@@ -5,3 +5,5 @@ export { default as Section } from './Section';
 export { default as Card } from './Card';
 export { default as Grid } from './Grid';
 export { default as SolutionTabs } from './SolutionTabs';
+export { default as CodeShowcase } from './CodeShowcase';
+export { default as UtilityShowcase } from './UtilityShowcase';

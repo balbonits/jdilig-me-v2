@@ -102,9 +102,11 @@ export const examples: ExampleCase[] = [
 ];
 
 // Default export for easy importing
-export default {
+const exerciseModule = {
   slidingWindowMax,
   slidingWindowMaxBrute,
   metadata,
   examples
 };
+
+export default exerciseModule;

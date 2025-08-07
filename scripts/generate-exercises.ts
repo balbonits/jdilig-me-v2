@@ -57,8 +57,8 @@ async function generateExercisesJSON() {
         
         // Determine approach and complexity based on function name
         let approach = 'Standard';
-        let timeComplexity = metadata.timeComplexity;
-        let spaceComplexity = metadata.spaceComplexity;
+        let timeComplexity = 'O(n)'; // Default for standard approach
+        let spaceComplexity = 'O(1)'; // Default for standard approach
         let isOptimal = false; // Will be determined by algorithm analysis
         
         // Parse approach from function name and set complexity
@@ -76,8 +76,20 @@ async function generateExercisesJSON() {
           spaceComplexity = 'O(n)';
         } else if (funcName.toLowerCase().includes('recursive')) {
           approach = 'Recursive';
+          timeComplexity = 'O(n)';
+          spaceComplexity = 'O(n)';
         } else if (funcName.toLowerCase().includes('iterative')) {
           approach = 'Iterative';
+          timeComplexity = 'O(n)';
+          spaceComplexity = 'O(1)';
+        } else {
+          // For standard/base functions, try to infer from context
+          // For anagram functions, sorting approach is typical for the base function
+          if (funcName.toLowerCase().includes('anagram')) {
+            approach = 'Sorting';
+            timeComplexity = 'O(n log n)';
+            spaceComplexity = 'O(n)';
+          }
         }
         
         return {
@@ -119,8 +131,8 @@ async function generateExercisesJSON() {
         solution.isOptimal = score === bestComplexityScore;
       });
       
-      // Create slug from filename
-      const slug = fileName.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+      // Use filename directly as slug
+      const slug = fileName;
       
       const exerciseData: ExerciseData = {
         name: fileName,

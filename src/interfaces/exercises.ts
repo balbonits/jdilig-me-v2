@@ -8,6 +8,7 @@ export type ExerciseInput =
   | (string | number)[] // Mixed arrays for deduplication exercises
   | [string, string] 
   | [number[], number]
+  | [number[] | null, number] // Support null arrays in tuple inputs
   | { operations: (string | number)[][] } // For complex data structures with mixed types
   | null;
 

@@ -48,8 +48,8 @@ async function generateUtilitiesJSON() {
         .filter(key => typeof utilityModule[key] === 'function')
         .filter(key => !['default'].includes(key));
       
-      // Create slug from filename
-      const slug = fileName.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+      // Use filename directly as slug  
+      const slug = fileName;
       
       const utilityData: UtilityData = {
         name: fileName,

@@ -14,8 +14,17 @@ This file contains context and references for the jdilig-me-v2 project to help C
 ## Website Features
 - Home page (/) - main landing with ResumeDisplay component
 - Projects page (/projects) - work/project gallery showcase  
-- Code page (/code) - coding showcase with algorithms and utilities
+- Code page (/code) - comprehensive coding showcase with algorithm exercises and utility functions
 - About page (/about) - personal info, skills, and contact details
+
+### Code Showcase System
+- **Algorithm Exercises** (/code/exercises) - Interactive showcase of computer science problems
+- **Utility Functions** (/code/utilities) - Reusable utility functions with documentation
+- **Individual Pages** (/code/exercises/[slug], /code/utilities/[slug]) - Detailed code analysis and examples
+- **2+1 Layout**: Description | Code + Examples spanning bottom (mobile-first responsive)
+- **Multiple Solutions**: Tabbed interface showing different algorithmic approaches
+- **Complexity Analysis**: Time/space complexity with optimal solution detection
+- **Pascal Case Convention**: All code showcase files use PascalCase naming
 
 ## Design Principles
 - **Modular Architecture**: Each component follows index.tsx -> script.tsx -> style.module.css pattern
@@ -37,6 +46,9 @@ This file contains context and references for the jdilig-me-v2 project to help C
 - **Section**: Individual content sections with card styling and titles
 - **Card**: Reusable card component with hover effects and responsive padding
 - **Grid**: Responsive grid system (1→2→3 columns across breakpoints)
+- **CodeShowcase**: 2+1 layout component for algorithm exercises with description, code, and examples
+- **UtilityShowcase**: Utility function display component with usage examples
+- **SolutionTabs**: Tabbed interface for multiple algorithm solutions with complexity analysis
 
 ### Mobile-First Responsive Design
 - **Breakpoints**: Mobile (default) → Tablet (768px+) → Desktop (1024px+)
@@ -361,8 +373,11 @@ Solutions are automatically analyzed for optimality:
 ## Development Commands
 ```bash
 npm run dev              # Start development server
+npm run dev:clean        # Clear .next cache and start dev server
+npm run dev:fresh        # Clear cache, regenerate JSON, and start dev server
 npm run build            # Generate code JSON + build Next.js
-npm run build:next       # Build Next.js only
+npm run build:next       # Build Next.js only  
+npm run build:clean      # Clear cache and build
 npm run start            # Start production server
 npm run lint             # Run ESLint
 npm run test             # Run Jest tests
@@ -390,6 +405,7 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Global Styles**: Minimal globals.css for theme variables and base styles
 - **No !important**: Clean CSS cascade using proper specificity
 - **Responsive Design**: Mobile-first approach with consistent breakpoints
+- **⚠️ Known Issue**: Tailwind v4 `theme()` functions not working properly - using standard CSS values as fallback
 
 ### Theme Implementation
 ```css
@@ -411,16 +427,47 @@ npm run generate:utilities  # Generate utilities JSON only
 ```
 
 ### Build System
-- **Code Generation**: Exercises and utilities parsed into JSON at build time
+- **Code Generation**: Exercises and utilities parsed into JSON at build time using ts-node scripts
 - **TypeScript Interfaces**: Shared types for exercises and utilities in `src/types/` and `src/interfaces/`
 - **Static Assets**: Resume PDF served from public/ directory
-- **SSG Build**: 25 pages generated (14 exercises + 1 utility + core pages)
-- **Type Safety**: Proper interfaces for PersonalInfo, Skills, ProjectItem, ResumeSection
+- **SSG Build**: 27+ pages generated (14 exercises + 1 utility + core pages)
+- **Type Safety**: Proper interfaces for PersonalInfo, Skills, ProjectItem, ResumeSection, ExerciseData, UtilityData
+- **Pascal Case Convention**: All code showcase files use PascalCase naming for consistency
+- **Optimal Solution Detection**: Algorithm automatically identifies best time complexity solutions
+- **Dynamic Routing**: [slug].tsx pages for individual exercise and utility showcases
 
 ### Testing
 - **Jest + Testing Library**: Component and logic testing
 - **Coverage Reports**: Track test coverage
 - **Mock Strategy**: Mock data imports and contexts in tests
+
+## Technical Debt & Future Improvements
+
+### High Priority
+- **Tailwind v4 Theme Functions**: `theme()` functions not processing correctly in CSS modules
+  - **Current**: Using standard CSS values as fallback (working solution)
+  - **Goal**: Integrate proper Tailwind v4 theme() function support
+  - **Impact**: Medium - affects maintainability and design system consistency
+  - **Files**: All `style.module.css` files, particularly CodeShowcase and SolutionTabs
+
+- **CSS Design Token Library**: Repeated values like font-family, spacing, colors across components
+  - **Current**: Hard-coded values duplicated in multiple CSS files
+  - **Goal**: Create centralized design token system with CSS custom properties
+  - **Impact**: High - improves maintainability, consistency, and themeable design system
+  - **Example**: `font-family: var(--font-mono)` instead of `'Monaco', 'Menlo', 'Ubuntu Mono', monospace`
+
+### Medium Priority
+- **Code Syntax Highlighting**: Currently using plain `<pre><code>` blocks
+  - **Current**: Monospace font with basic styling
+  - **Goal**: Add syntax highlighting for TypeScript/JavaScript
+  - **Impact**: Low-Medium - would improve visual appeal of code showcase
+
+### Low Priority
+- **Performance Optimization**: Bundle analysis and code splitting
+- **Accessibility Enhancements**: ARIA labels for complex UI components
+- **Testing Coverage**: Add unit tests for code showcase components
+
+---
 
 ## Important Notes
 
@@ -436,20 +483,23 @@ npm run generate:utilities  # Generate utilities JSON only
   - `@import "tailwindcss/theme.css" layer(theme)`
   - `@import "tailwindcss/preflight.css" layer(base)` 
   - `@import "tailwindcss/utilities.css" layer(utilities)`
-- **Component Styles**: Use `theme()` functions instead of deprecated `@apply`
+- **Component Styles**: INTENDED to use `theme()` functions instead of deprecated `@apply`
 - **Modular Architecture**: Each component imports its own CSS file
+- **⚠️ Current Issue**: `theme()` functions not processing correctly, using standard CSS values as fallback
 - **Examples**:
   ```css
-  /* Tailwind v4 approach */
+  /* Intended Tailwind v4 approach (not working yet) */
   .button {
     padding: theme('spacing.3') theme('spacing.6');
     border-radius: theme('borderRadius.lg');
     font-weight: theme('fontWeight.medium');
   }
   
-  /* NOT the old @apply approach */
-  .button-old {
-    @apply px-6 py-3 rounded-lg font-medium; /* DEPRECATED */
+  /* Current fallback approach */
+  .button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
   }
   ```
 

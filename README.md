@@ -179,8 +179,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ```bash
 npm run dev              # Start development server
+npm run dev:clean        # Clear .next cache and start dev server
+npm run dev:fresh        # Clear cache, regenerate JSON, and start dev server
 npm run build            # Generate code JSON + build for production
 npm run build:next       # Build Next.js only (without code generation)
+npm run build:clean      # Clear cache and build
 npm run start            # Start production server
 npm run lint             # Run ESLint
 npm run test             # Run Jest tests
@@ -271,6 +274,29 @@ Use for **reusable utility types** and UI/system-level definitions:
 **Rule of Thumb:**
 - **Interface** = "What data looks like" (business domain)
 - **Type** = "How code behaves" (technical implementation)
+
+## Technical Debt & Future Improvements
+
+### High Priority
+- **Tailwind v4 Theme Functions**: `theme()` functions not processing correctly in CSS modules
+  - Current: Using standard CSS values as fallback (working solution)
+  - Goal: Integrate proper Tailwind v4 theme() function support
+  - Impact: Medium - affects maintainability and design system consistency
+
+- **CSS Design Token Library**: Repeated values like font-family, spacing, colors across components
+  - Current: Hard-coded values duplicated in multiple CSS files
+  - Goal: Create centralized design token system with CSS custom properties
+  - Impact: High - improves maintainability and consistency
+
+### Medium Priority
+- **Code Syntax Highlighting**: Currently using plain `<pre><code>` blocks
+  - Goal: Add syntax highlighting for TypeScript/JavaScript code showcase
+  - Impact: Low-Medium - would improve visual appeal
+
+### Low Priority
+- **Performance Optimization**: Bundle analysis and code splitting
+- **Accessibility Enhancements**: ARIA labels for complex UI components  
+- **Testing Coverage**: Add unit tests for code showcase components
 
 ## Deploy on Vercel
 

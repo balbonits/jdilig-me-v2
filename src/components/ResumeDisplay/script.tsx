@@ -157,7 +157,7 @@ export default function ResumeDisplay() {
             </div>
           </div>
           <ul className={styles.achievements}>
-            <li>Enhanced TBN's web presence with cross-platform UX/UI design integration, boosting user engagement.</li>
+            <li>Enhanced TBN&apos;s web presence with cross-platform UX/UI design integration, boosting user engagement.</li>
             <li>Implemented subscription flow for TBNPlus.com & MeritPlus.com, introducing more revenue avenues.</li>
             <li>Led UX research and competitive analysis, wireframing and front-end flow diagram, refining VoD platform strategies & improve agility by helping stakeholders & product owners visualize their thought during ideation/conceptualization.</li>
             <li>Mentored team on UX/UI development and principles, fostering best practices, innovation, and user accessibility.</li>
@@ -194,7 +194,7 @@ export default function ResumeDisplay() {
             </div>
           </div>
           <ul className={styles.achievements}>
-            <li>Developed FOX.com's video player, enhancing cross-platform functionality.</li>
+            <li>Developed FOX.com&apos;s video player, enhancing cross-platform functionality.</li>
             <li>Integrated analytics tools, improving data insights for various FOX properties.</li>
             <li>Collaborated on UI enhancements, boosting user experience across platforms.</li>
             <li>Enhanced user experience through UI bug fixes and improvements.</li>
@@ -214,7 +214,7 @@ export default function ResumeDisplay() {
             </div>
           </div>
           <ul className={styles.achievements}>
-            <li>Developed Wisely by ADP's app UI using React.js and TypeScript, enhancing data integrity, user engagement and accessibility.</li>
+            <li>Developed Wisely by ADP&apos;s app UI using React.js and TypeScript, enhancing data integrity, user engagement and accessibility.</li>
             <li>Integrated Cordova/PhoneGap for hybrid app, improving cross-platform functionality.</li>
             <li>Managed state with Redux, ensuring seamless data flow, and app performance.</li>
             <li>Executed testing with Jest and Enzyme, ensuring high-quality code and reliability.</li>

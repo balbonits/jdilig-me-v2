@@ -15,7 +15,7 @@ export default function AboutPage() {
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Background</h2>
           <p className={styles.text}>
-            I'm a passionate software engineer with experience in full-stack development, 
+            I&apos;m a passionate software engineer with experience in full-stack development, 
             focusing on creating efficient, scalable, and user-friendly applications.
           </p>
         </section>
@@ -58,7 +58,7 @@ export default function AboutPage() {
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Contact</h2>
           <p className={styles.text}>
-            Feel free to reach out if you'd like to discuss opportunities or just chat about technology.
+            Feel free to reach out if you&apos;d like to discuss opportunities or just chat about technology.
           </p>
         </section>
       </div>

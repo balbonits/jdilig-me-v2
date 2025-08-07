@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:clean": "rm -rf .next && next dev",
+    "dev:fresh": "rm -rf .next && npm run generate && next dev",
     "build": "npm run generate && next build",
     "build:next": "next build",
+    "build:clean": "rm -rf .next && npm run build",
     "start": "next start",
     "lint": "next lint",
     "generate": "ts-node scripts/generate-all.ts",

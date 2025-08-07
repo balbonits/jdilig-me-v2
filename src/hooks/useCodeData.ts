@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ExerciseData } from '@interfaces/exercises';
 import { UtilityData } from '@interfaces/utilities';
-import { LoadingState } from '@types/index';
+import { LoadingState } from '@/types';
 
 export interface CodeDataResult {
   exercises: ExerciseData[];

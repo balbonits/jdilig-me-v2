@@ -32,9 +32,6 @@ export default function SolutionTabs({ solutions, className = '' }: SolutionTabs
               {solution.approach}
               {solution.isOptimal && <span className={styles.optimalBadge}>★</span>}
             </span>
-            <span className={styles.complexity}>
-              {solution.timeComplexity}
-            </span>
           </button>
         ))}
       </div>
@@ -42,10 +39,12 @@ export default function SolutionTabs({ solutions, className = '' }: SolutionTabs
       {/* Active Tab Content */}
       <div className={styles.tabContent}>
         <div className={styles.codeHeader}>
-          <h4 className={styles.functionName}>{activeSolution.name}</h4>
-          <div className={styles.complexityInfo}>
-            <span className={styles.time}>Time: {activeSolution.timeComplexity}</span>
-            <span className={styles.space}>Space: {activeSolution.spaceComplexity}</span>
+          <div className={styles.headerContent}>
+            <h4 className={styles.functionName}>{activeSolution.name}</h4>
+            <div className={styles.complexityInfo}>
+              <span className={styles.time}>Time: {activeSolution.timeComplexity}</span>
+              <span className={styles.space}>Space: {activeSolution.spaceComplexity}</span>
+            </div>
           </div>
           <button 
             className={styles.copyButton}
