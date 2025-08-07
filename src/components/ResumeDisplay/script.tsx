@@ -5,52 +5,88 @@ import styles from './style.module.css';
 export default function ResumeDisplay() {
   return (
     <PageContainer>
-      <PageHeader 
-        title="John Dilig" 
-        subtitle="Front End Developer"
-      >
-        <div className={styles.contactInfo}>
-          <span>Redondo Beach, CA 90278</span>
-          <span>9099971393</span>
-          <span>rjdofficemail@gmail.com</span>
+      {/* Hero Header */}
+      <div className={styles.heroHeader}>
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>John Dilig</h1>
+          <div className={styles.heroSubtitle}>Senior Front-End Developer</div>
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.statNumber}>16+</span>
+              <span className={styles.statLabel}>Years Experience</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.statNumber}>25+</span>
+              <span className={styles.statLabel}>Technologies</span>
+            </div>
+            <div className={styles.heroStat}>
+              <span className={styles.statNumber}>3</span>
+              <span className={styles.statLabel}>Major Companies</span>
+            </div>
+          </div>
+          <div className={styles.contactInfo}>
+            <span>Redondo Beach, CA 90278</span>
+            <span>9099971393</span>
+            <span>rjdofficemail@gmail.com</span>
+          </div>
         </div>
-      </PageHeader>
+        <div className={styles.heroGradient}></div>
+      </div>
 
       <SectionContainer>
-        {/* Websites, Portfolios, Profiles */}
-        <Section 
-          title="Websites, Portfolios, Profiles"
-          description="Professional online presence and portfolio links."
-        >
-          <Grid minWidth="300px">
-            <Card>
-              <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={styles.link}>
-                https://www.linkedin.com/in/rjdilig/
-              </a>
-            </Card>
-            <Card>
-              <a href="https://jdilig-me.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.link}>
-                https://jdilig-me.vercel.app/
-              </a>
-            </Card>
-            <Card>
-              <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.link}>
-                http://github.com/balbonits
-              </a>
-            </Card>
-          </Grid>
-        </Section>
+        {/* Professional Summary Hero Banner */}
+        <div className={styles.summaryHero}>
+          <div className={styles.summaryContent}>
+            <h2 className={styles.summaryTitle}>Frontend Engineering Excellence</h2>
+            <div className={styles.summaryBadge}>16+ Years Proven</div>
+            <p className={styles.summaryText}>
+              Senior front-end developer specializing in React ecosystems, high-traffic web applications, 
+              and cross-platform solutions. Led teams at Fox, TBN, and ADP building scalable user interfaces 
+              that serve millions. Expert in modern JavaScript, TypeScript, and responsive design with a 
+              track record of improving user engagement and application performance.
+            </p>
+            <div className={styles.summaryTech}>
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>Next.js</span>
+              <span>JavaScript ES6+</span>
+              <span>CSS/SASS</span>
+              <span>Performance</span>
+            </div>
+          </div>
+          <div className={styles.summaryGradient}></div>
+        </div>
 
-        {/* Professional Summary */}
-        <Section title="Professional Summary">
-          <p className={styles.summary}>
-            Front-End Developer with over 16 years of experience specializing in building responsive, 
-            high-traffic web applications and cross-platform solutions. Proficient in JavaScript, React.js 
-            and CMS integration, with a strong history of improving user engagement and optimizing performance 
-            for leading technology and media companies. Dedicated to utilizing innovative UI/UX design principles 
-            and guiding teams to deliver user-centric solutions and foster continuous improvement.
-          </p>
-        </Section>
+        {/* Links Banner */}
+        <div className={styles.linksGrid}>
+          <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+            <div className={styles.linkContent}>
+              <div className={styles.linkIcon}>💼</div>
+              <div className={styles.linkText}>
+                <div className={styles.linkTitle}>LinkedIn Profile</div>
+                <div className={styles.linkUrl}>linkedin.com/in/rjdilig</div>
+              </div>
+            </div>
+          </a>
+          <a href="https://jdilig-me.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+            <div className={styles.linkContent}>
+              <div className={styles.linkIcon}>🌐</div>
+              <div className={styles.linkText}>
+                <div className={styles.linkTitle}>Portfolio Site</div>
+                <div className={styles.linkUrl}>jdilig-me.vercel.app</div>
+              </div>
+            </div>
+          </a>
+          <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+            <div className={styles.linkContent}>
+              <div className={styles.linkIcon}>⚡</div>
+              <div className={styles.linkText}>
+                <div className={styles.linkTitle}>GitHub Projects</div>
+                <div className={styles.linkUrl}>github.com/balbonits</div>
+              </div>
+            </div>
+          </a>
+        </div>
 
       {/* Skills */}
       <section className={styles.section}>

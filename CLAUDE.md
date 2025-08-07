@@ -2,6 +2,16 @@
 
 This file contains context and references for the jdilig-me-v2 project to help Claude understand the codebase structure and conventions.
 
+## 🤖 **Shared Context System**
+This document serves as a **persistent knowledge base** that is shared between different Claude instances and conversations. It acts as a "memory system" that allows different Claude sessions to understand:
+- Project architecture and technical decisions
+- Current development status and progress
+- Known issues, tech debt, and workarounds  
+- Established conventions and patterns
+- Recent changes and their context
+
+**For Claude instances**: Always refer to this file for project context and update it when making significant changes to maintain continuity across conversations.
+
 ## Project Overview
 - **Name**: jdilig-me-v2
 - **Type**: Personal website
@@ -448,13 +458,15 @@ npm run generate:utilities  # Generate utilities JSON only
   - **Current**: Using standard CSS values as fallback (working solution)
   - **Goal**: Integrate proper Tailwind v4 theme() function support
   - **Impact**: Medium - affects maintainability and design system consistency
-  - **Files**: All `style.module.css` files, particularly CodeShowcase and SolutionTabs
+  - **Files**: All `style.module.css` files, particularly CodeShowcase, SolutionTabs, AboutPage, CodePage, ResumeDisplay
+  - **Note**: New hero banner system (CodePage, AboutPage, ResumeDisplay) follows this fallback pattern consistently
 
 - **CSS Design Token Library**: Repeated values like font-family, spacing, colors across components
-  - **Current**: Hard-coded values duplicated in multiple CSS files
+  - **Current**: Hard-coded values duplicated in multiple CSS files, especially in hero banner gradients
   - **Goal**: Create centralized design token system with CSS custom properties
   - **Impact**: High - improves maintainability, consistency, and themeable design system
   - **Example**: `font-family: var(--font-mono)` instead of `'Monaco', 'Menlo', 'Ubuntu Mono', monospace`
+  - **Hero Banners**: Gradient colors could be tokenized as `--gradient-primary`, `--gradient-secondary`, etc.
 
 ### Medium Priority
 - **Code Syntax Highlighting**: Currently using plain `<pre><code>` blocks
@@ -676,6 +688,29 @@ When continuing this work:
 3. Add remaining components using simple patterns first
 4. Add data generation scripts and content
 5. Optimize with memoization only after core functionality is stable
+
+## August 2025 - Hero Banner System Implementation
+
+### AboutPage Transformation Complete ✅
+- **Problem Resolved**: Fixed incorrect CSS import path in AboutPage
+  - **Issue**: `@import '../../styles/hero-banners.css'` (incorrect path from `/src/components/pages/AboutPage/`)
+  - **Fix**: `@import '../../../styles/hero-banners.css'` (correct relative path)
+  - **Impact**: Resolved build errors and hero banner styling issues
+- **Hero Banner Integration**: AboutPage now uses centralized hero banner system
+  - **Main Hero**: Personal intro with stats (16+ years, 100+ projects, 3 major corps)
+  - **Journey Cards**: Frontend Focus, Problem Solver, Growth Mindset sections
+  - **Skills Banners**: Frontend Mastery, Styling & Design, Tools & Workflow
+  - **Contact Banner**: Available status with email, phone, location
+- **Design Consistency**: Matches CodePage's vibrant, glass morphism style
+  - **Gradients**: Vibrant blue-green, purple-pink, and orange-red combinations
+  - **Mobile-First**: Responsive grids (1→2→3 columns across breakpoints)
+  - **Fallback CSS**: Follows established pattern for Tailwind theme() issues
+
+### Hero Banner System Architecture
+- **Centralized Styles**: `/src/styles/hero-banners.css` contains reusable hero banner components
+- **Import Pattern**: Components import hero banners using correct relative paths
+- **Usage**: CodePage, AboutPage, and ResumeDisplay all use hero banner system
+- **Next Target**: Projects page transformation using same pattern
 
 ## Documentation Maintenance
 
