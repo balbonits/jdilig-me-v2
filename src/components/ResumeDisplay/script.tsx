@@ -1,49 +1,48 @@
 import React from 'react';
+import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
 import styles from './style.module.css';
 
 export default function ResumeDisplay() {
   return (
-    <div className={styles.resumePage}>
-      {/* Header Section */}
-      <div className={styles.header}>
-        <h1 className={styles.title}>John Dilig</h1>
-        <p className={styles.subtitle}>Front End Developer</p>
+    <PageContainer>
+      <PageHeader 
+        title="John Dilig" 
+        subtitle="Front End Developer"
+      >
         <div className={styles.contactInfo}>
           <span>Redondo Beach, CA 90278</span>
           <span>9099971393</span>
           <span>rjdofficemail@gmail.com</span>
         </div>
-      </div>
+      </PageHeader>
 
-      <div className={styles.sections}>
+      <SectionContainer>
         {/* Websites, Portfolios, Profiles */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Websites, Portfolios, Profiles</h2>
-          <p className={styles.sectionText}>
-            Professional online presence and portfolio links.
-          </p>
-          <div className={styles.linksList}>
-            <div className={styles.linkItem}>
-              <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer">
+        <Section 
+          title="Websites, Portfolios, Profiles"
+          description="Professional online presence and portfolio links."
+        >
+          <Grid minWidth="300px">
+            <Card>
+              <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={styles.link}>
                 https://www.linkedin.com/in/rjdilig/
               </a>
-            </div>
-            <div className={styles.linkItem}>
-              <a href="https://jdilig-me.vercel.app/" target="_blank" rel="noopener noreferrer">
+            </Card>
+            <Card>
+              <a href="https://jdilig-me.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.link}>
                 https://jdilig-me.vercel.app/
               </a>
-            </div>
-            <div className={styles.linkItem}>
-              <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer">
+            </Card>
+            <Card>
+              <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.link}>
                 http://github.com/balbonits
               </a>
-            </div>
-          </div>
-        </section>
+            </Card>
+          </Grid>
+        </Section>
 
         {/* Professional Summary */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Professional Summary</h2>
+        <Section title="Professional Summary">
           <p className={styles.summary}>
             Front-End Developer with over 16 years of experience specializing in building responsive, 
             high-traffic web applications and cross-platform solutions. Proficient in JavaScript, React.js 
@@ -51,7 +50,7 @@ export default function ResumeDisplay() {
             for leading technology and media companies. Dedicated to utilizing innovative UI/UX design principles 
             and guiding teams to deliver user-centric solutions and foster continuous improvement.
           </p>
-        </section>
+        </Section>
 
       {/* Skills */}
       <section className={styles.section}>
@@ -272,7 +271,7 @@ export default function ResumeDisplay() {
           <div className={styles.graduationDate}>January 2008</div>
         </div>
       </section>
-    </div>
-  </div>
+      </SectionContainer>
+    </PageContainer>
   );
 }

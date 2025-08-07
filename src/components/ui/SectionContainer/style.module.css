@@ -1,0 +1,13 @@
+/* Mobile-first approach */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .sections {
+    gap: 4rem;
+  }
+}

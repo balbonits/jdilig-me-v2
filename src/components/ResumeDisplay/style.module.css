@@ -1,73 +1,32 @@
-@layer components {
-  .resumePage {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+/* Component-specific styles for ResumeDisplay */
+.contactInfo {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
 
-  .header {
-    margin-bottom: 3rem;
-    text-align: center;
-  }
+.link {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
 
-  .title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--primary);
-    margin-bottom: 1rem;
-  }
+.link:hover {
+  color: var(--foreground);
+}
 
-  .subtitle {
-    font-size: 1.125rem;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .contactInfo {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    font-size: 0.875rem;
-    color: var(--muted);
-  }
-
-  .sections {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-  }
-
-  .section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    padding: 2.5rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--foreground);
-    margin-bottom: 1rem;
-    border-left: 4px solid var(--primary);
-    padding-left: 1rem;
-  }
-
-  .sectionText {
-    color: var(--muted);
-    margin-bottom: 2rem;
-    font-size: 1.125rem;
-    line-height: 1.6;
-  }
-
-  /* Professional Summary */
-  .summary {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: var(--muted);
-    margin: 0;
-  }
+.summary {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
 
   /* Links Section */
   .linksList {
@@ -296,4 +255,3 @@
       align-items: flex-start;
     }
   }
-}

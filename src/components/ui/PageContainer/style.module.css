@@ -1,0 +1,13 @@
+/* Mobile-first approach */
+.page {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .page {
+    padding: 2rem;
+  }
+}

@@ -8,11 +8,11 @@ This file contains context and references for the jdilig-me-v2 project to help C
 - **Framework**: Next.js with Pages Router
 - **Technologies**: React, TypeScript, Tailwind CSS v4
 - **Branch**: master
-- **Status**: Modular component architecture with CSS modules
-- **Architecture**: Pages Router with modular component structure
+- **Status**: Modular component architecture with unified UI system
+- **Architecture**: Pages Router with modular component structure and reusable UI primitives
 
 ## Website Features
-- Home page (/) - main landing with personal introduction
+- Home page (/) - main landing with ResumeDisplay component
 - Projects page (/projects) - work/project gallery showcase  
 - Code page (/code) - coding showcase with algorithms and utilities
 - About page (/about) - personal info, skills, and contact details
@@ -21,11 +21,29 @@ This file contains context and references for the jdilig-me-v2 project to help C
 - **Modular Architecture**: Each component follows index.tsx -> script.tsx -> style.module.css pattern
 - **CSS Modules**: Scoped styles using .module.css files
 - **Theme System**: Light/dark mode using CSS custom properties and class-based switching
-- Mobile-first, responsive design
+- **Mobile-First Design**: All components use mobile-first responsive approach with min-width media queries
+- **Unified UI System**: Reusable UI primitives for consistent design across all pages
 - Performance-first approach
 - Clean, maintainable code structure
 - Consistent component organization
 - **Tailwind Integration**: Uses Tailwind color system via CSS custom properties
+
+## UI Component System
+
+### Core UI Primitives (src/components/ui/)
+- **PageContainer**: Main page wrapper with responsive padding and layout
+- **PageHeader**: Standardized page titles, subtitles, and descriptions  
+- **SectionContainer**: Wrapper for multiple content sections with proper spacing
+- **Section**: Individual content sections with card styling and titles
+- **Card**: Reusable card component with hover effects and responsive padding
+- **Grid**: Responsive grid system (1→2→3 columns across breakpoints)
+
+### Mobile-First Responsive Design
+- **Breakpoints**: Mobile (default) → Tablet (768px+) → Desktop (1024px+)
+- **CSS Pattern**: Start with mobile styles, enhance with min-width media queries
+- **Spacing**: 1rem mobile → 2rem tablet+ padding
+- **Typography**: Smaller mobile → larger desktop font sizes
+- **Grid**: Single column → multi-column layouts
 
 ## Technical Architecture
 - **Rendering**: Pages Router (SSR/SSG)
@@ -45,9 +63,30 @@ src/
 │   ├── _app.tsx           # Custom App component with providers
 │   └── _document.tsx      # Custom Document component
 ├── components/            # Reusable UI components
+│   ├── ui/                # Unified UI component system
+│   │   ├── PageContainer/ # Main page wrapper
+│   │   │   ├── index.tsx  #   - Clean export
+│   │   │   ├── script.tsx #   - Component logic
+│   │   │   └── style.module.css # - Mobile-first styles
+│   │   ├── PageHeader/    # Page titles and descriptions
+│   │   ├── SectionContainer/ # Section layout wrapper
+│   │   ├── Section/       # Individual content sections
+│   │   ├── Card/          # Reusable card component
+│   │   ├── Grid/          # Responsive grid layouts
+│   │   └── index.ts       # Unified exports for all UI components
 │   ├── pages/             # Page-level components (imported by routes)
 │   │   ├── HomePage/      # Home page component
 │   │   │   ├── index.tsx  #   - Clean export
+│   │   │   ├── script.tsx #   - Component logic (uses ResumeDisplay)
+│   │   │   └── style.module.css # - Page-specific styles
+│   │   ├── ProjectsPage/  # Projects showcase
+│   │   ├── AboutPage/     # About/contact info
+│   │   └── CodePage/      # Code showcase
+│   ├── ResumeDisplay/     # Resume component (refactored to use UI primitives)
+│   │   ├── index.tsx      #   - Clean export
+│   │   ├── script.tsx     #   - Uses PageContainer, PageHeader, Section, etc.
+│   │   └── style.module.css # - Component-specific styles only
+│   └── SiteLayout/        # Main layout with navigation and theme toggle
 │   │   │   ├── script.tsx #   - Component logic
 │   │   │   └── style.module.css # - Scoped styles
 │   │   ├── ProjectsPage/  # Projects page component
@@ -98,6 +137,74 @@ src/
 - `src/pages/` - Contains route files that import page components
 - `src/components/pages/` - Contains actual page component implementations
 - Route files are minimal: just import and export the page component
+
+## UI Component Usage Patterns
+
+### Standard Page Layout
+```tsx
+import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
+
+export default function ExamplePage() {
+  return (
+    <PageContainer>
+      <PageHeader 
+        title="Page Title" 
+        subtitle="Optional subtitle"
+      >
+        Optional description content goes here
+      </PageHeader>
+      
+      <SectionContainer>
+        <Section title="First Section">
+          <Grid>
+            <Card>Content for card 1</Card>
+            <Card>Content for card 2</Card>
+            <Card>Content for card 3</Card>
+          </Grid>
+        </Section>
+        
+        <Section title="Second Section">
+          <p>Regular content without cards</p>
+        </Section>
+      </SectionContainer>
+    </PageContainer>
+  );
+}
+```
+
+### Component Import Pattern
+```tsx
+// Always import UI components from the unified export
+import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
+
+// Individual imports also work but are not recommended
+import PageContainer from '@/components/ui/PageContainer';
+```
+
+### Mobile-First CSS Pattern
+```css
+/* Mobile-first approach - start with mobile styles */
+.component {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+/* Tablet and up - enhance for larger screens */
+@media (min-width: 768px) {
+  .component {
+    padding: 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+/* Desktop and up - further enhancements */
+@media (min-width: 1024px) {
+  .component {
+    padding: 3rem;
+    font-size: 1.25rem;
+  }
+}
+```
 ```
 src/
 ├── app/                    # Global app configuration & context
