@@ -6,8 +6,8 @@ export default function ResumeDisplay() {
     <div className={styles.resumePage}>
       {/* Header Section */}
       <div className={styles.header}>
-        <h1 className={styles.title}>Reuel John Dilig</h1>
-        <p className={styles.subtitle}>Full Stack Developer & Software Engineer</p>
+        <h1 className={styles.title}>John Dilig</h1>
+        <p className={styles.subtitle}>Front End Developer</p>
         <div className={styles.contactInfo}>
           <span>Redondo Beach, CA 90278</span>
           <span>9099971393</span>
