@@ -49,4 +49,5 @@ export const examples: ExampleCase[] = [
   { input: "Hello World", output: "dlroW olleH", description: "With spaces" }
 ];
 
-export default { reverseString, reverseStringManual, metadata, examples };
+const exerciseModule = { reverseString, reverseStringManual, metadata, examples };
+export default exerciseModule;

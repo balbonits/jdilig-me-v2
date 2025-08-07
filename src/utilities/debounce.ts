@@ -2,7 +2,10 @@
  * Delays function execution until a specified wait time has elapsed since the last call.
  * Useful for rate-limiting event handlers like scroll, resize, or input events.
  */
-export function debounce<T extends (...args: any[]) => any>(
+// Function type that can be debounced
+export type DebouncableFunction = (...args: (string | number | boolean | Event)[]) => void | Promise<void>;
+
+export function debounce<T extends DebouncableFunction>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {

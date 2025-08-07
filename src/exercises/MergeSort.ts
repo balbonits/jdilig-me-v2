@@ -79,4 +79,5 @@ export const examples: ExampleCase[] = [
   { input: [4, 3, 2, 1], output: [1, 2, 3, 4], description: "Reverse sorted" }
 ];
 
-export default { mergeSort, mergeSortIterative, metadata, examples };
+const exerciseModule = { mergeSort, mergeSortIterative, metadata, examples };
+export default exerciseModule;

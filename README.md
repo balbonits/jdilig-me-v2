@@ -179,13 +179,65 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ```bash
 npm run dev              # Start development server
-npm run build            # Build for production
+npm run build            # Generate code JSON + build for production
+npm run build:next       # Build Next.js only (without code generation)
 npm run start            # Start production server
 npm run lint             # Run ESLint
 npm run test             # Run Jest tests
 npm run test:watch       # Run tests in watch mode
 npm run test:coverage    # Run tests with coverage
+npm run generate         # Generate all code showcase JSON files
+npm run generate:exercises  # Generate exercises.json only
+npm run generate:utilities  # Generate utilities.json only
 ```
+
+## Code Showcase System
+
+### **Code Exercises** 💻
+The project includes a comprehensive collection of coding exercises demonstrating algorithms, data structures, and problem-solving techniques:
+
+#### **Exercise Structure**
+Each exercise in `src/exercises/` contains:
+- **Multiple Solutions**: Different algorithmic approaches (Hash Map, Brute Force, Sorting, etc.)
+- **Complexity Analysis**: Time and space complexity for each solution
+- **Test Cases**: Input/output examples with descriptions
+- **Metadata**: Title, description, concepts, and performance metrics
+
+#### **Optimal Solution Detection**
+Solutions are automatically analyzed and marked as optimal based on time complexity:
+- **Priority Order**: O(1) > O(log n) > O(n) > O(n log n) > O(n²) > O(n³) > O(2^n)
+- **Multiple Optimal**: If multiple solutions share the best complexity, all are marked optimal
+- **Visual Indicators**: Optimal solutions display with ★ badges in the UI
+
+#### **Exercise Categories**
+- **Array & String Manipulation**: Two Sum, Anagram Checker, Array Deduplication
+- **Searching & Sorting**: Binary Search, Merge Sort, Sliding Window Maximum
+- **Data Structures**: LRU Cache, Trie Implementation
+- **Dynamic Programming**: Fibonacci Sequence, Longest Common Substring
+- **Mathematical**: Factorial Calculator, Palindrome Checker
+
+### **Utility Functions** 🛠️
+Reusable utility functions for common programming tasks in `src/utilities/`:
+
+#### **Utility Structure**
+Each utility contains:
+- **Function Implementation**: Clean, reusable TypeScript functions
+- **Usage Examples**: Practical code examples showing real-world applications  
+- **Documentation**: Description, category, and use cases
+- **Performance Notes**: Complexity and optimization details where relevant
+
+#### **Utility Categories**
+- **Performance**: Debounce functions for rate limiting
+- **Data Manipulation**: Array helpers, object utilities
+- **Validation**: Input sanitization and type checking
+- **Formatting**: String formatting and data transformation
+
+### **JSON Generation System** ⚙️
+The build system automatically parses TypeScript files and generates structured JSON:
+- **exercises.json**: All coding exercises with solutions, examples, and metadata
+- **utilities.json**: All utility functions with examples and documentation
+- **Build Integration**: JSON generation runs automatically before Next.js build
+- **Network Access**: JSON files served from `/public` for client-side fetching
 
 ## Development
 

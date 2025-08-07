@@ -52,4 +52,5 @@ export const examples: ExampleCase[] = [
   { input: 2.5, output: new Error("Input must be an integer"), description: "Non-integer error" }
 ];
 
-export default { factorial, factorialIterative, metadata, examples };
+const exerciseModule = { factorial, factorialIterative, metadata, examples };
+export default exerciseModule;

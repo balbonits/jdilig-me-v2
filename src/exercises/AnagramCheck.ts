@@ -33,8 +33,8 @@ export function areAnagramsHashMap(str1: string, str2: string): boolean {
   const s2 = cleanStr(str2);
   if (s1.length !== s2.length) return false;
   const charCount: { [key: string]: number } = {};
-  for (let char of s1) charCount[char] = (charCount[char] || 0) + 1;
-  for (let char of s2) {
+  for (const char of s1) charCount[char] = (charCount[char] || 0) + 1;
+  for (const char of s2) {
     if (!charCount[char]) return false;
     charCount[char]--;
   }
@@ -58,4 +58,5 @@ export const examples: ExampleCase[] = [
   { input: ["a b c", "cba!"], output: true, description: "With spaces" }
 ];
 
-export default { areAnagrams, areAnagramsHashMap, metadata, examples };
+const anagramModule = { areAnagrams, areAnagramsHashMap, metadata, examples };
+export default anagramModule;

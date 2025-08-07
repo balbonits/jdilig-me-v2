@@ -66,4 +66,5 @@ export const examples: ExampleCase[] = [
   { input: 3.5, output: new Error("Input must be an integer"), description: "Non-integer error" }
 ];
 
-export default { FibonacciSeq, FibonacciSeqMemoized, metadata, examples };
+const exerciseModule = { FibonacciSeq, FibonacciSeqMemoized, metadata, examples };
+export default exerciseModule;

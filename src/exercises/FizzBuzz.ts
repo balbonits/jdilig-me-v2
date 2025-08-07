@@ -66,4 +66,5 @@ export const examples: ExampleCase[] = [
   { input: 0, output: new Error("Input must be a positive integer"), description: "Invalid input" }
 ];
 
-export default { fizzBuzz, fizzBuzzConcat, fizzBuzzOneLiner, metadata, examples };
+const exerciseModule = { fizzBuzz, fizzBuzzConcat, fizzBuzzOneLiner, metadata, examples };
+export default exerciseModule;

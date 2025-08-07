@@ -77,4 +77,5 @@ export const examples: ExampleCase[] = [
   { input: ["banana", "anana"], output: "anana", description: "Overlapping" }
 ];
 
-export default { longestCommonSubstring, longestCommonSubstringBrute, metadata, examples };
+const exerciseModule = { longestCommonSubstring, longestCommonSubstringBrute, metadata, examples };
+export default exerciseModule;

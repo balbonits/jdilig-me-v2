@@ -2,7 +2,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { ExerciseData } from '../src/interfaces/exercises';
+import { ExerciseData, Solution } from '../src/interfaces/exercises';
 
 const EXERCISES_DIR = path.join(__dirname, '../src/exercises');
 const OUTPUT_DIR = path.join(__dirname, '../public');
@@ -48,6 +48,77 @@ async function generateExercisesJSON() {
         .filter(key => typeof exerciseModule[key] === 'function')
         .filter(key => !['default'].includes(key));
       
+      // Extract individual solutions by parsing the file content
+      const solutions = functions.map((funcName, index) => {
+        // Extract function code using regex
+        const funcRegex = new RegExp(`export function ${funcName}[\\s\\S]*?(?=export|$)`, 'g');
+        const match = fileContent.match(funcRegex);
+        const funcCode = match ? match[0].trim() : '';
+        
+        // Determine approach and complexity based on function name
+        let approach = 'Standard';
+        let timeComplexity = metadata.timeComplexity;
+        let spaceComplexity = metadata.spaceComplexity;
+        let isOptimal = false; // Will be determined by algorithm analysis
+        
+        // Parse approach from function name and set complexity
+        if (funcName.toLowerCase().includes('hashmap') || funcName.toLowerCase().includes('hash')) {
+          approach = 'Hash Map';
+          timeComplexity = 'O(n)';
+          spaceComplexity = 'O(n)';
+        } else if (funcName.toLowerCase().includes('bruteforce') || funcName.toLowerCase().includes('brute')) {
+          approach = 'Brute Force';
+          timeComplexity = 'O(n²)';
+          spaceComplexity = 'O(1)';
+        } else if (funcName.toLowerCase().includes('sort')) {
+          approach = 'Sorting';
+          timeComplexity = 'O(n log n)';
+          spaceComplexity = 'O(n)';
+        } else if (funcName.toLowerCase().includes('recursive')) {
+          approach = 'Recursive';
+        } else if (funcName.toLowerCase().includes('iterative')) {
+          approach = 'Iterative';
+        }
+        
+        return {
+          name: funcName,
+          code: funcCode,
+          approach,
+          timeComplexity,
+          spaceComplexity,
+          isOptimal // Will be set after analyzing all solutions
+        };
+      });
+      
+      // Determine optimal solution(s) based on time complexity analysis
+      // Priority: O(1) > O(log n) > O(n) > O(n log n) > O(n²) > O(n³) > O(2^n)
+      const complexityOrder = {
+        'O(1)': 1,
+        'O(log n)': 2, 
+        'O(n)': 3,
+        'O(n log n)': 4,
+        'O(n²)': 5,
+        'O(n³)': 6,
+        'O(2^n)': 7
+      };
+      
+      // Find the best time complexity
+      let bestComplexityScore = Infinity;
+      solutions.forEach(solution => {
+        const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)'; // Take first part if multiple
+        const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
+        if (score < bestComplexityScore) {
+          bestComplexityScore = score;
+        }
+      });
+      
+      // Mark solutions with the best time complexity as optimal
+      solutions.forEach(solution => {
+        const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)';
+        const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
+        solution.isOptimal = score === bestComplexityScore;
+      });
+      
       // Create slug from filename
       const slug = fileName.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
       
@@ -57,7 +128,8 @@ async function generateExercisesJSON() {
         metadata,
         examples,
         code: fileContent,
-        functions
+        functions,
+        solutions
       };
       
       exercises.push(exerciseData);

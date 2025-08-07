@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useRouter } from 'next/router';
 import styles from './style.module.css';
@@ -21,30 +22,30 @@ export default function SiteHeader() {
           
           {/* Navigation Links */}
           <div className={styles.navLinks}>
-            <a 
+            <Link 
               href="/" 
               className={`${styles.navLink} ${isActive('/') ? styles.navLinkActive : ''}`}
             >
               Home
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/projects" 
               className={`${styles.navLink} ${isActive('/projects') ? styles.navLinkActive : ''}`}
             >
               Projects
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/code" 
               className={`${styles.navLink} ${isActive('/code') ? styles.navLinkActive : ''}`}
             >
               Code
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/about" 
               className={`${styles.navLink} ${isActive('/about') ? styles.navLinkActive : ''}`}
             >
               About
-            </a>
+            </Link>
           </div>
           
           {/* Theme Toggle */}

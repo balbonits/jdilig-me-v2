@@ -63,4 +63,5 @@ export const examples: ExampleCase[] = [
   { input: null, output: new Error("Input must be an array"), description: "Invalid input" }
 ];
 
-export default { ArrayDeduplicate, ArrayFilterDeduplicate, ArrayReduceDeduplicate, metadata, examples };
+const arrayDeduperModule = { ArrayDeduplicate, ArrayFilterDeduplicate, ArrayReduceDeduplicate, metadata, examples };
+export default arrayDeduperModule;

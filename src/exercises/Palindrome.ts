@@ -56,4 +56,5 @@ export const examples: ExampleCase[] = [
   { input: ".,", output: true, description: "Only punctuation" }
 ];
 
-export default { isPalindrome, isPalindromeTwoPointer, metadata, examples };
+const exerciseModule = { isPalindrome, isPalindromeTwoPointer, metadata, examples };
+export default exerciseModule;

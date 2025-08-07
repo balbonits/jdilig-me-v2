@@ -61,4 +61,5 @@ export const examples: ExampleCase[] = [
   { input: [[1, 2, 2, 3], 2], output: 1, description: "Duplicates" }
 ];
 
-export default { binarySearch, binarySearchRecursive, metadata, examples };
+const binarySearchModule = { binarySearch, binarySearchRecursive, metadata, examples };
+export default binarySearchModule;

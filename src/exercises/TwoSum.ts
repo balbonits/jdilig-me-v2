@@ -58,4 +58,5 @@ export const examples: ExampleCase[] = [
   { input: [null, 5], output: new Error("Input must be an array with at least two numbers"), description: "Invalid" }
 ];
 
-export default { twoSum, twoSumBruteForce, metadata, examples };
+const twoSumModule = { twoSum, twoSumBruteForce, metadata, examples };
+export default twoSumModule;

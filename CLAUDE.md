@@ -300,6 +300,64 @@ src/
 - **Page components** (`src/components/pages/*/`) contain the actual UI logic and can be reused/tested independently
 - **UI components** (`src/components/*/`) are reusable across multiple pages
 
+## Code Quality & Development Standards
+
+### **ESLint Configuration & Standards**
+The project maintains strict code quality through comprehensive ESLint rules:
+
+#### **Type Safety Standards**
+- **No `any` types**: Use specific interfaces and types from `src/interfaces/` and `src/types/`
+- **No `unknown` types**: Define proper types for function parameters and return values
+- **Proper generics**: Use constrained generics instead of broad unknown types
+- **Example**: Instead of `(...args: unknown[]) => unknown`, use `DebouncableFunction` type
+
+#### **Import/Export Standards**
+- **Named default exports**: Assign objects to variables before default export
+  ```typescript
+  // ✅ Correct
+  const exerciseModule = { functions, metadata, examples };
+  export default exerciseModule;
+  
+  // ❌ Avoid
+  export default { functions, metadata, examples };
+  ```
+
+#### **React Standards**
+- **Next.js Link components**: Use `<Link>` from `next/link` instead of `<a>` tags for internal navigation
+- **Escaped entities**: Use `&apos;` instead of `'` in JSX text content
+- **Proper imports**: Import all necessary dependencies at the top level
+
+#### **Exercise/Utility Standards**
+- **Multiple solutions**: Each exercise can contain multiple algorithmic approaches
+- **Complexity analysis**: Automatic detection and marking of optimal solutions based on time complexity
+- **Consistent exports**: Each file exports functions, metadata, examples, and a default module object
+
+### **Optimal Solution Detection Algorithm**
+Solutions are automatically analyzed for optimality:
+
+#### **Complexity Priority Order**
+1. **O(1)** - Constant time (highest priority)
+2. **O(log n)** - Logarithmic time
+3. **O(n)** - Linear time
+4. **O(n log n)** - Linearithmic time  
+5. **O(n²)** - Quadratic time
+6. **O(n³)** - Cubic time
+7. **O(2^n)** - Exponential time (lowest priority)
+
+#### **Algorithm Logic**
+- Parse function names for approach hints (hashmap, bruteforce, sort, recursive, iterative)
+- Extract time complexity from function names or metadata
+- Compare all solutions within an exercise
+- Mark all solutions with the best time complexity as optimal
+- Display optimal solutions with ★ badges in UI
+
+#### **Approach Classification**
+- **Hash Map**: O(n) time, O(n) space - typically optimal for lookup problems
+- **Brute Force**: O(n²) time, O(1) space - baseline solution
+- **Sorting**: O(n log n) time, O(n) space - good for ordered data problems
+- **Recursive**: Varies by implementation
+- **Iterative**: Typically more space-efficient than recursive
+
 ## Development Commands
 ```bash
 npm run dev              # Start development server
@@ -438,6 +496,69 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Tab/Shift+Tab**: Navigate through interactive elements
 - **Escape**: Close modals/dropdowns (when implemented)
 - **Enter/Space**: Activate buttons and links
+
+## Code Showcase Implementation (January 2025)
+
+### **Current Development Status** 🚧
+**In Progress**: Building comprehensive code showcase system with modular components.
+
+#### **Completed Components** ✅
+- **SolutionTabs**: Tabbed interface for multiple algorithm solutions with complexity indicators
+- **CodeShowcase**: 2-column + 1-row layout (Description | Code | Examples) 
+- **ExercisesPage**: Grid listing of all coding exercises with preview cards
+- **useCodeData**: React hook for fetching exercises.json and utilities.json
+- **Type System**: Enhanced ExerciseInput/ExerciseOutput types for complex data structures
+- **JSON Generation**: Automated parsing with optimal solution detection algorithm
+- **ESLint Compliance**: Fixed all type errors, anonymous exports, React standards
+
+#### **Architecture Decisions Made** 🎯
+- **Tailwind CSS v4**: Using utility-first styling instead of CSS Modules for consistency
+- **Modular Components**: Each component follows index.tsx → script.tsx pattern
+- **Mobile-First Design**: Responsive grid layouts (1→2→3 columns across breakpoints)
+- **Tabbed Solutions**: Multiple algorithm approaches with complexity comparison
+- **Optimal Detection**: Automatic analysis based on time complexity priority order
+
+#### **Current File Structure**
+```
+src/
+├── components/
+│   ├── ui/
+│   │   ├── SolutionTabs/     # ✅ Completed - Tabbed code solutions
+│   │   ├── CodeShowcase/     # ✅ Completed - Main 2-col+1-row layout  
+│   │   └── index.ts          # ✅ Updated - Exports SolutionTabs
+│   ├── pages/
+│   │   └── ExercisesPage/    # ✅ Completed - Exercise listing grid
+├── hooks/
+│   └── useCodeData.ts        # ✅ Completed - Data fetching hook
+├── pages/code/exercises/
+│   └── index.tsx            # ✅ Completed - Routes to ExercisesPage
+├── interfaces/
+│   ├── exercises.ts         # ✅ Enhanced - Complex input/output types
+│   └── utilities.ts         # ⏳ Needs enhancement for UI consistency
+└── types/
+    └── index.ts             # ✅ Updated - LoadingState, ApiResponse types
+```
+
+#### **Next Immediate Tasks** ⏳
+1. **Individual Exercise Detail Page**: `/code/exercises/[slug].tsx` dynamic route
+2. **Update SolutionTabs Styling**: Convert to Tailwind CSS v4 from CSS Modules
+3. **Utilities Showcase**: Create UtilitiesPage and routing
+4. **Navigation Integration**: Update main `/code` page with proper links
+5. **Testing**: Verify responsive design and data fetching
+
+#### **Code Quality Standards Applied** 📋
+- **No `any`/`unknown`**: All types use specific interfaces (ExerciseInput, DebouncableFunction)
+- **Proper Exports**: Named default exports (const module = {...}; export default module;)
+- **Next.js Standards**: Link components, escaped entities, proper imports
+- **Optimal Solution Algorithm**: Time complexity-based priority (O(1) > O(log n) > O(n) etc.)
+
+### **For Claude Copilot Continuation** 🤖
+When continuing this work:
+1. **Focus Areas**: Complete individual exercise pages, convert remaining CSS to Tailwind
+2. **Styling Strategy**: Use Tailwind CSS v4 utility classes, no CSS Modules
+3. **Data Sources**: exercises.json and utilities.json generated via `npm run generate`
+4. **UI Patterns**: Follow PageContainer > PageHeader > SectionContainer > Section > Grid > Card
+5. **Component Standards**: index.tsx (clean export) → script.tsx (logic) → Tailwind classes
 
 ## Recent Changes & Updates
 

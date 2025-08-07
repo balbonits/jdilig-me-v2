@@ -168,4 +168,5 @@ export const examples: ExampleCase[] = [
 ];
 
 // Default export for easy importing
-export default { Trie, TrieArray, metadata, examples };
+const exerciseModule = { Trie, TrieArray, metadata, examples };
+export default exerciseModule;
