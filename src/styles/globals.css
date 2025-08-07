@@ -10,8 +10,16 @@
     --color-muted: #6b7280;
   }
   
+  /* Dark theme when body has dark class - higher specificity */
+  body.dark {
+    --color-background: #000000 !important;
+    --color-foreground: #ffffff !important;
+    --color-primary: #60a5fa !important;
+    --color-muted: #9ca3af !important;
+  }
+  
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not(.light) {
       --color-background: #000000;
       --color-foreground: #ffffff;
       --color-primary: #60a5fa;
@@ -25,5 +33,6 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: system-ui, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
