@@ -8,42 +8,96 @@ This file contains context and references for the jdilig-me-v2 project to help C
 - **Framework**: Next.js with Pages Router
 - **Technologies**: React, TypeScript, Tailwind CSS v4
 - **Branch**: master
-- **Status**: Hybrid SSG + CSR approach for optimal SEO and performance
-- **Architecture**: Static generation for key pages, client-side for interactive components
+- **Status**: Modular component architecture with CSS modules
+- **Architecture**: Pages Router with modular component structure
 
 ## Website Features
-- Home page (/) - main landing with resume/CV section
+- Home page (/) - main landing with personal introduction
 - Projects page (/projects) - work/project gallery showcase  
-- Code section (/code) - parent route for coding showcase
-  - Exercises listing (/code/exercises) - algorithm & data structure problems
-  - Individual exercises (/code/exercises/[name]) - e.g., /code/exercises/AnagramCheck
-  - Utilities listing (/code/utilities) - practical utility functions
-  - Individual utilities (/code/utilities/[name]) - e.g., /code/utilities/Debounce
-- About page (/about) - personal info and contact details
+- Code page (/code) - coding showcase with algorithms and utilities
+- About page (/about) - personal info, skills, and contact details
 
 ## Design Principles
-- **Hybrid Rendering**: SSG for key pages (SEO), CSR for interactive components (performance)
+- **Modular Architecture**: Each component follows index.tsx -> script.tsx -> style.module.css pattern
+- **CSS Modules**: Scoped styles using .module.css files
+- **Theme System**: Light/dark mode using CSS custom properties and class-based switching
 - Mobile-first, responsive design
-- Single Page Application (SPA) with smooth scroll navigation
 - Performance-first approach
-- Sticky/floating header navigation
-- Custom theming system (light/dark, extensible for future custom themes)
-- Fast, subtle transitions without "blinking" effects
-- Clean, close-to-metal implementation (no heavy animation libraries)
-- **Data Loading**: Static generation at build time + client-side for dynamic content
-- **SEO Optimized**: Search engine friendly with pre-rendered content
+- Clean, maintainable code structure
+- Consistent component organization
+- **Tailwind Integration**: Uses Tailwind color system via CSS custom properties
 
 ## Technical Architecture
-- **Rendering**: Hybrid SSG + CSR (Static Site Generation for key pages, Client-Side for interactive components)
-- **Data Fetching**: Build-time static generation + client-side for dynamic features
-- **SEO Strategy**: Pre-rendered HTML with ISR (Incremental Static Regeneration) revalidation
-- **SSG Implementation**: Key pages (Home, About, Projects, Code listings) use `getStaticProps` with 1-hour revalidation
-- **CSR Components**: Interactive showcases (CodeShowcase) remain client-side for optimal UX
-- **PWA Ready**: Future enhancement, not blocking launch
-- Building from scratch with Claude Code
-- Will deploy to existing Vercel deployment (v2 iteration)
+- **Rendering**: Pages Router (SSR/SSG)
+- **Styling**: CSS Modules + Tailwind CSS v4
+- **Theming**: CSS custom properties with .light/.dark class switching
+- **Component Structure**: Modular components with separated concerns
+- **Type Safety**: Full TypeScript implementation
 
 ## Project Structure
+```
+src/
+├── pages/                  # Next.js Pages Router
+│   ├── index.tsx          # Home route (imports HomePage component)
+│   ├── projects.tsx       # Projects route (imports ProjectsPage component)
+│   ├── about.tsx          # About route (imports AboutPage component)
+│   ├── code.tsx           # Code route (imports CodePage component)
+│   ├── _app.tsx           # Custom App component with providers
+│   └── _document.tsx      # Custom Document component
+├── components/            # Reusable UI components
+│   ├── pages/             # Page-level components (imported by routes)
+│   │   ├── HomePage/      # Home page component
+│   │   │   ├── index.tsx  #   - Clean export
+│   │   │   ├── script.tsx #   - Component logic
+│   │   │   └── style.module.css # - Scoped styles
+│   │   ├── ProjectsPage/  # Projects page component
+│   │   │   ├── index.tsx
+│   │   │   ├── script.tsx
+│   │   │   └── style.module.css
+│   │   ├── AboutPage/     # About page component
+│   │   │   ├── index.tsx
+│   │   │   ├── script.tsx
+│   │   │   └── style.module.css
+│   │   └── CodePage/      # Code page component
+│   │       ├── index.tsx
+│   │       ├── script.tsx
+│   │       └── style.module.css
+│   ├── SiteLayout/        # Main layout wrapper
+│   │   ├── index.tsx      # Clean export
+│   │   ├── script.tsx     # Layout logic with theme toggle
+│   │   └── style.module.css # Layout styles
+│   └── {ComponentName}/   # UI Component structure:
+│       ├── index.tsx      #   - Clean exports
+│       ├── script.tsx     #   - Main component logic
+│       ├── style.module.css #   - Scoped CSS modules
+│       └── test.tsx       #   - Jest tests
+├── contexts/              # React contexts
+│   └── ThemeContext.tsx   # Light/dark theme system
+├── data/                  # Static data
+│   ├── resume.ts          # Personal info, experience, skills
+│   ├── projects.ts        # Portfolio projects
+│   └── navigation.ts      # Site navigation items
+├── exercises/             # Coding exercises (TypeScript files)
+├── utilities/             # Utility functions (TypeScript files)
+├── hooks/                 # Custom React hooks
+├── interfaces/            # TypeScript interfaces
+├── lib/                   # Utility libraries
+├── types/                 # TypeScript type definitions
+└── styles/                # Global styles
+    └── globals.css        # Tailwind imports and theme variables
+```
+
+## Component Architecture
+**Modular Component Structure**: Each component follows a consistent pattern:
+- `index.tsx` - Clean export: `export { default } from './script';`
+- `script.tsx` - Main component logic and JSX
+- `style.module.css` - Scoped CSS modules for component-specific styles
+- `test.tsx` - Jest tests (optional)
+
+**Pages Router Strategy**: Clear separation between routing and page components
+- `src/pages/` - Contains route files that import page components
+- `src/components/pages/` - Contains actual page component implementations
+- Route files are minimal: just import and export the page component
 ```
 src/
 ├── app/                    # Global app configuration & context
@@ -132,13 +186,33 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Component Structure**: index.tsx (clean imports) + script.tsx (logic) + style.css + test.tsx
 
 ### Styling Strategy
-- **Tailwind CSS v4**: Latest version with explicit layer system and theme() functions
-- **Global CSS**: Component styles consolidated in `src/styles/globals.css` for build optimization
-- **Layer Architecture**: @layer theme, base, components, utilities for proper cascade
-- **CSS Variables**: Theme-aware colors and fonts for dynamic theming
-- **theme() Functions**: Replace deprecated @apply with Tailwind v4's theme() syntax
-- **Mobile-first**: Responsive design starting from mobile
-- **Component Organization**: Styles organized by component in global CSS layers
+- **CSS Modules**: Component-scoped styles using `.module.css` files
+- **Tailwind CSS v4**: Integration via CSS custom properties in globals.css
+- **Theme System**: Light/dark mode using CSS custom properties and class switching
+- **Color System**: Uses Tailwind's color palette via `var(--color-*)` custom properties
+- **Component Structure**: Each component has its own `style.module.css` file
+- **Global Styles**: Minimal globals.css for theme variables and base styles
+- **No !important**: Clean CSS cascade using proper specificity
+- **Responsive Design**: Mobile-first approach with consistent breakpoints
+
+### Theme Implementation
+```css
+/* Light theme (default) */
+:root {
+  --background: var(--color-white);
+  --foreground: var(--color-gray-900);
+  --primary: var(--color-blue-500);
+  /* ... */
+}
+
+/* Dark theme via class */
+.dark {
+  --background: var(--color-gray-950);
+  --foreground: var(--color-gray-50);
+  --primary: var(--color-blue-400);
+  /* ... */
+}
+```
 
 ### Build System
 - **Code Generation**: Exercises and utilities parsed into JSON at build time

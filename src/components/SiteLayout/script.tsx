@@ -12,20 +12,32 @@ export default function SiteLayout({ children, className = '' }: SiteLayoutProps
   return (
     <div className={`${styles.layout} ${className}`}>
       <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <h1 className={styles.title}>My Site ({theme} mode)</h1>
-          <button 
-            onClick={toggleTheme}
-            className={styles.themeToggle}
-          >
-            Toggle Theme
-          </button>
-        </div>
         <nav className={styles.nav}>
-          <a href="/">Home</a>
-          <a href="/projects">Projects</a>
-          <a href="/code">Code</a>
-          <a href="/about">About</a>
+          <div className={styles.navContainer}>
+            {/* Logo/Brand */}
+            <div className={styles.brand}>
+              <h1 className={styles.title}>John Dilig</h1>
+            </div>
+            
+            {/* Navigation Links */}
+            <div className={styles.navLinks}>
+              <a href="/" className={styles.navLink}>Home</a>
+              <a href="/projects" className={styles.navLink}>Projects</a>
+              <a href="/code" className={styles.navLink}>Code</a>
+              <a href="/about" className={styles.navLink}>About</a>
+            </div>
+            
+            {/* Theme Toggle */}
+            <div className={styles.actions}>
+              <button 
+                onClick={toggleTheme}
+                className={styles.themeToggle}
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
+              </button>
+            </div>
+          </div>
         </nav>
       </header>
       
@@ -34,7 +46,9 @@ export default function SiteLayout({ children, className = '' }: SiteLayoutProps
       </main>
       
       <footer className={styles.footer}>
-        <p>© 2024 My Site. Built with Next.js.</p>
+        <div className={styles.footerContent}>
+          <p>© 2025 John Dilig. Built with Next.js & TypeScript.</p>
+        </div>
       </footer>
     </div>
   );
