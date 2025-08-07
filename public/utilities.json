@@ -1,0 +1,24 @@
+[
+  {
+    "name": "debounce",
+    "slug": "debounce",
+    "metadata": {
+      "title": "Debounce Function",
+      "category": "Performance"
+    },
+    "examples": [
+      {
+        "description": "Debounce search input to limit API calls.",
+        "code": "const debouncedSearch = debounce(handleSearch, 300);\ninput.addEventListener('input', (e) => debouncedSearch(e.target.value));"
+      },
+      {
+        "description": "Optimize window resize events for layout updates.",
+        "code": "const debouncedResize = debounce(updateLayout, 200);\nwindow.addEventListener('resize', debouncedResize);"
+      }
+    ],
+    "code": "/**\n * Delays function execution until a specified wait time has elapsed since the last call.\n * Useful for rate-limiting event handlers like scroll, resize, or input events.\n */\nexport function debounce<T extends (...args: any[]) => any>(\n  func: T,\n  wait: number\n): (...args: Parameters<T>) => void {\n  let timeout: NodeJS.Timeout | null = null;\n\n  return (...args: Parameters<T>) => {\n    if (timeout) {\n      clearTimeout(timeout);\n    }\n    timeout = setTimeout(() => {\n      func(...args);\n    }, wait);\n  };\n}\n\nexport const metadata = {\n  title: 'Debounce Function',\n  category: 'Performance'\n};\n\nexport const examples = [\n  {\n    description: 'Debounce search input to limit API calls.',\n    code: `const debouncedSearch = debounce(handleSearch, 300);\ninput.addEventListener('input', (e) => debouncedSearch(e.target.value));`\n  },\n  {\n    description: 'Optimize window resize events for layout updates.',\n    code: `const debouncedResize = debounce(updateLayout, 200);\nwindow.addEventListener('resize', debouncedResize);`\n  }\n];",
+    "functions": [
+      "debounce"
+    ]
+  }
+]

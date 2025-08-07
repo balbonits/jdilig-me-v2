@@ -140,16 +140,11 @@ npm run test:coverage    # Run tests with coverage
 
 ## Development
 
-- **Pages**: Add new routes in `src/pages/` that import page components
-- **Components**: Create modular components in `src/components/` following the established pattern
-- **UI Components**: Use existing UI primitives from `src/components/ui/` for consistent design
-- **Styling**: Use CSS modules for component-specific styles, global variables for theming
-- **Responsive Design**: Follow mobile-first approach with min-width media queries
-- **Context**: See `CLAUDE.md` for detailed project context and conventions
+See `CLAUDE.md` for detailed project context, architecture, and conventions.
 
-### Adding New Pages
+### Quick Start
 1. Create page component in `src/components/pages/NewPage/`
-2. Use UI primitives for consistent layout: `PageContainer`, `PageHeader`, etc.
+2. Use UI primitives: `PageContainer`, `PageHeader`, `Section`, etc.
 3. Import page component in `src/pages/new-page.tsx`
 4. Follow mobile-first responsive design patterns
 
