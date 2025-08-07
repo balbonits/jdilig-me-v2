@@ -1,0 +1,141 @@
+@layer components {
+  .header {
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  :global(.dark) .header {
+    background: rgba(3, 7, 18, 0.8);
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+  .navContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+  }
+
+  .brand {
+    flex-shrink: 0;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin: 0;
+    text-decoration: none;
+  }
+
+  .navLinks {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .navLink {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .navLink:hover {
+    color: var(--foreground);
+  }
+
+  .navLink:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.2s ease;
+  }
+
+  .navLink:hover:after {
+    width: 100%;
+  }
+
+  .navLinkActive {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .navLinkActive:after {
+    width: 100%;
+    background: var(--primary);
+  }
+
+  .actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .themeToggle {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.125rem;
+    transition: all 0.2s ease;
+  }
+
+  .themeToggle:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .navContainer {
+      padding: 1rem;
+    }
+
+    .navLinks {
+      gap: 1.5rem;
+    }
+
+    .navLink {
+      font-size: 0.8125rem;
+    }
+
+    .title {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .navLinks {
+      gap: 1rem;
+    }
+
+    .navContainer {
+      padding: 0.75rem;
+    }
+  }
+}

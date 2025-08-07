@@ -1,0 +1,299 @@
+@layer components {
+  .resumePage {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .contactInfo {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .sections {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 2.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary);
+    padding-left: 1rem;
+  }
+
+  .sectionText {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  /* Professional Summary */
+  .summary {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* Links Section */
+  .linksList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .linkItem {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .linkItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .linkItem a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  }
+
+  .linkItem a:hover {
+    color: var(--foreground);
+  }
+
+  /* Skills Section */
+  .skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skillsColumn {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .skillsColumn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .skillItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skillItem:last-child {
+    border-bottom: none;
+  }
+
+  .skillName {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+
+  .skillYears {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  }
+
+  /* Work History */
+  .job {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+  }
+
+  .job:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .jobHeader {
+    margin-bottom: 1rem;
+  }
+
+  .jobTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  }
+
+  .jobDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .company {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .period {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .achievements {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .achievements li {
+    position: relative;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--muted);
+    padding-left: 1rem;
+  }
+
+  .achievements li::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-size: 0.75rem;
+  }
+
+  .techStack {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--accent);
+    border-radius: 0.375rem;
+    border-left: 3px solid var(--primary);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .techStack strong {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+
+  /* Education */
+  .education {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .education:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .degree {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  }
+
+  .school {
+    font-size: 1rem;
+    color: var(--foreground);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .graduationDate {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* Responsive Design - Matching CodePage */
+  @media (max-width: 768px) {
+    .resumePage {
+      padding: 1rem;
+    }
+    
+    .title {
+      font-size: 2.5rem;
+    }
+    
+    .section {
+      padding: 1.5rem;
+    }
+    
+    .linksList,
+    .skillsGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .contactInfo {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .jobDetails {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
