@@ -116,18 +116,49 @@ src/
 │   ├── resume.ts          # Personal info, experience, skills
 │   ├── projects.ts        # Portfolio projects
 │   └── navigation.ts      # Site navigation items
-├── exercises/             # Coding exercises (TypeScript files)
-├── utilities/             # Utility functions (TypeScript files)
+├── exercises/             # Coding exercises (TypeScript files with metadata)
+├── utilities/             # Utility functions (TypeScript files with examples)
+├── interfaces/            # Domain-specific data structures
+│   ├── exercises.ts       # Exercise and example case interfaces
+│   └── utilities.ts       # Utility function interfaces
+├── types/                 # Reusable utility types and UI definitions
+│   └── index.ts           # Common types, UI props, system enums
 ├── hooks/                 # Custom React hooks
-├── interfaces/            # TypeScript interfaces
 ├── lib/                   # Utility libraries
-├── types/                 # TypeScript type definitions
+├── scripts/               # Build and generation scripts
+│   ├── generate-all.ts    # Generate all JSON files
+│   ├── generate-exercises.ts # Parse exercises to JSON
+│   └── generate-utilities.ts # Parse utilities to JSON
 └── styles/                # Global styles
     └── globals.css        # Tailwind imports and theme variables
 ```
 
+## TypeScript Organization
+
+The project uses a clear separation between **interfaces** and **types**:
+
+### **Interfaces** (`src/interfaces/`)
+Domain-specific data structures that define business logic entities:
+- **exercises.ts**: Exercise data structures (ExerciseMetadata, ExampleCase, etc.)
+- **utilities.ts**: Utility function data structures  
+- Resume, project, and content-specific data shapes
+- External API response structures
+
+### **Types** (`src/types/`)
+Reusable utility types and UI/system-level definitions:
+- **Generic utility types**: Optional, NonEmptyArray, DeepPartial
+- **UI component prop types**: ButtonVariant, Size, Theme, BreakPoint
+- **System-wide enums**: LoadingState, ApiResponse, FormField
+- **Navigation types**: NavItem, cross-component shared types
+
+**Rule of Thumb**: Interface = "What data looks like" (business domain), Type = "How code behaves" (technical implementation)
+
 ## Component Architecture
-**Modular Component Structure**: Each component follows a consistent pattern:
+
+### Modular Component Philosophy
+The project follows a **"separation of concerns"** approach with focused, composable components:
+
+**Component Structure**: Each component follows a consistent pattern:
 - `index.tsx` - Clean export: `export { default } from './script';`
 - `script.tsx` - Main component logic and JSX
 - `style.module.css` - Scoped CSS modules for component-specific styles

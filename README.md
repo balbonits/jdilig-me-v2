@@ -33,6 +33,8 @@ src/
 │   ├── ResumeDisplay/     # Resume component (used on homepage)
 │   └── SiteLayout/        # Main layout with theme toggle
 ├── contexts/              # React contexts (ThemeContext)
+├── interfaces/            # Domain-specific data structures
+├── types/                 # Reusable utility types and UI definitions
 ├── styles/                # Global styles and theme variables
 └── data/                  # Static content and configuration
 ```
@@ -57,11 +59,58 @@ The project features a unified, reusable UI component system:
 
 ## Component Architecture
 
-Each component follows a consistent modular pattern:
-- `index.tsx` - Clean export: `export { default } from './script';`
-- `script.tsx` - Component logic and JSX
-- `style.module.css` - Scoped CSS modules with mobile-first responsive design
-- `test.tsx` - Jest tests (optional)
+### Modular Component Philosophy
+
+The project follows a **"separation of concerns"** approach with each component split into focused files:
+
+- `index.tsx` - **Clean export**: `export { default } from './script';`
+- `script.tsx` - **Component logic and JSX**: The actual React component implementation
+- `style.module.css` - **Scoped styles**: Component-specific CSS modules with mobile-first design
+- `test.tsx` - **Jest tests**: Component testing (optional)
+
+### Design Principles
+
+#### **1. Single Responsibility Components**
+Each component has one clear purpose and can be composed with others:
+- **Layout Components**: Handle structure and positioning (`PageContainer`, `Grid`, `Section`)
+- **Content Components**: Display data and handle interactions (`Card`, `PageHeader`)
+- **Logic Components**: Manage state and business logic (page components, data providers)
+
+#### **2. Composable Architecture**
+Components are designed to work together like building blocks:
+```tsx
+// Small, focused components combine to create complex layouts
+<PageContainer>
+  <PageHeader /> {/* Handles titles/descriptions */}
+  <SectionContainer> {/* Manages spacing between sections */}
+    <Section> {/* Individual content area */}
+      <Grid> {/* Responsive layout */}
+        <Card /> {/* Reusable content container */}
+      </Grid>
+    </Section>
+  </SectionContainer>
+</PageContainer>
+```
+
+#### **3. Clean Import Strategy**
+- **Unified exports**: `import { Card, Grid } from '@/components/ui'`
+- **No deep imports**: Avoid `import Card from '@/components/ui/Card/script'`
+- **Index files**: Each component exports cleanly through `index.tsx`
+
+#### **4. Scalable File Structure**
+Components follow a predictable pattern making the codebase easy to navigate:
+```
+ComponentName/
+├── index.tsx      # Export only - no logic
+├── script.tsx     # React component - imports ./style.module.css
+├── style.module.css # CSS modules - scoped styles
+└── test.tsx       # Jest tests - optional
+```
+
+#### **5. Style Isolation**
+- **CSS Modules**: Each component's styles are scoped automatically
+- **No style conflicts**: Components can safely coexist without CSS collisions  
+- **Mobile-first**: All components use responsive design from the ground up
 
 ### UI Component Usage
 ```tsx
@@ -147,6 +196,29 @@ See `CLAUDE.md` for detailed project context, architecture, and conventions.
 2. Use UI primitives: `PageContainer`, `PageHeader`, `Section`, etc.
 3. Import page component in `src/pages/new-page.tsx`
 4. Follow mobile-first responsive design patterns
+
+### TypeScript Organization
+
+The project uses a clear separation between **interfaces** and **types**:
+
+#### **Interfaces** (`src/interfaces/`)
+Use for **domain-specific data structures** that define the shape of business logic entities:
+- `exercises.ts` - Exercise data structures (ExerciseMetadata, ExampleCase, etc.)
+- `utilities.ts` - Utility function data structures
+- Resume, project, and content-specific data shapes
+- External API response structures
+
+#### **Types** (`src/types/`)  
+Use for **reusable utility types** and UI/system-level definitions:
+- Generic utility types (Optional, NonEmptyArray, DeepPartial)
+- UI component prop types (ButtonVariant, Size, Theme)
+- System-wide enums and unions (LoadingState, BreakPoint)
+- Form and navigation type definitions
+- Cross-component shared types
+
+**Rule of Thumb:**
+- **Interface** = "What data looks like" (business domain)
+- **Type** = "How code behaves" (technical implementation)
 
 ## Deploy on Vercel
 
