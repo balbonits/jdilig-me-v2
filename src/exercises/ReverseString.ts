@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Reverse a String Exercise Implementation
@@ -37,8 +37,30 @@ export const metadata: ExerciseMetadata = {
   description: "Reverses a string, returning the characters in opposite order",
   concepts: ["string manipulation", "array iteration", "built-in methods"],
   timeComplexity: "O(n)",
-  spaceComplexity: "O(n)"
+  spaceComplexity: "O(n)",
+  difficulty: "Beginner"
 };
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "reverseString",
+    tabName: "Built-in Methods",
+    approach: "Split, reverse, join",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "reverseStringManual",
+    tabName: "Manual Loop",
+    approach: "Manual character-by-character reversal",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: "hello", output: "olleh", description: "Basic reversal" },
@@ -49,5 +71,5 @@ export const examples: ExampleCase[] = [
   { input: "Hello World", output: "dlroW olleH", description: "With spaces" }
 ];
 
-const exerciseModule = { reverseString, reverseStringManual, metadata, examples };
+const exerciseModule = { reverseString, reverseStringManual, metadata, solutions, examples };
 export default exerciseModule;

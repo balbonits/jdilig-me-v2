@@ -1,28 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { useCodeData } from '@/hooks/useCodeData';
+import { ExerciseData } from '@/interfaces/exercises';
 import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
 import styles from './style.module.css';
 
-export default function ExercisesPage() {
-  const { exercises, exercisesState, error } = useCodeData();
+interface ExercisesPageProps {
+  exercises: ExerciseData[];
+}
 
-  if (exercisesState === 'loading') {
-    return (
-      <PageContainer>
-        <div className={styles.loading}>Loading exercises...</div>
-      </PageContainer>
-    );
-  }
-
-  if (exercisesState === 'error') {
-    return (
-      <PageContainer>
-        <div className={styles.error}>Error loading exercises: {error}</div>
-      </PageContainer>
-    );
-  }
-
+export default function ExercisesPage({ exercises }: ExercisesPageProps) {
   return (
     <PageContainer>
       <PageHeader
@@ -78,12 +64,6 @@ export default function ExercisesPage() {
                       <code className={styles.value}>{exercise.metadata.spaceComplexity}</code>
                     </div>
                   </div>
-
-                  {exercise.solutions.some(s => s.isOptimal) && (
-                    <div className={styles.optimalBadge}>
-                      ★ Optimal Solution Included
-                    </div>
-                  )}
                 </Card>
               </Link>
             ))}

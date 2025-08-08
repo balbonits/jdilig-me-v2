@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Anagram Checker Exercise Implementation
@@ -46,8 +46,30 @@ export const metadata: ExerciseMetadata = {
   description: "Checks if two strings are anagrams, ignoring case, spaces, and non-alphanumeric characters",
   concepts: ["string manipulation", "sorting", "hash maps", "regular expressions"],
   timeComplexity: "O(n log n) for sorting, O(n) for hash map",
-  spaceComplexity: "O(n)"
-};
+  spaceComplexity: "O(n)",
+  difficulty: "Easy"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "areAnagrams",
+    tabName: "Sorting",
+    approach: "Sort characters and compare",
+    timeComplexity: "O(n log n)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  },
+  {
+    name: "areAnagramsHashMap",
+    tabName: "Hash Map", 
+    approach: "Character frequency counting",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: ["listen", "silent"], output: true, description: "Classic pair" },
@@ -58,5 +80,5 @@ export const examples: ExampleCase[] = [
   { input: ["a b c", "cba!"], output: true, description: "With spaces" }
 ];
 
-const anagramModule = { areAnagrams, areAnagramsHashMap, metadata, examples };
+const anagramModule = { areAnagrams, areAnagramsHashMap, metadata, solutions, examples };
 export default anagramModule;

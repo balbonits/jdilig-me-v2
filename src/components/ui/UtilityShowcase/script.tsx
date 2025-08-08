@@ -1,5 +1,5 @@
 import React from 'react';
-import { UtilityData } from '@interfaces/utilities';
+import { UtilityData } from '@/interfaces/utilities';
 import { PageHeader, SectionContainer, Section, Grid, Card } from '@/components/ui';
 import styles from './style.module.css';
 

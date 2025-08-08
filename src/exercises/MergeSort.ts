@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Merge Sort Exercise Implementation
@@ -67,8 +67,30 @@ export const metadata: ExerciseMetadata = {
   description: "Sorts an array using merge sort",
   concepts: ["recursion", "divide-and-conquer"],
   timeComplexity: "O(n log n)",
-  spaceComplexity: "O(n)"
-};
+  spaceComplexity: "O(n)",
+  difficulty: "Medium"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "mergeSort",
+    tabName: "Recursive",
+    approach: "Recursive divide-and-conquer",
+    timeComplexity: "O(n log n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "mergeSortIterative",
+    tabName: "Iterative",
+    approach: "Bottom-up iterative approach",
+    timeComplexity: "O(n log n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: [5, 2, 8, 1], output: [1, 2, 5, 8], description: "Unsorted array" },
@@ -79,5 +101,5 @@ export const examples: ExampleCase[] = [
   { input: [4, 3, 2, 1], output: [1, 2, 3, 4], description: "Reverse sorted" }
 ];
 
-const exerciseModule = { mergeSort, mergeSortIterative, metadata, examples };
+const exerciseModule = { mergeSort, mergeSortIterative, metadata, solutions, examples };
 export default exerciseModule;

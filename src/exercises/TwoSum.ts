@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Two Sum Exercise Implementation
@@ -46,8 +46,30 @@ export const metadata: ExerciseMetadata = {
   description: "Finds two indices in an array whose values sum to a target",
   concepts: ["array iteration", "hash maps", "brute-force"],
   timeComplexity: "O(n) for hash map, O(n²) for brute-force",
-  spaceComplexity: "O(n) for hash map, O(1) for brute-force"
+  spaceComplexity: "O(n) for hash map, O(1) for brute-force",
+  difficulty: "Easy"
 };
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "twoSum",
+    tabName: "Hash Map",
+    approach: "Single-pass hash table",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "twoSumBruteForce",
+    tabName: "Brute Force",
+    approach: "Nested loop search",
+    timeComplexity: "O(n²)",
+    spaceComplexity: "O(1)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: [[2, 7, 11, 15], 9], output: [0, 1], description: "Basic" },
@@ -58,5 +80,5 @@ export const examples: ExampleCase[] = [
   { input: [null, 5], output: new Error("Input must be an array with at least two numbers"), description: "Invalid" }
 ];
 
-const twoSumModule = { twoSum, twoSumBruteForce, metadata, examples };
+const twoSumModule = { twoSum, twoSumBruteForce, metadata, solutions, examples };
 export default twoSumModule;

@@ -2,7 +2,8 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { ExerciseData, Solution } from '../src/interfaces/exercises';
+import { ExerciseData } from '../src/interfaces/exercises';
+import { Solution, SolutionMetadata } from '../src/interfaces/shared';
 
 const EXERCISES_DIR = path.join(__dirname, '../src/exercises');
 const OUTPUT_DIR = path.join(__dirname, '../public');
@@ -35,8 +36,8 @@ async function generateExercisesJSON() {
       delete require.cache[modulePath]; // Clear cache for re-imports
       const exerciseModule = require(modulePath);
       
-      // Extract metadata and examples
-      const { metadata, examples } = exerciseModule;
+      // Extract metadata, examples, and solutions
+      const { metadata, examples, solutions } = exerciseModule;
       
       if (!metadata || !examples) {
         console.warn(`Skipping ${fileName}: missing metadata or examples`);
@@ -48,88 +49,92 @@ async function generateExercisesJSON() {
         .filter(key => typeof exerciseModule[key] === 'function')
         .filter(key => !['default'].includes(key));
       
-      // Extract individual solutions by parsing the file content
-      const solutions = functions.map((funcName, index) => {
-        // Extract function code using regex
-        const funcRegex = new RegExp(`export function ${funcName}[\\s\\S]*?(?=export|$)`, 'g');
-        const match = fileContent.match(funcRegex);
-        const funcCode = match ? match[0].trim() : '';
-        
-        // Determine approach and complexity based on function name
-        let approach = 'Standard';
-        let timeComplexity = 'O(n)'; // Default for standard approach
-        let spaceComplexity = 'O(1)'; // Default for standard approach
-        let isOptimal = false; // Will be determined by algorithm analysis
-        
-        // Parse approach from function name and set complexity
-        if (funcName.toLowerCase().includes('hashmap') || funcName.toLowerCase().includes('hash')) {
-          approach = 'Hash Map';
-          timeComplexity = 'O(n)';
-          spaceComplexity = 'O(n)';
-        } else if (funcName.toLowerCase().includes('bruteforce') || funcName.toLowerCase().includes('brute')) {
-          approach = 'Brute Force';
-          timeComplexity = 'O(n²)';
-          spaceComplexity = 'O(1)';
-        } else if (funcName.toLowerCase().includes('sort')) {
-          approach = 'Sorting';
-          timeComplexity = 'O(n log n)';
-          spaceComplexity = 'O(n)';
-        } else if (funcName.toLowerCase().includes('recursive')) {
-          approach = 'Recursive';
-          timeComplexity = 'O(n)';
-          spaceComplexity = 'O(n)';
-        } else if (funcName.toLowerCase().includes('iterative')) {
-          approach = 'Iterative';
-          timeComplexity = 'O(n)';
-          spaceComplexity = 'O(1)';
-        } else {
-          // For standard/base functions, try to infer from context
-          // For anagram functions, sorting approach is typical for the base function
-          if (funcName.toLowerCase().includes('anagram')) {
-            approach = 'Sorting';
-            timeComplexity = 'O(n log n)';
+      // Use solution metadata if provided, otherwise fall back to function extraction
+      let solutionData: Solution[] = [];
+      
+      if (solutions && Array.isArray(solutions)) {
+        // Use the explicitly defined solution metadata
+        solutionData = solutions.map(solutionMeta => {
+          // Extract function code using regex
+          const funcRegex = new RegExp(`export (?:function|const) ${solutionMeta.name}[\\s\\S]*?(?=export|$)`, 'g');
+          const match = fileContent.match(funcRegex);
+          const funcCode = match ? match[0].trim() : '';
+          
+          return {
+            name: solutionMeta.name,
+            tabName: solutionMeta.tabName,
+            code: funcCode,
+            approach: solutionMeta.tabName, // Use tabName as the approach for display
+            timeComplexity: solutionMeta.timeComplexity,
+            spaceComplexity: solutionMeta.spaceComplexity,
+            isOptimal: solutionMeta.isOptimal,
+            type: solutionMeta.type
+          };
+        });
+      } else {
+        // Fall back to the old method for exercises not yet updated
+        solutionData = functions.map((funcName, index) => {
+          // Extract function code using regex
+          const funcRegex = new RegExp(`export function ${funcName}[\\s\\S]*?(?=export|$)`, 'g');
+          const match = fileContent.match(funcRegex);
+          const funcCode = match ? match[0].trim() : '';
+          
+          // Use function name as approach for backwards compatibility
+          let approach = funcName;
+          let timeComplexity = 'O(n)';
+          let spaceComplexity = 'O(1)';
+          let isOptimal = false;
+          
+          // Basic complexity inference (keep minimal for backwards compatibility)
+          if (funcName.toLowerCase().includes('bruteforce') || funcName.toLowerCase().includes('brute')) {
+            timeComplexity = 'O(n²)';
+          } else if (funcName.toLowerCase().includes('recursive')) {
             spaceComplexity = 'O(n)';
           }
-        }
-        
-        return {
-          name: funcName,
-          code: funcCode,
-          approach,
-          timeComplexity,
-          spaceComplexity,
-          isOptimal // Will be set after analyzing all solutions
+          
+          return {
+            name: funcName,
+            tabName: funcName, // Use function name as tab name for backwards compatibility
+            code: funcCode,
+            approach,
+            timeComplexity,
+            spaceComplexity,
+            isOptimal,
+            type: 'function' as const // Default to function type
+          };
+        });
+      }
+      
+      // Determine optimal solution(s) based on time complexity analysis (only for legacy exercises)
+      if (!solutions || !Array.isArray(solutions)) {
+        // Priority: O(1) > O(log n) > O(n) > O(n log n) > O(n²) > O(n³) > O(2^n)
+        const complexityOrder = {
+          'O(1)': 1,
+          'O(log n)': 2, 
+          'O(n)': 3,
+          'O(n log n)': 4,
+          'O(n²)': 5,
+          'O(n³)': 6,
+          'O(2^n)': 7
         };
-      });
-      
-      // Determine optimal solution(s) based on time complexity analysis
-      // Priority: O(1) > O(log n) > O(n) > O(n log n) > O(n²) > O(n³) > O(2^n)
-      const complexityOrder = {
-        'O(1)': 1,
-        'O(log n)': 2, 
-        'O(n)': 3,
-        'O(n log n)': 4,
-        'O(n²)': 5,
-        'O(n³)': 6,
-        'O(2^n)': 7
-      };
-      
-      // Find the best time complexity
-      let bestComplexityScore = Infinity;
-      solutions.forEach(solution => {
-        const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)'; // Take first part if multiple
-        const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
-        if (score < bestComplexityScore) {
-          bestComplexityScore = score;
-        }
-      });
-      
-      // Mark solutions with the best time complexity as optimal
-      solutions.forEach(solution => {
-        const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)';
-        const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
-        solution.isOptimal = score === bestComplexityScore;
-      });
+        
+        // Find the best time complexity
+        let bestComplexityScore = Infinity;
+        solutionData.forEach((solution: Solution) => {
+          const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)'; // Take first part if multiple
+          const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
+          if (score < bestComplexityScore) {
+            bestComplexityScore = score;
+          }
+        });
+        
+        // Mark solutions with the best time complexity as optimal
+        solutionData.forEach((solution: Solution) => {
+          const complexity = solution.timeComplexity?.split(' ')[0] || 'O(n)';
+          const score = complexityOrder[complexity as keyof typeof complexityOrder] || 99;
+          solution.isOptimal = score === bestComplexityScore;
+        });
+      }
       
       // Use filename directly as slug
       const slug = fileName;
@@ -141,7 +146,7 @@ async function generateExercisesJSON() {
         examples,
         code: fileContent,
         functions,
-        solutions
+        solutions: solutionData
       };
       
       exercises.push(exerciseData);
@@ -152,12 +157,14 @@ async function generateExercisesJSON() {
     }
   }
 
-  // Write exercises.json
+  // Write exercises.json (minified for production)
   const outputPath = path.join(OUTPUT_DIR, 'exercises.json');
-  fs.writeFileSync(outputPath, JSON.stringify(exercises, null, 2));
+  const minifiedJSON = JSON.stringify(exercises);
+  fs.writeFileSync(outputPath, minifiedJSON);
   
+  const fileSizeKB = (Buffer.byteLength(minifiedJSON, 'utf8') / 1024).toFixed(1);
   console.log(`\n✅ Generated exercises.json with ${exercises.length} exercises`);
-  console.log(`📄 Output: ${outputPath}`);
+  console.log(`📄 Output: ${outputPath} (${fileSizeKB} KB minified)`);
   
   return exercises;
 }

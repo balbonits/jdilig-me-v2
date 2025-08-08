@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Trie-based Autocomplete Exercise Implementation
@@ -140,8 +140,30 @@ export const metadata: ExerciseMetadata = {
   description: "Trie for inserting words and suggesting completions for a prefix",
   concepts: ["tree data structures", "DFS traversal"],
   timeComplexity: "O(k) insert/suggest",
-  spaceComplexity: "O(total chars)"
-};
+  spaceComplexity: "O(total chars)",
+  difficulty: "Expert"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "Trie",
+    tabName: "Map-based",
+    approach: "Map for flexible character storage",
+    timeComplexity: "O(k)",
+    spaceComplexity: "O(total chars)",
+    isOptimal: true,
+    type: "class"
+  },
+  {
+    name: "TrieArray",
+    tabName: "Array-based",
+    approach: "Fixed array for lowercase a-z only",
+    timeComplexity: "O(k)",
+    spaceComplexity: "O(total chars)",
+    isOptimal: true,
+    type: "class"
+  }
+];
 
 // Example test cases
 export const examples: ExampleCase[] = [
@@ -168,5 +190,5 @@ export const examples: ExampleCase[] = [
 ];
 
 // Default export for easy importing
-const exerciseModule = { Trie, TrieArray, metadata, examples };
+const exerciseModule = { Trie, TrieArray, metadata, solutions, examples };
 export default exerciseModule;

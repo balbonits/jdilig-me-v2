@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Factorial Calculator Exercise Implementation
@@ -40,8 +40,30 @@ export const metadata: ExerciseMetadata = {
   description: "Computes the factorial of a non-negative integer",
   concepts: ["recursion", "iteration", "input validation", "mathematics"],
   timeComplexity: "O(n)",
-  spaceComplexity: "O(n) for recursive, O(1) for iterative"
-};
+  spaceComplexity: "O(n) for recursive, O(1) for iterative",
+  difficulty: "Beginner"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "factorial",
+    tabName: "Recursive",
+    approach: "Recursive factorial calculation",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  },
+  {
+    name: "factorialIterative",
+    tabName: "Iterative",
+    approach: "Iterative factorial calculation",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    isOptimal: true,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: 5, output: 120, description: "Factorial of 5" },
@@ -52,5 +74,5 @@ export const examples: ExampleCase[] = [
   { input: 2.5, output: new Error("Input must be an integer"), description: "Non-integer error" }
 ];
 
-const exerciseModule = { factorial, factorialIterative, metadata, examples };
+const exerciseModule = { factorial, factorialIterative, metadata, solutions, examples };
 export default exerciseModule;

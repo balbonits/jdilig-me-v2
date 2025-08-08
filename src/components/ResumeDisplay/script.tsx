@@ -1,56 +1,35 @@
 import React from 'react';
 import { PageContainer, SectionContainer } from '@/components/ui';
+import HeroBanner from '@/components/ui/HeroBanner';
 import styles from './style.module.css';
 
 export default function ResumeDisplay() {
   return (
     <PageContainer>
       {/* Hero Header */}
-      <div className={styles.heroHeader}>
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>John Dilig</h1>
-          <div className={styles.heroSubtitle}>Senior Front-End Developer</div>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>16+</span>
-              <span className={styles.statLabel}>Years Experience</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>25+</span>
-              <span className={styles.statLabel}>Technologies</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>4</span>
-              <span className={styles.statLabel}>Major Companies</span>
-            </div>
-          </div>
-        </div>
-        <div className={styles.heroGradient}></div>
-      </div>
+      <HeroBanner
+        title="John Dilig"
+        subtitle="Senior Front-End Developer"
+        stats={[
+          { number: "16+", label: "Years Experience" },
+          { number: "25+", label: "Technologies" },
+          { number: "4", label: "Major Companies" }
+        ]}
+        className="resume-header-hero"
+      />
 
       <SectionContainer>
         {/* Professional Summary Hero Banner */}
-        <div className={styles.summaryHero}>
-          <div className={styles.summaryContent}>
-            <h2 className={styles.summaryTitle}>Frontend Engineering Excellence</h2>
-            <div className={styles.summaryBadge}>16+ Years Proven</div>
-            <p className={styles.summaryText}>
-              Senior front-end developer specializing in React ecosystems, high-traffic web applications, 
-              and cloud-native solutions. Contributed to teams at AWS, Fox, TBN, and ADP building scalable user interfaces 
-              that serve millions. Expert in modern JavaScript, TypeScript, and responsive design with a 
-              track record of improving user engagement and application performance.
-            </p>
-            <div className={styles.summaryTech}>
-              <span>React</span>
-              <span>TypeScript</span>
-              <span>Next.js</span>
-              <span>JavaScript ES6+</span>
-              <span>CSS/SASS</span>
-              <span>Performance</span>
-            </div>
-          </div>
-          <div className={styles.summaryGradient}></div>
-        </div>
+        <HeroBanner
+          title="Frontend Engineering Excellence"
+          badge="16+ Years Proven"
+          description="Senior front-end developer specializing in React ecosystems, high-traffic web applications, 
+            and cloud-native solutions. Contributed to teams at AWS, Fox, TBN, and ADP building scalable user interfaces 
+            that serve millions. Expert in modern JavaScript, TypeScript, and responsive design with a 
+            track record of improving user engagement and application performance."
+          tags={["React", "TypeScript", "Next.js", "JavaScript ES6+", "CSS/SASS", "Performance"]}
+          className="resume-summary-hero"
+        />
 
         {/* Links Banner */}
         <div className={styles.linksGrid}>

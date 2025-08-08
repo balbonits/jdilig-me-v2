@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { UtilityData } from '@interfaces/utilities';
+import { UtilityData } from '@/interfaces/utilities';
 import { PageContainer, PageHeader, SectionContainer, Section, Grid, Card } from '@/components/ui';
 import styles from './style.module.css';
 

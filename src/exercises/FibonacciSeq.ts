@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Fibonacci Sequence Exercise Implementation
@@ -54,8 +54,30 @@ export const metadata: ExerciseMetadata = {
   description: "Generates the first n numbers in the Fibonacci sequence",
   concepts: ["iteration", "recursion", "memoization", "array manipulation"],
   timeComplexity: "O(n) for iterative/memoized",
-  spaceComplexity: "O(n)"
-};
+  spaceComplexity: "O(n)",
+  difficulty: "Easy"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "FibonacciSeq",
+    tabName: "Iterative",
+    approach: "Iterative sequence generation",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "FibonacciSeqMemoized",
+    tabName: "Memoized",
+    approach: "Recursive with memoization",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: 7, output: [0, 1, 1, 2, 3, 5, 8], description: "n=7" },
@@ -66,5 +88,5 @@ export const examples: ExampleCase[] = [
   { input: 3.5, output: new Error("Input must be an integer"), description: "Non-integer error" }
 ];
 
-const exerciseModule = { FibonacciSeq, FibonacciSeqMemoized, metadata, examples };
+const exerciseModule = { FibonacciSeq, FibonacciSeqMemoized, metadata, solutions, examples };
 export default exerciseModule;

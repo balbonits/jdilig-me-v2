@@ -1,6 +1,6 @@
 import React from 'react';
-import { ExerciseData } from '@interfaces/exercises';
-import SolutionTabs from '../SolutionTabs';
+import { ExerciseData } from '@/interfaces/exercises';
+import SolutionTabs from '@/components/ui/SolutionTabs';
 import styles from './style.module.css';
 
 interface CodeShowcaseProps {

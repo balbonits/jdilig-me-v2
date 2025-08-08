@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next';
-import { UtilityData } from '@interfaces/utilities';
+import { UtilityData } from '@/interfaces/utilities';
 import UtilitiesPage from '@/components/pages/UtilitiesPage';
 
 interface UtilitiesPageProps {

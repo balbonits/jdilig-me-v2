@@ -1,45 +1,25 @@
 import React from 'react';
 import { SectionContainer } from '@/components/ui';
+import HeroBanner from '@/components/ui/HeroBanner';
 import styles from './style.module.css';
 
 export default function AboutContent() {
   return (
     <>
       {/* Main Hero Banner */}
-      <div className={styles.mainHero}>
-        <div className={styles.heroContent}>
-          <div className={styles.heroHeader}>
-            <h1 className={styles.heroTitle}>John Dilig</h1>
-            <div className={styles.heroBadge}>Front-End Developer</div>
-          </div>
-          <p className={styles.heroDescription}>
-            Passionate front-end developer with 17 years crafting exceptional user experiences. 
-            I transform complex problems into elegant, performant web solutions.
-          </p>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>17</span>
-              <span className={styles.statLabel}>Years</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>50+</span>
-              <span className={styles.statLabel}>Projects</span>
-            </div>
-            <div className={styles.heroStat}>
-              <span className={styles.statNumber}>3</span>
-              <span className={styles.statLabel}>Major Companies</span>
-            </div>
-          </div>
-          <div className={styles.heroTech}>
-            <span>React</span>
-            <span>TypeScript</span>
-            <span>Next.js</span>
-            <span>Performance</span>
-            <span>UI/UX</span>
-          </div>
-        </div>
-        <div className={styles.heroGradient}></div>
-      </div>
+      <HeroBanner
+        title="John Dilig"
+        badge="Front-End Developer"
+        description="Passionate front-end developer with 17 years crafting exceptional user experiences. 
+          I transform complex problems into elegant, performant web solutions."
+        stats={[
+          { number: "17", label: "Years" },
+          { number: "50+", label: "Projects" },
+          { number: "3", label: "Major Companies" }
+        ]}
+        tags={["React", "TypeScript", "Next.js", "Performance", "UI/UX"]}
+        className="about-main-hero"
+      />
       
       {/* Contact Hero Banner */}
       <div className={styles.contactHero}>

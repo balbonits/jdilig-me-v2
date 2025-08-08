@@ -1,4 +1,8 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import type { 
+  ExerciseMetadata, 
+  ExampleCase, 
+  SolutionMetadata
+} from "@/interfaces/exercises";
 
 /**
  * FizzBuzz Exercise Implementation
@@ -54,11 +58,42 @@ export const fizzBuzzOneLiner = (n: number): string[] => {
 
 export const metadata: ExerciseMetadata = {
   title: "FizzBuzz",
-  description: "Count from 1 to n, replacing multiples of 3 with 'Fizz', 5 with 'Buzz', both with 'FizzBuzz'",
-  concepts: ["loops", "conditionals", "modulo operator", "string manipulation"],
+  description: "Print numbers 1 to n, replacing multiples of 3 with 'Fizz', multiples of 5 with 'Buzz', and multiples of both with 'FizzBuzz'.",
+  concepts: ["Loops", "Conditionals", "Modular Arithmetic"],
   timeComplexity: "O(n)",
-  spaceComplexity: "O(n)"
+  spaceComplexity: "O(n)",
+  difficulty: "Beginner"
 };
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "fizzBuzz",
+    tabName: "Standard",
+    approach: "If-else chain with modulo",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "fizzBuzzConcat",
+    tabName: "Concat",
+    approach: "String concatenation",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "fizzBuzzOneLiner",
+    tabName: "One-liner",
+    approach: "Array.from with ternary",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "constant"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: 15, output: ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"], description: "Classic FizzBuzz up to 15" },
@@ -66,5 +101,5 @@ export const examples: ExampleCase[] = [
   { input: 0, output: new Error("Input must be a positive integer"), description: "Invalid input" }
 ];
 
-const exerciseModule = { fizzBuzz, fizzBuzzConcat, fizzBuzzOneLiner, metadata, examples };
+const exerciseModule = { fizzBuzz, fizzBuzzConcat, fizzBuzzOneLiner, metadata, solutions, examples };
 export default exerciseModule;

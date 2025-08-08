@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
-import { ExerciseData } from '@interfaces/exercises';
+import { ExerciseData } from '@/interfaces/exercises';
 import { PageContainer } from '@/components/ui';
 import CodeShowcase from '@/components/ui/CodeShowcase';
 

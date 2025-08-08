@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
-import { UtilityData } from '@interfaces/utilities';
+import { UtilityData } from '@/interfaces/utilities';
 import { PageContainer } from '@/components/ui';
 import UtilityShowcase from '@/components/ui/UtilityShowcase';
 

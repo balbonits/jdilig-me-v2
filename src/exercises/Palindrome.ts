@@ -1,4 +1,8 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import type { 
+  ExerciseMetadata, 
+  ExampleCase, 
+  SolutionMetadata
+} from "@/interfaces/exercises";
 
 /**
  * Palindrome Checker Exercise Implementation
@@ -40,12 +44,43 @@ export function isPalindromeTwoPointer(str: string): boolean {
 }
 
 export const metadata: ExerciseMetadata = {
-  title: "Palindrome Checker",
-  description: "Checks if a string is a palindrome, ignoring case, spaces, and non-alphanumeric characters",
-  concepts: ["string manipulation", "regular expressions", "comparison"],
+  title: "Palindrome Check",
+  description: "Check if a string reads the same forwards and backwards, ignoring spaces and case.",
+  concepts: ["String Manipulation", "Two Pointers", "Regular Expressions"],
   timeComplexity: "O(n)",
-  spaceComplexity: "O(n)"
+  spaceComplexity: "O(1)",
+  difficulty: "Easy"
 };
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "isPalidrome",
+    tabName: "Two Pointers",
+    approach: "Two pointers from ends to center",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(1)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "isPalindromeReverse",
+    tabName: "Reverse",
+    approach: "Compare string with its reverse",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  },
+  {
+    name: "isPalindromeRecursive",
+    tabName: "Recursive",
+    approach: "Recursive two-pointer check",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: "A man, a plan, a canal: Panama", output: true, description: "Classic palindrome with spaces and punctuation" },
@@ -56,5 +91,5 @@ export const examples: ExampleCase[] = [
   { input: ".,", output: true, description: "Only punctuation" }
 ];
 
-const exerciseModule = { isPalindrome, isPalindromeTwoPointer, metadata, examples };
+const exerciseModule = { isPalindrome, isPalindromeTwoPointer, metadata, solutions, examples };
 export default exerciseModule;

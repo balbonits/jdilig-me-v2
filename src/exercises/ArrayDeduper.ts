@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Array Deduplication Exercise Implementation
@@ -51,8 +51,39 @@ export const metadata: ExerciseMetadata = {
   description: "Removes duplicates from an array of numbers or strings",
   concepts: ["array manipulation", "hash sets", "filtering", "reducing"],
   timeComplexity: "O(n) for Set-based, O(n²) for filter/reduce-based",
-  spaceComplexity: "O(n)"
-};
+  spaceComplexity: "O(n)",
+  difficulty: "Easy"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "ArrayDeduplicate",
+    tabName: "Set-based",
+    approach: "Set-based deduplication",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "ArrayFilterDeduplicate", 
+    tabName: "Filter",
+    approach: "Array.filter with indexOf",
+    timeComplexity: "O(n²)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  },
+  {
+    name: "ArrayReduceDeduplicate",
+    tabName: "Reduce", 
+    approach: "Array.reduce with includes",
+    timeComplexity: "O(n²)",
+    spaceComplexity: "O(n)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: [1, 2, 2, 3, 1], output: [1, 2, 3], description: "Duplicate numbers" },
@@ -63,5 +94,5 @@ export const examples: ExampleCase[] = [
   { input: null, output: new Error("Input must be an array"), description: "Invalid input" }
 ];
 
-const arrayDeduperModule = { ArrayDeduplicate, ArrayFilterDeduplicate, ArrayReduceDeduplicate, metadata, examples };
+const arrayDeduperModule = { ArrayDeduplicate, ArrayFilterDeduplicate, ArrayReduceDeduplicate, metadata, solutions, examples };
 export default arrayDeduperModule;

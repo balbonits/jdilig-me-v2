@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * LRU Cache Exercise Implementation
@@ -149,8 +149,30 @@ export const metadata: ExerciseMetadata = {
   description: "Implements a Least Recently Used (LRU) cache with get and put",
   concepts: ["hash maps", "doubly linked lists"],
   timeComplexity: "O(1) for get/put",
-  spaceComplexity: "O(capacity)"
+  spaceComplexity: "O(capacity)",
+  difficulty: "Hard"
 };
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "LRUCache",
+    tabName: "Map-based",
+    approach: "JavaScript Map for LRU ordering",
+    timeComplexity: "O(1)",
+    spaceComplexity: "O(capacity)",
+    isOptimal: true,
+    type: "class"
+  },
+  {
+    name: "LRUCacheDLL",
+    tabName: "Doubly Linked List",
+    approach: "Hash map + custom doubly linked list",
+    timeComplexity: "O(1)",
+    spaceComplexity: "O(capacity)",
+    isOptimal: true,
+    type: "class"
+  }
+];
 
 // Example test cases
 export const examples: ExampleCase[] = [
@@ -212,6 +234,7 @@ const exerciseModule = {
   LRUCache,
   LRUCacheDLL,
   metadata,
+  solutions,
   examples
 };
 

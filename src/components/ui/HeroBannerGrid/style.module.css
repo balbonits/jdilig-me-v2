@@ -1,0 +1,20 @@
+/* Hero Banner Grid Layout */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* Smaller gap on mobile */
+  margin: 1.5rem 0; /* Smaller margin on mobile */
+}
+
+@media (min-width: 768px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem; /* Increase spacing on larger screens */
+    margin: 2.5rem 0; /* Larger margin on desktop */
+  }
+}
+
+/* Override margin-bottom for grid items to prevent double spacing */
+.heroGrid > * {
+  margin-bottom: 0;
+}

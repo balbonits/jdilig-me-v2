@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Longest Common Substring Exercise Implementation
@@ -65,8 +65,30 @@ export const metadata: ExerciseMetadata = {
   description: "Finds the longest substring common to two strings",
   concepts: ["dynamic programming", "string manipulation"],
   timeComplexity: "O(m*n) for DP, O(m*n*min(m,n)) for brute force",
-  spaceComplexity: "O(m*n) for DP, O(1) for brute force"
-};
+  spaceComplexity: "O(m*n) for DP, O(1) for brute force",
+  difficulty: "Hard"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "longestCommonSubstring",
+    tabName: "Dynamic Programming",
+    approach: "2D DP table approach",
+    timeComplexity: "O(m*n)",
+    spaceComplexity: "O(m*n)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "longestCommonSubstringBrute",
+    tabName: "Brute Force",
+    approach: "Nested loop comparison",
+    timeComplexity: "O(m*n*min(m,n))",
+    spaceComplexity: "O(1)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: ["ABCD", "ACDF"], output: "CD", description: "Basic" },
@@ -77,5 +99,5 @@ export const examples: ExampleCase[] = [
   { input: ["banana", "anana"], output: "anana", description: "Overlapping" }
 ];
 
-const exerciseModule = { longestCommonSubstring, longestCommonSubstringBrute, metadata, examples };
+const exerciseModule = { longestCommonSubstring, longestCommonSubstringBrute, metadata, solutions, examples };
 export default exerciseModule;

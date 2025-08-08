@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Solution } from '@interfaces/exercises';
+import { Solution } from '@/interfaces/exercises';
 import styles from './style.module.css';
 
 interface SolutionTabsProps {

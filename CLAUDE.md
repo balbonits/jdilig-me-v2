@@ -12,6 +12,16 @@ This document serves as a **persistent knowledge base** that is shared between d
 
 **For Claude instances**: Always refer to this file for project context and update it when making significant changes to maintain continuity across conversations.
 
+## 🛠️ **Technical Debt & Refactoring**
+For comprehensive technical debt tracking, component refactoring plans, and development priorities, see **[TECH_DEBT.md](./TECH_DEBT.md)**. This document contains:
+- Modularization opportunities (AboutContent component ~600 lines → modular components)
+- CSS anti-patterns and design system improvements
+- Component audit checklists and migration strategies
+- Performance optimization plans
+- Testing and accessibility improvements
+
+When discussing "tech debt" or refactoring, always reference this centralized document.
+
 ## Project Overview
 - **Name**: jdilig-me-v2
 - **Type**: Personal website
@@ -479,34 +489,6 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Coverage Reports**: Track test coverage
 - **Mock Strategy**: Mock data imports and contexts in tests
 
-## Technical Debt & Future Improvements
-
-### High Priority
-- **Tailwind v4 Theme Functions**: `theme()` functions not processing correctly in CSS modules
-  - **Current**: Using standard CSS values as fallback (working solution)
-  - **Goal**: Integrate proper Tailwind v4 theme() function support
-  - **Impact**: Medium - affects maintainability and design system consistency
-  - **Files**: All `style.module.css` files, particularly CodeShowcase, SolutionTabs, AboutPage, CodePage, ResumeDisplay
-  - **Note**: New hero banner system (CodePage, AboutPage, ResumeDisplay) follows this fallback pattern consistently
-
-- **CSS Design Token Library**: Repeated values like font-family, spacing, colors across components
-  - **Current**: Hard-coded values duplicated in multiple CSS files, especially in hero banner gradients
-  - **Goal**: Create centralized design token system with CSS custom properties
-  - **Impact**: High - improves maintainability, consistency, and themeable design system
-  - **Example**: `font-family: var(--font-mono)` instead of `'Monaco', 'Menlo', 'Ubuntu Mono', monospace`
-  - **Hero Banners**: Gradient colors could be tokenized as `--gradient-primary`, `--gradient-secondary`, etc.
-
-### Medium Priority
-- **Code Syntax Highlighting**: Currently using plain `<pre><code>` blocks
-  - **Current**: Monospace font with basic styling
-  - **Goal**: Add syntax highlighting for TypeScript/JavaScript
-  - **Impact**: Low-Medium - would improve visual appeal of code showcase
-
-### Low Priority
-- **Performance Optimization**: Bundle analysis and code splitting
-- **Accessibility Enhancements**: ARIA labels for complex UI components
-- **Testing Coverage**: Add unit tests for code showcase components
-
 ---
 
 ## Important Notes
@@ -651,6 +633,31 @@ When continuing this work:
 5. **Component Standards**: index.tsx (clean export) → script.tsx (logic) → Tailwind classes
 
 ## Recent Changes & Updates
+
+### August 2025 - Exercise & Utility System Enhancements
+- **Difficulty Classification**: Added 5-tier difficulty system (Beginner → Easy → Medium → Hard → Expert) to all exercises
+- **Solution Type Classification**: Added solution type metadata (function, class, method, constant, utility) 
+- **Enhanced Metadata Structure**: Extended interfaces with `difficulty` and `type` fields for better organization
+- **Utility System Parity**: Applied same metadata structure to utilities for consistency
+- **Type System Optimization**: Consolidated input/output types into unified shared interfaces for DRY principles
+- **Enhanced Descriptions**: Added comprehensive metadata details to exercise/utility descriptions
+- **Build System Cleanup**: Removed obsolete JavaScript build scripts, unified on TypeScript-only approach
+- **Shared Interface System**: Created `/src/interfaces/shared.ts` as single source of truth for common types
+
+#### Exercise Difficulty Distribution
+- **Beginner**: Factorial, FizzBuzz, Reverse String
+- **Easy**: Anagram Check, Array Deduper, Fibonacci, Palindrome, Two Sum
+- **Medium**: Binary Search, Merge Sort  
+- **Hard**: LRU Cache, Longest Common Substring, Sliding Window Max
+- **Expert**: Trie-based Autocomplete
+
+#### Metadata Structure Improvements
+- **ExerciseMetadata/UtilityMetadata**: Now includes difficulty level for better discovery
+- **SolutionMetadata**: Enhanced with solution type classification and display names (tabName)
+- **Shared Interface System**: Created `/src/interfaces/shared.ts` as single source of truth
+- **Type System DRY**: Unified data types (DataValue, DataArray, DataTuple) eliminate duplication
+- **Build System Cleanup**: Removed duplicate JS/TS build scripts, unified on TypeScript
+- **JSON Generation**: Build scripts properly map metadata to generated JSON for UI consumption
 
 ### December 2024 - SEO & Layout Improvements
 - **SSG Implementation**: Converted from pure CSR to hybrid SSG+CSR approach
@@ -802,10 +809,11 @@ When continuing this work:
 - **Next Target**: Projects page transformation using same pattern
 
 ### Next Development Steps 🎯
-1. **Projects Page Modularization**: Apply design system patterns to ProjectsPage
-   - Extract hero banner, project cards, and skill tags into reusable components
-   - Implement consistent card alignment using new CSS module patterns
-   - Add testing coverage for new components
+1. **Exercise Enhancement**: Improve algorithm exercise system
+   - Add difficulty/complexity ordering system
+   - Implement real-time function execution for examples
+   - Add solution type classification (function vs class)
+   - Enhance user experience with better exercise discovery
 2. **Component Library Expansion**: Continue building reusable UI components
    - Extract common card variants (company, skill, project)
    - Standardize spacing, typography, and interaction patterns
@@ -818,6 +826,38 @@ When continuing this work:
    - Code splitting and lazy loading
    - Image optimization and WebP conversion
    - Bundle analysis and optimization
+
+## Recent Major Changes
+
+### December 2024: Explicit Solution/Tab Naming System ✅
+**Problem**: Multiple exercises had confusing "Standard" tabs because the build script was inferring tab names from function names, resulting in poor UX.
+
+**Solution**: Implemented explicit solution metadata system for all exercises.
+
+**Technical Changes**:
+- **Updated `SolutionMetadata` Interface**: Added `tabName`, `approach`, `timeComplexity`, `spaceComplexity`, and `isOptimal` fields
+- **Updated Build Script**: Modified `/scripts/generate-exercises.ts` to use explicit `solutions` array from exercise files with fallback to legacy inference
+- **Updated All 14 Exercise Files**: Added explicit `solutions` arrays with descriptive `tabName` values
+
+**Improved Tab Names**:
+- **AnagramCheck**: "Sorting", "Hash Map" (was: "Standard", "Standard")
+- **ArrayDeduper**: "Set-based", "Filter", "Reduce" (was: "Standard" x3)
+- **BinarySearch**: "Iterative", "Recursive" (was: "Standard" x2)
+- **FactorialCalc**: "Recursive", "Iterative" (was: function names)
+- **FibonacciSeq**: "Iterative", "Memoized" (was: function names)
+- **LongestCommonSubstring**: "Dynamic Programming", "Brute Force" (was: function names)
+- **MergeSort**: "Recursive", "Iterative" (was: function names)
+- **Palindrome**: "Reverse & Compare", "Two Pointers" (was: function names)
+- **ReverseString**: "Built-in Methods", "Manual Loop" (was: function names)
+- **SlidingWindowMax**: "Deque", "Brute Force" (was: function names)
+- **LRUCache**: "Map-based", "Doubly Linked List" (was: class names)
+- **Trie**: "Map-based", "Array-based" (was: class names)
+- **TwoSum**: Already had good names ("Hash Map", "Brute Force")
+- **FizzBuzz**: Already had good names ("Standard", "Concat", "One-liner")
+
+**Quality Assurance**: All tests passing (22/22), no linting errors, successful production build, 72.7 KB minified JSON regenerated.
+
+**Future Benefits**: Better UX, maintainable code, extensible system, developer-friendly for new exercises.
 
 ## Documentation Maintenance
 

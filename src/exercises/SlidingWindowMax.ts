@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Sliding Window Maximum Exercise Implementation
@@ -64,8 +64,30 @@ export const metadata: ExerciseMetadata = {
   description: "Finds the maximum in each k-sized sliding window of an array",
   concepts: ["sliding window", "deque", "brute-force"],
   timeComplexity: "O(n) for deque, O(n*k) for brute force",
-  spaceComplexity: "O(n)"
-};
+  spaceComplexity: "O(n)",
+  difficulty: "Hard"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "slidingWindowMax",
+    tabName: "Deque",
+    approach: "Monotonic deque approach",
+    timeComplexity: "O(n)",
+    spaceComplexity: "O(k)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "slidingWindowMaxBrute",
+    tabName: "Brute Force",
+    approach: "Nested loop for each window",
+    timeComplexity: "O(n*k)",
+    spaceComplexity: "O(1)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 // Example test cases
 export const examples: ExampleCase[] = [
@@ -106,6 +128,7 @@ const exerciseModule = {
   slidingWindowMax,
   slidingWindowMaxBrute,
   metadata,
+  solutions,
   examples
 };
 

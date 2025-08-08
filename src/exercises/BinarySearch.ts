@@ -1,4 +1,4 @@
-import { ExerciseMetadata, ExampleCase } from '@interfaces/exercises';
+import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
  * Binary Search Exercise Implementation
@@ -49,8 +49,30 @@ export const metadata: ExerciseMetadata = {
   description: "Finds the index of a target in a sorted array",
   concepts: ["divide-and-conquer", "logarithmic search"],
   timeComplexity: "O(log n)",
-  spaceComplexity: "O(1) for iterative, O(log n) for recursive"
-};
+  spaceComplexity: "O(1) for iterative, O(log n) for recursive",
+  difficulty: "Medium"
+}
+
+export const solutions: SolutionMetadata[] = [
+  {
+    name: "binarySearch",
+    tabName: "Iterative",
+    approach: "Iterative binary search",
+    timeComplexity: "O(log n)",
+    spaceComplexity: "O(1)",
+    isOptimal: true,
+    type: "function"
+  },
+  {
+    name: "binarySearchRecursive",
+    tabName: "Recursive",
+    approach: "Recursive binary search",
+    timeComplexity: "O(log n)",
+    spaceComplexity: "O(log n)",
+    isOptimal: false,
+    type: "function"
+  }
+];
 
 export const examples: ExampleCase[] = [
   { input: [[1, 3, 5, 7, 9], 5], output: 2, description: "Middle" },
@@ -61,5 +83,5 @@ export const examples: ExampleCase[] = [
   { input: [[1, 2, 2, 3], 2], output: 1, description: "Duplicates" }
 ];
 
-const binarySearchModule = { binarySearch, binarySearchRecursive, metadata, examples };
+const binarySearchModule = { binarySearch, binarySearchRecursive, metadata, solutions, examples };
 export default binarySearchModule;

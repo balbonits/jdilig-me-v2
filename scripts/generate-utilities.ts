@@ -35,8 +35,8 @@ async function generateUtilitiesJSON() {
       delete require.cache[modulePath]; // Clear cache for re-imports
       const utilityModule = require(modulePath);
       
-      // Extract metadata and examples
-      const { metadata, examples } = utilityModule;
+      // Extract metadata, examples, and solutions
+      const { metadata, examples, solutions } = utilityModule;
       
       if (!metadata || !examples) {
         console.warn(`Skipping ${fileName}: missing metadata or examples`);
@@ -48,6 +48,49 @@ async function generateUtilitiesJSON() {
         .filter(key => typeof utilityModule[key] === 'function')
         .filter(key => !['default'].includes(key));
       
+      // Use solution metadata if provided, otherwise fall back to function extraction
+      let solutionData: any[] = [];
+      
+      if (solutions && Array.isArray(solutions)) {
+        // Use the explicitly defined solution metadata
+        solutionData = solutions.map(solutionMeta => {
+          // Extract function code using regex
+          const funcRegex = new RegExp(`export (?:function|const) ${solutionMeta.name}[\\s\\S]*?(?=export|$)`, 'g');
+          const match = fileContent.match(funcRegex);
+          const funcCode = match ? match[0].trim() : '';
+          
+          return {
+            name: solutionMeta.name,
+            tabName: solutionMeta.tabName,
+            code: funcCode,
+            approach: solutionMeta.tabName, // Use tabName as the approach for display
+            timeComplexity: solutionMeta.timeComplexity,
+            spaceComplexity: solutionMeta.spaceComplexity,
+            isOptimal: solutionMeta.isOptimal,
+            type: solutionMeta.type
+          };
+        });
+      } else {
+        // Fall back to the old method for utilities not yet updated
+        solutionData = functions.map((funcName, index) => {
+          // Extract function code using regex
+          const funcRegex = new RegExp(`export function ${funcName}[\\s\\S]*?(?=export|$)`, 'g');
+          const match = fileContent.match(funcRegex);
+          const funcCode = match ? match[0].trim() : '';
+          
+          return {
+            name: funcName,
+            tabName: funcName, // Use function name as tab name for backwards compatibility
+            code: funcCode,
+            approach: funcName,
+            timeComplexity: 'O(1)',
+            spaceComplexity: 'O(1)',
+            isOptimal: true,
+            type: 'utility' as const // Default to utility type
+          };
+        });
+      }
+      
       // Use filename directly as slug  
       const slug = fileName;
       
@@ -57,7 +100,8 @@ async function generateUtilitiesJSON() {
         metadata,
         examples,
         code: fileContent,
-        functions
+        functions,
+        solutions: solutionData
       };
       
       utilities.push(utilityData);
@@ -68,12 +112,14 @@ async function generateUtilitiesJSON() {
     }
   }
 
-  // Write utilities.json
+  // Write utilities.json (minified for production)
   const outputPath = path.join(OUTPUT_DIR, 'utilities.json');
-  fs.writeFileSync(outputPath, JSON.stringify(utilities, null, 2));
+  const minifiedJSON = JSON.stringify(utilities);
+  fs.writeFileSync(outputPath, minifiedJSON);
   
+  const fileSizeKB = (Buffer.byteLength(minifiedJSON, 'utf8') / 1024).toFixed(1);
   console.log(`\n✅ Generated utilities.json with ${utilities.length} utilities`);
-  console.log(`📄 Output: ${outputPath}`);
+  console.log(`📄 Output: ${outputPath} (${fileSizeKB} KB minified)`);
   
   return utilities;
 }
