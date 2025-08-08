@@ -42,10 +42,38 @@ This document serves as a **persistent knowledge base** that is shared between d
 - **Theme System**: Light/dark mode using CSS custom properties and class-based switching
 - **Mobile-First Design**: All components use mobile-first responsive approach with min-width media queries
 - **Unified UI System**: Reusable UI primitives for consistent design across all pages
+- **Frontend Library Mindset**: Building reusable, scalable patterns for future component library development
 - Performance-first approach
 - Clean, maintainable code structure
 - Consistent component organization
 - **Tailwind Integration**: Uses Tailwind color system via CSS custom properties
+
+### Card Component Design System
+**Standardized Alignment Pattern for ALL Card Types:**
+- All card containers use `align-items: flex-start` to push content to top
+- All cards have `min-height: 200px` for visual consistency
+- Headers use `flex-shrink: 0` to prevent compression
+- Content areas use `width: 100%` and `align-self: flex-start`
+- Titles use appropriate flex properties for text flow
+- Icons use `flex-shrink: 0` to maintain size
+
+**Applied to ALL card categories:**
+- **Journey Cards** (.cardContent, .cardHeader, .cardTitle, .cardDescription)
+- **Experience Banners** (.experienceContent, .experienceHeader, .experienceTitle, .experienceDescription)  
+- **Skill Cards** (.skillContent, .skillHeader, .skillTitle, .skillTags)
+
+**Special Skill Card Features:**
+- Vertical header layout (title above level badge)
+- Distinct level badge styling vs skill tags
+- Level badges: smaller, gradient background, subtle shadow
+- Skill tags: bottom-aligned with `margin-top: auto`
+
+**Benefits:**
+- Perfect text alignment across ALL card types
+- Prevents wrapping/layout issues universally
+- Maintains visual hierarchy consistently
+- Scales for future library use with predictable behavior
+- Single pattern to maintain across entire design system
 
 ## UI Component System
 
@@ -705,6 +733,22 @@ When continuing this work:
   - **Gradients**: Vibrant blue-green, purple-pink, and orange-red combinations
   - **Mobile-First**: Responsive grids (1→2→3 columns across breakpoints)
   - **Fallback CSS**: Follows established pattern for Tailwind theme() issues
+
+### AboutContent Modularization & Layout Refinements ✅
+- **Component Extraction**: Created modular AboutContent component for Home page integration
+  - **Reusable Structure**: AboutContent can be imported and used across different pages
+  - **Personalized Hero**: Changed title from "About Me" to "John Dilig" with proper badge positioning
+  - **Content Accuracy**: Updated company experience (AWS, FOXSports.com, TBN) with legally accurate descriptions
+  - **Visual Balance**: Refined badge positioning - badge now appears below name using `flex-direction: column`
+- **Layout Improvements**: Fixed hero banner content width and alignment issues
+  - **Full-Width Description**: Removed `max-width: 600px` constraint on hero description for better banner utilization
+  - **Badge Positioning**: Implemented proper vertical stacking (name above, badge below) using flexbox column layout
+  - **Compact Badge Design**: Added `display: inline-block` and `width: fit-content` for appropriate badge sizing
+- **Company Experience Updates**: 
+  - **AWS**: Enhanced QuickSight UI development and cloud-native solutions
+  - **FOXSports.com**: High-traffic video streaming platform optimization
+  - **TBN**: Frontend consulting for broadcasting and content management systems
+- **Content Refinements**: Updated stats to reflect accurate experience (17 years, 50+ projects, 3 major companies)
 
 ### Hero Banner System Architecture
 - **Centralized Styles**: `/src/styles/hero-banners.css` contains reusable hero banner components

@@ -20,14 +20,9 @@ export default function ResumeDisplay() {
               <span className={styles.statLabel}>Technologies</span>
             </div>
             <div className={styles.heroStat}>
-              <span className={styles.statNumber}>3</span>
+              <span className={styles.statNumber}>4</span>
               <span className={styles.statLabel}>Major Companies</span>
             </div>
-          </div>
-          <div className={styles.contactInfo}>
-            <span>Redondo Beach, CA 90278</span>
-            <span>9099971393</span>
-            <span>rjdofficemail@gmail.com</span>
           </div>
         </div>
         <div className={styles.heroGradient}></div>
@@ -41,7 +36,7 @@ export default function ResumeDisplay() {
             <div className={styles.summaryBadge}>16+ Years Proven</div>
             <p className={styles.summaryText}>
               Senior front-end developer specializing in React ecosystems, high-traffic web applications, 
-              and cross-platform solutions. Led teams at Fox, TBN, and ADP building scalable user interfaces 
+              and cloud-native solutions. Contributed to teams at AWS, Fox, TBN, and ADP building scalable user interfaces 
               that serve millions. Expert in modern JavaScript, TypeScript, and responsive design with a 
               track record of improving user engagement and application performance.
             </p>
@@ -195,7 +190,7 @@ export default function ResumeDisplay() {
           <ul className={styles.achievements}>
             <li>Enhanced TBN&apos;s web presence with cross-platform UX/UI design integration, boosting user engagement.</li>
             <li>Implemented subscription flow for TBNPlus.com & MeritPlus.com, introducing more revenue avenues.</li>
-            <li>Led UX research and competitive analysis, wireframing and front-end flow diagram, refining VoD platform strategies & improve agility by helping stakeholders & product owners visualize their thought during ideation/conceptualization.</li>
+            <li>Conducted UX research and competitive analysis, wireframing and front-end flow diagrams, refining VoD platform strategies & improving agility by helping stakeholders & product owners visualize their thoughts during ideation/conceptualization.</li>
             <li>Mentored team on UX/UI development and principles, fostering best practices, innovation, and user accessibility.</li>
           </ul>
         </div>
