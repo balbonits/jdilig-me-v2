@@ -11,25 +11,35 @@
     "build:clean": "rm -rf .next && npm run build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "generate": "ts-node scripts/generate-all.ts",
     "generate:exercises": "ts-node scripts/generate-exercises.ts",
     "generate:utilities": "ts-node scripts/generate-utilities.ts"
   },
   "dependencies": {
+    "next": "15.4.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.4.5"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
-    "@eslint/eslintrc": "^3",
-    "ts-node": "^10"
+    "jest": "^30.0.5",
+    "jest-environment-jsdom": "^30.0.5",
+    "tailwindcss": "^4",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10",
+    "typescript": "^5"
   }
 }

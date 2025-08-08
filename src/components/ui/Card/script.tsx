@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils';
 import styles from './style.module.css';
 
 interface CardProps {
@@ -7,9 +8,9 @@ interface CardProps {
   hover?: boolean;
 }
 
-export default function Card({ children, className = '', hover = true }: CardProps) {
+export default function Card({ children, className, hover = true }: CardProps) {
   return (
-    <div className={`${styles.card} ${hover ? styles.hover : ''} ${className}`}>
+    <div className={cn(styles.card, { [styles.hover]: hover }, className)}>
       {children}
     </div>
   );

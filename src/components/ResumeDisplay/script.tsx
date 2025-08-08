@@ -297,7 +297,7 @@ export default function ResumeDisplay() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Education</h2>
         <div className={styles.education}>
-          <h3 className={styles.degree}>Associate of Science in Information Technology Computer Network Systems</h3>
+          <h3 className={styles.degree}>Associate of Science in Computer Network Systems</h3>
           <div className={styles.school}>ITT Technical Institute SAN DIMAS, CA</div>
           <div className={styles.graduationDate}>January 2008</div>
         </div>
