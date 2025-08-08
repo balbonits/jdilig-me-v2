@@ -43,3 +43,9 @@ next-env.d.ts
 # generated files
 /public/exercises.json
 /public/utilities.json
+
+# temporary development files
+**/test-types.*
+**/update-imports.*
+**/*.temp.*
+**/*.tmp.*
