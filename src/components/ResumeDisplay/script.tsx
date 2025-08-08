@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
+import { PageContainer, SectionContainer } from '@/components/ui';
 import styles from './style.module.css';
 
 export default function ResumeDisplay() {

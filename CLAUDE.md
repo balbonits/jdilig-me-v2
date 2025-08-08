@@ -775,6 +775,26 @@ When continuing this work:
 - **Fast execution** (0.413s) with proper module resolution
 - **TypeScript integration** working correctly with path mapping
 
+### Development Workflow ⚠️ CRITICAL ⚠️
+**ALWAYS run this validation sequence BEFORE committing code:**
+
+1. **🔍 Lint Check**: `npm run lint`
+   - **Must pass**: Zero ESLint warnings or errors
+   - **Common fixes**: Remove unused imports, fix TypeScript issues
+   - **Recent fixes**: Removed unused imports from ResumeDisplay and HomePage
+
+2. **🧪 Unit Tests**: `npm test`
+   - **Must pass**: All test suites passing
+   - **Current status**: 13/13 tests passing in ~0.5s
+   - **Coverage**: classnames utility + Card component
+
+3. **🏗️ Build Verification**: `npm run build`
+   - **Must pass**: Successful compilation with no errors
+   - **Includes**: Code generation, Next.js build, static page generation
+   - **Recent status**: ✅ 23 static pages generated successfully
+
+**⚠️ NEVER commit without running all three steps - prevents broken builds in CI/CD**
+
 ### Hero Banner System Architecture
 - **Centralized Styles**: `/src/styles/hero-banners.css` contains reusable hero banner components
 - **Import Pattern**: Components import hero banners using correct relative paths
