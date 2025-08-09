@@ -49,3 +49,6 @@ next-env.d.ts
 **/update-imports.*
 **/*.temp.*
 **/*.tmp.*
+
+# snapshots
+/snapshots
