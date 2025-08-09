@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils';
 import styles from './style.module.css';
 
 interface SectionProps {
@@ -10,7 +11,7 @@ interface SectionProps {
 
 export default function Section({ title, description, children, className = '' }: SectionProps) {
   return (
-    <section className={`${styles.section} ${className}`}>
+    <section className={cn(styles.section, className)}>
       <h2 className={styles.sectionTitle}>{title}</h2>
       {description && <p className={styles.sectionText}>{description}</p>}
       {children}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageContainer, SectionContainer } from '@/components/ui';
+import { PageContainer, SectionContainer, Section } from '@/components/ui';
 import HeroBanner from '@/components/ui/HeroBanner';
 import styles from './style.module.css';
 
@@ -63,8 +63,7 @@ export default function ResumeDisplay() {
         </div>
 
       {/* Skills */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Skills</h2>
+      <Section title="Skills">
         <div className={styles.skillsGrid}>
           <div className={styles.skillsColumn}>
             <div className={styles.skillItem}>
@@ -151,11 +150,10 @@ export default function ResumeDisplay() {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Work History */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Work History</h2>
+      <Section title="Work History">
         
         {/* Trinity Broadcasting Network */}
         <div className={styles.job}>
@@ -270,17 +268,16 @@ export default function ResumeDisplay() {
             <li>Managed desktop computers and devices; maintaining office productivity & equipment reliability.</li>
           </ul>
         </div>
-      </section>
+      </Section>
 
       {/* Education */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Education</h2>
+      <Section title="Education">
         <div className={styles.education}>
           <h3 className={styles.degree}>Associate of Science in Computer Network Systems</h3>
           <div className={styles.school}>ITT Technical Institute SAN DIMAS, CA</div>
           <div className={styles.graduationDate}>January 2008</div>
         </div>
-      </section>
+      </Section>
       </SectionContainer>
     </PageContainer>
   );

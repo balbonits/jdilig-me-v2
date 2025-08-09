@@ -30,6 +30,32 @@ async function generateUtilitiesJSON() {
       // Read the file content
       const fileContent = fs.readFileSync(filePath, 'utf-8');
       
+      // Extract JSDoc comments for rich description
+      const jsdocMatch = fileContent.match(/\/\*\*\s*([\s\S]*?)\s*\*\//);
+      let enrichedMetadata = {};
+      
+      if (jsdocMatch) {
+        const jsdocContent = jsdocMatch[1];
+        
+        // Parse different sections from JSDoc
+        const descriptionMatch = jsdocContent.match(/\* DESCRIPTION:\s*\n\s*\*\s*(.*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const exampleMatch = jsdocContent.match(/\* EXAMPLE:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const conceptsMatch = jsdocContent.match(/\* CONCEPTS:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const performanceMatch = jsdocContent.match(/\* PERFORMANCE:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const constraintsMatch = jsdocContent.match(/\* CONSTRAINTS:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const approachesMatch = jsdocContent.match(/\* APPROACHES:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        const usageMatch = jsdocContent.match(/\* USAGE:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
+        
+        enrichedMetadata = {
+          detailedDescription: descriptionMatch ? descriptionMatch[1].trim() : undefined,
+          examples: exampleMatch ? [exampleMatch[1].replace(/\*\s*/g, '').trim()] : undefined,
+          performanceNotes: performanceMatch ? performanceMatch[1].replace(/\*\s*/g, '').trim() : undefined,
+          constraints: constraintsMatch ? constraintsMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim()) : undefined,
+          approaches: approachesMatch ? approachesMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim()) : undefined,
+          usage: usageMatch ? usageMatch[1].replace(/\*\s*/g, '').trim() : undefined,
+        };
+      }
+      
       // Import the module dynamically
       const modulePath = path.resolve(filePath);
       delete require.cache[modulePath]; // Clear cache for re-imports
@@ -97,7 +123,7 @@ async function generateUtilitiesJSON() {
       const utilityData: UtilityData = {
         name: fileName,
         slug,
-        metadata,
+        metadata: { ...metadata, ...enrichedMetadata },
         examples,
         code: fileContent,
         functions,

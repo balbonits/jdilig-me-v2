@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils';
 import styles from './style.module.css';
 
 export interface HeroBannerGridProps {
@@ -8,7 +9,7 @@ export interface HeroBannerGridProps {
 
 export default function HeroBannerGrid({ children, className = '' }: HeroBannerGridProps) {
   return (
-    <div className={`${styles.heroGrid} ${className}`}>
+    <div className={cn(styles.heroGrid, className)}>
       {children}
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils';
 import styles from './style.module.css';
 
 interface GridProps {
@@ -24,7 +25,7 @@ export default function Grid({
   };
 
   return (
-    <div className={`${styles.grid} ${className}`} style={gridStyle}>
+    <div className={cn(styles.grid, className)} style={gridStyle}>
       {children}
     </div>
   );

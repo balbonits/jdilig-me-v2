@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run lint)",
+      "Bash(npm test)",
+      "Bash(npm run build:*)",
+      "Bash(rmdir:*)",
+      "Bash(rimraf:*)",
+      "Bash(npx rimraf:*)",
+      "Bash(npm run generate:exercises:*)",
+      "Bash(npm run generate:*)",
+      "Bash(npm run dev:clean:*)",
+      "Bash(curl:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

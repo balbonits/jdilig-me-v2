@@ -89,6 +89,13 @@ export interface BaseMetadata {
   timeComplexity: string;
   spaceComplexity: string;
   difficulty: DifficultyLevel;
+  // Rich description fields from JSDoc comments
+  detailedDescription?: string;
+  constraints?: string[];
+  examples?: string[];
+  performanceNotes?: string;
+  approaches?: string[];
+  usage?: string; // For utilities - common usage patterns
 }
 
 // Solution metadata interface for both exercises and utilities

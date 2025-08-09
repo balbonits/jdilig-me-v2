@@ -1,8 +1,10 @@
+import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
-import { PageContainer } from '@/components/ui';
-import UtilityShowcase from '@/components/ui/UtilityShowcase';
+import { Showcase, Grid, Card } from '@/components/ui';
+import type { ShowcaseSection } from '@/components/ui/Showcase';
+import styles from './utility-showcase.module.css';
 
 interface UtilityPageProps {
   utility: UtilityData;
@@ -12,17 +14,125 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
   const router = useRouter();
 
   if (router.isFallback) {
-    return (
-      <PageContainer>
-        <div>Loading utility...</div>
-      </PageContainer>
-    );
+    return <div>Loading utility...</div>;
   }
 
+  const { metadata, examples, code, functions } = utility;
+
+  const headerContent = (
+    <div className={styles.headerTags}>
+      <span className={styles.categoryTag}>
+        {metadata.category}
+      </span>
+      <span className={styles.countTag}>
+        {functions.length} function{functions.length !== 1 ? 's' : ''}
+      </span>
+    </div>
+  );
+
+  const sections: ShowcaseSection[] = [
+    {
+      id: 'overview',
+      title: 'Utility Overview',
+      content: (
+        <div className={styles.overviewContainer}>
+          {/* Description */}
+          {metadata.detailedDescription && (
+            <div className={styles.subsection}>
+              <h4 className={styles.subsectionTitle}>Description</h4>
+              <p className={styles.subsectionText}>
+                {metadata.detailedDescription}
+              </p>
+            </div>
+          )}
+
+          {/* Usage */}
+          {metadata.usage && (
+            <div className={styles.subsection}>
+              <h4 className={styles.subsectionTitle}>Common Usage</h4>
+              <pre className={styles.usageBlock}>
+                <code>{metadata.usage}</code>
+              </pre>
+            </div>
+          )}
+
+          {/* Details */}
+          <div className={styles.subsection}>
+            <h4 className={styles.subsectionTitle}>Details</h4>
+            <div className={styles.detailsGrid}>
+              <div className={styles.detailsRow}>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Category:</span>
+                  <span className={styles.detailValue}>{metadata.category}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Functions:</span>
+                  <span className={styles.detailValue}>{functions.join(', ')}</span>
+                </div>
+              </div>
+
+              {metadata.performanceNotes && (
+                <div className={styles.performanceNote}>
+                  <h5 className={styles.performanceTitle}>Performance:</h5>
+                  <p className={styles.performanceText}>
+                    {metadata.performanceNotes}
+                  </p>
+                </div>
+              )}
+
+              {/* Concepts */}
+              <div>
+                <h5 className={styles.subsectionTitle}>Concepts:</h5>
+                <div className={styles.conceptsContainer}>
+                  {metadata.concepts.map(concept => (
+                    <span key={concept} className={styles.conceptTag}>
+                      {concept}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: 'implementation',
+      title: 'Implementation',
+      content: (
+        <div>
+          <pre className={styles.implementationBlock}>
+            <code>{code}</code>
+          </pre>
+        </div>
+      )
+    },
+    {
+      id: 'examples',
+      title: 'Usage Examples',
+      content: (
+        <Grid minWidth="280px">
+          {examples.map((example, index) => (
+            <Card key={index}>
+              <h4 className={styles.exampleTitle}>
+                {example.description}
+              </h4>
+              <pre className={styles.exampleCode}>
+                <code>{example.code}</code>
+              </pre>
+            </Card>
+          ))}
+        </Grid>
+      )
+    }
+  ];
+
   return (
-    <PageContainer>
-      <UtilityShowcase utility={utility} />
-    </PageContainer>
+    <Showcase
+      title={metadata.title}
+      header={headerContent}
+      sections={sections}
+    />
   );
 }
 

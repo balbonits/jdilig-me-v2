@@ -1,0 +1,56 @@
+/* Base Tab Content Styling */
+.tab {
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  min-width: 0;
+}
+
+/* Background variants */
+.withBackground {
+  background: white;
+}
+
+.noBackground {
+  background: transparent;
+  border: none;
+}
+
+/* Padding variants */
+.paddingNone {
+  padding: 0;
+}
+
+.paddingSmall {
+  padding: 1rem;
+}
+
+.paddingMedium {
+  padding: 1.5rem;
+}
+
+.paddingLarge {
+  padding: 2rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .paddingSmall {
+    padding: 0.75rem;
+  }
+  
+  .paddingMedium {
+    padding: 1rem;
+  }
+  
+  .paddingLarge {
+    padding: 1.5rem;
+  }
+}
+
+/* Dark mode */
+.dark .withBackground {
+  background: #111827;
+  border-color: #374151;
+}

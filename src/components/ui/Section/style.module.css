@@ -1,35 +1,64 @@
-/* Mobile-first approach */
+/* Section - ResumeDisplay Design Pattern */
 .section {
-  background: var(--card);
+  background: var(--background);
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #11998e 100%);
+}
+
+.section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .sectionTitle {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--foreground);
-  margin-bottom: 1rem;
-  border-left: 4px solid var(--primary);
-  padding-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sectionTitle::before {
+  content: '●';
+  color: #667eea;
+  font-size: 0.75rem;
 }
 
 .sectionText {
   color: var(--muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-size: 1rem;
   line-height: 1.6;
 }
 
+/* Mobile Responsive Design */
+@media (max-width: 767px) {
+  .section {
+    padding: 1.5rem;
+  }
+}
+
 /* Tablet and up */
 @media (min-width: 768px) {
-  .section {
-    padding: 2.5rem;
-  }
-  
   .sectionTitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .sectionText {
