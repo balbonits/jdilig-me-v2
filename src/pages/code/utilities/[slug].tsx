@@ -2,7 +2,8 @@ import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
-import { Showcase, Grid, Card } from '@/components/ui';
+import { TabContainer, Tab, Showcase, Grid, Card } from '@/components/ui';
+import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import styles from './utility-showcase.module.css';
 
@@ -17,7 +18,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
     return <div>Loading utility...</div>;
   }
 
-  const { metadata, examples, code, functions } = utility;
+  const { metadata, examples, functions, solutions } = utility;
 
   const headerContent = (
     <div className={styles.headerTags}>
@@ -29,6 +30,36 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
       </span>
     </div>
   );
+
+  // Create solution tabs like exercises
+  const tabs: TabItem[] = solutions.map(solution => ({
+    id: solution.name,
+    label: solution.tabName,
+    content: (
+      <Tab padding="none">
+        <div className={styles.solutionHeader}>
+          <div className={styles.solutionInfo}>
+            <h4>{solution.name}</h4>
+            <div className={styles.solutionMeta}>
+              <span>Time: {solution.timeComplexity}</span> | <span>Space: {solution.spaceComplexity}</span>
+            </div>
+          </div>
+          <button 
+            onClick={() => navigator.clipboard.writeText(solution.code)}
+            className={styles.copyButton}
+          >
+            Copy
+          </button>
+        </div>
+        <pre className={styles.codeBlock}>
+          <code>{solution.code}</code>
+        </pre>
+      </Tab>
+    ),
+    metadata: solution.timeComplexity,
+    badge: solution.isOptimal ? '★' : undefined,
+    isHighlighted: solution.isOptimal
+  }));
 
   const sections: ShowcaseSection[] = [
     {
@@ -107,13 +138,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
     {
       id: 'implementation',
       title: 'Implementation',
-      content: (
-        <div>
-          <pre className={styles.implementationBlock}>
-            <code>{code}</code>
-          </pre>
-        </div>
-      )
+      content: <TabContainer tabs={tabs} emptyMessage="No implementations available" />
     },
     {
       id: 'examples',

@@ -153,17 +153,56 @@
   white-space: nowrap;
 }
 
-/* Implementation Section */
-.implementationBlock {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.375rem;
+/* Solution Tab Styling - copied from exercise showcase */
+.solutionHeader {
   padding: 1rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.solutionInfo h4 {
   margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 1rem;
+  color: var(--foreground);
+}
+
+.solutionMeta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  margin-top: 0.25rem;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.copyButton:hover {
+  background: var(--primary);
+  opacity: 0.9;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--card);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.875rem;
   color: var(--foreground);
   overflow-x: auto;
+  white-space: pre-wrap;
 }
 
 /* Usage Examples - Using Grid and Card components */
