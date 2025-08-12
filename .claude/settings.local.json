@@ -26,7 +26,8 @@
       "Bash(npx playwright:*)",
       "Bash(rm:*)",
       "Bash(npm run test:e2e:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }
