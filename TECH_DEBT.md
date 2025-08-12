@@ -1,3 +1,5 @@
+# August 2025
+- Favicon and app icon implementation and E2E test coverage added. No tech debt for favicon system.
 # [2025-08-12] (continued)
 - [x] E2E Playwright spec files are now organized by page/component (no more monolithic specs)
 - [x] Utilities and Exercises pages now include SEOHead for correct titles/meta (fixes E2E failures)

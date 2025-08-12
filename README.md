@@ -22,6 +22,10 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **ProfileImage System**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features
 - **PWA Ready**: Offline support, app shortcuts, and installable interface
 
+
+## 🖼️ Assets
+- Favicon and app icons are located in `/public/images/favicon` (multi-size PNG, ICO, Apple touch, manifest)
+
 ## 📁 Project Structure
 
 ```
@@ -182,6 +186,7 @@ Reusable TypeScript utilities with:
 - **Type Safety**: Full TypeScript interfaces and validation
 
 
+
 ## 🧪 Testing & Quality
 
 ### August 2025 Updates
@@ -190,6 +195,7 @@ Reusable TypeScript utilities with:
 - E2E tests are commit-essential: all must pass before commit
 
 ### Playwright E2E Testing
+- **Favicon & App Icon Test**: E2E test (`tests/e2e/favicon.spec.ts`) verifies that all favicon and app icon <link> tags are present and point to the correct files in `/images/favicon`.
 - **Visual Regression**: 18+ baseline screenshots across 5 browser/device combinations
 - **Multi-Browser**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
 - **Component Testing**: Individual sections, responsive layouts, theme switching

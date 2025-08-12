@@ -8,43 +8,50 @@ interface UtilitiesPageProps {
   utilities: UtilityData[];
 }
 
+
 const UtilitiesPage: React.FC<UtilitiesPageProps> = ({ utilities }) => {
   return (
     <PageContainer>
-      <PageHeader title="Utility Functions">
+      <PageHeader
+        title="Utility Functions"
+        subtitle="Reusable Functions for Real Projects"
+      >
         A collection of reusable utility functions for common programming tasks.
       </PageHeader>
 
       <SectionContainer>
-        <Section title="Available Utilities">
+        <Section title={`${utilities.length} Utilities`}>
           <Grid>
             {utilities.map((utility) => (
-              <Link key={utility.slug} href={`/code/utilities/${utility.slug}`}>
-                <Card>
-                  <div className={styles.utilityCard}>
-                    <div className={styles.header}>
-                      <h3 className={styles.title}>{utility.metadata.title}</h3>
-                      <span className={styles.category}>{utility.metadata.category}</span>
+              <Link
+                key={utility.slug}
+                href={`/code/utilities/${utility.slug}`}
+                className={styles.utilityLink}
+              >
+                <Card className={styles.utilityCard}>
+                  <div className={styles.cardHeader}>
+                    <h3 className={styles.utilityTitle}>{utility.metadata.title}</h3>
+                    <div className={styles.functionCount}>
+                      {utility.functions.length} function{utility.functions.length !== 1 ? 's' : ''}
                     </div>
-                    
-                    <p className={styles.description}>
-                      {utility.metadata.description}
-                    </p>
-                    
-                    <div className={styles.functions}>
-                      <span className={styles.functionCount}>
-                        {utility.functions.length} function{utility.functions.length !== 1 ? 's' : ''}:
-                      </span>
-                      <span className={styles.functionList}>
-                        {utility.functions.join(', ')}
-                      </span>
-                    </div>
+                  </div>
 
-                    <div className={styles.examples}>
-                      <p className={styles.exampleCount}>
-                        {utility.examples.length} usage example{utility.examples.length !== 1 ? 's' : ''}
-                      </p>
-                    </div>
+                  <p className={styles.utilityDescription}>{utility.metadata.description}</p>
+
+                  <div className={styles.tagsRow}>
+                    <span className={styles.categoryTag}>{utility.metadata.category}</span>
+                  </div>
+
+                  <div className={styles.functionListRow}>
+                    {utility.functions.map(fn => (
+                      <span key={fn} className={styles.functionTag}>{fn}</span>
+                    ))}
+                  </div>
+
+                  <div className={styles.examplesRow}>
+                    <span className={styles.exampleCount}>
+                      {utility.examples.length} usage example{utility.examples.length !== 1 ? 's' : ''}
+                    </span>
                   </div>
                 </Card>
               </Link>

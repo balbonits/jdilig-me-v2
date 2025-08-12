@@ -32,7 +32,9 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - **Architecture**: Pages Router with modular component structure and reusable UI primitives
 
 ## Website Features
-### Recent Changes (August 2025)
+-### Recent Changes (August 2025)
+  - Implemented custom favicon and app icons using assets in /public/images/favicon (multi-size PNG, ICO, Apple touch, manifest)
+  - Added Playwright E2E test to verify favicon and app icon links in <head>
 - Added SEOHead to Utilities and Exercises pages for correct page titles and SEO meta tags (fixes E2E Playwright title checks)
 - Split Playwright E2E tests into per-page spec files for maintainability
 - Cleaned up obsolete combined E2E spec files and snapshots
@@ -477,6 +479,8 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Dynamic Routing**: [slug].tsx pages for individual exercise and utility showcases
 
 ### Testing
+#### E2E Favicon Test
+- Playwright E2E test (`tests/e2e/favicon.spec.ts`) verifies that all favicon and app icon <link> tags are present and point to the correct files in /images/favicon.
 - **Jest + Testing Library**: Component and logic testing
 - **Coverage Reports**: Track test coverage
 - **Mock Strategy**: Mock data imports and contexts in tests

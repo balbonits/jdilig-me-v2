@@ -1,3 +1,6 @@
+# August 2025
+- Implemented custom favicon and app icons using /public/images/favicon (multi-size PNG, ICO, Apple touch, manifest)
+- Added Playwright E2E test to verify favicon and app icon links in <head>
 # August 12, 2025
 - Added SEOHead to Utilities and Exercises pages to ensure correct page titles and meta tags (fixes E2E Playwright failures)
 - Split Playwright E2E tests into individual page/component spec files
