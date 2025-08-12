@@ -12,6 +12,125 @@
     --border: var(--color-gray-200);
     --accent: var(--color-gray-100);
     --accent-foreground: var(--color-gray-700);
+    
+    /* ===== COMPONENT LIBRARY COLOR SYSTEM ===== */
+    /* Semantic color variables for component states and types */
+    
+    /* Base Color Palette */
+    --color-blue: rgba(103, 126, 234, 0.1);
+    --color-blue-hover: rgba(103, 126, 234, 0.15);
+    --color-purple: rgba(118, 75, 162, 0.1);
+    --color-purple-hover: rgba(118, 75, 162, 0.15);
+    --color-teal: rgba(17, 153, 142, 0.1);
+    --color-teal-hover: rgba(17, 153, 142, 0.15);
+    --color-pink: rgba(247, 112, 154, 0.1);
+    --color-pink-hover: rgba(247, 112, 154, 0.15);
+    --color-orange: rgba(255, 149, 0, 0.1);
+    --color-orange-hover: rgba(255, 149, 0, 0.15);
+    --color-green: rgba(56, 239, 125, 0.1);
+    --color-green-hover: rgba(56, 239, 125, 0.15);
+    --color-red: rgba(255, 99, 132, 0.1);
+    --color-red-hover: rgba(255, 99, 132, 0.15);
+    --color-yellow: rgba(255, 205, 86, 0.1);
+    --color-yellow-hover: rgba(255, 205, 86, 0.15);
+    --color-neutral: rgba(0, 0, 0, 0.03);
+    --color-neutral-hover: rgba(0, 0, 0, 0.05);
+    
+    /* Card Component Variables */
+    --card-bg-color-default: var(--color-neutral);
+    --card-bg-color-hover: var(--color-neutral-hover);
+    --card-bg-color-blue: var(--color-blue);
+    --card-bg-color-blue-hover: var(--color-blue-hover);
+    --card-bg-color-purple: var(--color-purple);
+    --card-bg-color-purple-hover: var(--color-purple-hover);
+    --card-bg-color-teal: var(--color-teal);
+    --card-bg-color-teal-hover: var(--color-teal-hover);
+    --card-bg-color-pink: var(--color-pink);
+    --card-bg-color-pink-hover: var(--color-pink-hover);
+    --card-bg-color-orange: var(--color-orange);
+    --card-bg-color-orange-hover: var(--color-orange-hover);
+    --card-bg-color-green: var(--color-green);
+    --card-bg-color-green-hover: var(--color-green-hover);
+    
+    /* Banner Component Variables */
+    --banner-bg-color-default: var(--color-blue);
+    --banner-bg-color-hover: var(--color-blue-hover);
+    --banner-bg-color-profile: var(--color-neutral);
+    --banner-bg-color-profile-hover: var(--color-neutral-hover);
+    --banner-bg-color-journey-1: var(--color-teal);
+    --banner-bg-color-journey-1-hover: var(--color-teal-hover);
+    --banner-bg-color-journey-2: var(--color-pink);
+    --banner-bg-color-journey-2-hover: var(--color-pink-hover);
+    --banner-bg-color-journey-3: var(--color-blue);
+    --banner-bg-color-journey-3-hover: var(--color-blue-hover);
+    --banner-bg-color-experience-1: var(--color-orange);
+    --banner-bg-color-experience-1-hover: var(--color-orange-hover);
+    --banner-bg-color-experience-2: var(--color-purple);
+    --banner-bg-color-experience-2-hover: var(--color-purple-hover);
+    --banner-bg-color-experience-3: var(--color-teal);
+    --banner-bg-color-experience-3-hover: var(--color-teal-hover);
+    --banner-bg-color-skill-1: var(--color-purple);
+    --banner-bg-color-skill-1-hover: var(--color-purple-hover);
+    --banner-bg-color-skill-2: var(--color-pink);
+    --banner-bg-color-skill-2-hover: var(--color-pink-hover);
+    --banner-bg-color-skill-3: var(--color-orange);
+    --banner-bg-color-skill-3-hover: var(--color-orange-hover);
+    --banner-bg-color-contact: var(--color-green);
+    --banner-bg-color-contact-hover: var(--color-green-hover);
+    
+    /* 7-Color Contact Card Rotation */
+    --contact-card-bg-color-1: var(--color-blue);
+    --contact-card-bg-color-1-hover: var(--color-blue-hover);
+    --contact-card-bg-color-2: var(--color-purple);
+    --contact-card-bg-color-2-hover: var(--color-purple-hover);
+    --contact-card-bg-color-3: var(--color-teal);
+    --contact-card-bg-color-3-hover: var(--color-teal-hover);
+    --contact-card-bg-color-4: var(--color-pink);
+    --contact-card-bg-color-4-hover: var(--color-pink-hover);
+    --contact-card-bg-color-5: var(--color-orange);
+    --contact-card-bg-color-5-hover: var(--color-orange-hover);
+    --contact-card-bg-color-6: var(--color-green);
+    --contact-card-bg-color-6-hover: var(--color-green-hover);
+    --contact-card-bg-color-7: var(--color-red);
+    --contact-card-bg-color-7-hover: var(--color-red-hover);
+    
+    /* Section Component Variables */
+    --section-bg-color-default: var(--color-neutral);
+    --section-bg-color-hover: var(--color-neutral-hover);
+    
+    /* Border Variables */
+    --border-color-default: rgba(0, 0, 0, 0.08);
+    --border-color-light: rgba(0, 0, 0, 0.05);
+    --border-color-medium: rgba(0, 0, 0, 0.1);
+    --border-color-strong: rgba(0, 0, 0, 0.15);
+    --border-color-emphasis: rgba(0, 0, 0, 0.2);
+    
+    /* Component Borders */
+    --card-border-color-default: var(--border-color-default);
+    --banner-border-color-default: var(--border-color-default);
+    --section-border-color-default: var(--border-color-default);
+    
+    /* Badge/Tag Variables */
+    --badge-bg-color-default: var(--color-blue);
+    --badge-bg-color-hover: var(--color-blue-hover);
+    --badge-border-color-default: var(--border-color-strong);
+    --tag-bg-color-default: var(--color-red);
+    --tag-bg-color-hover: var(--color-red-hover);
+    --tag-border-color-default: var(--border-color-medium);
+    --tag-border-color-hover: var(--border-color-emphasis);
+    
+    /* Shadow Variables */
+    --shadow-color-default: rgba(0, 0, 0, 0.08);
+    --shadow-color-hover: rgba(0, 0, 0, 0.15);
+    --shadow-color-strong: rgba(0, 0, 0, 0.25);
+    
+    /* Component Shadows */
+    --card-shadow-default: 0 8px 25px var(--shadow-color-default);
+    --card-shadow-hover: 0 25px 50px var(--shadow-color-hover);
+    --banner-shadow-default: 0 10px 30px var(--shadow-color-default);
+    --banner-shadow-hover: 0 25px 60px var(--shadow-color-strong);
+    --section-shadow-default: 0 8px 25px var(--shadow-color-default);
+    --section-shadow-hover: 0 25px 50px var(--shadow-color-hover);
   }
   
   @media (prefers-color-scheme: dark) {
@@ -24,6 +143,44 @@
       --border: var(--color-gray-700);
       --accent: var(--color-gray-800);
       --accent-foreground: var(--color-gray-300);
+      
+      /* Dark Mode Component Library Colors - Enhanced Vibrant Colors */
+      --color-blue: rgba(120, 145, 255, 0.3);
+      --color-blue-hover: rgba(120, 145, 255, 0.4);
+      --color-purple: rgba(140, 100, 200, 0.3);
+      --color-purple-hover: rgba(140, 100, 200, 0.4);
+      --color-teal: rgba(20, 180, 170, 0.3);
+      --color-teal-hover: rgba(20, 180, 170, 0.4);
+      --color-pink: rgba(255, 130, 180, 0.3);
+      --color-pink-hover: rgba(255, 130, 180, 0.4);
+      --color-orange: rgba(255, 165, 0, 0.3);
+      --color-orange-hover: rgba(255, 165, 0, 0.4);
+      --color-green: rgba(80, 255, 150, 0.3);
+      --color-green-hover: rgba(80, 255, 150, 0.4);
+      --color-red: rgba(255, 110, 140, 0.3);
+      --color-red-hover: rgba(255, 110, 140, 0.4);
+      --color-yellow: rgba(255, 220, 100, 0.3);
+      --color-yellow-hover: rgba(255, 220, 100, 0.4);
+      --color-neutral: rgba(255, 255, 255, 0.05);
+      --color-neutral-hover: rgba(255, 255, 255, 0.08);
+      
+      /* Dark Mode Borders */
+      --border-color-default: rgba(255, 255, 255, 0.1);
+      --border-color-light: rgba(255, 255, 255, 0.05);
+      --border-color-medium: rgba(255, 255, 255, 0.15);
+      --border-color-strong: rgba(255, 255, 255, 0.2);
+      --border-color-emphasis: rgba(255, 255, 255, 0.25);
+      
+      /* Dark Mode Badges/Tags */
+      --badge-bg-color-default: var(--color-blue);
+      --badge-bg-color-hover: var(--color-blue-hover);
+      --tag-bg-color-default: var(--color-red);
+      --tag-bg-color-hover: var(--color-red-hover);
+      
+      /* Dark Mode Shadows */
+      --shadow-color-default: rgba(0, 0, 0, 0.3);
+      --shadow-color-hover: rgba(0, 0, 0, 0.4);
+      --shadow-color-strong: rgba(0, 0, 0, 0.5);
     }
   }
   
@@ -36,6 +193,8 @@
     --border: var(--color-gray-200);
     --accent: var(--color-gray-100);
     --accent-foreground: var(--color-gray-700);
+    
+    /* Light Mode Component Library Colors (same as :root) */
   }
   
   .dark {
@@ -47,6 +206,8 @@
     --border: var(--color-gray-700);
     --accent: var(--color-gray-800);
     --accent-foreground: var(--color-gray-300);
+    
+    /* Dark Mode Component Library Colors (same as prefers-color-scheme: dark) */
   }
 }
 

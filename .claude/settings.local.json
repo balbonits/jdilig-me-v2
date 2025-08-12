@@ -14,7 +14,19 @@
       "Bash(npm run generate:*)",
       "Bash(npm run dev:clean:*)",
       "Bash(curl:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(git rm:*)",
+      "WebFetch(domain:jdilig.me)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(npx playwright:*)",
+      "Bash(rm:*)",
+      "Bash(npm run test:e2e:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }

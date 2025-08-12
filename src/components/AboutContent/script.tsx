@@ -18,6 +18,10 @@ export default function AboutContent() {
           { number: "3", label: "Major Companies" }
         ]}
         tags={["React", "TypeScript", "Next.js", "Performance", "UI/UX"]}
+        imageUrl="/images/profile.png"
+        imageAlt="John Dilig - Front-End Developer"
+        imageShape="circle"
+        variant="profile"
         className="about-main-hero"
       />
       
@@ -26,11 +30,11 @@ export default function AboutContent() {
         <div className={styles.contactContent}>
           <div className={styles.contactHeader}>
             <h2 className={styles.contactTitle}>Let&apos;s Connect</h2>
-            <div className={styles.contactBadge}>Available</div>
+            <div className={styles.contactBadge}>Open to Work</div>
           </div>
           <p className={styles.contactDescription}>
-            Ready to collaborate on your next project? Let&apos;s discuss how we can build 
-            something amazing together.
+            I&apos;m actively seeking new opportunities! Ready to bring my 17 years of front-end expertise 
+            to your team and help build exceptional user experiences.
           </p>
           <div className={styles.contactGrid}>
             <div className={styles.contactItem}>

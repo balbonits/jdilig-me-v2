@@ -1,15 +1,19 @@
-/* Mobile-first approach */
+/* Mobile-first approach - Unified Semi-Translucent Design */
 .card {
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: 0.375rem;
+  background: var(--card-bg-color-default);
+  border: 1px solid var(--card-border-color-default);
+  border-radius: 1rem;
   padding: 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--card-shadow-default);
+  color: var(--foreground);
 }
 
 .hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: var(--card-shadow-hover);
+  background: var(--card-bg-color-hover);
 }
 
 /* Tablet and up */

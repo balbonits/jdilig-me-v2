@@ -14,6 +14,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "generate": "npm run generate:exercises && npm run generate:utilities",
     "generate:exercises": "ts-node scripts/generate-exercises.ts",
     "generate:utilities": "ts-node scripts/generate-utilities.ts"
@@ -25,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.54.2",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
@@ -37,6 +41,7 @@
     "eslint-config-next": "15.4.5",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
+    "playwright": "^1.54.2",
     "rimraf": "^6.0.1",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.1",

@@ -17,7 +17,9 @@ export default function SiteHeader() {
         <div className={styles.navContainer}>
           {/* Logo/Brand */}
           <div className={styles.brand}>
-            <h1 className={styles.title}>Reuel John Dilig</h1>
+            <Link href="/" className={styles.titleLink}>
+              <h1 className={styles.title}>John Dilig</h1>
+            </Link>
           </div>
           
           {/* Navigation Links */}

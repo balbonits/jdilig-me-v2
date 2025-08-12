@@ -1,4 +1,4 @@
-/* About Content - Custom Styles Only */
+/* About Content - Unified Semi-Translucent Design */
 
 /* Journey Cards Grid */
 .journeyGrid {
@@ -19,40 +19,41 @@
   position: relative;
   border-radius: 1rem;
   padding: 2rem;
-  color: white;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow-default);
   min-height: 280px;
+  border: 1px solid var(--card-border-color-default);
+  color: var(--foreground, #1a202c);
 }
 
 .journeyCard:nth-child(1) {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: var(--banner-bg-color-journey-1);
+}
+
+.journeyCard:nth-child(1):hover {
+  background: var(--banner-bg-color-journey-1-hover);
 }
 
 .journeyCard:nth-child(2) {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  background: var(--banner-bg-color-journey-2);
+}
+
+.journeyCard:nth-child(2):hover {
+  background: var(--banner-bg-color-journey-2-hover);
 }
 
 .journeyCard:nth-child(3) {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: var(--banner-bg-color-journey-3);
+}
+
+.journeyCard:nth-child(3):hover {
+  background: var(--banner-bg-color-journey-3-hover);
 }
 
 .journeyCard:hover {
   transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-}
-
-.journeyCard:nth-child(1):hover {
-  background: linear-gradient(135deg, #0d7377 0%, #2dd4bf 100%);
-}
-
-.journeyCard:nth-child(2):hover {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.journeyCard:nth-child(3):hover {
-  background: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .cardContent {
@@ -62,23 +63,23 @@
   flex-direction: column;
   gap: 1.5rem;
   height: 100%;
-  min-height: 200px; /* Consistent minimum height across all card types */
-  align-items: flex-start; /* Align all content to the start (top) */
+  min-height: 200px;
+  align-items: flex-start;
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
   gap: 1rem;
-  flex-shrink: 0; /* Prevent header from shrinking */
-  width: 100%; /* Ensure header takes full width */
-  min-height: 2.5rem; /* Consistent header height across all cards */
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 2.5rem;
 }
 
 .cardIcon {
   font-size: 2.5rem;
   line-height: 1;
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0;
 }
 
 .cardTitle {
@@ -86,27 +87,22 @@
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
-  flex: 1; /* Allow title to take available space */
-  min-width: 0; /* Allow text to shrink if needed */
+  flex: 1;
+  min-width: 0;
 }
 
 .cardDescription {
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
-  opacity: 0.95;
-  width: 100%; /* Ensure description takes full width */
-  align-self: flex-start; /* Explicitly align text to start */
+  opacity: 0.85;
+  width: 100%;
+  align-self: flex-start;
 }
 
+/* No gradient overlay - cleaner design */
 .cardGradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
+  display: none;
 }
 
 /* Company Experience Grid */
@@ -128,52 +124,41 @@
   position: relative;
   border-radius: 1rem;
   padding: 2rem;
-  color: white;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--banner-shadow-default);
   min-height: 250px;
+  border: 1px solid var(--banner-border-color-default);
+  color: var(--foreground, #1a202c);
+}
+
+.experienceBanner:nth-child(1) {
+  background: var(--banner-bg-color-experience-1);
+}
+
+.experienceBanner:nth-child(1):hover {
+  background: var(--banner-bg-color-experience-1-hover);
+}
+
+.experienceBanner:nth-child(2) {
+  background: var(--banner-bg-color-experience-2);
+}
+
+.experienceBanner:nth-child(2):hover {
+  background: var(--banner-bg-color-experience-2-hover);
+}
+
+.experienceBanner:nth-child(3) {
+  background: var(--banner-bg-color-experience-3);
+}
+
+.experienceBanner:nth-child(3):hover {
+  background: var(--banner-bg-color-experience-3-hover);
 }
 
 .experienceBanner:hover {
   transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-}
-
-/* AWS Banner */
-.awsBanner {
-  background: linear-gradient(135deg, #ff9500 0%, #ff6b35 100%);
-}
-
-.awsBanner:hover {
-  background: linear-gradient(135deg, #e08600 0%, #e55a2b 100%);
-}
-
-/* Fox Banner */
-.foxBanner {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.foxBanner:hover {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-}
-
-/* ADP Banner */
-.adpBanner {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-}
-
-.adpBanner:hover {
-  background: linear-gradient(135deg, #0d7377 0%, #2dd4bf 100%);
-}
-
-/* TBN Banner */
-.tbnBanner {
-  background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
-}
-
-.tbnBanner:hover {
-  background: linear-gradient(135deg, #e53e3e 0%, #dd6b20 100%);
+  box-shadow: var(--banner-shadow-hover);
 }
 
 .experienceContent {
@@ -183,29 +168,29 @@
   flex-direction: column;
   gap: 1.5rem;
   height: 100%;
-  min-height: 200px; /* Ensure consistent minimum height */
-  align-items: flex-start; /* Align all content to the start (top) */
+  min-height: 200px;
+  align-items: flex-start;
 }
 
 .experienceHeader {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  flex-shrink: 0; /* Prevent header from shrinking */
-  width: 100%; /* Ensure header takes full width */
-  min-height: 2.5rem; /* Consistent header height across all cards */
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 2.5rem;
 }
 
 .experienceIcon {
   font-size: 2rem;
   line-height: 1;
   margin-top: 0.25rem;
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  flex-shrink: 0;
 }
 
 .experienceInfo {
   flex: 1;
-  min-width: 0; /* Allow text to wrap properly */
+  min-width: 0;
 }
 
 .experienceTitle {
@@ -216,7 +201,7 @@
 }
 
 .experienceBadge {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--badge-bg-color-default);
   backdrop-filter: blur(10px);
   padding: 0.25rem 0.75rem;
   border-radius: 1.5rem;
@@ -224,27 +209,28 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--badge-border-color-default);
   display: inline-block;
+  color: var(--foreground, #374151);
+  transition: all 0.2s ease;
+}
+
+.experienceBanner:hover .experienceBadge {
+  background: var(--badge-bg-color-hover);
 }
 
 .experienceDescription {
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  opacity: 0.95;
-  width: 100%; /* Ensure description takes full width */
-  align-self: flex-start; /* Explicitly align text to start */
+  opacity: 0.85;
+  width: 100%;
+  align-self: flex-start;
 }
 
+/* No gradient overlay - cleaner design */
 .experienceGradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
+  display: none;
 }
 
 /* Skills Grid */
@@ -272,40 +258,41 @@
   position: relative;
   border-radius: 1rem;
   padding: 2rem;
-  color: white;
   overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--banner-shadow-default);
   min-height: 280px;
+  border: 1px solid var(--banner-border-color-default);
+  color: var(--foreground, #1a202c);
 }
 
 .skillBanner:nth-child(1) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--banner-bg-color-skill-1);
+}
+
+.skillBanner:nth-child(1):hover {
+  background: var(--banner-bg-color-skill-1-hover);
 }
 
 .skillBanner:nth-child(2) {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--banner-bg-color-skill-2);
+}
+
+.skillBanner:nth-child(2):hover {
+  background: var(--banner-bg-color-skill-2-hover);
 }
 
 .skillBanner:nth-child(3) {
-  background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+  background: var(--banner-bg-color-skill-3);
+}
+
+.skillBanner:nth-child(3):hover {
+  background: var(--banner-bg-color-skill-3-hover);
 }
 
 .skillBanner:hover {
   transform: translateY(-8px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-}
-
-.skillBanner:nth-child(1):hover {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-}
-
-.skillBanner:nth-child(2):hover {
-  background: linear-gradient(135deg, #ec4899 0%, #ef4444 100%);
-}
-
-.skillBanner:nth-child(3):hover {
-  background: linear-gradient(135deg, #e53e3e 0%, #dd6b20 100%);
+  box-shadow: var(--banner-shadow-hover);
 }
 
 .skillContent {
@@ -315,20 +302,20 @@
   flex-direction: column;
   gap: 1.5rem;
   height: 100%;
-  min-height: 200px; /* Consistent minimum height across all card types */
-  align-items: flex-start; /* Align all content to the start (top) */
-  padding: 0; /* Remove any padding that might cause offset */
-  margin: 0; /* Remove any margin that might cause offset */
+  min-height: 200px;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
 }
 
 .skillHeader {
   display: flex;
-  flex-direction: column; /* Stack title and badge vertically */
-  align-items: flex-start; /* Align to the left */
-  gap: 0.5rem; /* Small gap between title and badge */
-  flex-shrink: 0; /* Prevent header from shrinking */
-  width: 100%; /* Ensure header takes full width */
-  min-height: auto; /* Remove fixed height since we're stacking */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: auto;
 }
 
 .skillTitle {
@@ -336,78 +323,82 @@
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
-  width: 100%; /* Take full width for single line */
-  align-self: flex-start; /* Explicitly align to start like other text */
+  width: 100%;
+  align-self: flex-start;
 }
 
 .skillBadge {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 100%); /* Different gradient */
+  background: var(--badge-bg-color-default);
   backdrop-filter: blur(10px);
-  padding: 0.25rem 0.75rem; /* Smaller padding */
-  border-radius: 1rem; /* Smaller radius */
-  font-size: 0.7rem; /* Smaller font */
-  font-weight: 500; /* Less bold */
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Stronger border */
-  align-self: flex-start; /* Explicitly align to start like other text */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  margin: 0; /* Remove any default margins */
-  display: inline-block; /* Ensure it behaves like text content */
+  border: 1px solid var(--badge-border-color-default);
+  align-self: flex-start;
+  box-shadow: 0 2px 8px var(--shadow-color-default);
+  margin: 0;
+  display: inline-block;
+  color: var(--foreground, #374151);
+  transition: all 0.2s ease;
+}
+
+.skillBanner:hover .skillBadge {
+  background: var(--badge-bg-color-hover);
 }
 
 .skillTags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin: 0; /* Remove all margins */
-  padding: 0; /* Remove all padding */
-  width: 100%; /* Ensure tags take full width */
-  align-self: flex-start; /* Explicitly align to start */
-  align-items: flex-start; /* Align all tag items to start */
-  justify-content: flex-start; /* Align tags to the left like text */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  align-self: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .skillTags span {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--tag-bg-color-default);
   backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--tag-border-color-default);
   transition: all 0.2s ease;
-  margin: 0; /* Remove any default margins */
-  align-self: flex-start; /* Each tag aligns to start */
-  display: inline-flex; /* Ensure proper inline behavior */
-  align-items: center; /* Center text within each tag */
+  margin: 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  color: var(--foreground, #4b5563);
 }
 
-.skillBanner:hover .skillTags span {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
+.skillBanner:hover .skillTags span,
+.skillTags span:hover {
+  background: var(--tag-bg-color-hover);
+  border-color: var(--tag-border-color-hover);
 }
 
+/* No gradient overlay - cleaner design */
 .skillGradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
+  display: none;
 }
 
 /* Contact Hero Banner */
 .contactHero {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: var(--banner-bg-color-contact);
+  border: 1px solid var(--banner-border-color-default);
   border-radius: 1rem;
   padding: 2.5rem;
-  color: white;
+  color: var(--foreground, #1a202c);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--banner-shadow-default);
   transition: all 0.3s ease;
   min-height: 350px;
   margin-bottom: 3rem;
@@ -415,8 +406,8 @@
 
 .contactHero:hover {
   transform: translateY(-4px);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  background: linear-gradient(135deg, #0d7377 0%, #2dd4bf 100%);
+  box-shadow: var(--banner-shadow-hover);
+  background: var(--banner-bg-color-contact-hover);
 }
 
 .contactContent {
@@ -443,7 +434,7 @@
 }
 
 .contactBadge {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--badge-bg-color-default);
   backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
@@ -452,15 +443,21 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--badge-border-color-default);
+  color: var(--foreground, #374151);
+  transition: all 0.2s ease;
+}
+
+.contactHero:hover .contactBadge {
+  background: var(--badge-bg-color-hover);
 }
 
 .contactDescription {
   font-size: 1.125rem;
   line-height: 1.6;
   margin: 0;
-  opacity: 0.95;
-  max-width: 500px;
+  opacity: 0.85;
+  max-width: 100%;
 }
 
 .contactGrid {
@@ -481,17 +478,77 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   padding: 1.5rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-color-medium);
   transition: all 0.2s ease;
 }
 
-.contactHero:hover .contactItem {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+/* 7-Color Rotation for Contact Items */
+.contactItem:nth-child(1) {
+  background: var(--contact-card-bg-color-1);
+}
+
+.contactItem:nth-child(1):hover {
+  background: var(--contact-card-bg-color-1-hover);
+}
+
+.contactItem:nth-child(2) {
+  background: var(--contact-card-bg-color-2);
+}
+
+.contactItem:nth-child(2):hover {
+  background: var(--contact-card-bg-color-2-hover);
+}
+
+.contactItem:nth-child(3) {
+  background: var(--contact-card-bg-color-3);
+}
+
+.contactItem:nth-child(3):hover {
+  background: var(--contact-card-bg-color-3-hover);
+}
+
+.contactItem:nth-child(4) {
+  background: var(--contact-card-bg-color-4);
+}
+
+.contactItem:nth-child(4):hover {
+  background: var(--contact-card-bg-color-4-hover);
+}
+
+.contactItem:nth-child(5) {
+  background: var(--contact-card-bg-color-5);
+}
+
+.contactItem:nth-child(5):hover {
+  background: var(--contact-card-bg-color-5-hover);
+}
+
+.contactItem:nth-child(6) {
+  background: var(--contact-card-bg-color-6);
+}
+
+.contactItem:nth-child(6):hover {
+  background: var(--contact-card-bg-color-6-hover);
+}
+
+.contactItem:nth-child(7) {
+  background: var(--contact-card-bg-color-7);
+}
+
+.contactItem:nth-child(7):hover {
+  background: var(--contact-card-bg-color-7-hover);
+}
+
+/* Continue the cycle for 8+ items */
+.contactItem:nth-child(n+8) {
+  background: var(--contact-card-bg-color-1);
+}
+
+.contactItem:nth-child(n+8):hover {
+  background: var(--contact-card-bg-color-1-hover);
 }
 
 .contactIcon {
@@ -508,7 +565,7 @@
 .contactLabel {
   font-size: 0.875rem;
   font-weight: 600;
-  opacity: 0.8;
+  opacity: 0.7;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -519,46 +576,67 @@
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
+.contactValue a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contactValue a:hover {
+  opacity: 0.8;
+}
+
+/* No gradient overlay - cleaner design */
 .contactGradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
+  display: none;
+}
+
+/* Dark Mode Support */
+:global(.dark) .journeyCard,
+:global(.dark) .experienceBanner,
+:global(.dark) .skillBanner,
+:global(.dark) .contactHero {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .journeyCard:hover,
+:global(.dark) .experienceBanner:hover,
+:global(.dark) .skillBanner:hover,
+:global(.dark) .contactHero:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .experienceBadge,
+:global(.dark) .skillBadge,
+:global(.dark) .contactBadge {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--foreground, #e2e8f0);
+}
+
+:global(.dark) .skillTags span {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--foreground, #cbd5e1);
+}
+
+:global(.dark) .skillBanner:hover .skillTags span {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+:global(.dark) .contactItem {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+:global(.dark) .contactHero:hover .contactItem {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Mobile Responsive */
 @media (max-width: 767px) {
-  .heroTitle {
-    font-size: 2.5rem;
-  }
-  
-  .heroDescription {
-    font-size: 1rem;
-  }
-  
-  .heroStats {
-    gap: 2rem;
-    justify-content: center;
-  }
-  
-  .statNumber {
-    font-size: 2rem;
-  }
-  
-  .heroHeader {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  .heroBadge {
-    align-self: center;
-  }
-  
-  .mainHero,
   .journeyCard,
   .experienceBanner,
   .skillBanner,
@@ -580,5 +658,19 @@
   .contactItem {
     flex-direction: column;
     text-align: center;
+  }
+  
+  .contactHeader {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .contactTitle {
+    font-size: 2rem;
+  }
+  
+  .contactBadge {
+    align-self: center;
   }
 }

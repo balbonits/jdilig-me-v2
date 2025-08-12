@@ -58,6 +58,68 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - Consistent component organization
 - **Tailwind Integration**: Uses Tailwind color system via CSS custom properties
 
+## CSS Architecture Standards ⭐ **CRITICAL**
+
+**ALL CSS must follow this mandatory hierarchy and approach:**
+
+### **📱 Mobile-First Approach**
+- **Always start with mobile base styles** (320px+ default)
+- Use **`min-width` media queries only** to enhance for larger screens
+- **Never use `max-width`** as primary breakpoint strategy
+
+### **📐 Responsive Breakpoints**
+- **Mobile (base)**: 320px+ default styles
+- **Tablet**: `@media (min-width: 768px)`
+- **Desktop**: `@media (min-width: 1024px)`
+
+### **🧩 Framework/Library Mindset**
+- Build **reusable, scalable components**
+- Use **generic naming conventions**
+- **Component-based architecture**
+- **Modular and composable** patterns
+
+### **🏗️ CSS Hierarchy (MANDATORY ORDER)**
+```css
+/* 1. ROOT/BASE - Global foundation */
+:root { /* CSS variables, design system colors */ }
+body { /* Global typography, base styles */ }
+
+/* 2. COMPONENT - Reusable component styles */
+.componentName { 
+  /* Base mobile-first component styles */
+}
+.componentVariant { 
+  /* Component variations and modifiers */
+}
+
+/* 3. PAGE - Page-specific overrides (minimize usage) */
+.pageSpecificClass { 
+  /* Only when component styles insufficient */
+}
+
+/* 4. THEME - Conditional theme overrides */
+:global(.dark) .component { 
+  /* Dark theme-specific overrides only */
+}
+:global(.light) .component { 
+  /* Light theme-specific overrides only */
+}
+```
+
+### **🎯 Implementation Rules**
+1. **Mobile-first base styles** always come first
+2. **CSS variables** for all themeable properties
+3. **Base styles establish defaults**, theme selectors override conditionally
+4. **Components over page-specific styles**
+5. **Generic and reusable** approach to all styling
+6. **Theme classes are conditional selectors**, not base styles
+
+**⚠️ NEVER:**
+- Use `max-width` for primary responsive design
+- Set theme styles as base (themes are conditional overrides)
+- Create page-specific styles when components can be enhanced
+- Use desktop-first approach
+
 ### Card Component Design System
 **Standardized Alignment Pattern for ALL Card Types:**
 - All card containers use `align-items: flex-start` to push content to top
@@ -419,3 +481,4 @@ npm run generate:utilities  # Generate utilities JSON only
 
 ---
 *For project history and detailed changes, see [HISTORY.md](./HISTORY.md)*
+- when committing, update the Markdown files, run tests (lint, unit, e2e, build), then git add & commit.

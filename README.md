@@ -48,6 +48,21 @@ Each component follows a **"separation of concerns"** approach:
 - `style.module.css` - Scoped CSS modules with mobile-first design
 - `test.tsx` - Jest tests (optional)
 
+### CSS Architecture Standards ⭐
+**All styles follow a mandatory hierarchy** (see [CLAUDE.md](./CLAUDE.md) for complete details):
+
+1. **Mobile-First**: Base styles for 320px+, enhance with `min-width` media queries
+2. **CSS Hierarchy**: Root/Base → Component → Page → Theme (conditional overrides)
+3. **Framework Mindset**: Reusable, generic components over page-specific styles
+4. **Theme Structure**: `:global(.dark)` and `:global(.light)` as conditional selectors
+
+```css
+/* ✅ Correct hierarchy example */
+.component { /* Mobile-first base */ }
+@media (min-width: 768px) { .component { /* Tablet enhancement */ } }
+:global(.dark) .component { /* Dark theme override */ }
+```
+
 ### UI Component Usage
 ```tsx
 import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';

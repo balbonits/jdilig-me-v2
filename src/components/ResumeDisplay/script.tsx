@@ -9,7 +9,11 @@ export default function ResumeDisplay() {
       {/* Hero Header */}
       <HeroBanner
         title="John Dilig"
-        subtitle="Senior Front-End Developer"
+        subtitle="Front-End Developer"
+        imageUrl="/images/headshot.png"
+        imageAlt="John Dilig Professional Headshot"
+        imageShape="circle"
+        variant="profile"
         stats={[
           { number: "16+", label: "Years Experience" },
           { number: "25+", label: "Technologies" },
@@ -23,7 +27,7 @@ export default function ResumeDisplay() {
         <HeroBanner
           title="Frontend Engineering Excellence"
           badge="16+ Years Proven"
-          description="Senior front-end developer specializing in React ecosystems, high-traffic web applications, 
+          description="Front-end developer specializing in React ecosystems, high-traffic web applications, 
             and cloud-native solutions. Contributed to teams at AWS, Fox, TBN, and ADP building scalable user interfaces 
             that serve millions. Expert in modern JavaScript, TypeScript, and responsive design with a 
             track record of improving user engagement and application performance."
@@ -42,12 +46,12 @@ export default function ResumeDisplay() {
               </div>
             </div>
           </a>
-          <a href="https://jdilig-me.vercel.app/" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+          <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
             <div className={styles.linkContent}>
-              <div className={styles.linkIcon}>🌐</div>
+              <div className={styles.linkIcon}>💻</div>
               <div className={styles.linkText}>
-                <div className={styles.linkTitle}>Portfolio Site</div>
-                <div className={styles.linkUrl}>jdilig-me.vercel.app</div>
+                <div className={styles.linkTitle}>Site Source Code</div>
+                <div className={styles.linkUrl}>github.com/balbonits/jdilig-me-v2</div>
               </div>
             </div>
           </a>

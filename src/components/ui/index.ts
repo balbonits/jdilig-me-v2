@@ -6,6 +6,7 @@ export { default as Card } from './Card';
 export { default as Grid } from './Grid';
 export { default as HeroBanner } from './HeroBanner';
 export { default as HeroBannerGrid } from './HeroBannerGrid';
+export { default as ProfileImage } from './ProfileImage';
 export { default as TabContainer } from './TabContainer';
 export { default as Tab } from './Tab';
 export { default as Showcase } from './Showcase';

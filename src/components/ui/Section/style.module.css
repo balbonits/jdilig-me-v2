@@ -1,13 +1,16 @@
-/* Section - ResumeDisplay Design Pattern */
+/* Section - Centralized Branding Design */
 .section {
-  background: var(--background);
-  border: 1px solid var(--border);
+  background: var(--section-bg-color-default);
+  border: 1px solid var(--section-border-color-default);
   border-radius: 1rem;
   padding: 2rem;
   margin-bottom: 2rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--section-shadow-default);
+  color: var(--foreground);
 }
 
 .section::before {
@@ -21,8 +24,9 @@
 }
 
 .section:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: var(--section-shadow-hover);
+  background: var(--section-bg-color-hover);
 }
 
 .sectionTitle {
