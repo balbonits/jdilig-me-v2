@@ -1,4 +1,6 @@
 # [2025-08-12] (continued)
+- [x] E2E Playwright spec files are now organized by page/component (no more monolithic specs)
+- [x] Utilities and Exercises pages now include SEOHead for correct titles/meta (fixes E2E failures)
 - E2E (Playwright) tests are commit-essential: all must pass before commit, not just before deploy. This ensures UI/UX and accessibility regressions are never committed.
 # [2025-08-12]
 - Consider further modularizing utility and exercise showcase components for maintainability.

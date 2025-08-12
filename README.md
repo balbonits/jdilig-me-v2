@@ -181,7 +181,13 @@ Reusable TypeScript utilities with:
 - **Static Assets**: exercises.json and utilities.json served from `/public`
 - **Type Safety**: Full TypeScript interfaces and validation
 
+
 ## 🧪 Testing & Quality
+
+### August 2025 Updates
+- Playwright E2E tests are now organized by page/component (not monolithic)
+- Utilities and Exercises pages now include SEOHead for correct titles/meta (fixes E2E failures)
+- E2E tests are commit-essential: all must pass before commit
 
 ### Playwright E2E Testing
 - **Visual Regression**: 18+ baseline screenshots across 5 browser/device combinations

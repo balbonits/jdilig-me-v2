@@ -32,6 +32,11 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - **Architecture**: Pages Router with modular component structure and reusable UI primitives
 
 ## Website Features
+### Recent Changes (August 2025)
+- Added SEOHead to Utilities and Exercises pages for correct page titles and SEO meta tags (fixes E2E Playwright title checks)
+- Split Playwright E2E tests into per-page spec files for maintainability
+- Cleaned up obsolete combined E2E spec files and snapshots
+- All E2E, unit, and lint tests must pass before commit (commit-essential)
 - Home page (/) - main landing with ResumeDisplay component
 - Projects page (/projects) - work/project gallery showcase  
 - Code page (/code) - comprehensive coding showcase with algorithm exercises and utility functions

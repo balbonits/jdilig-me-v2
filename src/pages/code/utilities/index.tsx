@@ -1,13 +1,20 @@
 import { GetStaticProps } from 'next';
 import { UtilityData } from '@/interfaces/utilities';
 import UtilitiesPage from '@/components/pages/UtilitiesPage';
+import SEOHead from '@/components/SEOHead';
+
 
 interface UtilitiesPageProps {
   utilities: UtilityData[];
 }
 
 export default function Utilities({ utilities }: UtilitiesPageProps) {
-  return <UtilitiesPage utilities={utilities} />;
+  return (
+    <>
+      <SEOHead pathname="/code/utilities" />
+      <UtilitiesPage utilities={utilities} />
+    </>
+  );
 }
 
 export const getStaticProps: GetStaticProps<UtilitiesPageProps> = async () => {

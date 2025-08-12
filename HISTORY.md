@@ -1,3 +1,8 @@
+# August 12, 2025
+- Added SEOHead to Utilities and Exercises pages to ensure correct page titles and meta tags (fixes E2E Playwright failures)
+- Split Playwright E2E tests into individual page/component spec files
+- Cleaned up obsolete E2E spec files and snapshots
+- All tests (lint, unit, E2E, build) passing except for minor snapshot diffs
 # [2025-08-12]
 - Refactored utility data: split into summary index and per-utility JSON files to resolve Next.js large page data warnings.
 - Updated Utility Code Showcase: usage examples now use a 2-column grid and open in a modal for better readability.
