@@ -90,6 +90,11 @@ export function generateMetaTags(props: SEOProps = {}): MetaTag[] {
     { name: 'robots', content: noIndex || noFollow ? `${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}` : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' },
     { name: 'googlebot', content: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' },
     { name: 'bingbot', content: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' },
+    
+    // Cache control meta tags
+    { name: 'cache-control', content: 'no-cache, no-store, must-revalidate' },
+    { name: 'pragma', content: 'no-cache' },
+    { name: 'expires', content: '0' },
   ];
 
   // Add robots meta tag if needed
