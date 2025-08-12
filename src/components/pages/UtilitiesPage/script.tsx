@@ -27,6 +27,10 @@ const UtilitiesPage: React.FC<UtilitiesPageProps> = ({ utilities }) => {
                       <span className={styles.category}>{utility.metadata.category}</span>
                     </div>
                     
+                    <p className={styles.description}>
+                      {utility.metadata.description}
+                    </p>
+                    
                     <div className={styles.functions}>
                       <span className={styles.functionCount}>
                         {utility.functions.length} function{utility.functions.length !== 1 ? 's' : ''}:

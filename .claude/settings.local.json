@@ -30,7 +30,8 @@
       "Bash(npm test:*)",
       "Bash(git clean:*)",
       "WebSearch",
-      "Bash(npm run test:*)"
+      "Bash(npm run test:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
