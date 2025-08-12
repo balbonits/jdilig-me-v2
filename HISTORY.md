@@ -1,3 +1,9 @@
+# [2025-08-12]
+- Refactored utility data: split into summary index and per-utility JSON files to resolve Next.js large page data warnings.
+- Updated Utility Code Showcase: usage examples now use a 2-column grid and open in a modal for better readability.
+- Added unified `test:all` script to run Jest and Playwright together.
+- Installed Playwright browsers for E2E testing.
+- Clarified and documented the full commit/test/documentation workflow in CLAUDE.md and README.md.
 # Project History & Updates
 
 This document tracks the historical development and major changes to the jdilig-me-v2 project.

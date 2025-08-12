@@ -242,12 +242,24 @@ Reusable utility types and UI definitions:
 
 **Rule**: Interface = "What data looks like", Type = "How code behaves"
 
-## 🔧 Development Workflow
 
-**Critical validation before commits:**
-1. `npm run lint` - Zero ESLint warnings/errors
-2. `npm test` - All unit tests passing
-3. `npm run build` - Successful production build
+## 🔧 Development & Commit Workflow
+
+**Always follow this workflow before committing:**
+1. Update documentation files: `CLAUDE.md`, `HISTORY.md`, `TECH_DEBT.md`, `README.md`
+2. Add/update tests for all new/changed features (unit, E2E, etc.)
++3. Run tests in order:
++   - `npm run lint` (ESLint)
++   - `npm test` (Jest unit tests)
++   - `npx playwright test` (E2E tests) — **E2E tests are commit-essential: all must pass before commit, not just before deploy.**
++   - `npm run build` (build check)
+4. Stage, commit, and push changes (with detailed commit message)
+
+### New Scripts & Features
+- `npm run test:all`: Runs both Jest and Playwright tests
+- Utility data refactored: now split into summary index and per-utility JSON files
+- Utility usage examples: 2-column grid, modal for each card
+- Playwright browsers must be installed for E2E tests (`npx playwright install`)
 
 ## 📚 Documentation
 

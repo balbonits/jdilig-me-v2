@@ -548,11 +548,30 @@ import { ProfileImage } from '@/components/ui';
 - **PWA**: Offline support, app shortcuts, installable with custom icons
 
 
-## Development Workflow ⚠️ CRITICAL
-**ALWAYS run before committing:**
-1. `npm run lint` - Zero ESLint warnings/errors
-2. `npm test` - All test suites passing
-3. `npm run build` - Successful compilation
+
+## Development & Commit Workflow ⚠️ CRITICAL
+**ALWAYS follow this workflow before committing:**
+1. **Update Documentation:**
+  - `CLAUDE.md`: Update AI context, architecture, and workflow notes
+  - `HISTORY.md`: Summarize all recent changes (features, refactors, fixes)
+  - `TECH_DEBT.md`: Log non-urgent improvements or follow-ups
+  - `README.md`: Update technical documentation, scripts, and usage
+2. **Update & Run Tests:**
+  - Add/update tests for all new/changed features (unit, E2E, etc.)
+  - Run tests in strict order:
+    1. `npm run lint` (ESLint)
+    2. `npm test` (Jest unit tests)
+    3. `npx playwright test` (E2E tests) — **E2E tests are commit-essential: all must pass before commit, not just before deploy.**
+    4. `npm run build` (build check)
+3. **Git Flow:**
+  - Stage all changes (`git add`)
+  - Write a detailed commit message documenting all work
+  - Commit and push (or notify user to push if not possible)
+
+**Notes:**
+- Always update or add tests for all changes before committing.
+- Document every significant change in the Markdown files.
+- This workflow ensures code quality, documentation, and reproducibility for both AI and human contributors.
 
 ## Documentation
 - **CLAUDE.md**: Current project context and development guidelines

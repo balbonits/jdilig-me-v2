@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Modal } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
-import { TabContainer, Tab, Showcase, Grid, Card } from '@/components/ui';
+import { TabContainer, Tab, Showcase } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import styles from './utility-showcase.module.css';
+
+interface UsageExamplesProps {
+  examples: { description: string; code: string }[];
+}
+
+function UsageExamples({ examples }: UsageExamplesProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <div className={styles.examplesGrid}>
+      {examples.map((example, idx) => (
+        <div
+          key={idx}
+          className={styles.exampleCard}
+          tabIndex={0}
+          role="button"
+          aria-label={`Open usage example: ${example.description}`}
+          onClick={() => setOpenIndex(idx)}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpenIndex(idx)}
+        >
+          <h4 className={styles.exampleTitle}>{example.description}</h4>
+          <pre className={styles.exampleCode}>
+            <code>{example.code}</code>
+          </pre>
+        </div>
+      ))}
+      {openIndex !== null && (
+        <Modal open onClose={() => setOpenIndex(null)} title={examples[openIndex].description}>
+          <pre className={styles.exampleCode} style={{ fontSize: '1.1rem', padding: '1.5rem', background: 'var(--card)' }}>
+            <code>{examples[openIndex].code}</code>
+          </pre>
+        </Modal>
+      )}
+    </div>
+  );
+}
 
 interface UtilityPageProps {
   utility: UtilityData;
@@ -143,21 +180,8 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
     {
       id: 'examples',
       title: 'Usage Examples',
-      content: (
-        <Grid minWidth="280px">
-          {examples.map((example, index) => (
-            <Card key={index}>
-              <h4 className={styles.exampleTitle}>
-                {example.description}
-              </h4>
-              <pre className={styles.exampleCode}>
-                <code>{example.code}</code>
-              </pre>
-            </Card>
-          ))}
-        </Grid>
-      )
-    }
+      content: <UsageExamples examples={examples} />
+  }
   ];
 
   return (

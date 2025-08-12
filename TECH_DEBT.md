@@ -1,3 +1,9 @@
+# [2025-08-12] (continued)
+- E2E (Playwright) tests are commit-essential: all must pass before commit, not just before deploy. This ensures UI/UX and accessibility regressions are never committed.
+# [2025-08-12]
+- Consider further modularizing utility and exercise showcase components for maintainability.
+- Add/expand E2E Playwright coverage for new modal interactions and usage example flows.
+- Review UI/UX polish for modal transitions and accessibility (focus trap, ARIA live regions).
 # Technical Debt & Refactoring Roadmap
 
 ## Overview
