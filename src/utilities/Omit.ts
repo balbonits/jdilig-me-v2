@@ -50,7 +50,7 @@ export function omit<T extends Record<string, unknown>, K extends keyof T>(
   
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key) && !keysToOmit.has(key as unknown as K)) {
-      (result as any)[key] = obj[key];
+      (result as Record<string, unknown>)[key] = obj[key];
     }
   }
   
@@ -82,13 +82,13 @@ export function omitDeep<T extends Record<string, unknown>>(
   
   for (const path of paths) {
     const keys = path.split('.');
-    let current: any = result;
+    let current: Record<string, unknown> = result;
     
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
       if (current[key] && typeof current[key] === 'object') {
         current[key] = { ...current[key] };
-        current = current[key];
+        current = current[key] as Record<string, unknown>;
       } else {
         break;
       }
@@ -122,7 +122,7 @@ export function omitBy<T extends Record<string, unknown>>(
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
       if (!predicate(value, key)) {
-        (result as any)[key] = value;
+        (result as Record<string, unknown>)[key] = value;
       }
     }
   }
@@ -160,7 +160,7 @@ export function omitByType<T extends Record<string, unknown>>(
       const valueType = value === null ? 'null' : typeof value;
       
       if (!typesToOmit.has(valueType)) {
-        (result as any)[key] = value;
+        (result as Record<string, unknown>)[key] = value;
       }
     }
   }
@@ -188,7 +188,7 @@ export function omitByPattern<T extends Record<string, unknown>>(
       const shouldOmit = patterns.some(pattern => pattern.test(String(key)));
       
       if (!shouldOmit) {
-        (result as any)[key] = obj[key];
+        (result as Record<string, unknown>)[key] = obj[key];
       }
     }
   }

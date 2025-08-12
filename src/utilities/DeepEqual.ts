@@ -107,7 +107,7 @@ export function deepEqual(a: unknown, b: unknown): boolean {
   
   for (const key of keysA) {
     if (!Object.prototype.hasOwnProperty.call(b, key)) return false;
-    if (!deepEqual((a as any)[key], (b as any)[key])) return false;
+    if (!deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) return false;
   }
   
   return true;
@@ -204,7 +204,7 @@ export function deepEqualWithCircularCheck(a: unknown, b: unknown, seenA = new W
     
     for (const key of keysA) {
       if (!Object.prototype.hasOwnProperty.call(b, key)) return false;
-      if (!deepEqualWithCircularCheck((a as any)[key], (b as any)[key], seenA, seenB)) return false;
+      if (!deepEqualWithCircularCheck((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key], seenA, seenB)) return false;
     }
     
     return true;
@@ -241,7 +241,7 @@ export function shallowEqual(a: unknown, b: unknown): boolean {
   
   for (const key of keysA) {
     if (!Object.prototype.hasOwnProperty.call(b, key)) return false;
-    if ((a as any)[key] !== (b as any)[key]) return false;
+    if ((a as Record<string, unknown>)[key] !== (b as Record<string, unknown>)[key]) return false;
   }
   
   return true;
@@ -300,7 +300,7 @@ export function deepEqualStrict(a: unknown, b: unknown): boolean {
   if (!deepEqualStrict(keysA, keysB)) return false;
   
   for (const key of keysA) {
-    if (!deepEqualStrict((a as any)[key], (b as any)[key])) return false;
+    if (!deepEqualStrict((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])) return false;
   }
   
   return true;

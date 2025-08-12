@@ -74,7 +74,7 @@ export function deepClone<T>(obj: T): T {
     const clonedObj = {} as T;
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        (clonedObj as any)[key] = deepClone((obj as any)[key]);
+        (clonedObj as Record<string, unknown>)[key] = deepClone((obj as Record<string, unknown>)[key]);
       }
     }
     return clonedObj;
@@ -147,7 +147,7 @@ export function deepCloneWithCircularCheck<T>(obj: T, seen = new WeakMap()): T {
     seen.set(obj as object, clonedObj);
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        (clonedObj as any)[key] = deepCloneWithCircularCheck((obj as any)[key], seen);
+        (clonedObj as Record<string, unknown>)[key] = deepCloneWithCircularCheck((obj as Record<string, unknown>)[key], seen);
       }
     }
     return clonedObj;
@@ -209,7 +209,7 @@ export interface DeepCloneOptions {
   includeNonEnumerable?: boolean;
   includeSymbols?: boolean;
   maxDepth?: number;
-  customCloners?: Map<any, (obj: any) => any>;
+  customCloners?: Map<unknown, (obj: unknown) => unknown>;
 }
 
 export function deepCloneCustom<T>(obj: T, options: DeepCloneOptions = {}, depth = 0): T {
@@ -271,12 +271,12 @@ export function deepCloneCustom<T>(obj: T, options: DeepCloneOptions = {}, depth
     : Object.keys(obj);
     
   keys.forEach(key => {
-    (clonedObj as any)[key] = deepCloneCustom((obj as any)[key], options, depth + 1);
+    (clonedObj as Record<string, unknown>)[key] = deepCloneCustom((obj as Record<string, unknown>)[key], options, depth + 1);
   });
   
   if (includeSymbols) {
     Object.getOwnPropertySymbols(obj).forEach(symbol => {
-      (clonedObj as any)[symbol] = deepCloneCustom((obj as any)[symbol], options, depth + 1);
+      (clonedObj as Record<symbol, unknown>)[symbol] = deepCloneCustom((obj as Record<symbol, unknown>)[symbol], options, depth + 1);
     });
   }
   

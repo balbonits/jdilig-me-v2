@@ -3,8 +3,7 @@
 
 import type { 
   BaseMetadata, 
-  SolutionMetadata, 
-  Solution, 
+  Showcase,
   UtilityInput, 
   UtilityOutput 
 } from './shared';
@@ -26,17 +25,8 @@ export interface UtilityExample {
   code: string;
 }
 
-// Utility data container
-export interface UtilityData {
-  name: string;
-  slug: string;
-  metadata: UtilityMetadata;
-  examples: UtilityExample[];
-  code: string;
-  functions: string[];
-  solutions: Solution[];
-  solutionMetadata?: SolutionMetadata[];
-}
+// Utility data container extends showcase interface
+export type UtilityData = Showcase<UtilityMetadata, UtilityExample>;
 
 // Re-export shared types that utilities commonly use
 export type { 
@@ -44,6 +34,7 @@ export type {
   SolutionType, 
   SolutionMetadata,
   Solution,
+  Showcase,
   UtilityInput,
   UtilityOutput 
 } from './shared';

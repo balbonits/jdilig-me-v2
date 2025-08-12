@@ -13,6 +13,7 @@ export function pick<T extends Record<string, unknown>, K extends keyof T>(
   
   for (const key of keys) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result as any)[key] = obj[key];
     }
   }
@@ -30,6 +31,7 @@ export function pickBy<T extends Record<string, unknown>>(
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
       if (predicate(value, key)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (result as any)[key] = value;
       }
     }

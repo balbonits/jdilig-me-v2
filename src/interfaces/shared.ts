@@ -98,6 +98,18 @@ export interface BaseMetadata {
   usage?: string; // For utilities - common usage patterns
 }
 
+// Showcase data container interface for both exercises and utilities
+export interface Showcase<TMetadata, TExample> {
+  name: string;
+  slug: string;
+  metadata: TMetadata;
+  examples: TExample[];
+  code: string;
+  functions: string[];
+  solutions: Solution[];
+  solutionMetadata?: SolutionMetadata[];
+}
+
 // Solution metadata interface for both exercises and utilities
 export interface SolutionMetadata {
   name: string;

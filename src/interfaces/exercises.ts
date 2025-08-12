@@ -3,8 +3,7 @@
 
 import type { 
   BaseMetadata, 
-  SolutionMetadata, 
-  Solution, 
+  Showcase,
   ExerciseInput, 
   ExerciseOutput 
 } from './shared';
@@ -23,17 +22,8 @@ export interface ExampleCase {
 // Exercise-specific metadata (currently identical to BaseMetadata)
 export type ExerciseMetadata = BaseMetadata;
 
-// Exercise data container
-export interface ExerciseData {
-  name: string;
-  slug: string;
-  metadata: ExerciseMetadata;
-  examples: ExampleCase[];
-  code: string;
-  functions: string[];
-  solutions: Solution[];
-  solutionMetadata?: SolutionMetadata[];
-}
+// Exercise data container extends showcase interface
+export type ExerciseData = Showcase<ExerciseMetadata, ExampleCase>;
 
 // Re-export shared types that exercises commonly use
 export type { 
@@ -41,6 +31,7 @@ export type {
   SolutionType, 
   SolutionMetadata,
   Solution,
+  Showcase,
   ExerciseInput,
   ExerciseOutput 
 } from './shared';
