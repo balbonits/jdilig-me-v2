@@ -52,7 +52,7 @@ next-env.d.ts
 **/update-imports.*
 **/*.temp.*
 **/*.tmp.*
+temp_diff.txt
 
 # snapshots
 /snapshots
-temp_diff.txt
