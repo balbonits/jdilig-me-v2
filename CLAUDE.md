@@ -555,6 +555,8 @@ import { ProfileImage } from '@/components/ui';
 
 
 ## Development & Commit Workflow ⚠️ CRITICAL
+**Commit Message Standard:**
+- If a commit includes more than one change, write the commit message in an itemized (bulleted or numbered) format, listing each change clearly.
 **ALWAYS follow this workflow before committing:**
 1. **Update Documentation:**
   - `CLAUDE.md`: Update AI context, architecture, and workflow notes
