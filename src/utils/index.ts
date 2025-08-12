@@ -7,3 +7,4 @@ export {
   fetchExerciseBySlug, 
   fetchUtilityBySlug 
 } from './data-fetchers';
+export { shortenUrl, getShortenedUrlSafe } from './urlShortener';

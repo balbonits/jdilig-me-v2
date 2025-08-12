@@ -1,0 +1,168 @@
+/* Floating Share Component */
+.floatingShare {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Main toggle button */
+.mainButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mainButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mainButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.mainButton:hover::before {
+  opacity: 1;
+}
+
+.mainButton svg {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.mainButton.expanded svg {
+  transform: rotate(45deg);
+}
+
+/* Share options container */
+.shareOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Individual share buttons */
+.shareButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-background);
+  color: var(--foreground);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+}
+
+.shareButton:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  background: var(--accent-muted);
+}
+
+/* Copy success state */
+.shareButton.copySuccess {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Platform-specific hover colors */
+.shareButton:nth-child(1):hover {
+  /* LinkedIn */
+  background: #0077b5;
+  color: white;
+}
+
+.shareButton:nth-child(2):hover {
+  /* X/Twitter */
+  background: #000000;
+  color: white;
+}
+
+.shareButton:nth-child(3):hover {
+  /* Facebook */
+  background: #1877f2;
+  color: white;
+}
+
+.shareButton:nth-child(4):hover:not(.copySuccess) {
+  /* Copy link */
+  background: var(--primary);
+  color: white;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .floatingShare {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .mainButton {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .shareButton {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mainButton,
+  .shareButton {
+    transition: none;
+  }
+  
+  .shareOptions {
+    animation: none;
+  }
+  
+  .mainButton:hover,
+  .shareButton:hover {
+    transform: none;
+  }
+}
