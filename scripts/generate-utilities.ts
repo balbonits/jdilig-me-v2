@@ -138,15 +138,34 @@ async function generateUtilitiesJSON() {
     }
   }
 
-  // Write utilities.json (minified for production)
+  // Write utilities-index.json (summary list)
+  const indexSummaries = utilities.map(u => ({
+    name: u.name,
+    slug: u.slug,
+    description: u.metadata?.description || u.metadata?.detailedDescription || '',
+    category: u.metadata?.category || '',
+    difficulty: u.metadata?.difficulty || '',
+  }));
+  const indexPath = path.join(OUTPUT_DIR, 'utilities-index.json');
+  fs.writeFileSync(indexPath, JSON.stringify(indexSummaries));
+  console.log(`\n✅ Generated utilities-index.json (${indexSummaries.length} summaries)`);
+  // Write per-utility JSON files
+  const perUtilityDir = path.join(OUTPUT_DIR, 'utilities');
+  if (!fs.existsSync(perUtilityDir)) {
+    fs.mkdirSync(perUtilityDir, { recursive: true });
+  }
+  for (const u of utilities) {
+    const utilPath = path.join(perUtilityDir, `${u.slug}.json`);
+    fs.writeFileSync(utilPath, JSON.stringify(u));
+  }
+  console.log(`✅ Generated per-utility JSON files in /public/utilities/`);
+  // Write utilities.json (full, for backward compatibility)
   const outputPath = path.join(OUTPUT_DIR, 'utilities.json');
   const minifiedJSON = JSON.stringify(utilities);
   fs.writeFileSync(outputPath, minifiedJSON);
-  
   const fileSizeKB = (Buffer.byteLength(minifiedJSON, 'utf8') / 1024).toFixed(1);
-  console.log(`\n✅ Generated utilities.json with ${utilities.length} utilities`);
+  console.log(`✅ Generated utilities.json with ${utilities.length} utilities`);
   console.log(`📄 Output: ${outputPath} (${fileSizeKB} KB minified)`);
-  
   return utilities;
 }
 
