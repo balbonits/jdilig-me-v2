@@ -248,12 +248,25 @@ src/
 
 The project uses a clear separation between **interfaces** and **types**:
 
-### **Interfaces** (`src/interfaces/`)
-Domain-specific data structures that define business logic entities:
-- **exercises.ts**: Exercise data structures (ExerciseMetadata, ExampleCase, etc.)
-- **utilities.ts**: Utility function data structures  
-- Resume, project, and content-specific data shapes
-- External API response structures
+### **Interface Hierarchy**
+The codebase follows a shared template pattern: **Shared** (collection) → **Showcase** (template) → **Exercise, Utility** (specific types)
+
+- **src/interfaces/shared.ts**: Collection of shared utility types & interfaces
+  - Core data types (DataValue, DataArray, DataTuple, DataStructure)
+  - Input/output types (ExerciseInput, UtilityInput, ExerciseOutput, UtilityOutput)
+  - Classification enums (DifficultyLevel, SolutionType)
+  - Base interfaces (BaseMetadata, Solution, SolutionMetadata)
+  - **Showcase<TMetadata, TExample>**: Base template interface for both exercises and utilities
+
+- **src/interfaces/exercises.ts**: Exercise-specific structures extending shared base
+  - **ExerciseData = Showcase<ExerciseMetadata, ExampleCase>**
+  - ExampleCase interface with required input/output
+  - ExerciseMetadata type alias
+
+- **src/interfaces/utilities.ts**: Utility-specific structures extending shared base  
+  - **UtilityData = Showcase<UtilityMetadata, UtilityExample>**
+  - UtilityExample interface with optional input/output
+  - UtilityMetadata extends BaseMetadata with category field
 
 ### **Types** (`src/types/`)
 Reusable utility types and UI/system-level definitions:
