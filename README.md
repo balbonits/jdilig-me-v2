@@ -18,6 +18,8 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **Utility Functions**: Reusable TypeScript utilities with documentation
 - **Responsive Design**: Mobile-first approach across all components
 - **Theme System**: Smooth light/dark mode transitions
+- **Accessibility**: WCAG 2.1 AA compliant with comprehensive ARIA support
+- **ProfileImage System**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features
 - **PWA Ready**: Offline support, app shortcuts, and installable interface
 
 ## 📁 Project Structure
@@ -26,7 +28,7 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 src/
 ├── pages/                  # Next.js Pages Router
 ├── components/             # Modular UI components
-│   ├── ui/                # Reusable UI primitives (PageContainer, Section, Card, Grid)
+│   ├── ui/                # Reusable UI primitives (PageContainer, Section, Card, Grid, HeroBanner, ProfileImage)
 │   ├── pages/             # Page-level components (HomePage, AboutPage, CodePage)
 │   ├── ResumeDisplay/     # Resume component
 │   └── SiteLayout/        # Main layout with theme toggle
@@ -84,6 +86,59 @@ export default function ExamplePage() {
 }
 ```
 
+## 🖼️ ProfileImage Component
+
+### Shape Variants
+The ProfileImage component offers 4 distinct shape options for different design contexts:
+
+```tsx
+import { ProfileImage } from '@/components/ui';
+
+// Circle - Default circular profile images (used in ResumeDisplay)
+<ProfileImage 
+  src="/images/profile.png" 
+  alt="Profile picture"
+  shape="circle"
+  width={160}
+  height={160}
+/>
+
+// Rounded - Rounded corners (used in Homepage hero)
+<ProfileImage 
+  src="/images/profile.png" 
+  alt="Profile picture"
+  shape="rounded"
+  width={160}
+  height={160}
+/>
+
+// Box - Sharp corners for formal contexts
+<ProfileImage shape="box" src="/images/profile.png" alt="Profile picture" />
+
+// Hexagon - Creative six-sided display using CSS clip-path
+<ProfileImage shape="hexagon" src="/images/profile.png" alt="Profile picture" />
+```
+
+### Features
+- **Next.js Integration**: Uses optimized Next.js Image component
+- **TypeScript Safety**: Full type definitions with shape validation
+- **Accessibility**: ARIA labels with shape descriptions for screen readers
+- **Performance**: Configurable quality, priority loading, and responsive sizing
+
+## ♿ Accessibility Features
+
+### WCAG 2.1 AA Compliance
+- **ARIA Implementation**: Comprehensive role assignments and descriptive labels
+- **Screen Reader Support**: Semantic HTML structure with proper landmark roles
+- **Keyboard Navigation**: All interactive elements accessible via keyboard
+- **Content Relationships**: Proper `aria-describedby` and `aria-labelledby` connections
+
+### Components with Accessibility
+- **ProfileImage**: `role="img"` with descriptive shape labels
+- **HeroBanner**: Semantic `<article>` structure with grouped stats and skills
+- **Contact Cards**: Complete ARIA labeling for email, phone, and location
+- **Navigation**: Proper heading hierarchy and landmark roles throughout
+
 ## 💻 Code Showcase System
 
 ### Algorithm Exercises
@@ -114,8 +169,9 @@ Reusable TypeScript utilities with:
 - **Commands**: `npm run test:e2e`, `npm run test:e2e:ui`, `npm run test:e2e:headed`
 
 ### Unit Testing
-- **22+ test cases** with Jest + React Testing Library
-- **Component testing**: Card component, classnames utility
+- **64+ test cases** with Jest + React Testing Library
+- **Component testing**: ProfileImage, HeroBanner, Card, AboutContent components
+- **Accessibility testing**: ARIA validation, screen reader support, keyboard navigation
 - **Data validation**: API response handling and error cases
 - **Coverage reports**: Track test coverage across codebase
 
@@ -181,11 +237,12 @@ Reusable utility types and UI definitions:
 
 ## 🌟 Recent Highlights
 
-- **E2E Testing**: Comprehensive Playwright visual regression testing
-- **Gradient System**: Simplified 2-color gradients for consistent design
+- **ProfileImage Component**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features
+- **WCAG 2.1 AA Compliance**: Comprehensive ARIA implementation and screen reader support
+- **Enhanced Testing**: 64+ Jest tests including accessibility validation and component testing
+- **E2E Testing**: Comprehensive Playwright visual regression testing across 5 browser combinations
 - **Exercise Enhancement**: 5-tier difficulty system with solution type classification
-- **Hero Banner System**: Vibrant, responsive banner components across pages
-- **Type Safety**: Enhanced interfaces with shared type system
+- **Type Safety**: Enhanced interfaces with shared type system and accessibility props
 
 ## 🚀 Deploy on Vercel
 
