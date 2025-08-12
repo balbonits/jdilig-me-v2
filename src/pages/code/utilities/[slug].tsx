@@ -59,6 +59,14 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
           {/* Details */}
           <div className={styles.subsection}>
             <h4 className={styles.subsectionTitle}>Details</h4>
+            
+            {/* Main Description */}
+            <div className={styles.descriptionContainer}>
+              <p className={styles.descriptionText}>
+                {metadata.description}
+              </p>
+            </div>
+            
             <div className={styles.detailsGrid}>
               <div className={styles.detailsRow}>
                 <div className={styles.detailItem}>
