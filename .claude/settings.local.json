@@ -27,7 +27,8 @@
       "Bash(rm:*)",
       "Bash(npm run test:e2e:*)",
       "Bash(cp:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(git clean:*)"
     ],
     "deny": []
   }
