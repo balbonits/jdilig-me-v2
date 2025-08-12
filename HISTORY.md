@@ -5,6 +5,11 @@ This document tracks the historical development and major changes to the jdilig-
 ## August 2025
 
 ### Exercise & Utility System Enhancements
+
+### Modal Component Implementation
+- **Modal UI Primitive**: Added a reusable, accessible Modal component to `src/components/ui/Modal/`
+- **Features**: Mobile-first, theme-aware, keyboard accessible, and fully tested with Jest
+- **Documentation**: Added usage and API details to README.md
 - **Difficulty Classification**: Added 5-tier difficulty system (Beginner → Easy → Medium → Hard → Expert) to all exercises
 - **Solution Type Classification**: Added solution type metadata (function, class, method, constant, utility) 
 - **Enhanced Metadata Structure**: Extended interfaces with `difficulty` and `type` fields for better organization

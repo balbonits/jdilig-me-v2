@@ -158,11 +158,20 @@ body { /* Global typography, base styles */ }
 - **Grid**: Responsive grid system (1→2→3 columns across breakpoints)
 - **HeroBanner**: Article-based hero sections with stats, tags, and ARIA support
 - **ProfileImage**: Multi-shape image component with accessibility features
+- **Modal**: Accessible, theme-aware modal dialog for overlay content
 - **CodeShowcase**: 2+1 layout component for algorithm exercises with description, code, and examples
 - **UtilityShowcase**: Utility function display component with usage examples
 - **SolutionTabs**: Tabbed interface for multiple algorithm solutions with complexity analysis
 
 ### Mobile-First Responsive Design
+
+### Modal Component
+- **Location**: `src/components/ui/Modal/`
+- **Features**: Accessible dialog with `role="dialog"`, `aria-modal`, keyboard focus, and close button
+- **Props**: `open`, `onClose`, `children`, `title?`, `className?`
+- **Styling**: Mobile-first, theme-aware, customizable via CSS Modules
+- **Testing**: Fully tested with Jest (unit tests for open/close, content, and accessibility)
+- **Usage**: Import from `@/components/ui` and control with state
 - **Breakpoints**: Mobile (default) → Tablet (768px+) → Desktop (1024px+)
 - **CSS Pattern**: Start with mobile styles, enhance with min-width media queries
 - **Spacing**: 1rem mobile → 2rem tablet+ padding

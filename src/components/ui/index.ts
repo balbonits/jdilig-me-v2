@@ -10,3 +10,5 @@ export { default as ProfileImage } from './ProfileImage';
 export { default as TabContainer } from './TabContainer';
 export { default as Tab } from './Tab';
 export { default as Showcase } from './Showcase';
+
+export { default as Modal } from './Modal';

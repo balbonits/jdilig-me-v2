@@ -28,7 +28,7 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 src/
 ├── pages/                  # Next.js Pages Router
 ├── components/             # Modular UI components
-│   ├── ui/                # Reusable UI primitives (PageContainer, Section, Card, Grid, HeroBanner, ProfileImage)
+│   ├── ui/                # Reusable UI primitives (PageContainer, Section, Card, Grid, HeroBanner, ProfileImage, Modal)
 │   ├── pages/             # Page-level components (HomePage, AboutPage, CodePage)
 │   ├── ResumeDisplay/     # Resume component
 │   └── SiteLayout/        # Main layout with theme toggle
@@ -65,11 +65,13 @@ Each component follows a **"separation of concerns"** approach:
 :global(.dark) .component { /* Dark theme override */ }
 ```
 
+
 ### UI Component Usage
 ```tsx
-import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
+import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid, Modal } from '@/components/ui';
 
 export default function ExamplePage() {
+  const [open, setOpen] = React.useState(false);
   return (
     <PageContainer>
       <PageHeader title="Page Title" subtitle="Optional subtitle" />
@@ -78,12 +80,31 @@ export default function ExamplePage() {
           <Grid>
             <Card>Card content</Card>
             <Card>Card content</Card>
+            <button onClick={() => setOpen(true)}>Open Modal</button>
+            <Modal open={open} onClose={() => setOpen(false)} title="Modal Title">
+              Modal content goes here
+            </Modal>
           </Grid>
         </Section>
       </SectionContainer>
     </PageContainer>
   );
 }
+```
+### Modal Component
+
+The `Modal` component is a reusable, accessible dialog for displaying overlay content. It supports:
+
+- **Props**: `open` (boolean), `onClose` (function), `children` (content), `title` (optional), `className` (optional)
+- **Accessibility**: Uses `role="dialog"`, `aria-modal`, and keyboard focus management
+- **Styling**: Mobile-first, theme-aware, and fully customizable via CSS Modules
+- **Usage**: Import from `@/components/ui` and control visibility with state
+
+Example:
+```tsx
+<Modal open={open} onClose={() => setOpen(false)} title="My Modal">
+  Modal content here
+</Modal>
 ```
 
 ## 🖼️ ProfileImage Component
