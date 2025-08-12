@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
@@ -6,15 +6,15 @@ import { UtilityData } from '@/interfaces/utilities';
 import { TabContainer, Tab, Showcase } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
+import { useModal } from '@/hooks/useModal';
 import styles from './utility-showcase.module.css';
 
 interface UsageExamplesProps {
   examples: { description: string; code: string }[];
+  onExampleClick: (example: { description: string; code: string }) => void;
 }
 
-function UsageExamples({ examples }: UsageExamplesProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+function UsageExamples({ examples, onExampleClick }: UsageExamplesProps) {
   return (
     <div className={styles.examplesGrid}>
       {examples.map((example, idx) => (
@@ -24,8 +24,8 @@ function UsageExamples({ examples }: UsageExamplesProps) {
           tabIndex={0}
           role="button"
           aria-label={`Open usage example: ${example.description}`}
-          onClick={() => setOpenIndex(idx)}
-          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && setOpenIndex(idx)}
+          onClick={() => onExampleClick(example)}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onExampleClick(example)}
         >
           <h4 className={styles.exampleTitle}>{example.description}</h4>
           <pre className={styles.exampleCode}>
@@ -33,13 +33,6 @@ function UsageExamples({ examples }: UsageExamplesProps) {
           </pre>
         </div>
       ))}
-      {openIndex !== null && (
-        <Modal open onClose={() => setOpenIndex(null)} title={examples[openIndex].description}>
-          <pre className={styles.exampleCode} style={{ fontSize: '1.1rem', padding: '1.5rem', background: 'var(--card)' }}>
-            <code>{examples[openIndex].code}</code>
-          </pre>
-        </Modal>
-      )}
     </div>
   );
 }
@@ -50,6 +43,7 @@ interface UtilityPageProps {
 
 export default function UtilityPage({ utility }: UtilityPageProps) {
   const router = useRouter();
+  const modal = useModal<{ description: string; code: string }>();
 
   if (router.isFallback) {
     return <div>Loading utility...</div>;
@@ -180,16 +174,25 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
     {
       id: 'examples',
       title: 'Usage Examples',
-      content: <UsageExamples examples={examples} />
+      content: <UsageExamples examples={examples} onExampleClick={modal.openModal} />
   }
   ];
 
   return (
-    <Showcase
-      title={metadata.title}
-      header={headerContent}
-      sections={sections}
-    />
+    <>
+      <Showcase
+        title={metadata.title}
+        header={headerContent}
+        sections={sections}
+      />
+      {modal.isOpen && modal.data && (
+        <Modal open onClose={modal.closeModal} title={modal.data.description}>
+          <pre className={styles.exampleCode} style={{ fontSize: '1.1rem', padding: '1.5rem', background: 'var(--card)' }}>
+            <code>{modal.data.code}</code>
+          </pre>
+        </Modal>
+      )}
+    </>
   );
 }
 
