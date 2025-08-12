@@ -35,12 +35,20 @@ export default function ProfileImage({
   priority = false,
   quality = 75
 }: ProfileImageProps) {
+  const shapeLabel = shape === 'circle' ? 'circular' : 
+                    shape === 'box' ? 'square' : 
+                    shape === 'rounded' ? 'rounded square' : 'hexagonal';
+
   return (
-    <div className={cn(
-      styles.profileImageWrapper,
-      styles[`shape${shape.charAt(0).toUpperCase() + shape.slice(1)}`],
-      className
-    )}>
+    <div 
+      className={cn(
+        styles.profileImageWrapper,
+        styles[`shape${shape.charAt(0).toUpperCase() + shape.slice(1)}`],
+        className
+      )}
+      role="img"
+      aria-label={`${alt} - ${shapeLabel} profile image`}
+    >
       <Image
         src={src}
         alt={alt}
@@ -49,6 +57,7 @@ export default function ProfileImage({
         className={styles.profileImage}
         priority={priority}
         quality={quality}
+        role="presentation"
       />
     </div>
   );

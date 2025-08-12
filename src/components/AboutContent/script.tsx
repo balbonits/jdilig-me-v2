@@ -26,46 +26,84 @@ export default function AboutContent() {
       />
       
       {/* Contact Hero Banner */}
-      <div className={styles.contactHero}>
+      <section 
+        className={styles.contactHero}
+        aria-label="Contact information and availability"
+      >
         <div className={styles.contactContent}>
-          <div className={styles.contactHeader}>
-            <h2 className={styles.contactTitle}>Let&apos;s Connect</h2>
-            <div className={styles.contactBadge}>Open to Work</div>
-          </div>
-          <p className={styles.contactDescription}>
+          <header className={styles.contactHeader}>
+            <h2 className={styles.contactTitle} id="contact-title">Let&apos;s Connect</h2>
+            <div 
+              className={styles.contactBadge}
+              role="status"
+              aria-label="Current employment status: Open to work"
+            >Open to Work</div>
+          </header>
+          <p 
+            className={styles.contactDescription}
+            aria-describedby="contact-title"
+          >
             I&apos;m actively seeking new opportunities! Ready to bring my 17 years of front-end expertise 
             to your team and help build exceptional user experiences.
           </p>
-          <div className={styles.contactGrid}>
-            <div className={styles.contactItem}>
-              <div className={styles.contactIcon}>📧</div>
+          <div 
+            className={styles.contactGrid}
+            role="group"
+            aria-label="Contact methods"
+          >
+            <div 
+              className={styles.contactItem}
+              role="group"
+              aria-label="Email contact information"
+            >
+              <div className={styles.contactIcon} aria-hidden="true">📧</div>
               <div className={styles.contactText}>
-                <div className={styles.contactLabel}>Email</div>
+                <div className={styles.contactLabel} id="email-label">Email</div>
                 <div className={styles.contactValue}>
-                  <a href="mailto:rjdofficemail@gmail.com">rjdofficemail@gmail.com</a>
+                  <a 
+                    href="mailto:rjdofficemail@gmail.com"
+                    aria-labelledby="email-label"
+                    aria-label="Send email to rjdofficemail@gmail.com"
+                  >rjdofficemail@gmail.com</a>
                 </div>
               </div>
             </div>
             
-            <div className={styles.contactItem}>
-              <div className={styles.contactIcon}>📱</div>
+            <div 
+              className={styles.contactItem}
+              role="group"
+              aria-label="Phone contact information"
+            >
+              <div className={styles.contactIcon} aria-hidden="true">📱</div>
               <div className={styles.contactText}>
-                <div className={styles.contactLabel}>Phone</div>
-                <div className={styles.contactValue}>+1 (909) 997-1393</div>
+                <div className={styles.contactLabel} id="phone-label">Phone</div>
+                <div 
+                  className={styles.contactValue}
+                  aria-labelledby="phone-label"
+                  aria-label="Phone number: +1 (909) 997-1393"
+                >+1 (909) 997-1393</div>
               </div>
             </div>
             
-            <div className={styles.contactItem}>
-              <div className={styles.contactIcon}>📍</div>
+            <div 
+              className={styles.contactItem}
+              role="group"
+              aria-label="Location information"
+            >
+              <div className={styles.contactIcon} aria-hidden="true">📍</div>
               <div className={styles.contactText}>
-                <div className={styles.contactLabel}>Location</div>
-                <div className={styles.contactValue}>Redondo Beach, CA</div>
+                <div className={styles.contactLabel} id="location-label">Location</div>
+                <div 
+                  className={styles.contactValue}
+                  aria-labelledby="location-label"
+                  aria-label="Located in Redondo Beach, California"
+                >Redondo Beach, CA</div>
               </div>
             </div>
           </div>
         </div>
         <div className={styles.contactGradient}></div>
-      </div>
+      </section>
       
       <SectionContainer>
         {/* Journey Cards Grid */}

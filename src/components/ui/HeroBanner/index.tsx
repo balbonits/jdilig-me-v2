@@ -62,15 +62,20 @@ export default function HeroBanner({
   subtitle
 }: HeroBannerProps) {
   const content = (
-    <div className={cn(
-      styles.heroBanner, 
-      imageUrl && styles.heroWithImage,
-      variant === 'profile' && styles.heroProfile,
-      variant === 'minimal' && styles.heroMinimal,
-      variant === 'background' && styles.heroBackground,
-      className
-    )} onClick={onClick}>
-      <div className={styles.heroLayout}>
+    <article 
+      className={cn(
+        styles.heroBanner, 
+        imageUrl && styles.heroWithImage,
+        variant === 'profile' && styles.heroProfile,
+        variant === 'minimal' && styles.heroMinimal,
+        variant === 'background' && styles.heroBackground,
+        className
+      )} 
+      onClick={onClick}
+      role={href ? "link" : onClick ? "button" : "banner"}
+      aria-label={`${title}${badge ? ` - ${badge}` : ''} hero section`}
+    >
+      <div className={styles.heroLayout} role="group" aria-label="Profile information">
         {/* Profile Image - Only show for non-background variants */}
         {imageUrl && variant !== 'background' && (
           <div className={styles.heroImageSection}>
@@ -88,25 +93,34 @@ export default function HeroBanner({
         {/* Content */}
         <div className={styles.heroContent}>
           {/* Header section */}
-          <div className={styles.heroHeader}>
-            {icon && <div className={styles.heroIcon}>{icon}</div>}
+          <header className={styles.heroHeader}>
+            {icon && <div className={styles.heroIcon} aria-hidden="true">{icon}</div>}
             <div className={styles.heroTitleSection}>
-              <h3 className={styles.heroTitle}>{title}</h3>
-              {subtitle && <div className={styles.heroSubtitle}>{subtitle}</div>}
+              <h1 className={styles.heroTitle} id="hero-title">{title}</h1>
+              {subtitle && <div className={styles.heroSubtitle} aria-describedby="hero-title">{subtitle}</div>}
             </div>
-            {badge && <div className={styles.heroBadge}>{badge}</div>}
-          </div>
+            {badge && <div className={styles.heroBadge} role="status" aria-label={`Professional status: ${badge}`}>{badge}</div>}
+          </header>
           
           {/* Description */}
-          {description && <p className={styles.heroDescription}>{description}</p>}
+          {description && <p className={styles.heroDescription} aria-describedby="hero-title">{description}</p>}
           
           {/* Stats */}
           {stats.length > 0 && (
-            <div className={styles.heroStats}>
+            <div 
+              className={styles.heroStats} 
+              role="group" 
+              aria-label="Professional statistics"
+            >
               {stats.map((stat, index) => (
-                <div key={index} className={styles.stat}>
-                  <span className={styles.statNumber}>{stat.number}</span>
-                  <span className={styles.statLabel}>{stat.label}</span>
+                <div 
+                  key={index} 
+                  className={styles.stat}
+                  role="status"
+                  aria-label={`${stat.number} ${stat.label}`}
+                >
+                  <span className={styles.statNumber} aria-hidden="true">{stat.number}</span>
+                  <span className={styles.statLabel} aria-hidden="true">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -114,9 +128,17 @@ export default function HeroBanner({
           
           {/* Tags */}
           {tags.length > 0 && (
-            <div className={styles.heroTech}>
+            <div 
+              className={styles.heroTech}
+              role="group"
+              aria-label="Technical skills and expertise"
+            >
               {tags.map((tag, index) => (
-                <span key={index}>{tag}</span>
+                <span 
+                  key={index}
+                  role="status"
+                  aria-label={`Skill: ${tag}`}
+                >{tag}</span>
               ))}
             </div>
           )}
@@ -126,7 +148,7 @@ export default function HeroBanner({
         </div>
       </div>
       <div className={styles.heroGradient}></div>
-    </div>
+    </article>
   );
 
   // If href is provided, wrap in Link
