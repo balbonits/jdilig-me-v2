@@ -28,7 +28,9 @@
       "Bash(npm run test:e2e:*)",
       "Bash(cp:*)",
       "Bash(npm test:*)",
-      "Bash(git clean:*)"
+      "Bash(git clean:*)",
+      "WebSearch",
+      "Bash(npm run test:*)"
     ],
     "deny": []
   }
