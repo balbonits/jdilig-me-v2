@@ -156,6 +156,8 @@ body { /* Global typography, base styles */ }
 - **Section**: Individual content sections with card styling and titles
 - **Card**: Reusable card component with hover effects and responsive padding
 - **Grid**: Responsive grid system (1→2→3 columns across breakpoints)
+- **HeroBanner**: Article-based hero sections with stats, tags, and ARIA support
+- **ProfileImage**: Multi-shape image component with accessibility features
 - **CodeShowcase**: 2+1 layout component for algorithm exercises with description, code, and examples
 - **UtilityShowcase**: Utility function display component with usage examples
 - **SolutionTabs**: Tabbed interface for multiple algorithm solutions with complexity analysis
@@ -195,6 +197,8 @@ src/
 │   │   ├── Section/       # Individual content sections
 │   │   ├── Card/          # Reusable card component
 │   │   ├── Grid/          # Responsive grid layouts
+│   │   ├── HeroBanner/    # Hero sections with ARIA support
+│   │   ├── ProfileImage/  # Multi-shape image component (circle, box, rounded, hexagon)
 │   │   └── index.ts       # Unified exports for all UI components
 │   ├── pages/             # Page-level components (imported by routes)
 │   │   ├── HomePage/      # Home page component
@@ -450,21 +454,75 @@ npm run generate:utilities  # Generate utilities JSON only
 - **Coverage Reports**: Track test coverage
 - **Mock Strategy**: Mock data imports and contexts in tests
 
+## ProfileImage Component System
+
+### Shape Variants & Usage
+- **Circle** (`shape="circle"`): Default circular profile images - used in ResumeDisplay
+- **Box** (`shape="box"`): Sharp-cornered square variant for formal contexts
+- **Rounded** (`shape="rounded"`): Rounded-corner square variant - used in Homepage hero
+- **Hexagon** (`shape="hexagon"`): Six-sided polygon using CSS clip-path for creative displays
+
+### Implementation Details
+```tsx
+import { ProfileImage } from '@/components/ui';
+
+// Usage examples
+<ProfileImage 
+  src="/images/profile.png" 
+  alt="John Dilig - Developer"
+  shape="rounded"           // circle | box | rounded | hexagon
+  width={160}
+  height={160}
+  priority={true}
+/>
+```
+
+### Technical Features
+- **Next.js Integration**: Uses optimized Next.js Image component with priority loading
+- **TypeScript Safety**: Full type definitions with ProfileImageProps and ProfileImageShape types
+- **CSS Modules**: Scoped styling with hover effects and responsive behavior
+- **Performance**: Configurable quality settings and lazy loading support
+
+## Accessibility (WCAG 2.1 AA Compliance)
+
+### ARIA Implementation
+- **ProfileImage**: `role="img"` with descriptive shape labels (`circular profile image`, `hexagonal profile image`)
+- **HeroBanner**: Semantic `<article>` structure with proper heading hierarchy
+- **Stats Sections**: `role="group"` with individual `role="status"` items and comprehensive `aria-label` descriptions
+- **Contact Cards**: Complete ARIA labeling for email/phone/location with proper relationships via `aria-labelledby`
+- **Navigation Elements**: Keyboard accessible with proper focus management
+
+### Screen Reader Support
+- **Content Relationships**: `aria-describedby` relationships between titles and descriptions
+- **Landmark Roles**: Proper `<section>`, `<header>`, `<article>` structure for navigation
+- **Hidden Decorative Elements**: Icons marked with `aria-hidden="true"` to avoid clutter
+- **Semantic HTML**: Proper heading hierarchy (h1 → h2 → h3) throughout components
+- **Status Announcements**: Dynamic content changes announced to assistive technology
+
+### Testing Coverage
+- **Unit Tests**: 64+ tests including 15+ accessibility-specific test cases
+- **ARIA Validation**: Tests verify proper role assignments, aria-label content, and relationship attributes
+- **Keyboard Navigation**: All interactive elements properly focusable and keyboard accessible
+- **Cross-Browser**: Playwright E2E tests across Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
+
 ---
 
 ## Current Status
 - **Framework**: Next.js Pages Router with TypeScript
-- **Architecture**: Modular component system with unified UI primitives
-- **Testing**: Jest + React Testing Library + Playwright E2E visual regression
+- **Architecture**: Modular component system with unified UI primitives + ProfileImage variants
+- **Testing**: Jest + React Testing Library + Playwright E2E visual regression (64+ tests passing)
 - **Styling**: Tailwind CSS v4 with CSS Modules and custom theme system
 - **Build**: Static site generation with 24+ pages, optimal solution detection
-- **Quality**: Full ESLint compliance, 22+ unit tests passing, multi-browser E2E coverage
+- **Quality**: Full ESLint compliance, comprehensive accessibility testing, multi-browser E2E coverage
+- **Accessibility**: WCAG 2.1 AA compliant with complete ARIA implementation and screen reader support
 
 ## Key Technologies
 - **Theming**: Custom CSS variables with light/dark mode and system preference detection
 - **Tailwind CSS v4**: Layer-based architecture with fallback CSS values (theme() functions pending)
 - **Performance**: Static JSON generation, service worker caching, minimal dependencies
-- **Accessibility**: WCAG 2.1 AA compliance with screen reader support and keyboard navigation
+- **Accessibility**: WCAG 2.1 AA compliance with comprehensive ARIA implementation, screen reader support, and keyboard navigation
+- **ProfileImage System**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features
+- **Component Testing**: 64+ Jest tests including accessibility validation and ARIA compliance
 - **PWA**: Offline support, app shortcuts, installable with custom icons
 
 
@@ -482,3 +540,4 @@ npm run generate:utilities  # Generate utilities JSON only
 ---
 *For project history and detailed changes, see [HISTORY.md](./HISTORY.md)*
 - when committing, update the Markdown files, run tests (lint, unit, e2e, build), then git add & commit.
+- always update, or add, tests for all (unit, e2e, etc.) whenever possible, and before committing work.
