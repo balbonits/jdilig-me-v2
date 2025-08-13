@@ -280,6 +280,25 @@ Reusable utility types and UI definitions:
 - **HISTORY.md**: Historical changes and major updates
 - **TECH_DEBT.md**: Refactoring plans and technical debt tracking
 
+## 🔗 Technical References & Best Practices
+
+### Component Libraries & UI Frameworks
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Tailwind UI](https://tailwindcss.com/plus)** - Premium UI components by Tailwind creators
+- **[Headless UI](https://headlessui.com/)** - Unstyled, accessible UI components for React
+- **[Radix UI](https://www.radix-ui.com/)** - Low-level UI primitives with accessibility
+- **[Shadcn UI](https://ui.shadcn.com/)** - Modern component library using Radix UI + Tailwind
+
+### React & Next.js Resources
+- **[Next.js Documentation](https://nextjs.org/docs)** - React framework for production
+- **[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)** - Testing utilities for React
+- **[Playwright](https://playwright.dev/)** - End-to-end testing framework
+
+### Development Tools
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety and developer experience
+- **[ESLint](https://eslint.org/)** - Code quality and consistency
+- **[Jest](https://jestjs.io/)** - JavaScript testing framework
+
 ## 🌟 Recent Highlights
 
 - **ProfileImage Component**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features

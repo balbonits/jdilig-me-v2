@@ -18,9 +18,11 @@
   "test:all": "npm run test && npm run test:e2e",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "generate": "npm run generate:exercises && npm run generate:utilities",
+    "generate": "npm run generate:exercises && npm run generate:utilities && npm run generate:projects",
     "generate:exercises": "ts-node scripts/generate-exercises.ts",
-    "generate:utilities": "ts-node scripts/generate-utilities.ts"
+    "generate:utilities": "ts-node scripts/generate-utilities.ts",
+    "generate:projects": "ts-node scripts/generate-projects.ts",
+    "process-images": "ts-node scripts/process-project-images.ts"
   },
   "dependencies": {
     "next": "15.4.5",

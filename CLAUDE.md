@@ -540,12 +540,44 @@ import { ProfileImage } from '@/components/ui';
 
 ## Current Status
 - **Framework**: Next.js Pages Router with TypeScript
-- **Architecture**: Modular component system with unified UI primitives + ProfileImage variants
-- **Testing**: Jest + React Testing Library + Playwright E2E visual regression (64+ tests passing)
+- **Architecture**: Modular component system + unified UI primitives + ProfileImage variants + Complete project showcase system
+- **Testing**: Jest + React Testing Library + Playwright E2E visual regression (84+ tests passing)
 - **Styling**: Tailwind CSS v4 with CSS Modules and custom theme system
-- **Build**: Static site generation with 24+ pages, optimal solution detection
+- **Build**: Static site generation with 38+ pages + automated image processing + JSON consolidation pipelines
 - **Quality**: Full ESLint compliance, comprehensive accessibility testing, multi-browser E2E coverage
 - **Accessibility**: WCAG 2.1 AA compliant with complete ARIA implementation and screen reader support
+- **Project System**: Complete automated showcase with PROJECT.md workflow, image processing, and responsive design
+
+## Project Showcase System
+
+### **Complete Implementation** ✅
+- **Hero banner cards** matching Code page design with gradients and hover effects
+- **Screenshots moved to Project Overview** (first section) with modal interactions
+- **Individual JSON files** per project for scalable management
+- **Automated image processing** with naming convention: `[number]-[category]-[description].[ext]`
+- **PROJECT.md workflow**: Each project documented in markdown, Claude extracts JSON data
+- **Build-time consolidation** similar to exercises/utilities system
+- **Type-safe interfaces** with comprehensive project data structure
+
+### **New Commands**
+```bash
+npm run process-images [slug]    # Process project images
+npm run generate:projects        # Generate projects JSON from individual files
+npm run generate                 # All generation (exercises + utilities + projects)
+```
+
+### **File Structure**
+```
+projects/[slug].json             # Individual project data
+raw-images/[slug]/              # Raw images with naming convention  
+[project]/PROJECT.md            # Complete project documentation
+public/projects.json            # Generated consolidated data
+```
+
+### **Naming Convention**
+- **Format**: `[number]-[category]-[description].[ext]`
+- **Categories**: `desktop` (1200×800), `mobile` (375×667), `tablet` (768×1024), `feature` (800×600)
+- **Auto-processing**: WebP + PNG output, thumbnails, quality optimization
 
 ## Key Technologies
 - **Theming**: Custom CSS variables with light/dark mode and system preference detection

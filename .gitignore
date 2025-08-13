@@ -46,6 +46,12 @@ next-env.d.ts
 # generated files
 /public/exercises.json
 /public/utilities.json
+/public/utilities/
+/public/projects.json
+/public/projects-index.json
+
+# raw image processing
+/raw-images/
 
 # temporary development files
 **/test-types.*
