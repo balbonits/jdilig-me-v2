@@ -262,13 +262,15 @@ src/
 │   └── ThemeContext.tsx   # Light/dark theme system
 ├── data/                  # Static data
 │   ├── resume.ts          # Personal info, experience, skills
-│   ├── projects.ts        # Portfolio projects
+│   ├── projects.ts        # Legacy projects data (deprecated)
 │   └── navigation.ts      # Site navigation items
 ├── exercises/             # Coding exercises (TypeScript files with metadata)
 ├── utilities/             # Utility functions (TypeScript files with examples)
 ├── interfaces/            # Domain-specific data structures
 │   ├── exercises.ts       # Exercise and example case interfaces
-│   └── utilities.ts       # Utility function interfaces
+│   ├── utilities.ts       # Utility function interfaces
+│   ├── projects.ts        # Project data interfaces
+│   └── shared.ts          # Shared interfaces and types
 ├── types/                 # Reusable utility types and UI definitions
 │   └── index.ts           # Common types, UI props, system enums
 ├── hooks/                 # Custom React hooks
@@ -276,9 +278,15 @@ src/
 ├── scripts/               # Build and generation scripts
 │   ├── generate-all.ts    # Generate all JSON files
 │   ├── generate-exercises.ts # Parse exercises to JSON
-│   └── generate-utilities.ts # Parse utilities to JSON
+│   ├── generate-utilities.ts # Parse utilities to JSON
+│   ├── generate-projects.ts  # Parse projects TypeScript modules to JSON
+│   └── process-project-images.ts # Image processing pipeline
 └── styles/                # Global styles
     └── globals.css        # Tailwind imports and theme variables
+projects/                  # Project data (TypeScript modules)
+└── personal-website-v2.ts # Individual project TypeScript files
+raw-images/                # Raw project images for processing
+└── {project-slug}/        # Project-specific image folders
 ```
 
 ## TypeScript Organization
@@ -446,9 +454,15 @@ npm run lint             # Run ESLint
 npm run test             # Run Jest tests
 npm run test:watch       # Run tests in watch mode
 npm run test:coverage    # Run tests with coverage
-npm run generate         # Generate exercises + utilities JSON
+npm run test:e2e         # Run Playwright E2E tests
+npm run test:all         # Run both unit and E2E tests
+npm run test:e2e:ui      # Run E2E tests with UI
+npm run test:e2e:headed  # Run E2E tests in headed mode
+npm run generate         # Generate exercises + utilities + projects JSON
 npm run generate:exercises  # Generate exercises JSON only
 npm run generate:utilities  # Generate utilities JSON only
+npm run generate:projects   # Generate projects JSON from TypeScript modules
+npm run process-images   # Process project images (requires slug parameter)
 ```
 
 ## Code Conventions
@@ -574,68 +588,103 @@ import { ProfileImage } from '@/components/ui';
 ### **Complete Implementation** ✅
 - **Hero banner cards** matching Code page design with gradients and hover effects
 - **Screenshots moved to Project Overview** (first section) with modal interactions
-- **Individual JSON files** per project for scalable management
+- **TypeScript modules** for type-safe project data management
 - **Automated image processing** with naming convention: `[number]-[category]-[description].[ext]`
-- **PROJECT.md workflow**: Each project documented in markdown, Claude extracts JSON data
 - **Build-time consolidation** similar to exercises/utilities system
+- **Comprehensive guide documentation** with multiple workflow approaches
 - **Type-safe interfaces** with comprehensive project data structure
 
-### **New Commands**
+### **Project System Commands**
 ```bash
-npm run process-images [slug]    # Process project images
-npm run generate:projects        # Generate projects JSON from individual files
+npm run process-images [slug]    # Process project images for specific project
+npm run process-images all       # Process images for all projects
+npm run generate:projects        # Generate projects JSON from TypeScript modules
 npm run generate                 # All generation (exercises + utilities + projects)
 ```
 
-
-### **File Structure (NEW: TypeScript Project Modules)**
+### **File Structure (TypeScript Project Modules)**
 ```
 projects/{project-name}.ts      # Individual project data as typed TS modules
 raw-images/{project-name}/      # Raw images with naming convention  
-{project-name}/PROJECT.md       # Complete project documentation
 public/projects.json            # Generated consolidated data
+public/projects-index.json      # Generated project index
 ```
 
-### **Project Data Module Pattern**
-- Each project is a TypeScript file: `/projects/{project-name}.ts`
-- Export a typed object using the `ProjectData` interface from `src/interfaces/projects.ts`:
+### **Project Data Module Implementation**
+Each project is a TypeScript file in `/projects/{project-name}.ts` that exports a typed object:
 
 ```ts
 import { ProjectData } from '@/interfaces/projects';
 
 const project: ProjectData = {
   slug: 'my-cool-project',
-  title: 'My Cool Project',
-  description: 'A short summary of the project.',
-  technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-  repoUrl: 'https://github.com/yourname/my-cool-project',
-  liveUrl: 'https://mycoolproject.com',
-  images: [
-    '/projects/my-cool-project/1-desktop-home.png',
-    '/projects/my-cool-project/2-mobile-feature.png'
-  ],
-  // ...other fields as defined in ProjectData
+  metadata: {
+    title: 'My Cool Project',
+    name: 'my-cool-project',
+    description: 'A short summary of the project.',
+    detailedDescription: 'Comprehensive description...',
+    category: 'Full-Stack Development',
+    status: 'completed',
+    startDate: '2024-01',
+    endDate: '2024-03',
+    duration: '3 months',
+    role: 'Full-Stack Developer',
+    difficulty: 'Hard',
+    featured: true
+  },
+  techStack: [{
+    category: 'Frontend Framework',
+    items: ['Next.js', 'TypeScript', 'Tailwind CSS']
+  }],
+  features: [{
+    title: 'Key Feature',
+    description: 'Feature description',
+    impact: 'Impact measurement'
+  }],
+  highlights: [{
+    title: 'Technical Achievement',
+    description: 'Implementation details',
+    achievements: ['Achievement 1', 'Achievement 2']
+  }],
+  links: [{
+    type: 'live',
+    url: 'https://example.com',
+    label: 'Live Demo'
+  }],
+  lessons: ['Learning 1', 'Learning 2'],
+  challenges: ['Challenge 1', 'Challenge 2'],
+  futureImprovements: ['Improvement 1', 'Improvement 2']
 };
 
 export default project;
 ```
 
-- Use named default exports for consistency (see ESLint rules).
-- The build/generation script will import all `.ts` files in `/projects`, consolidate them, and output `public/projects.json` for the site.
+### **Project Addition Workflow**
 
-### **Migration Notes**
-- Migrate existing `projects/*.json` files to `.ts` modules using the above pattern.
-- Update generation scripts to import and process TypeScript modules instead of JSON.
+**Simple Approach** (see `ADD_PROJECT_SIMPLE.md`):
+1. Upload images to `raw-images/{project-slug}/` following naming convention
+2. Write `PROJECT.md` with complete project documentation 
+3. Run `npm run process-images {slug}` and `npm run generate:projects`
+
+**Comprehensive Approach** (see `PROJECT_GUIDE.md`):
+- Detailed project data structure guide
+- Image processing workflow with `IMAGE_WORKFLOW.md`
+- Complete metadata collection checklist
+- Integration testing steps
 
 **Benefits:**
 - Type safety and autocompletion
 - Consistent with exercises/utilities system
-- Easier to extend and refactor
+- Comprehensive documentation guides
+- Automated image processing pipeline
+- Easy project addition workflow
 
-### **Naming Convention**
+### **Image Processing System**
 - **Format**: `[number]-[category]-[description].[ext]`
 - **Categories**: `desktop` (1200×800), `mobile` (375×667), `tablet` (768×1024), `feature` (800×600)
 - **Auto-processing**: WebP + PNG output, thumbnails, quality optimization
+- **Workflow Documentation**: Complete guide in `IMAGE_WORKFLOW.md`
+- **Simple Setup**: Drop images in `raw-images/{slug}/` and run processing command
 
 ## Key Technologies
 - **Theming**: Custom CSS variables with light/dark mode and system preference detection
@@ -680,6 +729,10 @@ export default project;
 - **CLAUDE.md**: Current project context and development guidelines
 - **HISTORY.md**: Historical changes and major updates
 - **TECH_DEBT.md**: Refactoring plans and technical debt tracking
+- **PROJECT_GUIDE.md**: Comprehensive guide for adding new projects
+- **ADD_PROJECT_SIMPLE.md**: Simplified project addition workflow
+- **IMAGE_WORKFLOW.md**: Image processing pipeline documentation
+- **PROJECT.md**: Project showcase data for the website itself
 
 ---
 *For project history and detailed changes, see [HISTORY.md](./HISTORY.md)*

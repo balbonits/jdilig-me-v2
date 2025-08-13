@@ -62,39 +62,76 @@ public/
   projects.json            # Consolidated project data (generated)
 ```
 
-## 🗂️ Projects Data Structure (NEW)
+## 🗂️ Project Showcase System
 
-Project data is now stored as individual TypeScript modules in the `projects/` directory. Each file exports a typed `ProjectData` object. The build script consolidates these into `public/projects.json`.
+### TypeScript Module Architecture
+Project data is stored as individual TypeScript modules in the `projects/` directory. Each file exports a typed `ProjectData` object with comprehensive metadata, features, tech stack, and more.
 
-**Example:**
+**Complete Example:**
 ```ts
 import { ProjectData } from '@/interfaces/projects';
 
 const project: ProjectData = {
   slug: 'my-cool-project',
-  title: 'My Cool Project',
-  description: 'A short summary of the project.',
-  technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-  repoUrl: 'https://github.com/yourname/my-cool-project',
-  liveUrl: 'https://mycoolproject.com',
-  images: [
-    '/projects/my-cool-project/1-desktop-home.png',
-    '/projects/my-cool-project/2-mobile-feature.png'
-  ],
-  // ...other fields as defined in ProjectData
+  metadata: {
+    title: 'My Cool Project',
+    name: 'my-cool-project',
+    description: 'A modern web application built with React and TypeScript.',
+    detailedDescription: 'Comprehensive description of the project...',
+    category: 'Full-Stack Development',
+    status: 'completed',
+    startDate: '2024-01',
+    endDate: '2024-03',
+    duration: '3 months',
+    role: 'Full-Stack Developer',
+    difficulty: 'Hard',
+    featured: true
+  },
+  techStack: [{
+    category: 'Frontend Framework',
+    items: ['Next.js', 'TypeScript', 'Tailwind CSS']
+  }],
+  features: [{
+    title: 'Key Feature',
+    description: 'Feature description',
+    impact: 'Impact measurement'
+  }],
+  highlights: [{
+    title: 'Technical Achievement',
+    description: 'Implementation details',
+    achievements: ['Achievement 1', 'Achievement 2']
+  }],
+  links: [{
+    type: 'live',
+    url: 'https://example.com',
+    label: 'Live Demo'
+  }],
+  lessons: ['Learning 1', 'Learning 2'],
+  challenges: ['Challenge 1', 'Challenge 2'],
+  futureImprovements: ['Improvement 1', 'Improvement 2']
 };
 
 export default project;
 ```
 
-**Migration:**
-- Migrate existing `projects/*.json` files to `.ts` modules using the above pattern.
-- Update generation scripts to import and process TypeScript modules instead of JSON.
+### Image Processing Pipeline
+Automated image optimization with naming convention detection:
+- **Format**: `[number]-[category]-[description].[ext]`
+- **Categories**: `desktop` (1200×800), `mobile` (375×667), `tablet` (768×1024), `feature` (800×600)
+- **Output**: WebP + PNG formats, thumbnails, quality optimization
+- **Commands**: `npm run process-images [slug]` or `npm run process-images all`
+
+### Project Addition Workflow
+1. **Simple**: Upload images to `raw-images/{slug}/`, write `PROJECT.md`, run processing
+2. **Comprehensive**: Follow `PROJECT_GUIDE.md` for detailed workflow
+3. **Documentation**: See `ADD_PROJECT_SIMPLE.md` and `IMAGE_WORKFLOW.md`
 
 **Benefits:**
 - Type safety and autocompletion
 - Consistent with exercises/utilities system
-- Easier to extend and refactor
+- Automated image processing pipeline
+- Comprehensive documentation guides
+- Easy project addition workflow
 
 ## 🎨 Component Architecture
 
@@ -282,12 +319,24 @@ npm run build
 ```bash
 npm run dev              # Start development server
 npm run dev:clean        # Clear cache and start dev server
+npm run dev:fresh        # Clear cache, regenerate JSON, and start dev server
 npm run build            # Generate JSON + build for production
+npm run build:next       # Build Next.js only
+npm run build:clean      # Clear cache and build
 npm run start            # Start production server
 npm run lint             # Run ESLint
 npm run test             # Run Jest unit tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage
 npm run test:e2e         # Run Playwright E2E tests
-npm run generate         # Generate exercises + utilities JSON
+npm run test:all         # Run both unit and E2E tests
+npm run test:e2e:ui      # Run E2E tests with UI
+npm run test:e2e:headed  # Run E2E tests in headed mode
+npm run generate         # Generate exercises + utilities + projects JSON
+npm run generate:exercises  # Generate exercises JSON only
+npm run generate:utilities  # Generate utilities JSON only
+npm run generate:projects   # Generate projects JSON from TypeScript modules
+npm run process-images   # Process project images (requires slug parameter)
 ```
 
 ## 🎨 TypeScript Organization
@@ -331,6 +380,10 @@ Reusable utility types and UI definitions:
 - **CLAUDE.md**: Current project context and development guidelines
 - **HISTORY.md**: Historical changes and major updates
 - **TECH_DEBT.md**: Refactoring plans and technical debt tracking
+- **PROJECT_GUIDE.md**: Comprehensive guide for adding new projects
+- **ADD_PROJECT_SIMPLE.md**: Simplified project addition workflow
+- **IMAGE_WORKFLOW.md**: Image processing pipeline documentation
+- **PROJECT.md**: Project showcase data for the website itself
 
 ## 🔗 Technical References & Best Practices
 

@@ -21,9 +21,20 @@
 
 This document tracks the historical development and major changes to the jdilig-me-v2 project.
 
-# August 2025
-- Migrated project data system to use TypeScript modules: `/projects/{project-name}.ts` exporting typed `ProjectData` objects
-- Updated documentation and build scripts to support new pattern
+## August 2025 - Project System & Documentation Improvements
+
+### Project Showcase System Migration (August 13, 2025)
+- **TypeScript Module Migration**: Migrated project data from JSON files to TypeScript modules in `/projects/{project-name}.ts`
+- **Type-Safe Project Data**: Each project exports typed `ProjectData` object with comprehensive metadata structure
+- **Enhanced Build System**: Added `generate-projects.ts` script and `process-project-images.ts` for automated workflows
+- **Comprehensive Documentation**: Added multiple guide files for different user needs:
+  - `PROJECT_GUIDE.md`: Complete project addition workflow with detailed templates
+  - `ADD_PROJECT_SIMPLE.md`: Simplified 2-step workflow for quick project additions
+  - `IMAGE_WORKFLOW.md`: Automated image processing pipeline documentation
+  - `PROJECT.md`: Project showcase data for the website itself
+- **Image Processing Pipeline**: Automated optimization with naming convention detection (`[number]-[category]-[description].[ext]`)
+- **New Commands**: Added `npm run process-images` and enhanced `npm run generate:projects`
+- **Documentation Updates**: Updated CLAUDE.md, README.md, and TECH_DEBT.md to reflect new project system
 
 ### Modal Component Implementation
 - **Modal UI Primitive**: Added a reusable, accessible Modal component to `src/components/ui/Modal/`

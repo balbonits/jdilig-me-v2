@@ -20,7 +20,7 @@ This document tracks technical debt and planned refactoring work to maintain cod
 ## Recently Completed ✅
 
 ### August 2025 - Testing & Design System Improvements
- Migrate project JSON files in /projects to TypeScript modules for type safety and consistency (see CLAUDE.md and README.md for pattern)
+- [x] Migrate project JSON files in /projects to TypeScript modules for type safety and consistency (see CLAUDE.md and README.md for pattern)
 ### Previously Completed 
 
 ## High Priority 🔴
