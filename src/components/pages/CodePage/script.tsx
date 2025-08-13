@@ -44,7 +44,6 @@ export default function CodePage() {
                   <span>Data Structures</span>
                 </div>
               </div>
-              <div className={styles.heroGradient}></div>
             </div>
           </Link>
 
@@ -80,7 +79,6 @@ export default function CodePage() {
                   <span>Frontend Focus</span>
                 </div>
               </div>
-              <div className={styles.heroGradient}></div>
             </div>
           </Link>
         </div>

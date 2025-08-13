@@ -3,9 +3,10 @@
 ## 🎯 **Super Simple Process**
 
 ### **What You Do:**
-1. Drop raw images in `raw-images/[project-slug]/`
-2. Run `npm run process-images [project-slug]`
-3. Add project data to `src/data/projects.ts`
+1. Create project folder: `/projects/{project-name}/`
+2. Drop raw images in `/projects/{project-name}/images/`
+3. Create/edit project data: `/projects/{project-name}.ts`
+4. Run `npm run process-images {project-name}`
 
 ### **What The Script Does:**
 - ✅ Auto-resizes to perfect dimensions
@@ -16,12 +17,15 @@
 
 ## 📋 **Quick Example**
 
-### **Input** (Your Raw Images - PNG/JPG Only)
+### **Project Structure** (Your Organization)
 ```
-raw-images/my-awesome-app/
-├── 01-desktop-homepage.png           (2560x1440, 2.3MB)
-├── 02-mobile-login.jpg               (750x1334, 1.8MB)  
-└── 03-feature-dashboard.png          (1920x1080, 1.5MB)
+projects/
+└── my-awesome-app/
+    ├── my-awesome-app.ts             (Project data & metadata)
+    └── images/                       (Raw images - PNG/JPG only)
+        ├── 01-desktop-homepage.png   (2560x1440, 2.3MB)
+        ├── 02-mobile-login.jpg       (750x1334, 1.8MB)
+        └── 03-feature-dashboard.png  (1920x1080, 1.5MB)
 ```
 
 ### **Output** (Auto-Generated)
@@ -85,7 +89,7 @@ screenshots: [
 brew install imagemagick
 
 # Process single project
-npm run process-images my-project-slug
+npm run process-images my-awesome-app
 
 # Process all projects at once  
 npm run process-images all
@@ -124,23 +128,55 @@ npm run process-images help
 
 ## 🎯 **Integration with Project Data**
 
-After processing images, update your project data:
+Your project data file contains both metadata and processed image paths:
 
 ```typescript
-// In src/data/projects.ts
-{
+// In projects/my-awesome-app/my-awesome-app.ts
+import { ProjectData } from '@/interfaces/projects';
+
+const project: ProjectData = {
   slug: 'my-awesome-app',
+  title: 'My Awesome App',
+  description: 'Amazing project description',
   // ... other metadata
   screenshots: [
     {
-      src: '/images/projects/my-awesome-app/homepage-screenshot-desktop.webp',
+      src: '/images/projects/my-awesome-app/01-desktop-homepage-desktop.webp',
       alt: 'Detailed description for screen readers',
-      caption: 'Short display caption',
+      caption: 'Homepage Dashboard',
       category: 'desktop' // matches processing output
+    },
+    {
+      src: '/images/projects/my-awesome-app/02-mobile-login-mobile.webp',
+      alt: 'Mobile login interface with clean design',
+      caption: 'Mobile Experience',
+      category: 'mobile'
     }
     // Add more screenshots...
   ]
-}
+};
+
+export default project;
 ```
 
 **Result**: Beautiful, fast-loading project showcase with responsive images and modal interactions! 🎉
+
+## 🎯 **Prototype Implementation**
+
+The **personal-website-v2** project has been migrated to the new consolidated structure and serves as the prototype:
+
+```
+projects/personal-website-v2/
+├── personal-website-v2.ts         # ✅ Project data & metadata  
+├── images/                        # ✅ Raw images location
+│   └── (ready for screenshots)
+└── PROJECT.md                     # ✅ Complete documentation
+```
+
+This structure demonstrates:
+- ✅ **Co-located data and images** for better organization
+- ✅ **TypeScript project modules** with full type safety
+- ✅ **Optional documentation** in PROJECT.md files
+- ✅ **Clear naming conventions** for consistency
+
+All future projects should follow this consolidated pattern!

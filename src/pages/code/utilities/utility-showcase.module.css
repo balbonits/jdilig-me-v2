@@ -256,6 +256,19 @@
   white-space: pre-wrap;
 }
 
+.modalCode {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--foreground);
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
 /* Mobile Responsive */
 @media (max-width: 767px) {
   .subsection {

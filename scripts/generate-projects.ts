@@ -77,7 +77,7 @@ class ProjectGenerator {
   }
 
   /**
-   * Process all project files
+   * Process all project files in folder structure
    */
   private processProjects(): void {
     if (!fs.existsSync(PROJECTS_DIR)) {
@@ -86,40 +86,91 @@ class ProjectGenerator {
       return;
     }
 
-    const files = fs.readdirSync(PROJECTS_DIR)
-      .filter(file => file.endsWith('.ts') && !file.endsWith('.d.ts'))
+    const items = fs.readdirSync(PROJECTS_DIR, { withFileTypes: true });
+    
+    // Look for project folders
+    const projectFolders = items
+      .filter(item => item.isDirectory())
+      .map(item => item.name)
       .sort();
 
-    if (files.length === 0) {
+    // Also check for legacy individual .ts files in root
+    const legacyFiles = items
+      .filter(item => item.isFile() && item.name.endsWith('.ts') && !item.name.endsWith('.d.ts'))
+      .map(item => item.name);
+
+    if (projectFolders.length === 0 && legacyFiles.length === 0) {
       console.log('⚠️  No project TypeScript files found in projects/');
       return;
     }
 
-    console.log(`🔍 Found ${files.length} project files`);
+    console.log(`🔍 Found ${projectFolders.length} project folders + ${legacyFiles.length} legacy files`);
 
-    for (const file of files) {
-      const filePath = path.join(PROJECTS_DIR, file);
-      console.log(`Processing ${file}...`);
+    // Process project folders first (new structure)
+    for (const folderName of projectFolders) {
+      const folderPath = path.join(PROJECTS_DIR, folderName);
+      const tsFileName = `${folderName}.ts`;
+      const tsFilePath = path.join(folderPath, tsFileName);
+      
+      if (!fs.existsSync(tsFilePath)) {
+        console.log(`⚠️  Skipping ${folderName}/ - no ${tsFileName} found`);
+        continue;
+      }
+
+      console.log(`Processing ${folderName}/${tsFileName}...`);
       try {
         // Use require to import the TS module (must be run with ts-node)
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const mod = require(filePath);
+        const mod = require(tsFilePath);
         const project = mod.default as ProjectData;
+        
         if (!project.slug || !project.metadata?.title) {
-          console.error(`❌ Invalid project structure in ${file}`);
+          console.error(`❌ Invalid project structure in ${folderName}/${tsFileName}`);
           continue;
         }
+        
         // Ensure required fields have defaults
         project.screenshots = project.screenshots || [];
         project.metrics = project.metrics || [];
         project.lessons = project.lessons || [];
         project.challenges = project.challenges || [];
         project.futureImprovements = project.futureImprovements || [];
+        
         this.projects.push(project);
         this.summaries.push(this.createSummary(project));
-        console.log(`✓ Processed ${file}`);
+        console.log(`✓ Processed ${folderName}/${tsFileName}`);
       } catch (error) {
-        console.error(`❌ Error loading ${file}:`, error);
+        console.error(`❌ Error loading ${folderName}/${tsFileName}:`, error);
+      }
+    }
+
+    // Process legacy individual files (fallback for migration)
+    for (const file of legacyFiles) {
+      const filePath = path.join(PROJECTS_DIR, file);
+      console.log(`Processing legacy file ${file}...`);
+      try {
+        // Use require to import the TS module
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const mod = require(filePath);
+        const project = mod.default as ProjectData;
+        
+        if (!project.slug || !project.metadata?.title) {
+          console.error(`❌ Invalid project structure in ${file}`);
+          continue;
+        }
+        
+        // Ensure required fields have defaults
+        project.screenshots = project.screenshots || [];
+        project.metrics = project.metrics || [];
+        project.lessons = project.lessons || [];
+        project.challenges = project.challenges || [];
+        project.futureImprovements = project.futureImprovements || [];
+        
+        this.projects.push(project);
+        this.summaries.push(this.createSummary(project));
+        console.log(`✓ Processed legacy ${file}`);
+      } catch (error) {
+        console.error(`❌ Error loading legacy ${file}:`, error);
       }
     }
   }

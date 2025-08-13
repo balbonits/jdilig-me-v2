@@ -67,8 +67,8 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                           <span key={techIndex}>{tech}</span>
                         ))}
                       </div>
-                      <div style={{marginTop: '1rem'}}>
-                        <span style={{fontWeight: 500, color: 'var(--primary)'}}>View Project Details →</span>
+                      <div className={styles.heroFooter}>
+                        <span className={styles.linkText}>View Project Details →</span>
                       </div>
                     </div>
                   </div>
@@ -121,8 +121,8 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                           <span key={techIndex}>{tech}</span>
                         ))}
                       </div>
-                      <div style={{marginTop: '1rem'}}>
-                        <span style={{fontWeight: 500, color: 'var(--primary)'}}>View Project Details →</span>
+                      <div className={styles.heroFooter}>
+                        <span className={styles.linkText}>View Project Details →</span>
                       </div>
                     </div>
                   </div>

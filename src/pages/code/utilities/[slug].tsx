@@ -187,7 +187,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
       />
       {modal.isOpen && modal.data && (
         <Modal open onClose={modal.closeModal} title={modal.data.description}>
-          <pre className={styles.exampleCode} style={{ fontSize: '1.1rem', padding: '1.5rem', background: 'var(--card)' }}>
+          <pre className={styles.modalCode}>
             <code>{modal.data.code}</code>
           </pre>
         </Modal>

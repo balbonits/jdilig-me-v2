@@ -1,9 +1,12 @@
 import React from 'react';
 import { PageContainer, SectionContainer, Section } from '@/components/ui';
 import HeroBanner from '@/components/ui/HeroBanner';
+import { useScreenshotMode } from '@/hooks/useScreenshotMode';
 import styles from './style.module.css';
 
 export default function ResumeDisplay() {
+  const { hideShareLinks } = useScreenshotMode();
+
   return (
     <PageContainer>
       {/* Hero Header */}
@@ -35,36 +38,38 @@ export default function ResumeDisplay() {
           className="resume-summary-hero"
         />
 
-        {/* Links Banner */}
-        <div className={styles.linksGrid}>
-          <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.linkedin}`}>
-            <div className={styles.linkContent}>
-              <div className={styles.linkIcon}>💼</div>
-              <div className={styles.linkText}>
-                <div className={styles.linkTitle}>LinkedIn Profile</div>
-                <div className={styles.linkUrl}>linkedin.com/in/rjdilig</div>
+        {/* Links Banner - Hidden in screenshot mode */}
+        {!hideShareLinks && (
+          <div className={styles.linksGrid}>
+            <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.linkedin}`}>
+              <div className={styles.linkContent}>
+                <div className={styles.linkIcon}>💼</div>
+                <div className={styles.linkText}>
+                  <div className={styles.linkTitle}>LinkedIn Profile</div>
+                  <div className={styles.linkUrl}>linkedin.com/in/rjdilig</div>
+                </div>
               </div>
-            </div>
-          </a>
-          <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.github}`}>
-            <div className={styles.linkContent}>
-              <div className={styles.linkIcon}>💻</div>
-              <div className={styles.linkText}>
-                <div className={styles.linkTitle}>Site Source Code</div>
-                <div className={styles.linkUrl}>github.com/balbonits/jdilig-me-v2</div>
+            </a>
+            <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.github}`}>
+              <div className={styles.linkContent}>
+                <div className={styles.linkIcon}>💻</div>
+                <div className={styles.linkText}>
+                  <div className={styles.linkTitle}>Site Source Code</div>
+                  <div className={styles.linkUrl}>github.com/balbonits/jdilig-me-v2</div>
+                </div>
               </div>
-            </div>
-          </a>
-          <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
-            <div className={styles.linkContent}>
-              <div className={styles.linkIcon}>⚡</div>
-              <div className={styles.linkText}>
-                <div className={styles.linkTitle}>GitHub Projects</div>
-                <div className={styles.linkUrl}>github.com/balbonits</div>
+            </a>
+            <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+              <div className={styles.linkContent}>
+                <div className={styles.linkIcon}>⚡</div>
+                <div className={styles.linkText}>
+                  <div className={styles.linkTitle}>GitHub Projects</div>
+                  <div className={styles.linkUrl}>github.com/balbonits</div>
+                </div>
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
+        )}
 
       {/* Skills */}
       <Section title="Skills">

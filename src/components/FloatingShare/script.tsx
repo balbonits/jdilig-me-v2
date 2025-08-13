@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { cn, getShortenedUrlSafe } from '@/utils';
 import { generateShareUrls, getPageSEO } from '@/lib/seo';
 import { getCanonicalUrl } from '@/config/site';
+import { useScreenshotMode } from '@/hooks/useScreenshotMode';
 import styles from './style.module.css';
 
 interface ShareData {
@@ -13,6 +14,7 @@ interface ShareData {
 }
 
 export default function FloatingShare() {
+  const { hideShareLinks } = useScreenshotMode();
   const [isExpanded, setIsExpanded] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [shortenedUrl, setShortenedUrl] = useState<string>('');
@@ -80,6 +82,11 @@ export default function FloatingShare() {
       setTimeout(() => setCopySuccess(false), 2000);
     }
   };
+
+  // Hide entire component in screenshot mode (after all hooks)
+  if (hideShareLinks) {
+    return null;
+  }
 
   return (
     <div className={styles.floatingShare}>

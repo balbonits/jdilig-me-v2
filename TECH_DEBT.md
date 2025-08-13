@@ -25,7 +25,107 @@ This document tracks technical debt and planned refactoring work to maintain cod
 
 ## High Priority 🔴
 
-### 1. Component Audit & Standardization
+### 1. Google Analytics Integration for Performance Metrics
+**Problem**: No analytics tracking for Core Web Vitals, Lighthouse scores, and user engagement metrics
+**Business Impact**: Unable to monitor site performance, user behavior, or SEO effectiveness
+
+**Implementation Requirements**:
+- **Google Analytics 4 (GA4)**: User engagement, page views, traffic sources
+- **Core Web Vitals tracking**: LCP, FID, CLS metrics for performance monitoring
+- **Lighthouse CI integration**: Automated performance scoring in build pipeline
+- **Custom events**: Code showcase interactions, project views, contact form submissions
+- **Privacy compliance**: GDPR-friendly implementation with consent management
+
+**Technical Implementation**:
+```typescript
+// _app.tsx - GA4 initialization
+import { GoogleAnalytics } from '@next/third-parties/google'
+
+// Custom tracking hooks
+const useAnalytics = () => ({
+  trackCodeView: (exerciseSlug: string) => gtag('event', 'code_view', { exercise: exerciseSlug }),
+  trackProjectView: (projectSlug: string) => gtag('event', 'project_view', { project: projectSlug }),
+  trackPerformance: (metric: string, value: number) => gtag('event', 'performance', { metric, value })
+});
+
+// Core Web Vitals reporting
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  gtag('event', metric.name, {
+    custom_map: { metric_id: 'dimension1' },
+    metric_id: metric.id,
+    metric_value: Math.round(metric.value),
+    metric_delta: metric.delta,
+  });
+}
+```
+
+**Lighthouse Integration**:
+```yaml
+# .github/workflows/lighthouse.yml
+- name: Lighthouse CI
+  uses: treosh/lighthouse-ci-action@v9
+  with:
+    configPath: './lighthouserc.json'
+    uploadArtifacts: true
+    temporaryPublicStorage: true
+```
+
+**Benefits**:
+- Monitor real user performance metrics
+- Track feature usage and engagement
+- Identify performance regressions early
+- SEO optimization insights
+- Data-driven UX improvements
+
+**Priority**: HIGH - Essential for production monitoring and optimization
+
+### 2. Site Design Enhancement for Recruiter Appeal
+**Problem**: Current design lacks visual impact and professional polish expected by recruiters and hiring managers
+**Business Impact**: Reduced interview opportunities and professional impression
+
+**Design Enhancement Requirements**:
+- **Visual Hierarchy**: Strengthen typography, spacing, and content organization for better scanability
+- **Professional Polish**: Enhance color scheme, shadows, and micro-interactions for enterprise appeal
+- **Skills Showcase**: More prominent display of technical competencies and achievements
+- **Results Focus**: Highlight quantifiable impact (performance improvements, user metrics, scale)
+- **Industry Standards**: Align with modern portfolio design expectations in tech recruiting
+
+**Specific Improvements Needed**:
+- **Hero Section**: More compelling value proposition with clear technical positioning
+- **Experience Cards**: Emphasize company logos, impact metrics, and technology stacks
+- **Skills Matrix**: Visual skill proficiency indicators and certification highlights
+- **Project Portfolio**: Professional case study format with before/after metrics
+- **Contact/CTA**: Clear calls-to-action for hiring managers (schedule interview, download resume)
+
+**Visual Design System**:
+```css
+/* Professional color palette */
+--primary-brand: #2563eb;      /* Professional blue */
+--success-accent: #059669;     /* Achievement green */
+--expertise-highlight: #7c3aed; /* Technical purple */
+--corporate-neutral: #64748b;   /* Enterprise gray */
+
+/* Typography hierarchy */
+--font-display: 'Inter', system-ui;    /* Modern, readable headers */
+--font-technical: 'Fira Code', monospace; /* Code/technical content */
+--spacing-enterprise: 1.5rem 2rem;     /* Professional spacing */
+```
+
+**Implementation Strategy**:
+1. **Research Phase**: Analyze top developer portfolios and recruiting preferences
+2. **Design System**: Create professional component variants with recruiter focus
+3. **Content Strategy**: Rewrite copy with business impact and technical authority
+4. **A/B Testing**: Compare current vs enhanced design for engagement metrics
+
+**Success Metrics**:
+- Increased time-on-site and page engagement
+- Higher contact form submission rates
+- Positive feedback from recruiters and hiring managers
+- Improved professional network referrals
+
+**Priority**: HIGH - Directly impacts career opportunities and professional growth
+
+### 3. Component Audit & Standardization
 **Problem**: AboutContent has repetitive card patterns that violate DRY principles
 - Journey cards, experience banners, skill banners all follow similar patterns
 - 600+ lines of repetitive CSS with slight variations
@@ -85,6 +185,7 @@ src/components/ui/
 - Consolidate gradient definitions into single source
 - Unified hover effect patterns
 - Convert mixed units to consistent rem-based system
+- **Remove `!important` CSS rules**: Replace with proper CSS cascade and specificity hierarchy
 
 **Impact**: Critical for maintainability and design consistency
 
@@ -145,7 +246,79 @@ src/components/ui/
 
 ## Medium Priority 🟡
 
-### 4. Design System Foundation
+### 4. Expand Unit Test Coverage
+**Problem**: Insufficient unit test coverage for critical components and utilities
+**Current State**: Basic Jest setup with limited component testing
+
+**Testing Gaps Identified**:
+- **UI Components**: Most components in `src/components/ui/` lack comprehensive unit tests
+- **Utility Functions**: Functions in `src/utilities/` need thorough test coverage
+- **Page Components**: AboutContent, CodePage, ProjectsPage need component behavior testing
+- **Custom Hooks**: `useScreenshotMode`, `useTheme` missing test coverage
+- **Integration Tests**: Component composition and prop passing not tested
+
+**Implementation Requirements**:
+```typescript
+// Component testing patterns
+describe('PageHeader', () => {
+  it('renders title and subtitle correctly', () => { /* ... */ });
+  it('forwards className prop', () => { /* ... */ });
+  it('handles optional props gracefully', () => { /* ... */ });
+});
+
+// Utility function testing
+describe('debounce utility', () => {
+  it('delays function execution', () => { /* ... */ });
+  it('cancels previous calls', () => { /* ... */ });
+  it('handles edge cases', () => { /* ... */ });
+});
+```
+
+**Coverage Targets**:
+- **UI Components**: 85%+ coverage
+- **Utility Functions**: 95%+ coverage  
+- **Custom Hooks**: 90%+ coverage
+- **Integration Tests**: Critical user flows covered
+
+**Priority**: MEDIUM - Essential for maintainable codebase and confident refactoring
+
+### 5. Comprehensive E2E Test Specification Files
+**Problem**: E2E test coverage needs expansion beyond current Playwright implementation
+**Current State**: Basic E2E tests for page navigation and visual regression
+
+**Missing E2E Coverage**:
+- **Code Showcase Workflows**: Algorithm exercise interactions, solution tab switching
+- **Project Gallery Interactions**: Modal opening, image gallery navigation, project filtering
+- **Contact Form Submission**: Form validation, error handling, success states
+- **Theme Switching**: Dark/light mode transitions across all pages
+- **Mobile Responsive Testing**: Touch interactions, mobile navigation, responsive layouts
+- **Accessibility Testing**: Screen reader compatibility, keyboard navigation flows
+
+**Test Specifications Needed**:
+```typescript
+// Code showcase workflow
+describe('Algorithm Exercise Interaction', () => {
+  it('displays multiple solutions with complexity analysis', () => { /* ... */ });
+  it('allows copying code snippets', () => { /* ... */ });
+  it('marks optimal solutions with badges', () => { /* ... */ });
+});
+
+// Project gallery
+describe('Project Portfolio Navigation', () => {
+  it('opens project modals with correct content', () => { /* ... */ });
+  it('navigates through project screenshots', () => { /* ... */ });
+  it('filters projects by technology', () => { /* ... */ });
+});
+```
+
+**Cross-Browser Requirements**:
+- **Desktop**: Chrome, Firefox, Safari
+- **Mobile**: iOS Safari, Android Chrome
+- **Accessibility**: Screen reader testing with NVDA/VoiceOver
+
+**Priority**: MEDIUM - Critical for production confidence and user experience validation
+
+### 6. Design System Foundation
 **Problem**: Inconsistent design values across components
 - No centralized design tokens
 - Magic numbers throughout CSS
@@ -312,7 +485,69 @@ const { ref, inView } = useInView({ triggerOnce: true });
 
 ## Low Priority 🟢
 
-### 6. Enhanced Card & HeroBanner Variants
+### 6. Implement Two-Tone Gradient Design Pattern
+**Context**: Proper architectural approach for gradient backgrounds using pseudo-elements
+**Current Issue**: Previous gradient implementation used sibling divs instead of true background layers
+
+**Recommended Implementation Pattern**:
+```css
+.heroBanner {
+  position: relative;
+  /* base styles */
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2; /* above the pseudo-element background */
+}
+```
+
+**Benefits of Pseudo-Element Approach**:
+- ✅ True background layer positioning
+- ✅ No extra DOM elements needed
+- ✅ Content naturally flows in foreground
+- ✅ Cleaner HTML structure
+- ✅ Better semantic meaning
+- ✅ Easier to maintain and theme
+
+**HTML Structure**:
+```html
+<div class="heroBanner">
+  <div class="heroContent">
+    <!-- All content here -->
+  </div>
+  <!-- No separate gradient div needed -->
+</div>
+```
+
+**Priority**: LOW - Focus on component architecture first, gradients are aesthetic enhancement
+
+### 7. Re-implement Gradient System (Future Enhancement)
+**Context**: Gradients were removed from components for consistency and maintainability
+**Future Goal**: Add gradient variants back to components using design token system
+
+**Current State**: Components use solid colors and CSS custom properties
+**Future Implementation**: 
+- Use centralized gradient design tokens in `/src/styles/tokens.css`
+- Add gradient variant props to Card and HeroBanner components
+- Apply gradients through semantic aliases (e.g., `--gradient-primary`, `--gradient-success`)
+
+**Benefits**: Visual richness while maintaining design system consistency
+**Priority**: LOW - Focus on component architecture first, gradients are aesthetic enhancement
+
+### 7. Enhanced Card & HeroBanner Variants
 **Current**: Separate GradientCard concept planned
 **New Approach**: Enhance existing `Card` and `HeroBanner` components with variant props
 

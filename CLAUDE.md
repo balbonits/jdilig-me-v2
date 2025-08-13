@@ -283,10 +283,11 @@ src/
 │   └── process-project-images.ts # Image processing pipeline
 └── styles/                # Global styles
     └── globals.css        # Tailwind imports and theme variables
-projects/                  # Project data (TypeScript modules)
-└── personal-website-v2.ts # Individual project TypeScript files
-raw-images/                # Raw project images for processing
-└── {project-slug}/        # Project-specific image folders
+projects/                  # Project data & images (consolidated)
+└── personal-website-v2/   # Individual project folders
+    ├── personal-website-v2.ts # Project TypeScript module
+    ├── images/             # Raw images for processing  
+    └── PROJECT.md          # Optional project documentation
 ```
 
 ## TypeScript Organization
@@ -602,16 +603,22 @@ npm run generate:projects        # Generate projects JSON from TypeScript module
 npm run generate                 # All generation (exercises + utilities + projects)
 ```
 
-### **File Structure (TypeScript Project Modules)**
+### **File Structure (Consolidated Project Organization)**
 ```
-projects/{project-name}.ts      # Individual project data as typed TS modules
-raw-images/{project-name}/      # Raw images with naming convention  
+projects/
+└── {project-name}/
+    ├── {project-name}.ts       # Individual project data as typed TS modules
+    ├── images/                 # Raw images with naming convention
+    │   ├── 01-desktop-home.png
+    │   ├── 02-mobile-feature.png
+    │   └── ...
+    └── PROJECT.md              # Complete project documentation (optional)
 public/projects.json            # Generated consolidated data
 public/projects-index.json      # Generated project index
 ```
 
 ### **Project Data Module Implementation**
-Each project is a TypeScript file in `/projects/{project-name}.ts` that exports a typed object:
+Each project is organized as a folder in `/projects/{project-name}/` with a TypeScript file `{project-name}.ts` that exports a typed object:
 
 ```ts
 import { ProjectData } from '@/interfaces/projects';

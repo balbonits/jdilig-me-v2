@@ -73,7 +73,7 @@ class ImageProcessor {
 
   constructor(options: ProcessingOptions = {}) {
     this.options = options;
-    this.inputDir = options.inputDir || path.join(process.cwd(), 'raw-images');
+    this.inputDir = options.inputDir || path.join(process.cwd(), 'projects');
     this.outputDir = options.outputDir || path.join(process.cwd(), 'public', 'images', 'projects');
   }
 
@@ -229,7 +229,8 @@ class ImageProcessor {
   async processProject(projectSlug: string): Promise<void> {
     console.log(`\n🚀 Processing images for project: ${projectSlug}`);
     
-    const inputPath = path.join(this.inputDir, projectSlug);
+    // New structure: projects/{project-name}/images/
+    const inputPath = path.join(this.inputDir, projectSlug, 'images');
     const imageFiles = this.getImageFiles(inputPath);
     
     if (imageFiles.length === 0) {
@@ -284,12 +285,14 @@ class ImageProcessor {
     console.log('   Ubuntu: sudo apt-get install imagemagick');
     console.log('   Windows: Download from https://imagemagick.org/script/download.php\n');
     
-    console.log('2. Create input directory with naming convention:');
-    console.log('   raw-images/');
+    console.log('2. Create project folders with images:');
+    console.log('   projects/');
     console.log('   ├── my-project-1/');
-    console.log('   │   ├── 01-desktop-homepage.png');
-    console.log('   │   ├── 02-mobile-login.jpg');
-    console.log('   │   └── 03-feature-dashboard.png');
+    console.log('   │   ├── my-project-1.ts       # Project data');
+    console.log('   │   └── images/               # Raw images');
+    console.log('   │       ├── 01-desktop-homepage.png');
+    console.log('   │       ├── 02-mobile-login.jpg');
+    console.log('   │       └── 03-feature-dashboard.png');
     console.log('   └── my-project-2/');
     console.log('       ├── 01-desktop-main.png');
     console.log('       └── 02-mobile-app.png\n');

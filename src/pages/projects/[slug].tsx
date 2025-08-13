@@ -147,7 +147,6 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
                 src={screenshot.src}
                 alt={screenshot.alt}
                 fill
-                style={{ objectFit: 'cover' }}
                 className={styles.screenshot}
               />
               <div className={styles.screenshotOverlay}>
@@ -171,7 +170,6 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
               alt={modal.data.alt}
               width={1200}
               height={800}
-              style={{ width: '100%', height: 'auto' }}
               className={styles.modalImage}
             />
             <p className={styles.modalCaption}>{modal.data.alt}</p>

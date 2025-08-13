@@ -2,6 +2,7 @@
 
 import { generateExercisesJSON } from './generate-exercises';
 import { generateUtilitiesJSON } from './generate-utilities';
+import ProjectGenerator from './generate-projects';
 
 async function generateAll() {
   console.log('🔄 Generating all code data...\n');
@@ -12,6 +13,10 @@ async function generateAll() {
     
     console.log('\n🛠️ Generating utilities...');
     await generateUtilitiesJSON();
+    
+    console.log('\n📁 Generating projects...');
+    const projectGenerator = new ProjectGenerator();
+    projectGenerator.run();
     
     console.log('\n✅ All code data generated successfully!');
   } catch (error) {

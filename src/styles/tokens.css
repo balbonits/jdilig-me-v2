@@ -1,0 +1,94 @@
+/* Design Tokens - Centralized Design System */
+
+:root {
+  /* ========================================
+     GRADIENT DESIGN TOKENS
+     ======================================== */
+  
+  /* Primary Brand Gradients */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple/Blue - Most used */
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink/Red - Very common */
+  --gradient-tertiary: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); /* Teal/Green - Success */
+  --gradient-quaternary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Blue - LinkedIn style */
+  
+  /* Company Theme Gradients */
+  --gradient-aws: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%); /* AWS Blue */
+  --gradient-fox: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); /* Fox Orange */
+  --gradient-tbn: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%); /* TBN Purple */
+  --gradient-adp: linear-gradient(135deg, #e53e3e 0%, #dd6b20 100%); /* ADP Red/Orange */
+  
+  /* State Gradients */
+  --gradient-success: var(--gradient-tertiary); /* Alias for teal/green */
+  --gradient-warning: var(--gradient-adp); /* Alias for red/orange */
+  --gradient-info: var(--gradient-quaternary); /* Alias for blue */
+  --gradient-accent: linear-gradient(135deg, #ec4899 0%, #ef4444 100%); /* Pink accent */
+  
+  /* Specialty Gradients */
+  --gradient-emerald: linear-gradient(135deg, #0d7377 0%, #2dd4bf 100%); /* Emerald tones */
+  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%); /* Pink to yellow */
+  
+  /* Decorative/Glass Morphism */
+  --gradient-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  --gradient-glass-dark: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+  
+  /* Hover State Variants (Darker versions) */
+  --gradient-primary-hover: linear-gradient(135deg, #5a5fcf 0%, #6a3d94 100%);
+  --gradient-secondary-hover: linear-gradient(135deg, #d182e0 0%, #dc4c60 100%);
+  --gradient-quaternary-hover: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%);
+  --gradient-fox-hover: linear-gradient(135deg, #e55a5a 0%, #e6b84a 100%);
+  
+  /* ========================================
+     SPACING DESIGN TOKENS  
+     ======================================== */
+  
+  /* Spacing Scale (0.25rem = 4px base unit) */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px - Base */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  
+  /* ========================================
+     TYPOGRAPHY DESIGN TOKENS
+     ======================================== */
+  
+  /* Font Size Scale (Perfect Fourth 1.333 ratio) */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px - Base */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 2.5rem;     /* 40px */
+  --text-6xl: 3rem;       /* 48px */
+  
+  /* ========================================
+     SEMANTIC ALIASES
+     ======================================== */
+  
+  /* Component-specific gradient aliases */
+  --gradient-linkedin: var(--gradient-quaternary);
+  --gradient-github: var(--gradient-fox);
+  --gradient-journey-1: var(--gradient-tertiary);
+  --gradient-journey-2: var(--gradient-sunset);
+  --gradient-journey-3: var(--gradient-quaternary);
+  --gradient-experience-aws: var(--gradient-aws);
+  --gradient-experience-fox: var(--gradient-fox);
+  --gradient-experience-tbn: var(--gradient-tbn);
+  --gradient-experience-adp: var(--gradient-adp);
+}
+
+/* Theme variants for dark mode */
+:global(.dark) {
+  /* Adjust gradient opacity or variants for dark theme if needed */
+  --gradient-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
