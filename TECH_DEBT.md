@@ -1,3 +1,7 @@
+## [2025-08-12] E2E Playwright Test Policy
+- E2E Playwright test failures (including visual snapshot mismatches) are now build-blocking.
+- Playwright snapshot maintenance is a required part of the commit workflow.
+- This helps catch UI/data issues before they reach production.
 # August 2025
 - Favicon and app icon implementation and E2E test coverage added. No tech debt for favicon system.
 # [2025-08-12] (continued)
@@ -16,23 +20,8 @@ This document tracks technical debt and planned refactoring work to maintain cod
 ## Recently Completed ✅
 
 ### August 2025 - Testing & Design System Improvements
-- ✅ **Playwright E2E Testing Framework**: Comprehensive visual regression testing with 18 baseline snapshots
-- ✅ **Gradient Design System Simplification**: Unified all gradients to clean 2-color transitions for visual consistency
-- ✅ **Spacing Standardization**: Fixed inconsistent vertical spacing between sections (standardized to 3rem)
-- ✅ **Visual Quality Assurance**: All linting, unit tests, and build verification passing
-
+ Migrate project JSON files in /projects to TypeScript modules for type safety and consistency (see CLAUDE.md and README.md for pattern)
 ### Previously Completed 
-- ✅ Modularized type interfaces (shared/exercises/utilities)
-- ✅ Created generic HeroBanner component with className overrides
-- ✅ Removed legacy hero banner CSS and global style pollution
-- ✅ Fixed build script imports and utility interface usage
-- ✅ Implemented modular CSS pattern for HeroBanner
-- ✅ Added custom classnames utility for conditional CSS
-- ✅ Updated all exercises with proper metadata and solution tabs
-- ✅ **Algorithm Exercise Enhancements**: Added solution metadata and tabbed interfaces
-- ✅ **Tailwind v4 Theme Functions**: Established fallback CSS pattern (working solution)
-- ✅ **Build System Cleanup**: Removed duplicate JS/TS build scripts, unified on TypeScript-only approach
-- ✅ **System Stability**: Resolved infinite refresh bug through systematic component rebuild
 
 ## High Priority 🔴
 

@@ -224,14 +224,9 @@ This project represents a complete rebuild of my personal website with a focus o
 
 ### **Technical Achievements**
 
-- **84+ tests** across 5 browser environments with 100% critical path coverage
-- **38 static pages** generated with optimal loading performance
-- **15+ reusable UI components** with consistent design patterns
-- **4 automated build pipelines** for exercises, utilities, projects, and image processing
-- **90% reduction** in manual image editing through automated processing
 
 ### **For Future AI Assistants**
-
+Each project is now stored as a TypeScript file in the `projects/` directory, exporting a typed `ProjectData` object. See README.md for example and migration notes.
 This project serves as a template for future Claude-assisted development projects. The JSON structure above can be used as a reference for documenting similar projects, providing consistent formatting and comprehensive coverage of technical details, challenges, and achievements.
 
 ---

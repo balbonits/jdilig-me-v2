@@ -87,11 +87,11 @@ class ProjectGenerator {
     }
 
     const files = fs.readdirSync(PROJECTS_DIR)
-      .filter(file => file.endsWith('.json'))
+      .filter(file => file.endsWith('.ts') && !file.endsWith('.d.ts'))
       .sort();
 
     if (files.length === 0) {
-      console.log('⚠️  No project JSON files found in projects/');
+      console.log('⚠️  No project TypeScript files found in projects/');
       return;
     }
 
@@ -100,12 +100,26 @@ class ProjectGenerator {
     for (const file of files) {
       const filePath = path.join(PROJECTS_DIR, file);
       console.log(`Processing ${file}...`);
-      
-      const project = this.loadProject(filePath);
-      if (project) {
+      try {
+        // Use require to import the TS module (must be run with ts-node)
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const mod = require(filePath);
+        const project = mod.default as ProjectData;
+        if (!project.slug || !project.metadata?.title) {
+          console.error(`❌ Invalid project structure in ${file}`);
+          continue;
+        }
+        // Ensure required fields have defaults
+        project.screenshots = project.screenshots || [];
+        project.metrics = project.metrics || [];
+        project.lessons = project.lessons || [];
+        project.challenges = project.challenges || [];
+        project.futureImprovements = project.futureImprovements || [];
         this.projects.push(project);
         this.summaries.push(this.createSummary(project));
         console.log(`✓ Processed ${file}`);
+      } catch (error) {
+        console.error(`❌ Error loading ${file}:`, error);
       }
     }
   }

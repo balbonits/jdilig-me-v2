@@ -31,57 +31,40 @@
 }
 
 /* Hero Banner Cards - Different gradients for each project */
+
 .heroBanner {
   position: relative;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #e8edfa;
   border-radius: 1rem;
   padding: 2.5rem;
   min-height: 450px;
-  color: white;
+  color: #18181b;
+  border: 1.5px solid #d1d5db;
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.10), 0 1.5px 6px rgba(30, 64, 175, 0.06);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
 }
 
-.heroBanner1 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+:global(.dark) .heroBanner {
+  background: #18181b;
+  color: #f3f4f6;
+  border: 1px solid #334155;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32);
 }
 
-.heroBanner2 {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.heroBanner3 {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-}
-
+.heroBanner1,
+.heroBanner2,
+.heroBanner3,
 .heroBanner4 {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  background: var(--background, #fff);
 }
 
-.heroLink:hover .heroBanner1 {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-}
-
-.heroLink:hover .heroBanner2 {
-  background: linear-gradient(135deg, #ec4899 0%, #ef4444 100%);
-}
-
-.heroLink:hover .heroBanner3 {
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-}
-
+.heroLink:hover .heroBanner1,
+.heroLink:hover .heroBanner2,
+.heroLink:hover .heroBanner3,
 .heroLink:hover .heroBanner4 {
-  background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-}
-
-.heroGradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  pointer-events: none;
+  background: var(--background, #fff);
 }
 
 /* Hero Content */
@@ -105,27 +88,29 @@
   font-size: 1.875rem;
   font-weight: 700;
   margin: 0;
-  line-height: 1.2;
+    font-weight: 500;
+    color: #18181b;
 }
 
 .heroBadge {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: #e0e7ef;
+  color: #18181b;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   text-transform: capitalize;
   letter-spacing: 0.05em;
   white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid #cbd5e1;
 }
 
 .heroDescription {
   font-size: 1.125rem;
   line-height: 1.6;
   margin: 0;
-  opacity: 0.95;
+  font-weight: 500;
+  color: #18181b;
 }
 
 /* Hero Stats */
@@ -167,9 +152,10 @@
 }
 
 .heroCategory {
-  font-size: 0.875rem;
-  opacity: 0.9;
-  font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 600;
+    opacity: 1;
+    color: #18181b;
 }
 
 .heroLinks {
@@ -178,13 +164,14 @@
 }
 
 .linkBadge {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: #e0e7ef;
+  border-radius: 0.5rem;
   padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  border: 1.5px solid #cbd5e1;
+    opacity: 1;
 }
 
 /* Hero Tech Tags */
@@ -196,14 +183,14 @@
 }
 
 .heroTech span {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  background: #e0e7ef;
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1.5px solid #cbd5e1;
   transition: all 0.2s ease;
+    opacity: 1;
 }
 
 .heroLink:hover .heroTech span {

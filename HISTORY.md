@@ -1,3 +1,8 @@
+
+## [2025-08-12] E2E Playwright Test Policy Update
+- E2E Playwright test failures (including visual snapshot mismatches) are now considered build-blocking.
+- Snapshots must be updated and validated as part of the commit-essential workflow.
+- This policy ensures UI/data issues (like the Projects page data bug) are caught before deploy.
 # August 2025
 - Implemented custom favicon and app icons using /public/images/favicon (multi-size PNG, ICO, Apple touch, manifest)
 - Added Playwright E2E test to verify favicon and app icon links in <head>
@@ -16,9 +21,9 @@
 
 This document tracks the historical development and major changes to the jdilig-me-v2 project.
 
-## August 2025
-
-### Exercise & Utility System Enhancements
+# August 2025
+- Migrated project data system to use TypeScript modules: `/projects/{project-name}.ts` exporting typed `ProjectData` objects
+- Updated documentation and build scripts to support new pattern
 
 ### Modal Component Implementation
 - **Modal UI Primitive**: Added a reusable, accessible Modal component to `src/components/ui/Modal/`

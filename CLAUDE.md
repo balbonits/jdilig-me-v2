@@ -1,5 +1,26 @@
 # CLAUDE.md - Project Context & References
 
+## 🧠 Memorize Pattern for Context Updates
+
+To streamline adding new information to this context file, you can use the special pattern:
+
+**memorize:**
+
+Any statement or block following a line that starts with `memorize:` should be considered as a candidate for inclusion in this file as persistent project context. When you instruct Copilot or Copilot Chat with a message like:
+
+```
+memorize: [your statement here]
+```
+
+I will suggest or make an edit to append that statement to this file, ensuring it becomes part of the shared project context for future suggestions and responses.
+
+**Example usage:**
+```
+memorize: All new utility functions must include at least one usage example and a complexity analysis.
+```
+
+This workflow helps maintain a living, up-to-date project knowledge base.
+
 This file contains context and references for the jdilig-me-v2 project to help Claude understand the codebase structure and conventions.
 
 ## 🤖 **Shared Context System**
@@ -38,7 +59,7 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - Added SEOHead to Utilities and Exercises pages for correct page titles and SEO meta tags (fixes E2E Playwright title checks)
 - Split Playwright E2E tests into per-page spec files for maintainability
 - Cleaned up obsolete combined E2E spec files and snapshots
-- All E2E, unit, and lint tests must pass before commit (commit-essential)
+- All test errors (unit, E2E, lint, type, and Playwright visual snapshot mismatches) are now build-blocking and must be resolved before commit. Only warnings or skips that are essential but not build-breaking are tracked in TECH_DEBT.md. Snapshots must be updated and validated as part of the commit workflow. Correct Playwright snapshots are required to catch UI/data issues before deploy.
 - Home page (/) - main landing with ResumeDisplay component
 - Projects page (/projects) - work/project gallery showcase  
 - Code page (/code) - comprehensive coding showcase with algorithm exercises and utility functions
@@ -566,13 +587,50 @@ npm run generate:projects        # Generate projects JSON from individual files
 npm run generate                 # All generation (exercises + utilities + projects)
 ```
 
-### **File Structure**
+
+### **File Structure (NEW: TypeScript Project Modules)**
 ```
-projects/[slug].json             # Individual project data
-raw-images/[slug]/              # Raw images with naming convention  
-[project]/PROJECT.md            # Complete project documentation
+projects/{project-name}.ts      # Individual project data as typed TS modules
+raw-images/{project-name}/      # Raw images with naming convention  
+{project-name}/PROJECT.md       # Complete project documentation
 public/projects.json            # Generated consolidated data
 ```
+
+### **Project Data Module Pattern**
+- Each project is a TypeScript file: `/projects/{project-name}.ts`
+- Export a typed object using the `ProjectData` interface from `src/interfaces/projects.ts`:
+
+```ts
+import { ProjectData } from '@/interfaces/projects';
+
+const project: ProjectData = {
+  slug: 'my-cool-project',
+  title: 'My Cool Project',
+  description: 'A short summary of the project.',
+  technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+  repoUrl: 'https://github.com/yourname/my-cool-project',
+  liveUrl: 'https://mycoolproject.com',
+  images: [
+    '/projects/my-cool-project/1-desktop-home.png',
+    '/projects/my-cool-project/2-mobile-feature.png'
+  ],
+  // ...other fields as defined in ProjectData
+};
+
+export default project;
+```
+
+- Use named default exports for consistency (see ESLint rules).
+- The build/generation script will import all `.ts` files in `/projects`, consolidate them, and output `public/projects.json` for the site.
+
+### **Migration Notes**
+- Migrate existing `projects/*.json` files to `.ts` modules using the above pattern.
+- Update generation scripts to import and process TypeScript modules instead of JSON.
+
+**Benefits:**
+- Type safety and autocompletion
+- Consistent with exercises/utilities system
+- Easier to extend and refactor
 
 ### **Naming Convention**
 - **Format**: `[number]-[category]-[description].[ext]`
@@ -594,6 +652,8 @@ public/projects.json            # Generated consolidated data
 **Commit Message Standard:**
 - If a commit includes more than one change, write the commit message in an itemized (bulleted or numbered) format, listing each change clearly.
 **ALWAYS follow this workflow before committing:**
+* All test errors (unit, E2E, lint, type, Playwright visual) are build-blocking. No errors may be skipped or ignored for a successful build/commit.
+* Only warnings/skips that are essential but not build-breaking are tracked in TECH_DEBT.md for follow-up.
 1. **Update Documentation:**
   - `CLAUDE.md`: Update AI context, architecture, and workflow notes
   - `HISTORY.md`: Summarize all recent changes (features, refactors, fixes)

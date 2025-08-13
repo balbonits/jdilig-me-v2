@@ -133,41 +133,38 @@
     --section-shadow-hover: 0 25px 50px var(--shadow-color-hover);
   }
   
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: var(--color-gray-950);
-      --foreground: var(--color-gray-50);
-      --primary: var(--color-blue-400);
-      --muted: var(--color-gray-400);
-      --card: var(--color-gray-900);
-      --border: var(--color-gray-700);
-      --accent: var(--color-gray-800);
-      --accent-foreground: var(--color-gray-300);
-      
-      /* Dark Mode Component Library Colors - Enhanced Vibrant Colors */
-      --color-blue: rgba(120, 145, 255, 0.3);
-      --color-blue-hover: rgba(120, 145, 255, 0.4);
-      --color-purple: rgba(140, 100, 200, 0.3);
-      --color-purple-hover: rgba(140, 100, 200, 0.4);
-      --color-teal: rgba(20, 180, 170, 0.3);
-      --color-teal-hover: rgba(20, 180, 170, 0.4);
-      --color-pink: rgba(255, 130, 180, 0.3);
-      --color-pink-hover: rgba(255, 130, 180, 0.4);
-      --color-orange: rgba(255, 165, 0, 0.3);
-      --color-orange-hover: rgba(255, 165, 0, 0.4);
-      --color-green: rgba(80, 255, 150, 0.3);
-      --color-green-hover: rgba(80, 255, 150, 0.4);
-      --color-red: rgba(255, 110, 140, 0.3);
-      --color-red-hover: rgba(255, 110, 140, 0.4);
-      --color-yellow: rgba(255, 220, 100, 0.3);
-      --color-yellow-hover: rgba(255, 220, 100, 0.4);
-      --color-neutral: rgba(255, 255, 255, 0.05);
-      --color-neutral-hover: rgba(255, 255, 255, 0.08);
-      
-      /* Dark Mode Borders */
-      --border-color-default: rgba(255, 255, 255, 0.1);
-      --border-color-light: rgba(255, 255, 255, 0.05);
-      --border-color-medium: rgba(255, 255, 255, 0.15);
+  :global(.dark) {
+    --background: var(--color-gray-950);
+    --foreground: var(--color-gray-50);
+    --primary: var(--color-blue-400);
+    --muted: var(--color-gray-400);
+    --card: var(--color-gray-900);
+    --border: var(--color-gray-700);
+    --accent: var(--color-gray-800);
+    --accent-foreground: var(--color-gray-300);
+    /* Dark Mode Component Library Colors - Enhanced Vibrant Colors */
+    --color-blue: rgba(120, 145, 255, 0.3);
+    --color-blue-hover: rgba(120, 145, 255, 0.4);
+    --color-purple: rgba(140, 100, 200, 0.3);
+    --color-purple-hover: rgba(140, 100, 200, 0.4);
+    --color-teal: rgba(20, 180, 170, 0.3);
+    --color-teal-hover: rgba(20, 180, 170, 0.4);
+    --color-pink: rgba(255, 130, 180, 0.3);
+    --color-pink-hover: rgba(255, 130, 180, 0.4);
+    --color-orange: rgba(255, 165, 0, 0.3);
+    --color-orange-hover: rgba(255, 165, 0, 0.4);
+    --color-green: rgba(80, 255, 150, 0.3);
+    --color-green-hover: rgba(80, 255, 150, 0.4);
+    --color-red: rgba(255, 110, 140, 0.3);
+    --color-red-hover: rgba(255, 110, 140, 0.4);
+    --color-yellow: rgba(255, 220, 100, 0.3);
+    --color-yellow-hover: rgba(255, 220, 100, 0.4);
+    --color-neutral: rgba(255, 255, 255, 0.05);
+    --color-neutral-hover: rgba(255, 255, 255, 0.08);
+    /* Dark Mode Borders */
+    --border-color-default: rgba(255, 255, 255, 0.1);
+    --border-color-light: rgba(255, 255, 255, 0.05);
+    --border-color-medium: rgba(255, 255, 255, 0.15);
       --border-color-strong: rgba(255, 255, 255, 0.2);
       --border-color-emphasis: rgba(255, 255, 255, 0.25);
       
@@ -209,7 +206,6 @@
     
     /* Dark Mode Component Library Colors (same as prefers-color-scheme: dark) */
   }
-}
 
 @layer base {
   body {

@@ -26,6 +26,20 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 ## 🖼️ Assets
 - Favicon and app icons are located in `/public/images/favicon` (multi-size PNG, ICO, Apple touch, manifest)
 
+src/
+├── pages/                  # Next.js Pages Router
+├── components/             # Modular UI components
+│   ├── ui/                # Reusable UI primitives (PageContainer, Section, Card, Grid, HeroBanner, ProfileImage, Modal)
+│   ├── pages/             # Page-level components (HomePage, AboutPage, CodePage)
+│   ├── ResumeDisplay/     # Resume component
+│   └── SiteLayout/        # Main layout with theme toggle
+├── interfaces/            # Domain-specific data structures
+├── types/                 # Reusable utility types and UI definitions
+├── exercises/             # Coding exercises (TypeScript files)
+├── utilities/             # Utility functions (TypeScript files)
+├── styles/                # Global styles and theme variables
+└── data/                  # Static content and configuration
+
 ## 📁 Project Structure
 
 ```
@@ -42,7 +56,45 @@ src/
 ├── utilities/             # Utility functions (TypeScript files)
 ├── styles/                # Global styles and theme variables
 └── data/                  # Static content and configuration
+projects/
+  {project-name}.ts        # Individual project data as typed TS modules
+public/
+  projects.json            # Consolidated project data (generated)
 ```
+
+## 🗂️ Projects Data Structure (NEW)
+
+Project data is now stored as individual TypeScript modules in the `projects/` directory. Each file exports a typed `ProjectData` object. The build script consolidates these into `public/projects.json`.
+
+**Example:**
+```ts
+import { ProjectData } from '@/interfaces/projects';
+
+const project: ProjectData = {
+  slug: 'my-cool-project',
+  title: 'My Cool Project',
+  description: 'A short summary of the project.',
+  technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+  repoUrl: 'https://github.com/yourname/my-cool-project',
+  liveUrl: 'https://mycoolproject.com',
+  images: [
+    '/projects/my-cool-project/1-desktop-home.png',
+    '/projects/my-cool-project/2-mobile-feature.png'
+  ],
+  // ...other fields as defined in ProjectData
+};
+
+export default project;
+```
+
+**Migration:**
+- Migrate existing `projects/*.json` files to `.ts` modules using the above pattern.
+- Update generation scripts to import and process TypeScript modules instead of JSON.
+
+**Benefits:**
+- Type safety and autocompletion
+- Consistent with exercises/utilities system
+- Easier to extend and refactor
 
 ## 🎨 Component Architecture
 
@@ -192,7 +244,7 @@ Reusable TypeScript utilities with:
 ### August 2025 Updates
 - Playwright E2E tests are now organized by page/component (not monolithic)
 - Utilities and Exercises pages now include SEOHead for correct titles/meta (fixes E2E failures)
-- E2E tests are commit-essential: all must pass before commit
+All test errors (unit, E2E, lint, type, Playwright visual snapshot mismatches) are build-blocking and must be resolved before commit. Only warnings or skips that are essential but not build-breaking are tracked in TECH_DEBT.md. Always update and validate Playwright snapshots as part of the workflow. Correct Playwright snapshots are required to catch UI/data issues before deploy.
 
 ### Playwright E2E Testing
 - **Favicon & App Icon Test**: E2E test (`tests/e2e/favicon.spec.ts`) verifies that all favicon and app icon <link> tags are present and point to the correct files in `/images/favicon`.
