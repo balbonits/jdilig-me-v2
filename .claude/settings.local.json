@@ -34,7 +34,8 @@
       "Bash(grep:*)",
       "Bash(mv:*)",
       "Bash(mkdir:*)",
-      "Bash(npm run process-images:*)"
+      "Bash(npm run process-images:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

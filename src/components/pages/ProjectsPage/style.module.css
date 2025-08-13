@@ -53,17 +53,35 @@
   box-shadow: 0 8px 32px rgba(0,0,0,0.32);
 }
 
-.heroBanner1,
-.heroBanner2,
-.heroBanner3,
-.heroBanner4 {
+/* Semantic variant classes instead of numbered variants */
+.heroBanner.primary {
   background: var(--background, #fff);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.10), 0 1.5px 6px rgba(59, 130, 246, 0.06);
 }
 
-.heroLink:hover .heroBanner1,
-.heroLink:hover .heroBanner2,
-.heroLink:hover .heroBanner3,
-.heroLink:hover .heroBanner4 {
+.heroBanner.secondary {
+  background: var(--background, #fff);
+  border-color: #10b981;
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.10), 0 1.5px 6px rgba(16, 185, 129, 0.06);
+}
+
+.heroBanner.tertiary {
+  background: var(--background, #fff);
+  border-color: #f59e0b;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.10), 0 1.5px 6px rgba(245, 158, 11, 0.06);
+}
+
+.heroBanner.quaternary {
+  background: var(--background, #fff);
+  border-color: #ef4444;
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.10), 0 1.5px 6px rgba(239, 68, 68, 0.06);
+}
+
+.heroLink:hover .heroBanner.primary,
+.heroLink:hover .heroBanner.secondary,
+.heroLink:hover .heroBanner.tertiary,
+.heroLink:hover .heroBanner.quaternary {
   background: var(--background, #fff);
 }
 

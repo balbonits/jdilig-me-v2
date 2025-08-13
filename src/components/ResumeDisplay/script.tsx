@@ -37,7 +37,7 @@ export default function ResumeDisplay() {
 
         {/* Links Banner */}
         <div className={styles.linksGrid}>
-          <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+          <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.linkedin}`}>
             <div className={styles.linkContent}>
               <div className={styles.linkIcon}>💼</div>
               <div className={styles.linkText}>
@@ -46,7 +46,7 @@ export default function ResumeDisplay() {
               </div>
             </div>
           </a>
-          <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
+          <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.github}`}>
             <div className={styles.linkContent}>
               <div className={styles.linkIcon}>💻</div>
               <div className={styles.linkText}>

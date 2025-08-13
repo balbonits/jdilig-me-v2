@@ -13,6 +13,9 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
   // For demo: treat the first project as featured if any exist
   const featuredProjects = projects.length > 0 ? [projects[0]] : [];
   const allProjects = projects;
+  
+  // Define semantic variants instead of dynamic numbering
+  const variants = ['primary', 'secondary', 'tertiary', 'quaternary'];
 
   return (
     <PageContainer>
@@ -31,7 +34,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
               const githubLink = project.links.find(link => link.type === 'github');
               return (
                 <Link key={project.slug} href={`/projects/${project.slug}`} className={styles.heroLink}>
-                  <div className={`${styles.heroBanner} ${styles[`heroBanner${index + 1}`]}`}>
+                  <div className={`${styles.heroBanner} ${styles[variants[index % variants.length]]}`}>
                     <div className={styles.heroContent}>
                       <div className={styles.heroHeader}>
                         <h3 className={styles.heroTitle}>{project.metadata.title}</h3>
@@ -85,7 +88,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
               const githubLink = project.links.find(link => link.type === 'github');
               return (
                 <Link key={project.slug} href={`/projects/${project.slug}`} className={styles.heroLink}>
-                  <div className={`${styles.heroBanner} ${styles[`heroBanner${index + 1}`]}`}>
+                  <div className={`${styles.heroBanner} ${styles[variants[index % variants.length]]}`}>
                     <div className={styles.heroContent}>
                       <div className={styles.heroHeader}>
                         <h3 className={styles.heroTitle}>{project.metadata.title}</h3>

@@ -26,19 +26,20 @@
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
-.linkBanner:nth-child(2) {
+/* Explicit variant classes instead of nth-child selectors */
+.linkBanner.linkedin {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
-.linkBanner:nth-child(2):hover {
+.linkBanner.linkedin:hover {
   background: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%);
 }
 
-.linkBanner:nth-child(3) {
+.linkBanner.github {
   background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
 }
 
-.linkBanner:nth-child(3):hover {
+.linkBanner.github:hover {
   background: linear-gradient(135deg, #e53e3e 0%, #dd6b20 100%);
 }
 
