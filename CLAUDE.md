@@ -725,6 +725,21 @@ export default project;
 - Document every significant change in the Markdown files.
 - This workflow ensures code quality, documentation, and reproducibility for both AI and human contributors.
 
+### **⚡ Smart Test Optimization**
+For documentation-only changes (only `.md` files modified), skip expensive tests:
+```bash
+# Check if only markdown files changed
+if git diff --cached --name-only | grep -v '\.md$' | grep -q .; then
+  echo "Code changes detected - running full test suite"
+  npm run lint && npm test && npx playwright test && npm run build
+else
+  echo "Documentation-only changes - skipping tests"
+  npm run lint  # Still check for any lint issues
+fi
+```
+
+**Rationale**: Documentation changes don't affect UX or functionality, so running the full test suite (Jest + Playwright + build) is unnecessary and wastes time.
+
 ## Documentation
 - **CLAUDE.md**: Current project context and development guidelines
 - **HISTORY.md**: Historical changes and major updates
