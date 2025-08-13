@@ -25,7 +25,7 @@ This document tracks technical debt and planned refactoring work to maintain cod
 
 ## High Priority 🔴
 
-### 1. Modularize AboutContent Card/Banner Components
+### 1. Component Audit & Standardization
 **Problem**: AboutContent has repetitive card patterns that violate DRY principles
 - Journey cards, experience banners, skill banners all follow similar patterns
 - 600+ lines of repetitive CSS with slight variations
@@ -67,11 +67,53 @@ src/components/ui/
 - Improve maintainability and reusability
 - Follow established modular pattern
 
-### 2. Standardize All UI Components to Modular Pattern
-**Problem**: Other components may still use global CSS or non-modular patterns
-- Need to audit all components in `src/components/`
-- Ensure consistent className override pattern
-- Remove any remaining global style dependencies
+### 2. CSS Anti-patterns Cleanup
+**Problem**: Several CSS anti-patterns found in current codebase that need immediate resolution
+
+**Specific Issues**:
+- **Repeated nth-child selectors**: Journey/skill/experience cards use nth-child for variants
+- **Magic numbers**: Inconsistent spacing, sizes, z-index values
+- **Duplicated gradient definitions**: Same gradients redefined multiple times
+- **Inconsistent hover effects**: Different transform/shadow values across components
+- **Mixed units**: px, rem, em used inconsistently
+
+**Priority**: HIGH - These patterns make maintenance difficult and create inconsistencies
+
+**Immediate Action Items**:
+- Remove nth-child styling variants from AboutContent
+- Standardize spacing values using design tokens
+- Consolidate gradient definitions into single source
+- Unified hover effect patterns
+- Convert mixed units to consistent rem-based system
+
+**Impact**: Critical for maintainability and design consistency
+
+### 3. AboutContent Component Modularization
+**Problem**: AboutContent has 600+ lines of repetitive CSS patterns
+- Journey cards, experience banners, skill banners all follow similar patterns
+- Hard to maintain and theme consistently
+- Violates DRY principles
+
+**Specific Issues in AboutContent**:
+- **Journey Cards** (lines 8-67): 3 gradient variants, hover effects, content layout
+- **Experience Banners** (lines 89-218): 4 company-specific gradients (AWS, Fox, ADP, TBN)
+- **Skill Banners** (lines 240-390): 3 skill category gradients with tags system
+- **Contact Hero** (lines 392-520): Another hero variant with contact grid
+- **Mobile Responsive** (lines 522-580): Repeated responsive patterns
+
+**Refactoring Approach**:
+1. **Phase 1**: Extract Journey Cards → enhance existing `Card` with gradient variants
+2. **Phase 2**: Convert Experience Banners → use `HeroBanner` with company themes
+3. **Phase 3**: Transform Skill Banners → `Card` component with tag systems
+4. **Phase 4**: Migrate Contact Hero → enhanced `HeroBanner` + contact grid
+
+**Benefits**:
+- Reduce CSS from 600+ lines to ~100 lines per component
+- Enable consistent theming via existing component props
+- Improve maintainability and reusability
+
+### 1. Component Audit & Standardization Details
+**Problem**: Need systematic audit of all components for modular CSS compliance
 
 **Components to audit**:
 
@@ -101,61 +143,9 @@ src/components/ui/
 - [ ] Mobile responsive within component
 - [ ] TypeScript interfaces properly defined
 
-### 3. Remove CSS Anti-patterns and Inconsistencies
-**Problem**: Several CSS anti-patterns found in current codebase
-
-**Specific Issues**:
-- **Repeated nth-child selectors**: Journey/skill/experience cards use nth-child for variants
-  ```css
-  .journeyCard:nth-child(1) { background: gradient1; }
-  .journeyCard:nth-child(2) { background: gradient2; }
-  .journeyCard:nth-child(3) { background: gradient3; }
-  ```
-  Should be: `<GradientCard className="emerald">` with predefined variants
-
-- **Magic numbers**: Inconsistent spacing, sizes, z-index values
-  ```css
-  min-height: 280px;  /* vs */ min-height: 250px; /* vs */ min-height: 350px;
-  gap: 1.5rem;       /* vs */ gap: 2rem;        /* vs */ gap: 2.5rem;
-  ```
-  Should use: Design token system or CSS custom properties
-
-- **Duplicated gradient definitions**: Same gradients redefined multiple times
-- **Inconsistent hover effects**: Different transform/shadow values across components
-- **Mixed units**: px, rem, em used inconsistently
-
-**Solution**: Create design system foundations
-```
-src/styles/
-├── tokens.css              # Design tokens (spacing, colors, etc.)
-├── gradients.css           # Reusable gradient definitions  
-└── effects.css             # Standard hover/transition effects
-```
-
-### 4. Consolidate Similar Layout Patterns
-**Problem**: Multiple components implement similar layout patterns differently
-
-**Duplicate Patterns Found**:
-- **Grid layouts**: `journeyGrid`, `experienceGrid`, `skillsGrid` all very similar
-- **Card content structure**: `cardContent`, `experienceContent`, `skillContent` 
-- **Header patterns**: `cardHeader`, `experienceHeader`, `skillHeader`
-- **Responsive breakpoints**: Same breakpoints redefined in multiple files
-
-**Solution**: Extract to reusable layout components
-```
-src/components/ui/
-├── ResponsiveGrid/         # 1-col mobile, 2-3 col desktop
-├── CardLayout/            # Standard card content structure  
-├── CardHeader/            # Icon + title + badge pattern
-└── layouts/               # Common layout primitives
-    ├── TwoColumn/
-    ├── ThreeColumn/
-    └── GridResponsive/
-```
-
 ## Medium Priority 🟡
 
-### 5. Create Design System Foundation
+### 4. Design System Foundation
 **Problem**: Inconsistent design values across components
 - No centralized design tokens
 - Magic numbers throughout CSS
@@ -207,7 +197,7 @@ src/components/ui/
 }
 ```
 
-### 6. Implement Component Composition Patterns
+### 5. Component Composition Patterns
 **Problem**: Large monolithic components that could be composed
 - AboutContent does everything in one component
 - Hard to test individual pieces
@@ -322,7 +312,48 @@ const { ref, inView } = useInView({ triggerOnce: true });
 
 ## Low Priority 🟢
 
-### 10. Code Syntax Highlighting Enhancement
+### 6. Enhanced Card & HeroBanner Variants
+**Current**: Separate GradientCard concept planned
+**New Approach**: Enhance existing `Card` and `HeroBanner` components with variant props
+
+**Card Component Enhancement**:
+```tsx
+<Card 
+  variant="gradient" 
+  gradient="emerald" // emerald, sunset, ocean, fire
+  className="custom-overrides"
+>
+  Content here
+</Card>
+
+<Card 
+  variant="colored" 
+  color="primary" // primary, secondary, accent
+  className="custom-overrides"
+>
+  Content here  
+</Card>
+```
+
+**HeroBanner Component Enhancement**:
+```tsx
+<HeroBanner
+  variant="gradient"
+  gradient="company-aws" // company-specific gradients
+  stats={stats}
+  tags={tags}
+>
+  Hero content
+</HeroBanner>
+```
+
+**Benefits**:
+- Leverages existing component architecture
+- No new components to maintain
+- Consistent API with current patterns
+- Easy migration from AboutContent patterns
+
+### 7. Code Syntax Highlighting Enhancement
 **Problem**: Currently using plain `<pre><code>` blocks
 - Current: Monospace font with basic styling
 - Goal: Add syntax highlighting for TypeScript/JavaScript code showcase
@@ -526,37 +557,36 @@ export { default as ComponentName } from './ComponentName';
 ## Next Steps
 
 ### Immediate (This Week) 🔥
-1. **Create GradientCard component** - Extract journey card pattern
-   - Base component with gradient variants
-   - className override support  
-   - TypeScript interfaces
-   - Basic tests
+1. **Component Audit** - Pick CodeItemDisplay or ProjectCard
+   - Check for modular CSS compliance using audit checklist
+   - Identify refactoring needs and anti-patterns
+   - Document findings and create action plan
 
-2. **Audit one existing component** - Pick CodeItemDisplay or ProjectCard
-   - Check for modular CSS compliance
-   - Identify refactoring needs
-   - Document findings
+2. **CSS Anti-patterns Assessment** - AboutContent analysis
+   - Identify all nth-child selectors and magic numbers
+   - Map gradient definitions and hover effects
+   - Create consolidation strategy
 
-3. **Set up design tokens** - Create foundational CSS custom properties
-   - Spacing scale
-   - Color gradients
-   - Standard effects (shadows, transforms)
+3. **AboutContent Refactoring Plan** - Detailed planning
+   - Map current patterns to existing Card/HeroBanner components
+   - Define enhancement props needed for variants
+   - Create migration timeline
 
 ### Short Term (Next 2-3 Weeks) 📅
-1. **Complete AboutContent refactoring**:
-   - Week 1: GradientCard + ResponsiveGrid
-   - Week 2: ContentCard for experience banners  
-   - Week 3: TagCard for skill banners + testing
+1. **Execute High Priority Items**:
+   - Week 1: Complete component audit and CSS anti-pattern cleanup
+   - Week 2: AboutContent refactoring using enhanced Card/HeroBanner
+   - Week 3: Testing and validation of refactored components
 
-2. **Establish component patterns**:
-   - Component composition guidelines
-   - CSS module conventions
-   - TypeScript interface standards
+2. **Establish design system foundation**:
+   - Design tokens implementation
+   - Component composition patterns
+   - CSS module standardization
 
-3. **Create component documentation**:
-   - Usage examples for each new component
-   - Migration guide from old patterns
-   - Best practices documentation
+3. **Create enhanced component documentation**:
+   - Updated Card and HeroBanner variant examples
+   - Migration guide from AboutContent patterns
+   - Best practices for gradient and color variants
 
 ### Medium Term (1-2 Months) 📈
 1. **Audit and migrate remaining components**:
