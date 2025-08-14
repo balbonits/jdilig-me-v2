@@ -995,6 +995,23 @@ npm run perf:benchmark
 - Quarterly architecture review
 - Developer satisfaction surveys
 
+### 8. Difficulty-Based Color Coding for Code Showcase
+**Context**: Add visual difficulty indicators to Exercises and Utilities pages using colorVariant props
+**Current State**: Exercises and Utilities use default Card components without color differentiation
+
+**Proposed Implementation**:
+- **Exercises**: Color code by time complexity (O(1)=green, O(log n)=blue, O(n)=yellow, O(n²)=orange, O(2^n)=red)
+- **Utilities**: Color code by category or usage complexity (Performance=blue, Type Safety=purple, Data=teal, etc.)
+- Use existing colorVariant prop system from Card component
+
+**Benefits**:
+- ✅ Quick visual identification of difficulty/complexity
+- ✅ Better user experience for skill-appropriate content discovery
+- ✅ Leverages existing colorVariant system for consistency
+- ✅ Maintains accessible contrast and readability
+
+**Priority**: LOW - Enhancement for improved UX, not essential functionality
+
 ### Success Criteria for Completion ✨
 1. **AboutContent refactored** - Uses only modular components
 2. **Zero global CSS** - All styling through CSS modules + className
@@ -1006,7 +1023,7 @@ npm run perf:benchmark
 
 ---
 
-*Last updated: August 7, 2025*
-*Next review: August 14, 2025*
+*Last updated: August 14, 2025*
+*Next review: August 21, 2025*
 *Owner: Frontend Team*
 *Priority: High (affects maintainability and development velocity)*
