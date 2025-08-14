@@ -761,3 +761,4 @@ fi
 - when committing, update the Markdown files, run tests (lint, unit, e2e, build), then git add & commit.
 - always update, or add, tests for all (unit, e2e, etc.) whenever possible, and before committing work.
 - make sure to update the technical documentation on README.md
+- always follow correct coding semantics for HTML, CSS, and JS/TS. check online for guidelines.

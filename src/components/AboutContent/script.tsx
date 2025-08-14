@@ -1,7 +1,82 @@
 import React from 'react';
-import { SectionContainer } from '@/components/ui';
+import { SectionContainer, Card, Grid } from '@/components/ui';
 import HeroBanner from '@/components/ui/HeroBanner';
 import styles from './style.module.css';
+
+const journeyData = [
+  {
+    id: 'frontend-focus',
+    icon: '🚀',
+    title: 'Frontend Focus',
+    description: 'Specializing in React ecosystems, modern JavaScript, and creating high-performance user interfaces that serve millions of users.',
+    color: 'blue' as const
+  },
+  {
+    id: 'problem-solver',
+    icon: '💡',
+    title: 'Problem Solver',
+    description: 'From building scalable cloud dashboards at AWS to optimizing video players at FOXSports.com, I tackle complex challenges with elegant solutions at scale.',
+    color: 'purple' as const
+  },
+  {
+    id: 'growth-mindset',
+    icon: '📈',
+    title: 'Growth Mindset',
+    description: 'Continuously learning new technologies while mentoring teams and sharing knowledge across organizations.',
+    color: 'teal' as const
+  }
+];
+
+const experienceData = [
+  {
+    id: 'aws',
+    icon: '⚡',
+    title: 'Amazon Web Services',
+    badge: 'Cloud Computing',
+    description: 'Enhanced AWS QuickSight UI with TypeScript and React.js, building data visualization interfaces used by millions. Developed cloud-native solutions and testing frameworks.',
+    color: 'pink' as const
+  },
+  {
+    id: 'fox',
+    icon: '📺',
+    title: 'FOXSports.com',
+    badge: 'Media & Entertainment', 
+    description: 'Developed frontend solutions for high-traffic video streaming platforms serving millions of users. Optimized video player performance and user experience.',
+    color: 'orange' as const
+  },
+  {
+    id: 'tbn',
+    icon: '📡',
+    title: 'TBN',
+    badge: 'Broadcasting & Media',
+    description: 'Provided frontend consulting for modern web solutions for global broadcasting operations. Enhanced user interfaces for content management and distribution systems.',
+    color: 'green' as const
+  }
+];
+
+const skillsData = [
+  {
+    id: 'frontend-mastery',
+    title: 'Frontend Mastery',
+    level: 'Core',
+    skills: ['React.js', 'TypeScript', 'Next.js', 'JavaScript ES6+', 'HTML5/CSS3', 'Responsive Design'],
+    color: 'red' as const
+  },
+  {
+    id: 'styling-design',
+    title: 'Styling & Design',
+    level: 'Advanced',
+    skills: ['CSS Modules', 'Tailwind CSS', 'SASS/LESS', 'PostCSS', 'UI/UX Design', 'Performance'],
+    color: 'blue' as const
+  },
+  {
+    id: 'tools-workflow',
+    title: 'Tools & Workflow',
+    level: 'Professional',
+    skills: ['Git/GitHub', 'Jest/Testing', 'Webpack/Build', 'Agile/Scrum', 'Code Review', 'Mentoring'],
+    color: 'purple' as const
+  }
+];
 
 export default function AboutContent() {
   return (
@@ -102,165 +177,58 @@ export default function AboutContent() {
             </div>
           </div>
         </div>
-        <div className={styles.contactGradient}></div>
       </section>
       
       <SectionContainer>
-        {/* Journey Cards Grid */}
-        <div className={styles.journeyGrid}>
-          <div className={styles.journeyCard}>
-            <div className={styles.cardContent}>
+        {/* Journey Cards */}
+        <Grid columns={3} gap="2rem" className={styles.journeySection}>
+          {journeyData.map((journey) => (
+            <Card key={journey.id} className={styles.journeyCard} colorVariant={journey.color}>
               <div className={styles.cardHeader}>
-                <div className={styles.cardIcon}>🚀</div>
-                <h3 className={styles.cardTitle}>Frontend Focus</h3>
+                <div className={styles.cardIcon}>{journey.icon}</div>
+                <h3 className={styles.cardTitle}>{journey.title}</h3>
               </div>
               <p className={styles.cardDescription}>
-                Specializing in React ecosystems, modern JavaScript, and creating 
-                high-performance user interfaces that serve millions of users.
+                {journey.description}
               </p>
-            </div>
-            <div className={styles.cardGradient}></div>
-          </div>
-          
-          <div className={styles.journeyCard}>
-            <div className={styles.cardContent}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardIcon}>💡</div>
-                <h3 className={styles.cardTitle}>Problem Solver</h3>
-              </div>
-              <p className={styles.cardDescription}>
-                From building scalable cloud dashboards at AWS to optimizing video players at FOXSports.com, 
-                I tackle complex challenges with elegant solutions at scale.
-              </p>
-            </div>
-            <div className={styles.cardGradient}></div>
-          </div>
-          
-          <div className={styles.journeyCard}>
-            <div className={styles.cardContent}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardIcon}>📈</div>
-                <h3 className={styles.cardTitle}>Growth Mindset</h3>
-              </div>
-              <p className={styles.cardDescription}>
-                Continuously learning new technologies while mentoring teams 
-                and sharing knowledge across organizations.
-              </p>
-            </div>
-            <div className={styles.cardGradient}></div>
-          </div>
-        </div>
+            </Card>
+          ))}
+        </Grid>
         
-        {/* Company Experience Banners */}
-        <div className={styles.experienceGrid}>
-          <div className={`${styles.experienceBanner} ${styles.awsBanner}`}>
-            <div className={styles.experienceContent}>
+        {/* Company Experience */}
+        <Grid columns={3} gap="2rem" className={styles.experienceSection}>
+          {experienceData.map((experience) => (
+            <Card key={experience.id} className={styles.experienceCard} colorVariant={experience.color}>
               <div className={styles.experienceHeader}>
-                <div className={styles.experienceIcon}>⚡</div>
-                <div className={styles.experienceInfo}>
-                  <h3 className={styles.experienceTitle}>Amazon Web Services</h3>
-                  <div className={styles.experienceBadge}>Cloud Computing</div>
-                </div>
+                <div className={styles.experienceIcon}>{experience.icon}</div>
+                <h3 className={styles.experienceTitle}>{experience.title}</h3>
               </div>
+              <div className={styles.experienceBadge}>{experience.badge}</div>
               <p className={styles.experienceDescription}>
-                Enhanced AWS QuickSight UI with TypeScript and React.js, building data visualization 
-                interfaces used by millions. Developed cloud-native solutions and testing frameworks.
+                {experience.description}
               </p>
-            </div>
-            <div className={styles.experienceGradient}></div>
-          </div>
-          
-          <div className={`${styles.experienceBanner} ${styles.foxBanner}`}>
-            <div className={styles.experienceContent}>
-              <div className={styles.experienceHeader}>
-                <div className={styles.experienceIcon}>📺</div>
-                <div className={styles.experienceInfo}>
-                  <h3 className={styles.experienceTitle}>FOXSports.com</h3>
-                  <div className={styles.experienceBadge}>Media & Entertainment</div>
-                </div>
-              </div>
-              <p className={styles.experienceDescription}>
-                Developed frontend solutions for high-traffic video streaming platforms 
-                serving millions of users. Optimized video player performance and user experience.
-              </p>
-            </div>
-            <div className={styles.experienceGradient}></div>
-          </div>
-          
-          <div className={`${styles.experienceBanner} ${styles.tbnBanner}`}>
-            <div className={styles.experienceContent}>
-              <div className={styles.experienceHeader}>
-                <div className={styles.experienceIcon}>📡</div>
-                <div className={styles.experienceInfo}>
-                  <h3 className={styles.experienceTitle}>TBN</h3>
-                  <div className={styles.experienceBadge}>Broadcasting & Media</div>
-                </div>
-              </div>
-              <p className={styles.experienceDescription}>
-                Provided frontend consulting for modern web solutions for global broadcasting operations. 
-                Enhanced user interfaces for content management and distribution systems.
-              </p>
-            </div>
-            <div className={styles.experienceGradient}></div>
-          </div>
-        </div>
+            </Card>
+          ))}
+        </Grid>
         
-        {/* Skills Hero Banners */}
-        <div className={styles.skillsGrid}>
-          <div className={styles.skillBanner}>
-            <div className={styles.skillContent}>
+        {/* Skills */}
+        <Grid columns={3} gap="2rem" className={styles.skillsSection}>
+          {skillsData.map((skill) => (
+            <Card key={skill.id} className={styles.skillCard} colorVariant={skill.color}>
               <div className={styles.skillHeader}>
-                <h3 className={styles.skillTitle}>Frontend Mastery</h3>
-                <div className={styles.skillBadge}>Core</div>
+                <h3 className={styles.skillTitle}>{skill.title}</h3>
+                <div className={styles.skillBadge}>{skill.level}</div>
               </div>
               <div className={styles.skillTags}>
-                <span>React.js</span>
-                <span>TypeScript</span>
-                <span>Next.js</span>
-                <span>JavaScript ES6+</span>
-                <span>HTML5/CSS3</span>
-                <span>Responsive Design</span>
+                {skill.skills.map((skillName, index) => (
+                  <span key={index} className={styles.skillTag}>
+                    {skillName}
+                  </span>
+                ))}
               </div>
-            </div>
-            <div className={styles.skillGradient}></div>
-          </div>
-          
-          <div className={styles.skillBanner}>
-            <div className={styles.skillContent}>
-              <div className={styles.skillHeader}>
-                <h3 className={styles.skillTitle}>Styling & Design</h3>
-                <div className={styles.skillBadge}>Advanced</div>
-              </div>
-              <div className={styles.skillTags}>
-                <span>CSS Modules</span>
-                <span>Tailwind CSS</span>
-                <span>SASS/LESS</span>
-                <span>PostCSS</span>
-                <span>UI/UX Design</span>
-                <span>Performance</span>
-              </div>
-            </div>
-            <div className={styles.skillGradient}></div>
-          </div>
-          
-          <div className={styles.skillBanner}>
-            <div className={styles.skillContent}>
-              <div className={styles.skillHeader}>
-                <h3 className={styles.skillTitle}>Tools & Workflow</h3>
-                <div className={styles.skillBadge}>Professional</div>
-              </div>
-              <div className={styles.skillTags}>
-                <span>Git/GitHub</span>
-                <span>Jest/Testing</span>
-                <span>Webpack/Build</span>
-                <span>Agile/Scrum</span>
-                <span>Code Review</span>
-                <span>Mentoring</span>
-              </div>
-            </div>
-            <div className={styles.skillGradient}></div>
-          </div>
-        </div>
+            </Card>
+          ))}
+        </Grid>
       </SectionContainer>
     </>
   );

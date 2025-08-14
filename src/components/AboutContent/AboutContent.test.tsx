@@ -5,14 +5,18 @@ import AboutContent from './script';
 
 // Mock the UI components
 jest.mock('@/components/ui', () => ({
-  SectionContainer: ({ children }: { children: React.ReactNode }) => <div data-testid="section-container">{children}</div>
+  SectionContainer: ({ children }: { children: React.ReactNode }) => <div data-testid="section-container">{children}</div>,
+  Card: ({ children }: { children: React.ReactNode }) => <div data-testid="card">{children}</div>,
+  Grid: ({ children }: { children: React.ReactNode }) => <div data-testid="grid">{children}</div>
 }));
 
 jest.mock('@/components/ui/HeroBanner', () => {
-  return function MockHeroBanner({ title, badge, imageShape }: { title: string; badge?: string; imageShape?: string }) {
+  return function MockHeroBanner({ title, badge, imageShape, variant }: { title: string; badge?: string; imageShape?: string; variant?: string }) {
+    // Use h1 for main hero, h3 for minimal experience banners
+    const HeadingTag = variant === 'minimal' ? 'h3' : 'h1';
     return (
       <div data-testid="hero-banner">
-        <h1>{title}</h1>
+        <HeadingTag>{title}</HeadingTag>
         {badge && <span data-testid="badge">{badge}</span>}
         {imageShape && <span data-testid="image-shape">{imageShape}</span>}
       </div>

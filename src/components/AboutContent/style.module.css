@@ -1,207 +1,70 @@
 /* About Content - Unified Semi-Translucent Design */
 
-/* Journey Cards Grid */
-.journeyGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+/* Journey Cards Section */
+.journeySection {
   margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-  .journeyGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-  }
-}
 
-.journeyCard {
-  position: relative;
-  border-radius: 1rem;
-  padding: 2rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: var(--card-shadow-default);
-  min-height: 280px;
-  border: 1px solid var(--card-border-color-default);
-  color: var(--foreground, #1a202c);
-}
-
-.journeyCard:nth-child(1) {
-  background: var(--banner-bg-color-journey-1);
-}
-
-.journeyCard:nth-child(1):hover {
-  background: var(--banner-bg-color-journey-1-hover);
-}
-
-.journeyCard:nth-child(2) {
-  background: var(--banner-bg-color-journey-2);
-}
-
-.journeyCard:nth-child(2):hover {
-  background: var(--banner-bg-color-journey-2-hover);
-}
-
-.journeyCard:nth-child(3) {
-  background: var(--banner-bg-color-journey-3);
-}
-
-.journeyCard:nth-child(3):hover {
-  background: var(--banner-bg-color-journey-3-hover);
-}
-
-.journeyCard:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--card-shadow-hover);
-}
-
-.cardContent {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  height: 100%;
-  min-height: 200px;
-  align-items: flex-start;
-}
-
-.cardHeader {
+.journeyCard .cardHeader {
   display: flex;
   align-items: center;
   gap: 1rem;
-  flex-shrink: 0;
-  width: 100%;
-  min-height: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-.cardIcon {
+.journeyCard .cardIcon {
   font-size: 2.5rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
-.cardTitle {
+.journeyCard .cardTitle {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
-  flex: 1;
-  min-width: 0;
+  color: var(--foreground);
 }
 
-.cardDescription {
+.journeyCard .cardDescription {
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
   opacity: 0.85;
-  width: 100%;
-  align-self: flex-start;
+  color: var(--foreground);
 }
 
-/* No gradient overlay - cleaner design */
-.cardGradient {
-  display: none;
-}
-
-/* Company Experience Grid */
-.experienceGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+/* Company Experience Section */
+.experienceSection {
   margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-  .experienceGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-  }
-}
+/* Experience Card Content Styles */
 
-.experienceBanner {
-  position: relative;
-  border-radius: 1rem;
-  padding: 2rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: var(--banner-shadow-default);
-  min-height: 250px;
-  border: 1px solid var(--banner-border-color-default);
-  color: var(--foreground, #1a202c);
-}
-
-.experienceBanner:nth-child(1) {
-  background: var(--banner-bg-color-experience-1);
-}
-
-.experienceBanner:nth-child(1):hover {
-  background: var(--banner-bg-color-experience-1-hover);
-}
-
-.experienceBanner:nth-child(2) {
-  background: var(--banner-bg-color-experience-2);
-}
-
-.experienceBanner:nth-child(2):hover {
-  background: var(--banner-bg-color-experience-2-hover);
-}
-
-.experienceBanner:nth-child(3) {
-  background: var(--banner-bg-color-experience-3);
-}
-
-.experienceBanner:nth-child(3):hover {
-  background: var(--banner-bg-color-experience-3-hover);
-}
-
-.experienceBanner:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--banner-shadow-hover);
-}
-
-.experienceContent {
-  position: relative;
-  z-index: 2;
+.experienceCard .experienceHeader {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  height: 100%;
-  min-height: 200px;
-  align-items: flex-start;
-}
-
-.experienceHeader {
-  display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
-  flex-shrink: 0;
-  width: 100%;
-  min-height: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.experienceIcon {
+.experienceCard .experienceIcon {
   font-size: 2rem;
   line-height: 1;
-  margin-top: 0.25rem;
   flex-shrink: 0;
 }
 
-.experienceInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.experienceTitle {
+.experienceCard .experienceTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
   line-height: 1.2;
+  color: var(--foreground);
 }
 
-.experienceBadge {
-  background: var(--badge-bg-color-default);
+.experienceCard .experienceBadge {
+  background: var(--badge-bg-color-default, rgba(0, 0, 0, 0.1));
   backdrop-filter: blur(10px);
   padding: 0.25rem 0.75rem;
   border-radius: 1.5rem;
@@ -209,126 +72,50 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 1px solid var(--badge-border-color-default);
+  border: 1px solid var(--badge-border-color-default, rgba(0, 0, 0, 0.2));
   display: inline-block;
   color: var(--foreground, #374151);
   transition: all 0.2s ease;
+  margin-bottom: 1rem;
 }
 
-.experienceBanner:hover .experienceBadge {
-  background: var(--badge-bg-color-hover);
+.experienceCard:hover .experienceBadge {
+  background: var(--badge-bg-color-hover, rgba(0, 0, 0, 0.15));
 }
 
-.experienceDescription {
+.experienceCard .experienceDescription {
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
   opacity: 0.85;
-  width: 100%;
-  align-self: flex-start;
+  color: var(--foreground);
 }
 
-/* No gradient overlay - cleaner design */
-.experienceGradient {
-  display: none;
-}
-
-/* Skills Grid */
-.skillsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+/* Skills Section */
+.skillsSection {
   margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-  .skillsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
-  }
-}
+/* Skill Card Content Styles */
 
-@media (min-width: 1024px) {
-  .skillsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.skillBanner {
-  position: relative;
-  border-radius: 1rem;
-  padding: 2rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: var(--banner-shadow-default);
-  min-height: 280px;
-  border: 1px solid var(--banner-border-color-default);
-  color: var(--foreground, #1a202c);
-}
-
-.skillBanner:nth-child(1) {
-  background: var(--banner-bg-color-skill-1);
-}
-
-.skillBanner:nth-child(1):hover {
-  background: var(--banner-bg-color-skill-1-hover);
-}
-
-.skillBanner:nth-child(2) {
-  background: var(--banner-bg-color-skill-2);
-}
-
-.skillBanner:nth-child(2):hover {
-  background: var(--banner-bg-color-skill-2-hover);
-}
-
-.skillBanner:nth-child(3) {
-  background: var(--banner-bg-color-skill-3);
-}
-
-.skillBanner:nth-child(3):hover {
-  background: var(--banner-bg-color-skill-3-hover);
-}
-
-.skillBanner:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--banner-shadow-hover);
-}
-
-.skillContent {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  height: 100%;
-  min-height: 200px;
-  align-items: flex-start;
-  padding: 0;
-  margin: 0;
-}
-
-.skillHeader {
+.skillCard .skillHeader {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
-  flex-shrink: 0;
-  width: 100%;
-  min-height: auto;
+  margin-bottom: 1rem;
 }
 
-.skillTitle {
+.skillCard .skillTitle {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
-  width: 100%;
-  align-self: flex-start;
+  color: var(--foreground);
 }
 
-.skillBadge {
-  background: var(--badge-bg-color-default);
+.skillCard .skillBadge {
+  background: var(--badge-bg-color-default, rgba(0, 0, 0, 0.1));
   backdrop-filter: blur(10px);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
@@ -337,56 +124,40 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
-  border: 1px solid var(--badge-border-color-default);
-  align-self: flex-start;
-  box-shadow: 0 2px 8px var(--shadow-color-default);
-  margin: 0;
-  display: inline-block;
+  border: 1px solid var(--badge-border-color-default, rgba(0, 0, 0, 0.2));
+  box-shadow: 0 2px 8px var(--shadow-color-default, rgba(0, 0, 0, 0.1));
   color: var(--foreground, #374151);
   transition: all 0.2s ease;
 }
 
-.skillBanner:hover .skillBadge {
-  background: var(--badge-bg-color-hover);
+.skillCard:hover .skillBadge {
+  background: var(--badge-bg-color-hover, rgba(0, 0, 0, 0.15));
 }
 
-.skillTags {
+.skillCard .skillTags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin: 0;
   padding: 0;
-  width: 100%;
-  align-self: flex-start;
-  align-items: flex-start;
-  justify-content: flex-start;
 }
 
-.skillTags span {
-  background: var(--tag-bg-color-default);
+.skillCard .skillTag {
+  background: var(--tag-bg-color-default, rgba(0, 0, 0, 0.08));
   backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid var(--tag-border-color-default);
+  border: 1px solid var(--tag-border-color-default, rgba(0, 0, 0, 0.15));
   transition: all 0.2s ease;
-  margin: 0;
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
   color: var(--foreground, #4b5563);
 }
 
-.skillBanner:hover .skillTags span,
-.skillTags span:hover {
-  background: var(--tag-bg-color-hover);
-  border-color: var(--tag-border-color-hover);
-}
-
-/* No gradient overlay - cleaner design */
-.skillGradient {
-  display: none;
+.skillCard:hover .skillTag,
+.skillCard .skillTag:hover {
+  background: var(--tag-bg-color-hover, rgba(0, 0, 0, 0.15));
+  border-color: var(--tag-border-color-hover, rgba(0, 0, 0, 0.25));
 }
 
 /* Contact Hero Banner */
@@ -585,42 +356,32 @@
   opacity: 0.8;
 }
 
-/* No gradient overlay - cleaner design */
-.contactGradient {
-  display: none;
-}
 
 /* Dark Mode Support */
-:global(.dark) .journeyCard,
-:global(.dark) .experienceBanner,
-:global(.dark) .skillBanner,
 :global(.dark) .contactHero {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-:global(.dark) .journeyCard:hover,
-:global(.dark) .experienceBanner:hover,
-:global(.dark) .skillBanner:hover,
 :global(.dark) .contactHero:hover {
   background: rgba(255, 255, 255, 0.08);
 }
 
-:global(.dark) .experienceBadge,
-:global(.dark) .skillBadge,
+:global(.dark) .skillCard .skillBadge,
+:global(.dark) .experienceCard .experienceBadge,
 :global(.dark) .contactBadge {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
   color: var(--foreground, #e2e8f0);
 }
 
-:global(.dark) .skillTags span {
+:global(.dark) .skillCard .skillTag {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.15);
   color: var(--foreground, #cbd5e1);
 }
 
-:global(.dark) .skillBanner:hover .skillTags span {
+:global(.dark) .skillCard:hover .skillTag {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.25);
 }
@@ -637,18 +398,9 @@
 
 /* Mobile Responsive */
 @media (max-width: 767px) {
-  .journeyCard,
-  .experienceBanner,
-  .skillBanner,
   .contactHero {
     padding: 2rem;
     min-height: auto;
-  }
-  
-  .journeyGrid,
-  .skillsGrid,
-  .experienceGrid {
-    grid-template-columns: 1fr;
   }
   
   .contactGrid {

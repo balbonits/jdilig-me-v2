@@ -8,12 +8,73 @@
   backdrop-filter: blur(10px);
   box-shadow: var(--card-shadow-default);
   color: var(--foreground);
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hover:hover {
   transform: translateY(-8px);
   box-shadow: var(--card-shadow-hover);
   background: var(--card-bg-color-hover);
+}
+
+/* 7-Color Rotation Classes */
+.colorBlue {
+  background: var(--color-blue);
+}
+
+.colorBlue:hover {
+  background: var(--color-blue-hover);
+}
+
+.colorPurple {
+  background: var(--color-purple);
+}
+
+.colorPurple:hover {
+  background: var(--color-purple-hover);
+}
+
+.colorTeal {
+  background: var(--color-teal);
+}
+
+.colorTeal:hover {
+  background: var(--color-teal-hover);
+}
+
+.colorPink {
+  background: var(--color-pink);
+}
+
+.colorPink:hover {
+  background: var(--color-pink-hover);
+}
+
+.colorOrange {
+  background: var(--color-orange);
+}
+
+.colorOrange:hover {
+  background: var(--color-orange-hover);
+}
+
+.colorGreen {
+  background: var(--color-green);
+}
+
+.colorGreen:hover {
+  background: var(--color-green-hover);
+}
+
+.colorRed {
+  background: var(--color-red);
+}
+
+.colorRed:hover {
+  background: var(--color-red-hover);
 }
 
 /* Tablet and up */

@@ -1,46 +1,25 @@
 /* ResumeDisplay - Custom Styles Only */
 
-/* Links Grid */
-.linksGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--space-6);
+/* Links Section */
+.linksSection {
   margin-bottom: var(--space-8);
 }
 
-.linkBanner {
-  background: var(--gradient-sunset);
-  border-radius: var(--space-3);
-  padding: var(--space-6);
-  color: white;
+.linkCard {
+  transition: transform 0.3s ease;
+}
+
+.linkWrapper {
   text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.2s ease;
 }
 
-.linkBanner:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  background: var(--gradient-secondary);
-}
-
-/* Explicit variant classes using design tokens */
-.linkBanner.linkedin {
-  background: var(--gradient-linkedin);
-}
-
-.linkBanner.linkedin:hover {
-  background: var(--gradient-quaternary-hover);
-}
-
-.linkBanner.github {
-  background: var(--gradient-github);
-}
-
-.linkBanner.github:hover {
-  background: var(--gradient-fox-hover);
+.linkWrapper:hover {
+  transform: translateY(-2px);
 }
 
 .linkContent {
@@ -303,13 +282,6 @@
 
   /* Mobile Responsive Design */
   @media (max-width: 767px) {
-    .linksGrid {
-      grid-template-columns: 1fr;
-    }
-    
-    .linkBanner {
-      padding: 1.25rem;
-    }
     
     .section {
       padding: 1.5rem;
@@ -331,8 +303,3 @@
     }
   }
 
-  @media (min-width: 768px) {
-    .linksGrid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }

@@ -246,7 +246,69 @@ src/components/ui/
 
 ## Medium Priority 🟡
 
-### 4. Expand Unit Test Coverage
+### 4. Comprehensive Layout Component System
+**Problem**: Missing dedicated layout primitives for complex CSS Grid, Flexbox, and form layouts
+**Current State**: Basic Grid component exists, but lacking specialized layout components for different use cases
+
+**Research Insights** (August 2025):
+- **Industry Best Practice**: Hybrid approach using CSS Grid for 2D layouts, Flexbox for 1D alignment within components
+- **Layout Primitives**: Composable building blocks following "single responsibility" principle (spacing, padding, alignment)
+- **Modern Patterns**: Container Queries emerging alongside CSS Grid/Flexbox, 96%+ browser support for production-ready techniques
+- **Performance**: Strategic combination prevents layout thrashing, requires efficient DOM batching
+
+**Proposed Component Structure**:
+
+**`/src/components/layout/` Collection:**
+- **GridLayout/**: Complex CSS Grid with named areas, template layouts
+- **AutoGrid/**: Self-sizing grid (enhance current Grid component)  
+- **FlexContainer/**: Primary flexbox wrapper with direction, justify, align props
+- **FlexStack/**: Vertical/horizontal stacking with spacing
+- **FlexWrap/**: Auto-wrapping items with min-width controls
+- **BlockContainer/**: Document flow layouts with max-width, spacing
+- **TwoColumn/**: Side-by-side layouts with responsive breakpoints
+- **StickyLayout/**: Sticky positioning for sidebars/navigation
+- **DataTable/**: Semantic table wrapper with responsive, scrollable options
+- **GridTable/**: CSS Grid as table alternative
+
+**`/src/components/form/` Collection:**
+- **FormLayout/**: Form-specific grid layouts with responsive columns
+- **FieldSet/**: Logical field grouping with collapsible options
+- **FormActions/**: Button grouping with alignment controls
+- **FormGroup/**: Field containers with labels, validation, help text
+- **FormRow/**: Horizontal field arrangements with span controls
+
+**Implementation Criteria**:
+```typescript
+// Create Component When:
+// - Complex responsive behavior needed
+// - Multiple style variants required  
+// - Reused across 3+ locations
+// - Involves layout calculations
+// - Props for configuration needed
+
+// Keep as HTML When:
+// - Single-use case
+// - Default styling sufficient
+// - Standard semantic meaning clear
+```
+
+**2025 Layout Principles**:
+- **Mobile-first responsive design** with Container Queries
+- **Layout primitives as composable building blocks**
+- **Performance-conscious**: Minimize layout thrashing, efficient selectors
+- **Accessibility-first**: Semantic HTML foundation, ARIA support
+- **Type safety**: Full TypeScript interfaces for all layout props
+
+**Priority**: MEDIUM - Would significantly improve developer experience and layout consistency, but current Grid component works for immediate needs
+
+**Benefits**:
+- Eliminate custom layout CSS across components
+- Consistent responsive behavior patterns
+- Improved developer velocity for new layouts
+- Type-safe layout composition
+- Better separation of concerns (layout vs styling)
+
+### 5. Expand Unit Test Coverage
 **Problem**: Insufficient unit test coverage for critical components and utilities
 **Current State**: Basic Jest setup with limited component testing
 

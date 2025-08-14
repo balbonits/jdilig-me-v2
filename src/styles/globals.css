@@ -100,11 +100,11 @@
     --section-bg-color-hover: var(--color-neutral-hover);
     
     /* Border Variables */
-    --border-color-default: rgba(0, 0, 0, 0.08);
-    --border-color-light: rgba(0, 0, 0, 0.05);
-    --border-color-medium: rgba(0, 0, 0, 0.1);
-    --border-color-strong: rgba(0, 0, 0, 0.15);
-    --border-color-emphasis: rgba(0, 0, 0, 0.2);
+    --border-color-default: rgba(0, 0, 0, 0.15);
+    --border-color-light: rgba(0, 0, 0, 0.1);
+    --border-color-medium: rgba(0, 0, 0, 0.2);
+    --border-color-strong: rgba(0, 0, 0, 0.25);
+    --border-color-emphasis: rgba(0, 0, 0, 0.3);
     
     /* Component Borders */
     --card-border-color-default: var(--border-color-default);
@@ -163,11 +163,11 @@
     --color-neutral: rgba(255, 255, 255, 0.05);
     --color-neutral-hover: rgba(255, 255, 255, 0.08);
     /* Dark Mode Borders */
-    --border-color-default: rgba(255, 255, 255, 0.1);
-    --border-color-light: rgba(255, 255, 255, 0.05);
-    --border-color-medium: rgba(255, 255, 255, 0.15);
-      --border-color-strong: rgba(255, 255, 255, 0.2);
-      --border-color-emphasis: rgba(255, 255, 255, 0.25);
+    --border-color-default: rgba(255, 255, 255, 0.2);
+    --border-color-light: rgba(255, 255, 255, 0.15);
+    --border-color-medium: rgba(255, 255, 255, 0.25);
+      --border-color-strong: rgba(255, 255, 255, 0.3);
+      --border-color-emphasis: rgba(255, 255, 255, 0.35);
       
       /* Dark Mode Badges/Tags */
       --badge-bg-color-default: var(--color-blue);

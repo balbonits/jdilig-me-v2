@@ -1,8 +1,35 @@
 import React from 'react';
-import { PageContainer, SectionContainer, Section } from '@/components/ui';
+import { PageContainer, SectionContainer, Section, Card, Grid } from '@/components/ui';
 import HeroBanner from '@/components/ui/HeroBanner';
 import { useScreenshotMode } from '@/hooks/useScreenshotMode';
 import styles from './style.module.css';
+
+const linksData = [
+  {
+    id: 'linkedin',
+    icon: '💼',
+    title: 'LinkedIn Profile',
+    url: 'linkedin.com/in/rjdilig',
+    href: 'https://www.linkedin.com/in/rjdilig/',
+    color: 'blue' as const
+  },
+  {
+    id: 'source-code',
+    icon: '💻',
+    title: 'Site Source Code',
+    url: 'github.com/balbonits/jdilig-me-v2',
+    href: 'https://github.com/balbonits/jdilig-me-v2',
+    color: 'purple' as const
+  },
+  {
+    id: 'github-projects',
+    icon: '⚡',
+    title: 'GitHub Projects',
+    url: 'github.com/balbonits',
+    href: 'http://github.com/balbonits',
+    color: 'teal' as const
+  }
+];
 
 export default function ResumeDisplay() {
   const { hideShareLinks } = useScreenshotMode();
@@ -38,37 +65,23 @@ export default function ResumeDisplay() {
           className="resume-summary-hero"
         />
 
-        {/* Links Banner - Hidden in screenshot mode */}
+        {/* Links Section - Hidden in screenshot mode */}
         {!hideShareLinks && (
-          <div className={styles.linksGrid}>
-            <a href="https://www.linkedin.com/in/rjdilig/" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.linkedin}`}>
-              <div className={styles.linkContent}>
-                <div className={styles.linkIcon}>💼</div>
-                <div className={styles.linkText}>
-                  <div className={styles.linkTitle}>LinkedIn Profile</div>
-                  <div className={styles.linkUrl}>linkedin.com/in/rjdilig</div>
-                </div>
-              </div>
-            </a>
-            <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer" className={`${styles.linkBanner} ${styles.github}`}>
-              <div className={styles.linkContent}>
-                <div className={styles.linkIcon}>💻</div>
-                <div className={styles.linkText}>
-                  <div className={styles.linkTitle}>Site Source Code</div>
-                  <div className={styles.linkUrl}>github.com/balbonits/jdilig-me-v2</div>
-                </div>
-              </div>
-            </a>
-            <a href="http://github.com/balbonits" target="_blank" rel="noopener noreferrer" className={styles.linkBanner}>
-              <div className={styles.linkContent}>
-                <div className={styles.linkIcon}>⚡</div>
-                <div className={styles.linkText}>
-                  <div className={styles.linkTitle}>GitHub Projects</div>
-                  <div className={styles.linkUrl}>github.com/balbonits</div>
-                </div>
-              </div>
-            </a>
-          </div>
+          <Grid columns={3} gap="2rem" className={styles.linksSection}>
+            {linksData.map((link) => (
+              <a key={link.id} href={link.href} target="_blank" rel="noopener noreferrer" className={styles.linkWrapper}>
+                <Card className={styles.linkCard} colorVariant={link.color}>
+                  <div className={styles.linkContent}>
+                    <span className={styles.linkIcon}>{link.icon}</span>
+                    <div className={styles.linkText}>
+                      <span className={styles.linkTitle}>{link.title}</span>
+                      <span className={styles.linkUrl}>{link.url}</span>
+                    </div>
+                  </div>
+                </Card>
+              </a>
+            ))}
+          </Grid>
         )}
 
       {/* Skills */}
