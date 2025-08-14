@@ -5,8 +5,8 @@ const project: ProjectData = {
   metadata: {
     title: 'Personal Website v2',
     name: 'jdilig-me-v2',
-    description: 'A modern, accessible personal website built with Next.js, TypeScript, and comprehensive testing.',
-    detailedDescription: 'Complete rebuild of my personal website focusing on performance, accessibility, and maintainability. Features a modular component architecture, comprehensive test coverage, and advanced UI components including interactive code showcases, modal systems, and responsive design patterns.',
+    description: 'A modern, accessible personal website with unified design system and component-driven architecture.',
+    detailedDescription: 'Complete rebuild featuring a unified UI component system, modular architecture, and comprehensive testing. Includes advanced features like interactive code showcases, modal systems, 7-color rotation design patterns, and full accessibility compliance with WCAG 2.1 AA standards.',
     category: 'Full-Stack Development',
     status: 'completed',
     startDate: '2024-11',
@@ -68,6 +68,11 @@ const project: ProjectData = {
       title: 'Modular Component Architecture',
       description: 'Unified UI component system with consistent patterns, CSS Modules, and clean separation of concerns.',
       impact: 'Enables rapid development and easy maintenance with reusable, scalable components.'
+    },
+    {
+      title: 'Unified Design System with Color Variants',
+      description: '7-color rotation system with colorVariant props for visual differentiation across Card components.',
+      impact: 'Provides consistent visual hierarchy while eliminating CSS anti-patterns and repetitive styling.'
     }
   ],
   metrics: [
