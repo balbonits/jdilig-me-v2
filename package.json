@@ -24,7 +24,10 @@
     "generate:projects": "ts-node scripts/generate-projects.ts",
     "process-images": "ts-node scripts/process-project-images.ts",
     "claude": "claude-code",
-    "claude:resume": "claude-code --resume"
+    "claude:resume": "claude-code --resume",
+    "deploy": "vercel --prod",
+    "deploy:force": "vercel --prod --force",
+    "deploy:preview": "vercel"
   },
   "dependencies": {
     "@anthropic-ai/claude-code": "^1.0.81",
