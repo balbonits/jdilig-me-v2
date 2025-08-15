@@ -85,12 +85,12 @@ export default function AboutContent() {
       <HeroBanner
         title="John Dilig"
         badge="Front-End Developer"
-        description="Passionate front-end developer with 17 years crafting exceptional user experiences. 
+        description="Passionate front-end developer with 18 years crafting exceptional user experiences. 
           I transform complex problems into elegant, performant web solutions."
         stats={[
-          { number: "17", label: "Years" },
+          { number: "18", label: "Years" },
           { number: "50+", label: "Projects" },
-          { number: "3", label: "Major Companies" }
+          { number: "5", label: "Major Companies" }
         ]}
         tags={["React", "TypeScript", "Next.js", "Performance", "UI/UX"]}
         imageUrl="/images/profile.png"
@@ -118,7 +118,7 @@ export default function AboutContent() {
             className={styles.contactDescription}
             aria-describedby="contact-title"
           >
-            I&apos;m actively seeking new opportunities! Ready to bring my 17 years of front-end expertise 
+            I&apos;m actively seeking new opportunities! Ready to bring my 18 years of front-end expertise 
             to your team and help build exceptional user experiences.
           </p>
           <div 
@@ -175,6 +175,22 @@ export default function AboutContent() {
                 >Redondo Beach, CA</div>
               </div>
             </div>
+          </div>
+          
+          {/* Resume Download CTA */}
+          <div className={styles.resumeSection}>
+            <a 
+              href="/resume.pdf" 
+              download="resume.pdf"
+              className={styles.resumeButton}
+              aria-label="Download John Dilig's resume as PDF"
+            >
+              <span className={styles.resumeIcon}>📄</span>
+              <span className={styles.resumeText}>
+                <span className={styles.resumeTitle}>Download Resume</span>
+                <span className={styles.resumeSubtitle}>Complete professional background</span>
+              </span>
+            </a>
           </div>
         </div>
       </section>

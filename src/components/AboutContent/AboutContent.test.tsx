@@ -80,7 +80,7 @@ describe('AboutContent Component Accessibility', () => {
       const emailLabel = screen.getByText('Email');
       expect(emailLabel).toHaveAttribute('id', 'email-label');
       
-      const emailLink = screen.getByRole('link');
+      const emailLink = screen.getByLabelText('Send email to rjdofficemail@gmail.com');
       expect(emailLink).toHaveAttribute('href', 'mailto:rjdofficemail@gmail.com');
       expect(emailLink).toHaveAttribute('aria-labelledby', 'email-label');
       expect(emailLink).toHaveAttribute('aria-label', 'Send email to rjdofficemail@gmail.com');
@@ -149,8 +149,10 @@ describe('AboutContent Component Accessibility', () => {
       render(<AboutContent />);
       
       // Check that all interactive elements have proper labels
-      const emailLink = screen.getByRole('link');
-      expect(emailLink).toHaveAccessibleName();
+      const links = screen.getAllByRole('link');
+      links.forEach(link => {
+        expect(link).toHaveAccessibleName();
+      });
       
       // Check that all status elements are properly labeled
       const statusBadge = screen.getByRole('status');
@@ -186,11 +188,14 @@ describe('AboutContent Component Accessibility', () => {
     it('should ensure all interactive elements are focusable', () => {
       render(<AboutContent />);
       
-      const emailLink = screen.getByRole('link');
-      expect(emailLink).toHaveAttribute('href');
+      const links = screen.getAllByRole('link');
+      expect(links.length).toBeGreaterThan(0);
       
-      // Links should be keyboard accessible by default
-      expect(emailLink).not.toHaveAttribute('tabindex', '-1');
+      // All links should have href attributes and be keyboard accessible
+      links.forEach(link => {
+        expect(link).toHaveAttribute('href');
+        expect(link).not.toHaveAttribute('tabindex', '-1');
+      });
     });
   });
 
