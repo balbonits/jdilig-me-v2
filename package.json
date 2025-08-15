@@ -13,18 +13,21 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-  "test:coverage": "jest --coverage",
-  "test:e2e": "playwright test",
-  "test:all": "npm run test && npm run test:e2e",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test && npm run test:e2e",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "generate": "npm run generate:exercises && npm run generate:utilities && npm run generate:projects",
     "generate:exercises": "ts-node scripts/generate-exercises.ts",
     "generate:utilities": "ts-node scripts/generate-utilities.ts",
     "generate:projects": "ts-node scripts/generate-projects.ts",
-    "process-images": "ts-node scripts/process-project-images.ts"
+    "process-images": "ts-node scripts/process-project-images.ts",
+    "claude": "claude-code",
+    "claude:resume": "claude-code --resume"
   },
   "dependencies": {
+    "@anthropic-ai/claude-code": "^1.0.81",
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -45,10 +48,10 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "playwright": "^1.54.2",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.1",
     "ts-node": "^10",
-    "typescript": "^5",
-    "rimraf": "^6.0.1"
+    "typescript": "^5"
   }
 }
