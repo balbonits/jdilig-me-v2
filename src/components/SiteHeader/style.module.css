@@ -121,8 +121,8 @@
   }
 
   .resumeLink {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
     color: var(--foreground);
     width: 2.5rem;
     height: 2.5rem;
@@ -133,11 +133,24 @@
     text-decoration: none;
     font-size: 1.125rem;
     transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
   }
 
   .resumeLink:hover {
-    background: var(--accent);
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.3);
     transform: scale(1.05);
+  }
+
+  /* Dark mode resume link */
+  :global(.dark) .resumeLink {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.25);
+  }
+
+  :global(.dark) .resumeLink:hover {
+    background: rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.4);
   }
 
   /* Mobile Responsive */
