@@ -50,8 +50,17 @@ export default function SiteHeader() {
             </Link>
           </div>
           
-          {/* Theme Toggle */}
+          {/* Actions */}
           <div className={styles.actions}>
+            <a 
+              href="/resume.pdf" 
+              download="resume.pdf"
+              className={styles.resumeLink}
+              aria-label="Download resume PDF"
+              title="Download Resume"
+            >
+              📄
+            </a>
             <button 
               onClick={toggleTheme}
               className={styles.themeToggle}

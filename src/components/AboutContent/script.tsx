@@ -176,22 +176,6 @@ export default function AboutContent() {
               </div>
             </div>
           </div>
-          
-          {/* Resume Download CTA */}
-          <div className={styles.resumeSection}>
-            <a 
-              href="/resume.pdf" 
-              download="resume.pdf"
-              className={styles.resumeButton}
-              aria-label="Download John Dilig's resume as PDF"
-            >
-              <span className={styles.resumeIcon}>📄</span>
-              <span className={styles.resumeText}>
-                <span className={styles.resumeTitle}>Download Resume</span>
-                <span className={styles.resumeSubtitle}>Complete professional background</span>
-              </span>
-            </a>
-          </div>
         </div>
       </section>
       

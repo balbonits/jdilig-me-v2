@@ -6,15 +6,6 @@ import styles from './style.module.css';
 
 const linksData = [
   {
-    id: 'resume-download',
-    icon: '📄',
-    title: 'Download Resume',
-    url: 'resume.pdf',
-    href: '/resume.pdf',
-    color: 'red' as const,
-    download: true
-  },
-  {
     id: 'linkedin',
     icon: '💼',
     title: 'LinkedIn Profile',
@@ -74,14 +65,13 @@ export default function ResumeDisplay() {
 
         {/* Links Section - Hidden in screenshot mode */}
         {!hideShareLinks && (
-          <Grid columns={4} gap="2rem" className={styles.linksSection}>
+          <Grid columns={3} gap="2rem" className={styles.linksSection}>
             {linksData.map((link) => (
               <a 
                 key={link.id} 
                 href={link.href} 
-                target={link.download ? '_self' : '_blank'} 
-                rel={link.download ? undefined : 'noopener noreferrer'}
-                download={link.download ? 'resume.pdf' : undefined}
+                target="_blank" 
+                rel="noopener noreferrer"
                 className={styles.linkWrapper}
               >
                 <Card className={styles.linkCard} colorVariant={link.color}>

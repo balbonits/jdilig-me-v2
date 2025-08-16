@@ -120,6 +120,26 @@
     transform: scale(1.05);
   }
 
+  .resumeLink {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.125rem;
+    transition: all 0.2s ease;
+  }
+
+  .resumeLink:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+  }
+
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .navContainer {
