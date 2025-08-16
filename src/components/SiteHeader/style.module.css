@@ -121,8 +121,8 @@
   }
 
   .resumeLink {
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: var(--badge-bg-color-default);
+    border: 1px solid var(--badge-border-color-default);
     color: var(--foreground);
     width: 2.5rem;
     height: 2.5rem;
@@ -137,20 +137,8 @@
   }
 
   .resumeLink:hover {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: rgba(59, 130, 246, 0.3);
+    background: var(--badge-bg-color-hover);
     transform: scale(1.05);
-  }
-
-  /* Dark mode resume link */
-  :global(.dark) .resumeLink {
-    background: rgba(59, 130, 246, 0.15);
-    border-color: rgba(59, 130, 246, 0.25);
-  }
-
-  :global(.dark) .resumeLink:hover {
-    background: rgba(59, 130, 246, 0.25);
-    border-color: rgba(59, 130, 246, 0.4);
   }
 
   /* Mobile Responsive */
