@@ -1,23 +1,30 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * Anagram Checker Exercise Implementation
+ * 🔤 Anagram Checker Exercise Implementation
  * 
  * DESCRIPTION:
- * Checks if two strings are anagrams, ignoring case, spaces, non-alphanumeric.
+ * Anagrams are words/phrases formed by rearranging letters of another word.
+ * This implementation handles case-insensitive matching, whitespace/punctuation
+ * removal, and provides both sorting and hash map solutions.
  * 
- * EXAMPLE:
- * "listen", "silent" → true
+ * EXAMPLES:
+ * • "listen", "silent" → true
+ * • "The Morse Code", "Here come dots" → true  
+ * • "Tea!", "eat" → true (ignores punctuation)
  * 
- * CONCEPTS:
- * - String manipulation
- * - Sorting or frequency counting
+ * ALGORITHMIC APPROACHES:
+ * • Sorting Method: Sort characters and compare strings
+ * • Hash Map Method: Count character frequencies (optimal)
+ * 
+ * REAL-WORLD APPLICATIONS:
+ * • Word games and puzzles
+ * • Cryptography and code-breaking
+ * • Data deduplication algorithms
  * 
  * PERFORMANCE:
  * - Time: O(n log n) sorting, O(n) hash map
- * - Space: O(n)
- * 
- * Multiple implementations included to show different approaches.
+ * - Space: O(n) for both approaches
  */
 
 export function areAnagrams(str1: string, str2: string): boolean {
@@ -44,6 +51,7 @@ export function areAnagramsHashMap(str1: string, str2: string): boolean {
 export const metadata: ExerciseMetadata = {
   title: "Anagram Checker",
   description: "Checks if two strings are anagrams, ignoring case, spaces, and non-alphanumeric characters",
+  detailedDescription: "🔤 **What are Anagrams?**\nAnagrams are words or phrases formed by rearranging letters of another word, using all original letters exactly once. Think \"listen\" → \"silent\" or \"The Morse Code\" → \"Here come dots\"!\n\n🛠️ **This Implementation Handles:**\n• Case-insensitive matching (\"Listen\" = \"SILENT\")\n• Whitespace and punctuation removal (\"Tea!\" = \"eat\")\n• Mixed alphanumeric characters (\"a1b2\" = \"2b1a\")\n• Input validation and error handling\n\n⚡ **Two Algorithmic Approaches:**\n• **Sorting Method:** Sort both strings and compare (simple but slower)\n• **Hash Map Method:** Count character frequencies (optimal for large inputs)\n\n💡 **Real-World Applications:**\n• Word games and puzzles\n• Cryptography and code-breaking\n• Data deduplication algorithms\n• String similarity detection",
   concepts: ["string manipulation", "sorting", "hash maps", "regular expressions"],
   timeComplexity: "O(n log n) for sorting, O(n) for hash map",
   spaceComplexity: "O(n)",

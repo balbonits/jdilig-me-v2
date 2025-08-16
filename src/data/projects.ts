@@ -8,24 +8,25 @@ let projectsData: ProjectData[] = [];
 export async function loadProjectsData(): Promise<ProjectData[]> {
   if (typeof window === 'undefined') {
     // Server-side: read from file system
-    const fs = await import('fs');
-    const path = await import('path');
-    
     try {
+      const fs = await import('fs');
+      const path = await import('path');
       const projectsPath = path.join(process.cwd(), 'public', 'projects.json');
       const projectsJson = fs.readFileSync(projectsPath, 'utf-8');
       projectsData = JSON.parse(projectsJson);
-    } catch {
-      console.warn('Projects data not found. Run: npm run generate:projects');
+    } catch (error) {
+      console.warn('Projects JSON not found:', error);
       projectsData = [];
     }
   } else {
-    // Client-side: fetch from API
+    // Client-side: fetch from public directory
     try {
       const response = await fetch('/projects.json');
-      projectsData = await response.json();
-    } catch {
-      console.warn('Failed to load projects data');
+      if (response.ok) {
+        projectsData = await response.json();
+      }
+    } catch (error) {
+      console.warn('Could not fetch projects data:', error);
       projectsData = [];
     }
   }

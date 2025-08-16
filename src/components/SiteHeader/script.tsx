@@ -1,14 +1,31 @@
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useRouter } from 'next/router';
+import MobileMenu from '@/components/ui/MobileMenu';
+import NavDropdown from '@/components/ui/NavDropdown';
 import styles from './style.module.css';
 
 export default function SiteHeader() {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
     return router.pathname === path;
+  };
+
+  const codeSubmenuItems = [
+    { href: '/code/exercises', label: 'Exercises' },
+    { href: '/code/utilities', label: 'Utilities' }
+  ];
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -36,12 +53,12 @@ export default function SiteHeader() {
             >
               Projects
             </Link>
-            <Link 
-              href="/code" 
-              className={`${styles.navLink} ${isActive('/code') ? styles.navLinkActive : ''}`}
-            >
-              Code
-            </Link>
+            <NavDropdown
+              label="Code"
+              href="/code"
+              items={codeSubmenuItems}
+              className={styles.navLink}
+            />
             <Link 
               href="/about" 
               className={`${styles.navLink} ${isActive('/about') ? styles.navLinkActive : ''}`}
@@ -52,25 +69,43 @@ export default function SiteHeader() {
           
           {/* Actions */}
           <div className={styles.actions}>
-            <a 
-              href="/resume.pdf" 
-              download="resume.pdf"
-              className={styles.resumeLink}
-              aria-label="Download resume PDF"
-              title="Download Resume"
+            {/* Desktop actions */}
+            <div className={styles.desktopActions}>
+              <a 
+                href="/resume.pdf" 
+                download="resume.pdf"
+                className={styles.resumeLink}
+                aria-label="Download resume PDF"
+                title="Download Resume"
+              >
+                📄
+              </a>
+              <button 
+                onClick={toggleTheme}
+                className={styles.themeToggle}
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? '☀️' : '🌙'}
+              </button>
+            </div>
+
+            {/* Mobile hamburger menu */}
+            <button
+              className={styles.hamburger}
+              onClick={toggleMobileMenu}
+              aria-label="Toggle mobile menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              📄
-            </a>
-            <button 
-              onClick={toggleTheme}
-              className={styles.themeToggle}
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? '☀️' : '🌙'}
+              <span className={styles.hamburgerLine}></span>
+              <span className={styles.hamburgerLine}></span>
+              <span className={styles.hamburgerLine}></span>
             </button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
     </header>
   );
 }

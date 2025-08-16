@@ -21,6 +21,8 @@ This document tracks technical debt and planned refactoring work to maintain cod
 
 ### August 2025 - Testing & Design System Improvements
 - [x] Migrate project JSON files in /projects to TypeScript modules for type safety and consistency (see CLAUDE.md and README.md for pattern)
+- [ ] **Code Showcase Search Feature**: Implement search functionality using the existing `concepts` array as tags. Users can search/filter exercises and utilities by programming concepts like "Arrays", "Hash Maps", "Performance", etc. This leverages the existing metadata structure without requiring additional data modeling.
+
 ### Previously Completed 
 
 ## High Priority 🔴

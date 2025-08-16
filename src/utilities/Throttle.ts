@@ -2,34 +2,45 @@ import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
 /**
- * Throttle Utility Implementation
+ * ⏱️ Throttle - Smart Rate Limiting Control
  * 
  * DESCRIPTION:
- * Limits function execution to at most once per specified time period.
- * Unlike debounce, throttle ensures regular execution during continuous events.
+ * 🎛️ **Steady Stream vs Delayed Burst**
+ * Throttle ensures functions execute at regular intervals during continuous events, while debounce waits for silence. Think of throttle as a "heartbeat" that guarantees consistent execution!
  * 
- * ENHANCED METADATA:
- * - Difficulty: Easy (closure pattern with timing control)
- * - Solution Type: function (higher-order function implementation)
- * - Time Complexity: O(1) per call
- * - Space Complexity: O(1) per throttled function
- * - Concepts: Closures, Higher-order functions, Rate limiting, Performance
- * - Category: Performance optimization utility
+ * 🔄 **Throttle vs Debounce:**
+ * • **Throttle:** Executes every X milliseconds during activity (steady stream)
+ * • **Debounce:** Waits for X milliseconds of inactivity before executing (delayed burst)
+ * • **Use Throttle:** When you need regular updates (scroll position, resize events)
+ * • **Use Debounce:** When you want to wait for user to finish (search input, button spam)
  * 
- * EXAMPLE:
- * throttle(handleScroll, 100) → Executes handleScroll max once per 100ms
+ * ⚡ **How Throttling Works:**
+ * • Set a time window (e.g., 100ms)
+ * • Execute function immediately on first call
+ * • Ignore subsequent calls within the time window
+ * • Reset timer after window expires
+ * • Guarantees maximum execution frequency
  * 
- * CONCEPTS:
- * - Closures and lexical scoping
- * - Higher-order functions
- * - Rate limiting vs debouncing
- * - Performance optimization
+ * 🛠️ **Three Implementation Strategies:**
+ * • **Standard Throttle:** Simple timestamp-based rate limiting
+ * • **Advanced Throttle:** Configurable leading/trailing execution options
+ * • **Immediate Throttle:** Boolean flag approach for instant feedback
+ * 
+ * 🎯 **Perfect Use Cases:**
+ * • **Scroll Events:** Update scroll position indicators smoothly
+ * • **Resize Handlers:** Recalculate layouts without overwhelming the browser
+ * • **Mouse Movement:** Track cursor position with controlled frequency
+ * • **Button Clicks:** Prevent rapid-fire submissions while staying responsive
+ * 
+ * 🚀 **Performance Benefits:**
+ * • Reduces CPU load from excessive function calls
+ * • Maintains smooth user experience during interactions
+ * • Prevents browser lag from overwhelming event handlers
+ * • Optimizes API request frequency and bandwidth usage
  * 
  * PERFORMANCE:
- * - Time: O(1) per call
- * - Space: O(1) per throttled function
- * 
- * Multiple implementations included to show different approaches.
+ * - Time: O(1) per call - constant time rate limiting
+ * - Space: O(1) per throttled function - minimal memory overhead
  */
 
 // Function type that can be throttled
@@ -119,6 +130,7 @@ export function throttleImmediate<T extends ThrottlableFunction>(
 export const metadata: UtilityMetadata = {
   title: "Throttle Function",
   description: "Limits function execution to at most once per specified time period, ensuring regular execution during continuous events",
+  detailedDescription: "⏱️ **Steady Stream vs Delayed Burst**\nThrottle ensures functions execute at regular intervals during continuous events, while debounce waits for silence. Think of throttle as a 'heartbeat' that guarantees consistent execution!\n\n🔄 **Throttle vs Debounce:**\n• **Throttle:** Executes every X milliseconds during activity (steady stream)\n• **Debounce:** Waits for X milliseconds of inactivity before executing (delayed burst)\n• **Use Throttle:** When you need regular updates (scroll position, resize events)\n• **Use Debounce:** When you want to wait for user to finish (search input, button spam)\n\n⚡ **How Throttling Works:**\n• Set a time window (e.g., 100ms)\n• Execute function immediately on first call\n• Ignore subsequent calls within the time window\n• Reset timer after window expires\n• Guarantees maximum execution frequency\n\n🛠️ **Three Implementation Strategies:**\n• **Standard Throttle:** Simple timestamp-based rate limiting\n• **Advanced Throttle:** Configurable leading/trailing execution options\n• **Immediate Throttle:** Boolean flag approach for instant feedback\n\n🎯 **Perfect Use Cases:**\n• **Scroll Events:** Update scroll position indicators smoothly\n• **Resize Handlers:** Recalculate layouts without overwhelming the browser\n• **Mouse Movement:** Track cursor position with controlled frequency\n• **Button Clicks:** Prevent rapid-fire submissions while staying responsive\n\n🚀 **Performance Benefits:**\n• Reduces CPU load from excessive function calls\n• Maintains smooth user experience during interactions\n• Prevents browser lag from overwhelming event handlers\n• Optimizes API request frequency and bandwidth usage",
   category: "Performance",
   concepts: ["closures", "higher-order functions", "rate limiting", "performance"],
   timeComplexity: "O(1) per call",

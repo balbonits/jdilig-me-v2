@@ -2,35 +2,38 @@ import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
 /**
- * Curry Utility Implementation
+ * 🔗 Curry Utility Implementation - Functional Programming Magic
  * 
  * DESCRIPTION:
- * Transforms a function to enable partial application by converting a function
- * that takes multiple arguments into a sequence of functions that each take a single argument.
+ * Currying transforms multi-argument functions into a chain of single-argument functions,
+ * enabling powerful partial application patterns. This fundamental functional programming
+ * technique creates more flexible, reusable, and composable code.
  * 
- * ENHANCED METADATA:
- * - Difficulty: Medium (functional programming concepts)
- * - Solution Type: function (higher-order function implementation)
- * - Time Complexity: O(1) per curried call
- * - Space Complexity: O(n) where n is the number of arguments
- * - Concepts: Closures, Higher-order functions, Functional programming, Partial application
- * - Category: Functional programming utility
+ * HOW IT WORKS:
+ * • Transform: add(a, b, c) → add(a)(b)(c)
+ * • Enable: const add5 = add(5) → add5(3)(2) === 10
+ * • Build: Specialized functions from general ones
  * 
- * EXAMPLE:
- * curry(add)(1)(2) → 3 (where add = (a, b) => a + b)
+ * IMPLEMENTATION VARIANTS:
+ * • Basic Curry: Type-safe with TypeScript generics
+ * • Auto Curry: Detects function arity automatically  
+ * • Curry2/3: Optimized for common 2-3 argument functions
  * 
- * CONCEPTS:
- * - Closures and lexical scoping
- * - Higher-order functions
- * - Functional programming paradigms
- * - Partial application
- * - Function composition
+ * REAL-WORLD EXAMPLES:
+ * • Event Handlers: onClick(userId)(event)
+ * • API Calls: makeRequest(token)(endpoint)(data)
+ * • Validation: validate(rules)(field)(value)
+ * • Configuration: createLogger(level)(format)(message)
+ * 
+ * FUNCTIONAL PROGRAMMING BENEFITS:
+ * • Function composition and pipelining
+ * • Reusable, configurable utilities
+ * • Cleaner, more readable code
+ * • Easier testing with predictable functions
  * 
  * PERFORMANCE:
  * - Time: O(1) per curried call
- * - Space: O(n) where n is the number of arguments accumulated
- * 
- * Multiple implementations included to show different approaches.
+ * - Space: O(n) where n is argument count
  */
 
 // Basic curry implementation
@@ -75,6 +78,7 @@ export function curry3<A, B, C, R>(fn: (a: A, b: B, c: C) => R): (a: A) => (b: B
 export const metadata: UtilityMetadata = {
   title: "Curry Function",
   description: "Transforms functions to enable partial application, converting multi-argument functions into sequences of single-argument functions",
+  detailedDescription: "🔗 **Functional Programming Magic**\nCurrying transforms multi-argument functions into a chain of single-argument functions, enabling powerful partial application patterns!\n\n🎯 **How It Works:**\n• Transform: `add(a, b, c)` → `add(a)(b)(c)`\n• Enable: `const add5 = add(5)` → `add5(3)(2) === 10`\n• Build: Specialized functions from general ones\n\n⚡ **Multiple Implementations:**\n• **Basic Curry:** Type-safe with TypeScript generics\n• **Auto Curry:** Detects function arity automatically\n• **Curry2/3:** Optimized for common 2-3 argument functions\n\n🛠️ **Real-World Use Cases:**\n• **Event Handlers:** `onClick(userId)(event)`\n• **API Calls:** `makeRequest(token)(endpoint)(data)`\n• **Validation:** `validate(rules)(field)(value)`\n• **Configuration:** `createLogger(level)(format)(message)`\n\n💡 **Functional Programming Benefits:**\n• Function composition and pipelining\n• Reusable, configurable utilities\n• Cleaner, more readable code\n• Easier testing with predictable functions",
   category: "Functional Programming",
   concepts: ["closures", "higher-order functions", "functional programming", "partial application"],
   timeComplexity: "O(1) per curried call",

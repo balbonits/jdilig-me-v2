@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import { ExerciseData } from '@/interfaces/exercises';
 import ExercisesPage from '@/components/pages/ExercisesPage';
 import SEOHead from '@/components/SEOHead';
+import { loadExercisesData } from '@/utils/data-fetchers';
 
 
 interface ExercisesPageProps {
@@ -18,9 +19,8 @@ export default function Exercises({ exercises }: ExercisesPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<ExercisesPageProps> = async () => {
-  // Import exercises data
-  const exercisesData = await import('../../../../public/exercises.json');
-  const exercises = exercisesData.default as ExerciseData[];
+  // Load exercises data from generated JSON
+  const exercises = await loadExercisesData();
 
   return {
     props: {

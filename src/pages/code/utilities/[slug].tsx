@@ -1,12 +1,14 @@
 import React from 'react';
-import { Modal } from '@/components/ui';
+import { Modal, Breadcrumb, FormattedDescription } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
 import { TabContainer, Tab, Showcase } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
+import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
 import { useModal } from '@/hooks/useModal';
+import { loadUtilitiesData, loadUtilityBySlug } from '@/utils/data-fetchers';
 import styles from './utility-showcase.module.css';
 
 interface UsageExamplesProps {
@@ -48,6 +50,14 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
   if (router.isFallback) {
     return <div>Loading utility...</div>;
   }
+
+  // Breadcrumb items
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', href: '/' },
+    { label: 'Code', href: '/code' },
+    { label: 'Utilities', href: '/code/utilities' },
+    { label: utility.metadata.title }
+  ];
 
   const { metadata, examples, functions, solutions } = utility;
 
@@ -124,9 +134,10 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
             
             {/* Main Description */}
             <div className={styles.descriptionContainer}>
-              <p className={styles.descriptionText}>
-                {metadata.description}
-              </p>
+              <FormattedDescription 
+                text={metadata.detailedDescription || metadata.description}
+                className={styles.descriptionText}
+              />
             </div>
             
             <div className={styles.detailsGrid}>
@@ -180,6 +191,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
 
   return (
     <>
+      <Breadcrumb items={breadcrumbItems} />
       <Showcase
         title={metadata.title}
         header={headerContent}
@@ -197,9 +209,8 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Import utilities data
-  const utilitiesData = await import('../../../../public/utilities.json');
-  const utilities = utilitiesData.default as UtilityData[];
+  // Load utilities data from generated JSON
+  const utilities = await loadUtilitiesData();
 
   const paths = utilities.map((utility) => ({
     params: { slug: utility.slug },
@@ -214,11 +225,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<UtilityPageProps> = async ({ params }) => {
   const slug = params?.slug as string;
   
-  // Import utilities data
-  const utilitiesData = await import('../../../../public/utilities.json');
-  const utilities = utilitiesData.default as UtilityData[];
-
-  const utility = utilities.find((util) => util.slug === slug);
+  // Load utility data from generated JSON
+  const utility = await loadUtilityBySlug(slug);
 
   if (!utility) {
     return {

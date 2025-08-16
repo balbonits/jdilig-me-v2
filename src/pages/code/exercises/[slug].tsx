@@ -2,9 +2,11 @@ import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { ExerciseData } from '@/interfaces/exercises';
-import { TabContainer, Tab, Showcase, Grid, Card } from '@/components/ui';
+import { TabContainer, Tab, Showcase, Grid, Card, Breadcrumb } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
+import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
+import { loadExercisesData, loadExerciseBySlug } from '@/utils/data-fetchers';
 import styles from './exercise-showcase.module.css';
 
 interface ExercisePageProps {
@@ -17,6 +19,14 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
   if (router.isFallback) {
     return <div>Loading exercise...</div>;
   }
+
+  // Breadcrumb items
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', href: '/' },
+    { label: 'Code', href: '/code' },
+    { label: 'Exercises', href: '/code/exercises' },
+    { label: exercise.metadata.title }
+  ];
 
   // Create solution tabs
   const tabs: TabItem[] = exercise.solutions.map(solution => ({
@@ -56,24 +66,22 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
       content: (
         <div className={styles.overviewContainer}>
           {/* Problem Description */}
-          {exercise.metadata.detailedDescription && (
-            <div className={styles.subsection}>
-              <h4 className={styles.subsectionTitle}>Description</h4>
-              <p className={styles.subsectionText}>
-                {exercise.metadata.detailedDescription}
-              </p>
-              {exercise.metadata.examples && exercise.metadata.examples.length > 0 && (
-                <div className={styles.examplesList}>
-                  <h5 className={styles.examplesLabel}>Examples:</h5>
-                  {exercise.metadata.examples.map((example, index) => (
-                    <pre key={index} className={styles.exampleBlock}>
-                      <code>{example}</code>
-                    </pre>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          <div className={styles.subsection}>
+            <h4 className={styles.subsectionTitle}>Description</h4>
+            <p className={styles.subsectionText}>
+              {exercise.metadata.detailedDescription || exercise.metadata.description}
+            </p>
+            {exercise.metadata.examples && exercise.metadata.examples.length > 0 && (
+              <div className={styles.examplesList}>
+                <h5 className={styles.examplesLabel}>Examples:</h5>
+                {exercise.metadata.examples.map((example, index) => (
+                  <pre key={index} className={styles.exampleBlock}>
+                    <code>{example}</code>
+                  </pre>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Concepts */}
           <div className={styles.subsection}>
@@ -180,18 +188,20 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
   ];
 
   return (
-    <Showcase
-      title={exercise.metadata.title}
-      subtitle={exercise.metadata.description}
-      sections={sections}
-    />
+    <>
+      <Breadcrumb items={breadcrumbItems} />
+      <Showcase
+        title={exercise.metadata.title}
+        subtitle={exercise.metadata.description}
+        sections={sections}
+      />
+    </>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Import exercises data
-  const exercisesData = await import('../../../../public/exercises.json');
-  const exercises = exercisesData.default as ExerciseData[];
+  // Load exercises data from generated JSON
+  const exercises = await loadExercisesData();
 
   const paths = exercises.map((exercise) => ({
     params: { slug: exercise.slug },
@@ -206,11 +216,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<ExercisePageProps> = async ({ params }) => {
   const slug = params?.slug as string;
   
-  // Import exercises data
-  const exercisesData = await import('../../../../public/exercises.json');
-  const exercises = exercisesData.default as ExerciseData[];
-
-  const exercise = exercises.find((ex) => ex.slug === slug);
+  // Load exercise data from generated JSON
+  const exercise = await loadExerciseBySlug(slug);
 
   if (!exercise) {
     return {

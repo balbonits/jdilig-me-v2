@@ -2,34 +2,38 @@ import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
 /**
- * Debounce Utility Implementation
+ * ⏱️ Debounce Utility Implementation - Performance Optimization Essential
  * 
  * DESCRIPTION:
- * Delays function execution until a specified wait time has elapsed since the last call.
- * Useful for rate-limiting event handlers like scroll, resize, or input events.
+ * Debouncing prevents functions from firing too frequently by delaying execution until
+ * a quiet period. This critical performance optimization technique is essential for
+ * handling rapid user interactions without overwhelming the system.
  * 
- * ENHANCED METADATA:
- * - Difficulty: Easy (straightforward closure pattern)
- * - Solution Type: function (higher-order function implementation)
- * - Time Complexity: O(1) per call
- * - Space Complexity: O(1) per debounced function
- * - Concepts: Closures, Higher-order functions, Event optimization, Performance
- * - Category: Performance optimization utility
+ * HOW DEBOUNCING WORKS:
+ * • User types → Timer starts
+ * • User types again → Timer resets  
+ * • User stops → Function executes after delay
+ * • Result: Function runs once instead of dozens of times
  * 
- * EXAMPLE:
- * debounce(handleSearch, 300) → Returns function that delays handleSearch by 300ms
+ * IMPLEMENTATION VARIANTS:
+ * • Standard Debounce: Waits for quiet period before execution
+ * • Immediate Debounce: Executes immediately, then prevents subsequent calls
  * 
- * CONCEPTS:
- * - Closures and lexical scoping
- * - Higher-order functions
- * - Event optimization
- * - Performance optimization
+ * COMMON USE CASES:
+ * • Search Input: debounce(searchAPI, 300) - Wait for user to stop typing
+ * • Window Resize: debounce(handleResize, 100) - Avoid layout thrashing
+ * • API Calls: debounce(saveData, 500) - Prevent duplicate requests
+ * • Scroll Events: debounce(updateScrollPosition, 50) - Smooth performance
+ * 
+ * PERFORMANCE IMPACT:
+ * • Reduces function calls by 90%+ in rapid-fire scenarios
+ * • Prevents unnecessary API requests and DOM updates
+ * • Improves perceived performance and user experience
+ * • Essential for production-ready applications
  * 
  * PERFORMANCE:
  * - Time: O(1) per call
  * - Space: O(1) per debounced function
- * 
- * Multiple implementations included to show different approaches.
  */
 
 // Function type that can be debounced
@@ -85,6 +89,7 @@ export function debounceImmediate<T extends DebouncableFunction>(
 export const metadata: UtilityMetadata = {
   title: "Debounce Function",
   description: "Delays function execution until a specified wait time has elapsed since the last call, optimizing performance for frequent events",
+  detailedDescription: "⏱️ **Performance Optimization Essential**\nDebouncing prevents functions from firing too frequently by delaying execution until a quiet period. Perfect for handling rapid user interactions!\n\n🎯 **How Debouncing Works:**\n• User types → Timer starts\n• User types again → Timer resets\n• User stops → Function executes after delay\n• Result: Function runs once instead of dozens of times\n\n⚡ **Two Implementation Variants:**\n• **Standard Debounce:** Waits for quiet period before execution\n• **Immediate Debounce:** Executes immediately, then prevents subsequent calls\n\n🛠️ **Common Use Cases:**\n• **Search Input:** `debounce(searchAPI, 300)` - Wait for user to stop typing\n• **Window Resize:** `debounce(handleResize, 100)` - Avoid layout thrashing\n• **API Calls:** `debounce(saveData, 500)` - Prevent duplicate requests\n• **Scroll Events:** `debounce(updateScrollPosition, 50)` - Smooth performance\n\n🚀 **Performance Impact:**\n• Reduces function calls by 90%+ in rapid-fire scenarios\n• Prevents unnecessary API requests and DOM updates\n• Improves perceived performance and user experience\n• Essential for production-ready applications",
   category: "Performance",
   concepts: ["closures", "higher-order functions", "event optimization", "performance"],
   timeComplexity: "O(1) per call",

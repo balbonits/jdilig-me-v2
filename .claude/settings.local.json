@@ -37,7 +37,13 @@
       "Bash(npm run process-images:*)",
       "Bash(sed:*)",
       "Bash(find:*)",
-      "WebFetch(domain:stackoverflow.com)"
+      "WebFetch(domain:stackoverflow.com)",
+      "Bash(npm start)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:www.linkedin.com)",
+      "Bash(npx vercel:*)",
+      "Bash(git reset:*)",
+      "WebFetch(domain:jdilig-2jjuh6ayt-john-diligs-projects.vercel.app)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

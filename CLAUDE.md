@@ -33,6 +33,8 @@ This document serves as a **persistent knowledge base** that is shared between d
 
 **For Claude instances**: Always refer to this file for project context and update it when making significant changes to maintain continuity across conversations.
 
+**IMPORTANT - Project Status Policy**: NEVER describe projects or features as "complete" or "finished". All projects are constantly evolving with ongoing changes, improvements, and iterations. Always describe current state and capabilities without implying completion status.
+
 ## 🛠️ **Technical Debt & Refactoring**
 For comprehensive technical debt tracking, component refactoring plans, and development priorities, see **[TECH_DEBT.md](./TECH_DEBT.md)**. This document contains:
 - Modularization opportunities (AboutContent component ~600 lines → modular components)
@@ -60,6 +62,16 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - Split Playwright E2E tests into per-page spec files for maintainability
 - Cleaned up obsolete combined E2E spec files and snapshots
 - All test errors (unit, E2E, lint, type, and Playwright visual snapshot mismatches) are now build-blocking and must be resolved before commit. Only warnings or skips that are essential but not build-breaking are tracked in TECH_DEBT.md. Snapshots must be updated and validated as part of the commit workflow. Correct Playwright snapshots are required to catch UI/data issues before deploy.
+
+#### Mobile Responsiveness Improvements (August 2025)
+- **Static Data Collections**: Created static data collections for projects, exercises, and utilities to eliminate large JSON files (utilities.json was 202KB, exceeding Next.js 128KB threshold) and network requests
+- **Mobile Navigation**: Implemented hamburger sidebar menu for mobile viewports (≤768px) with floating overlay design, backdrop blur, and smooth slide-in animation from right side
+- **Mobile Layout Fixes**: 
+  - Fixed ResumeDisplay cards overflow on mobile by removing `columns={3}` prop and adding overflow-x backup
+  - Fixed homepage mobile layout by removing forced 3-column grid and equal heights (`min-height: 350px` → `min-height: auto` on mobile)
+  - All Grid components now use responsive behavior (1 column mobile → 3 columns desktop)
+- **Breadcrumb Navigation**: Added breadcrumb component to code showcase pages (exercises/utilities) with responsive design
+- **Data Architecture**: Moved from JSON network requests to static TypeScript collections for better performance and type safety
 - Home page (/) - main landing with ResumeDisplay component
 - Projects page (/projects) - work/project gallery showcase  
 - Code page (/code) - comprehensive coding showcase with algorithm exercises and utility functions
@@ -190,6 +202,8 @@ body { /* Global typography, base styles */ }
 - **CodeShowcase**: 2+1 layout component for algorithm exercises with description, code, and examples
 - **UtilityShowcase**: Utility function display component with usage examples
 - **SolutionTabs**: Tabbed interface for multiple algorithm solutions with complexity analysis
+- **MobileMenu**: Floating overlay navigation menu for mobile viewports with backdrop blur and slide animation
+- **Breadcrumb**: Navigation breadcrumb component with accessibility support and responsive design
 
 ### Mobile-First Responsive Design
 
@@ -439,6 +453,42 @@ The project maintains strict code quality through comprehensive ESLint rules:
 - **Complexity analysis**: Automatic detection and marking of optimal solutions based on time complexity
 - **Consistent exports**: Each file exports functions, metadata, examples, and a default module object
 
+#### **Enhanced Description System**
+**Source of Truth**: All exercises/utilities in `src/exercises/*.ts` and `src/utilities/*.ts` are the authoritative source
+- **Brief Description**: `metadata.description` - Used in index page cards (one-line summary)
+- **Detailed Description**: `metadata.detailedDescription` - Used in individual showcase pages (comprehensive explanation)
+- **JSDoc Comments**: Enhanced with emojis, bullet points, and structured content for engaging documentation
+
+**JSDoc Structure Pattern**:
+```typescript
+/**
+ * 🎯 Exercise/Utility Title - Descriptive Subtitle
+ * 
+ * DESCRIPTION:
+ * Comprehensive explanation with context and importance...
+ * 
+ * HOW IT WORKS / EXAMPLES:
+ * • Step-by-step breakdown
+ * • Real-world examples with code
+ * • Visual explanations
+ * 
+ * IMPLEMENTATION VARIANTS / APPROACHES:
+ * • Different algorithmic approaches
+ * • Performance trade-offs
+ * • When to use each variant
+ * 
+ * REAL-WORLD USE CASES / APPLICATIONS:
+ * • Production scenarios
+ * • Industry applications
+ * • Problem-solving contexts
+ * 
+ * PERFORMANCE:
+ * - Time/Space complexity analysis
+ */
+```
+
+**Generation Process**: Build scripts parse JSDoc DESCRIPTION sections to populate `detailedDescription` in generated JSON
+
 ### **Optimal Solution Detection**
 Automatic analysis marks best solutions with ★ badges based on time complexity priority: O(1) > O(log n) > O(n) > O(n log n) > O(n²) > O(n³) > O(2^n)
 
@@ -505,14 +555,18 @@ npm run process-images   # Process project images (requires slug parameter)
 ```
 
 ### Build System
-- **Code Generation**: Exercises and utilities parsed into JSON at build time using ts-node scripts
+- **Static Data Collections**: TypeScript-based data collections replace JSON files for better performance and type safety
+  - `src/data/projects-static.ts`: Static project data with fallback to generated JSON
+  - `src/data/exercises-static.ts`: Static exercise data collection (eliminates large JSON files)
+  - `src/data/utilities-static.ts`: Static utility data collection (replaces 202KB utilities.json)
+- **Code Generation**: Exercises and utilities parsed into JSON at build time using ts-node scripts (with static fallbacks)
 - **TypeScript Interfaces**: Shared types for exercises and utilities in `src/types/` and `src/interfaces/`
 - **Static Assets**: Resume PDF served from public/ directory
-- **SSG Build**: 27+ pages generated (14 exercises + 1 utility + core pages)
+- **SSG Build**: 38+ pages generated (15 exercises + 14 utilities + individual project pages + core pages)
 - **Type Safety**: Proper interfaces for PersonalInfo, Skills, ProjectItem, ResumeSection, ExerciseData, UtilityData
 - **Pascal Case Convention**: All code showcase files use PascalCase naming for consistency
 - **Optimal Solution Detection**: Algorithm automatically identifies best time complexity solutions
-- **Dynamic Routing**: [slug].tsx pages for individual exercise and utility showcases
+- **Dynamic Routing**: [slug].tsx pages for individual exercise, utility, and project showcases
 
 ### Testing
 #### E2E Favicon Test
@@ -582,18 +636,18 @@ import { ProfileImage } from '@/components/ui';
 - **Build**: Static site generation with 38+ pages + automated image processing + JSON consolidation pipelines
 - **Quality**: Full ESLint compliance, comprehensive accessibility testing, multi-browser E2E coverage
 - **Accessibility**: WCAG 2.1 AA compliant with complete ARIA implementation and screen reader support
-- **Project System**: Complete automated showcase with PROJECT.md workflow, image processing, and responsive design
+- **Project System**: Automated showcase with PROJECT.md workflow, image processing, and responsive design
 
 ## Project Showcase System
 
-### **Complete Implementation** ✅
+### **Current Implementation**
 - **Hero banner cards** matching Code page design with gradients and hover effects
 - **Screenshots moved to Project Overview** (first section) with modal interactions
 - **TypeScript modules** for type-safe project data management
 - **Automated image processing** with naming convention: `[number]-[category]-[description].[ext]`
 - **Build-time consolidation** similar to exercises/utilities system
-- **Comprehensive guide documentation** with multiple workflow approaches
-- **Type-safe interfaces** with comprehensive project data structure
+- **Guide documentation** with multiple workflow approaches
+- **Type-safe interfaces** with project data structure
 
 ### **Project System Commands**
 ```bash
@@ -612,7 +666,7 @@ projects/
     │   ├── 01-desktop-home.png
     │   ├── 02-mobile-feature.png
     │   └── ...
-    └── PROJECT.md              # Complete project documentation (optional)
+    └── PROJECT.md              # Project documentation (optional)
 public/projects.json            # Generated consolidated data
 public/projects-index.json      # Generated project index
 ```
@@ -676,7 +730,7 @@ export default project;
 **Comprehensive Approach** (see `PROJECT_GUIDE.md`):
 - Detailed project data structure guide
 - Image processing workflow with `IMAGE_WORKFLOW.md`
-- Complete metadata collection checklist
+- Metadata collection checklist
 - Integration testing steps
 
 **Benefits:**
@@ -690,7 +744,7 @@ export default project;
 - **Format**: `[number]-[category]-[description].[ext]`
 - **Categories**: `desktop` (1200×800), `mobile` (375×667), `tablet` (768×1024), `feature` (800×600)
 - **Auto-processing**: WebP + PNG output, thumbnails, quality optimization
-- **Workflow Documentation**: Complete guide in `IMAGE_WORKFLOW.md`
+- **Workflow Documentation**: Guide in `IMAGE_WORKFLOW.md`
 - **Simple Setup**: Drop images in `raw-images/{slug}/` and run processing command
 
 ## Key Technologies

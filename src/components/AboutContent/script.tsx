@@ -181,7 +181,7 @@ export default function AboutContent() {
       
       <SectionContainer>
         {/* Journey Cards */}
-        <Grid columns={3} gap="2rem" className={styles.journeySection}>
+        <Grid gap="2rem" className={styles.journeySection}>
           {journeyData.map((journey) => (
             <Card key={journey.id} className={styles.journeyCard} colorVariant={journey.color}>
               <div className={styles.cardHeader}>
@@ -196,7 +196,7 @@ export default function AboutContent() {
         </Grid>
         
         {/* Company Experience */}
-        <Grid columns={3} gap="2rem" className={styles.experienceSection}>
+        <Grid gap="2rem" className={styles.experienceSection}>
           {experienceData.map((experience) => (
             <Card key={experience.id} className={styles.experienceCard} colorVariant={experience.color}>
               <div className={styles.experienceHeader}>
@@ -212,7 +212,7 @@ export default function AboutContent() {
         </Grid>
         
         {/* Skills */}
-        <Grid columns={3} gap="2rem" className={styles.skillsSection}>
+        <Grid gap="2rem" className={styles.skillsSection}>
           {skillsData.map((skill) => (
             <Card key={skill.id} className={styles.skillCard} colorVariant={skill.color}>
               <div className={styles.skillHeader}>

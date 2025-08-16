@@ -172,7 +172,14 @@
   box-shadow: var(--banner-shadow-default);
   transition: all 0.3s ease;
   min-height: 350px;
-  margin-bottom: 3rem;
+}
+
+/* Mobile: Remove equal heights and stack cards */
+@media (max-width: 767px) {
+  .contactHero {
+    min-height: auto;
+    margin-bottom: 3rem;
+  }
 }
 
 .contactHero:hover {

@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import { UtilityData } from '@/interfaces/utilities';
 import UtilitiesPage from '@/components/pages/UtilitiesPage';
 import SEOHead from '@/components/SEOHead';
+import { loadUtilitiesData } from '@/utils/data-fetchers';
 
 
 interface UtilitiesPageProps {
@@ -18,9 +19,8 @@ export default function Utilities({ utilities }: UtilitiesPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<UtilitiesPageProps> = async () => {
-  // Import utilities data
-  const utilitiesData = await import('../../../../public/utilities.json');
-  const utilities = utilitiesData.default as UtilityData[];
+  // Load utilities data from generated JSON
+  const utilities = await loadUtilitiesData();
 
   return {
     props: {

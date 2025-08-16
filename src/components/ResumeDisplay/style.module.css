@@ -3,6 +3,8 @@
 /* Links Section */
 .linksSection {
   margin-bottom: var(--space-8);
+  overflow-x: auto;
+  width: 100%;
 }
 
 .linkCard {

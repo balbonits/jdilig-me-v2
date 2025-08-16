@@ -1,0 +1,75 @@
+/* Formatted Description Component */
+.formattedDescription {
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.paragraph {
+  margin: 0 0 1rem 0;
+  color: var(--muted-foreground);
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.bulletSection {
+  margin: 1rem 0;
+}
+
+.bulletTitle {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.bulletList {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.bulletItem {
+  margin: 0.25rem 0;
+  position: relative;
+  color: var(--muted-foreground);
+}
+
+.bulletItem::before {
+  content: '•';
+  color: var(--primary);
+  position: absolute;
+  left: -1.5rem;
+  font-weight: bold;
+}
+
+/* Text formatting */
+.formattedDescription strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.formattedDescription code {
+  background-color: var(--muted);
+  color: var(--foreground);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875em;
+}
+
+/* Emoji support */
+.formattedDescription {
+  font-variant-emoji: emoji;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bulletList {
+    padding-left: 1.25rem;
+  }
+  
+  .bulletItem::before {
+    left: -1.25rem;
+  }
+}
