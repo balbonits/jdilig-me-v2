@@ -5,12 +5,10 @@ const project: ProjectData = {
   metadata: {
     title: 'Personal Website v2',
     name: 'jdilig-me-v2',
-    description: 'A modern, accessible personal website with unified design system and component-driven architecture.',
-    detailedDescription: 'Modern rebuild featuring a unified UI component system, modular architecture, and comprehensive testing. Includes advanced features like interactive code showcases, modal systems, 7-color rotation design patterns, and full accessibility compliance with WCAG 2.1 AA standards.',
+    description: 'A modern, accessible personal website with unified design system, comprehensive analytics, and enhanced educational content.',
+    detailedDescription: 'Modern rebuild featuring a unified UI component system, modular architecture, comprehensive testing, and dual analytics integration. Includes advanced features like interactive code showcases with enhanced descriptions, modal systems, navigation improvements, production reliability fixes, and full accessibility compliance with WCAG 2.1 AA standards.',
     category: 'Full-Stack Development',
     startDate: '2024-11',
-    endDate: '2025-01',
-    duration: '3 months',
     role: 'Full-Stack Developer & Designer',
     difficulty: 'Expert',
     featured: true
@@ -35,6 +33,10 @@ const project: ProjectData = {
     {
       category: 'Accessibility & UX',
       items: ['WCAG 2.1 AA Compliance', 'ARIA Implementation', 'Keyboard Navigation', 'Screen Reader Support']
+    },
+    {
+      category: 'Analytics & Tracking',
+      items: ['Vercel Analytics', 'Google Analytics 4', 'Privacy-First Tracking', 'Production Environment Only']
     }
   ],
   features: [
@@ -72,6 +74,21 @@ const project: ProjectData = {
       title: 'Unified Design System with Color Variants',
       description: '7-color rotation system with colorVariant props for visual differentiation across Card components.',
       impact: 'Provides consistent visual hierarchy while eliminating CSS anti-patterns and repetitive styling.'
+    },
+    {
+      title: 'Comprehensive Analytics Integration',
+      description: 'Dual analytics implementation with Vercel Analytics and Google Analytics 4 using official Next.js packages.',
+      impact: 'Privacy-first, cookieless tracking (44KB) with automatic page view tracking and production-only data collection.'
+    },
+    {
+      title: 'Enhanced Educational Content System',
+      description: 'Comprehensive descriptions with emojis, structured formatting, and real-world applications for all 29 code showcase items.',
+      impact: 'Transforms algorithm exercises and utility functions into engaging educational experiences with detailed explanations.'
+    },
+    {
+      title: 'Production Reliability Architecture',
+      description: 'Direct TypeScript module imports with brute force fallbacks to eliminate JSON dependency failures.',
+      impact: 'Ensures zero production deployment issues and bulletproof content delivery regardless of build environment.'
     }
   ],
   metrics: [
@@ -140,6 +157,32 @@ const project: ProjectData = {
         'Comprehensive metadata including difficulty levels',
         'Static JSON generation for performance'
       ]
+    }
+  ],
+  screenshots: [
+    {
+      src: '/images/projects/personal-website-v2/01-desktop-homepage-desktop.webp',
+      alt: 'Personal Website v2 Homepage',
+      caption: 'Modern homepage featuring ResumeDisplay component with profile information, experience timeline, and skills showcase',
+      category: 'desktop'
+    },
+    {
+      src: '/images/projects/personal-website-v2/02-desktop-resume-page-desktop.webp',
+      alt: 'Resume Page Display',
+      caption: 'Comprehensive resume page with professional experience, education, and technical skills in a clean, accessible format',
+      category: 'desktop'
+    },
+    {
+      src: '/images/projects/personal-website-v2/03-desktop-code-showcase-desktop.webp',
+      alt: 'Code Showcase System',
+      caption: 'Interactive code showcase featuring algorithm exercises and utility functions with complexity analysis and multiple solutions',
+      category: 'desktop'
+    },
+    {
+      src: '/images/projects/personal-website-v2/04-desktop-projects-dark-mode-desktop.webp',
+      alt: 'Projects Page in Dark Mode',
+      caption: 'Projects showcase page demonstrating dark theme implementation with hero banners and responsive card layouts',
+      category: 'desktop'
     }
   ],
   links: [

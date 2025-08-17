@@ -1,4 +1,10 @@
 
+## [2025-08-17] Navigation Fix & Project Screenshots Added
+- **Navigation Color Fix**: Fixed unreadable "Code" navigation text when active by adding missing `--primary-foreground` CSS variables for both light and dark themes
+- **Project Screenshots**: Added 4 desktop screenshots to personal-website-v2 project showcase (homepage, resume page, code showcase, projects dark mode)
+- **Image Processing**: Processed PNG images using automated ImageMagick pipeline, generating WebP and PNG versions with thumbnails
+- **Project Data Enhancement**: Updated project metadata to include comprehensive screenshot documentation with proper alt text and captions
+
 ## [2025-08-17] Analytics Implementation & Enhanced Descriptions Complete
 - **Analytics Integration**: Implemented Vercel Analytics (@vercel/analytics) and Google Analytics 4 (@next/third-parties/google) with official Next.js integration, environment variable support, and production-only tracking
 - **Enhanced Descriptions System**: Completed comprehensive, engaging descriptions with emojis and structured formatting for ALL 15 exercises and 14 utilities, improving user experience and educational value
