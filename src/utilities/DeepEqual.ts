@@ -2,35 +2,44 @@ import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
 /**
- * DeepEqual Utility Implementation
+ * ⚖️ DeepEqual - The Truth Detector for Complex Data
  * 
  * DESCRIPTION:
- * Performs deep equality comparison between two values, handling nested objects,
- * arrays, and various JavaScript data types including circular references.
+ * 🔍 **The Structural Comparison Master**
+ * Deep equality goes beyond reference checking to compare actual values and structures! Essential for testing, state management, and data validation where you need to know if two complex objects are truly equivalent in content.
  * 
- * ENHANCED METADATA:
- * - Difficulty: Medium (recursive comparison and type handling)
- * - Solution Type: function (recursive equality comparison utility)
- * - Time Complexity: O(n) where n is total number of properties/elements
- * - Space Complexity: O(d) where d is maximum depth of nesting
- * - Concepts: Recursion, Type checking, Object comparison, Reference tracking
- * - Category: Data comparison utility
+ * 🧠 **The Comparison Challenge:**
+ * • **Value vs Reference:** Compare actual content, not memory addresses
+ * • **Type-Aware:** Dates, RegExp, Sets, Maps compared by their semantic meaning
+ * • **Nested Structures:** Recursively compare objects within arrays within objects
+ * • **Circular Safety:** Detect and handle self-referencing structures gracefully
  * 
- * EXAMPLE:
- * deepEqual({ a: [1, 2] }, { a: [1, 2] }) → true
+ * ⚡ **Four Strategic Approaches:**
+ * • **Basic Deep:** Comprehensive recursive comparison with full type support
+ * • **Circular-Safe:** WeakMap tracking prevents infinite loops from self-references
+ * • **Shallow:** Fast top-level comparison for performance-critical scenarios
+ * • **JSON-Based:** Lightning-fast serialization comparison for simple data
  * 
- * CONCEPTS:
- * - Recursive algorithms
- * - Type checking and comparison
- * - Object and array traversal
- * - Reference equality vs value equality
- * - Circular reference handling
+ * 🚀 **Real-World Applications:**
+ * • **Unit Testing:** Assert.deepEqual() in test frameworks (Mocha, Jest)
+ * • **State Management:** Redux state comparison and change detection
+ * • **Form Validation:** Compare form data with original values
+ * • **Caching Systems:** Determine if cached data matches current request
+ * • **API Testing:** Validate response payloads against expected structures
+ * • **Configuration Management:** Compare settings across environments
+ * 
+ * 💡 **Learning Value:**
+ * • Recursive algorithm design and termination conditions
+ * • JavaScript type system and instanceof patterns
+ * • Performance trade-offs between accuracy and speed
+ * • Circular reference detection using WeakMap
+ * • Set and Map equality semantics vs array/object equality
  * 
  * PERFORMANCE:
- * - Time: O(n) where n is total properties/elements to compare
- * - Space: O(d) where d is maximum nesting depth
+ * - Time: O(n) where n is total properties/elements across all structures
+ * - Space: O(d) where d is maximum nesting depth (recursion stack)
  * 
- * Multiple implementations included to show different comparison approaches.
+ * Multiple implementations show comprehensive comparison, circular handling, performance optimization, and specialized use cases.
  */
 
 // Basic deep equality comparison
@@ -319,6 +328,7 @@ export function deepEqualJSON(a: unknown, b: unknown): boolean {
 export const metadata: UtilityMetadata = {
   title: "DeepEqual Function",
   description: "Performs deep equality comparison between values, handling nested structures, various data types, and circular references",
+  detailedDescription: "🔍 **The Structural Comparison Master**\nDeep equality goes beyond reference checking to compare actual values and structures! Essential for testing, state management, and data validation where you need to know if two complex objects are truly equivalent in content.\n\n🧠 **The Comparison Challenge:**\n• **Value vs Reference:** Compare actual content, not memory addresses\n• **Type-Aware:** Dates, RegExp, Sets, Maps compared by their semantic meaning\n• **Nested Structures:** Recursively compare objects within arrays within objects\n• **Circular Safety:** Detect and handle self-referencing structures gracefully\n\n⚡ **Four Strategic Approaches:**\n• **Basic Deep:** Comprehensive recursive comparison with full type support\n• **Circular-Safe:** WeakMap tracking prevents infinite loops from self-references\n• **Shallow:** Fast top-level comparison for performance-critical scenarios\n• **JSON-Based:** Lightning-fast serialization comparison for simple data\n\n🚀 **Real-World Applications:**\n• **Unit Testing:** Assert.deepEqual() in test frameworks (Mocha, Jest)\n• **State Management:** Redux state comparison and change detection\n• **Form Validation:** Compare form data with original values\n• **Caching Systems:** Determine if cached data matches current request\n• **API Testing:** Validate response payloads against expected structures\n• **Configuration Management:** Compare settings across environments\n\n💡 **Learning Value:**\n• Recursive algorithm design and termination conditions\n• JavaScript type system and instanceof patterns\n• Performance trade-offs between accuracy and speed\n• Circular reference detection using WeakMap\n• Set and Map equality semantics vs array/object equality",
   category: "Data Comparison",
   concepts: ["recursion", "type checking", "object comparison", "reference tracking"],
   timeComplexity: "O(n) where n is total properties/elements",

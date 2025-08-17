@@ -1,24 +1,40 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * LRU Cache Exercise Implementation
+ * 🗄️ LRU Cache - High-Performance Data Management
  * 
  * DESCRIPTION:
- * Implements a Least Recently Used (LRU) cache with get and put operations.
- * Evicts least recent item when capacity exceeded.
+ * ⚡ **The Smart Storage Solution**
+ * LRU (Least Recently Used) Cache is a fundamental data structure that combines the speed of hash maps with intelligent eviction policies. Essential for building high-performance systems that need fast data access with bounded memory usage!
  * 
- * EXAMPLE:
- * cache = new LRUCache(2); cache.put(1,1); cache.put(2,2); cache.get(1) → 1; cache.put(3,3); cache.get(2) → -1
+ * 🧠 **The Eviction Strategy:**
+ * • **Recently Used = Keep:** Items accessed recently stay in cache
+ * • **Least Used = Evict:** Oldest unused items get removed when capacity is full
+ * • **Access Updates Order:** Both get() and put() mark items as "recently used"
+ * • **Constant Time:** All operations must be O(1) for real-world performance
  * 
- * CONCEPTS:
- * - Hash maps
- * - Doubly linked lists for order
+ * ⚡ **Two Implementation Approaches:**
+ * • **Map-Based:** Leverages JavaScript Map's insertion order (simpler code)
+ * • **Hash + DLL:** Traditional approach with hash map + doubly-linked list (more control)
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **CPU Caches:** Hardware uses LRU for memory management
+ * • **Database Buffers:** Keep frequently accessed pages in memory
+ * • **Web Browsers:** Cache recently visited pages and resources
+ * • **CDN Systems:** Distribute and cache popular content efficiently
+ * • **Operating Systems:** Page replacement in virtual memory
+ * 
+ * 💡 **Learning Value:**
+ * • Data structure combination (hash map + linked list)
+ * • Time vs space complexity trade-offs
+ * • Cache eviction policies and their impacts
+ * • Real-world system design principles
  * 
  * PERFORMANCE:
- * - Time: O(1) for get/put
- * - Space: O(capacity)
+ * - Time: O(1) for both get and put operations
+ * - Space: O(capacity) bounded memory usage
  * 
- * Multiple implementations included to show different approaches.
+ * Two implementations show Map-based vs traditional hash+DLL approaches.
  */
 
 // Main class (Map-based)
@@ -147,6 +163,7 @@ export class LRUCacheDLL {
 export const metadata: ExerciseMetadata = {
   title: "LRU Cache",
   description: "Implements a Least Recently Used (LRU) cache with get and put",
+  detailedDescription: "⚡ **The Smart Storage Solution**\nLRU (Least Recently Used) Cache is a fundamental data structure that combines the speed of hash maps with intelligent eviction policies. Essential for building high-performance systems that need fast data access with bounded memory usage!\n\n🧠 **The Eviction Strategy:**\n• **Recently Used = Keep:** Items accessed recently stay in cache\n• **Least Used = Evict:** Oldest unused items get removed when capacity is full\n• **Access Updates Order:** Both get() and put() mark items as \"recently used\"\n• **Constant Time:** All operations must be O(1) for real-world performance\n\n⚡ **Two Implementation Approaches:**\n• **Map-Based:** Leverages JavaScript Map's insertion order (simpler code)\n• **Hash + DLL:** Traditional approach with hash map + doubly-linked list (more control)\n\n🚀 **Real-World Applications:**\n• **CPU Caches:** Hardware uses LRU for memory management\n• **Database Buffers:** Keep frequently accessed pages in memory\n• **Web Browsers:** Cache recently visited pages and resources\n• **CDN Systems:** Distribute and cache popular content efficiently\n• **Operating Systems:** Page replacement in virtual memory\n\n💡 **Learning Value:**\n• Data structure combination (hash map + linked list)\n• Time vs space complexity trade-offs\n• Cache eviction policies and their impacts\n• Real-world system design principles",
   concepts: ["hash maps", "doubly linked lists"],
   timeComplexity: "O(1) for get/put",
   spaceComplexity: "O(capacity)",

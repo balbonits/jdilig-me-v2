@@ -11,7 +11,6 @@ const mockProject: ProjectData = {
     description: 'A test project for unit testing',
     detailedDescription: 'This is a detailed description of the test project.',
     category: 'Full-Stack Development',
-    status: 'completed',
     startDate: '2024-01',
     endDate: '2024-03',
     duration: '3 months',
@@ -101,7 +100,6 @@ describe('ProjectPage', () => {
     render(<ProjectPage project={mockProject} />);
     
     expect(screen.getByText('Full-Stack Development')).toBeInTheDocument();
-    expect(screen.getAllByText('completed')).toHaveLength(2); // appears in header and details
     expect(screen.getAllByText('Expert')).toHaveLength(2); // appears in header and details
   });
 

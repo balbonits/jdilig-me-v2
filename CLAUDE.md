@@ -33,7 +33,12 @@ This document serves as a **persistent knowledge base** that is shared between d
 
 **For Claude instances**: Always refer to this file for project context and update it when making significant changes to maintain continuity across conversations.
 
-**IMPORTANT - Project Status Policy**: NEVER describe projects or features as "complete" or "finished". All projects are constantly evolving with ongoing changes, improvements, and iterations. Always describe current state and capabilities without implying completion status.
+**CRITICAL - Project Status Policy**: 
+- NEVER use "complete", "completed", "finished", "done" or any completion status language
+- NEVER add status fields to project data or interfaces (no "status: completed")
+- NEVER display completion badges or status indicators in the UI
+- All projects are constantly evolving - describe current capabilities, not completion state
+- Use terms like "current", "working", "functional", "implemented" instead of completion language
 
 ## 🛠️ **Technical Debt & Refactoring**
 For comprehensive technical debt tracking, component refactoring plans, and development priorities, see **[TECH_DEBT.md](./TECH_DEBT.md)**. This document contains:
@@ -426,11 +431,48 @@ import PageContainer from '@/components/ui/PageContainer';
 ### **ESLint Configuration & Standards**
 The project maintains strict code quality through comprehensive ESLint rules:
 
-#### **Type Safety Standards**
+#### **Type Safety Standards** ⭐ **CRITICAL**
 - **No `any` types**: Use specific interfaces and types from `src/interfaces/` and `src/types/`
 - **No `unknown` types**: Define proper types for function parameters and return values
 - **Proper generics**: Use constrained generics instead of broad unknown types
+- **REQUIRED fields only**: Never use optional fields (`?`) unless truly optional - breaks compile-time safety
 - **Example**: Instead of `(...args: unknown[]) => unknown`, use `DebouncableFunction` type
+
+#### **TypeScript Interface Standards** ⭐ **CRITICAL**
+
+**ALL interfaces must use REQUIRED fields, not optional, for type safety:**
+
+```typescript
+// ✅ CORRECT - Required fields ensure compile-time safety
+export interface BaseMetadata {
+  title: string;
+  description: string;
+  detailedDescription: string; // REQUIRED - no ? optional fields
+  concepts: string[];
+  timeComplexity: string;
+  spaceComplexity: string;
+  difficulty: DifficultyLevel;
+}
+
+// ❌ INCORRECT - Optional fields lead to runtime errors and confusion
+export interface BaseMetadata {
+  title: string;
+  description: string;
+  detailedDescription?: string; // BAD - optional fields break type safety
+}
+```
+
+**Why Required Fields Matter:**
+- **Compile-Time Safety**: TypeScript catches missing fields before runtime
+- **Documentation**: Forces developers to provide complete metadata
+- **Component Reliability**: Components can safely access all fields without checks
+- **Maintenance**: Clear contract between data and display components
+
+**Implementation Pattern:**
+1. **Define Interface**: All fields required, no optional fields unless truly optional
+2. **Update Components**: Remove conditional checks and fallback logic
+3. **Add Missing Data**: TypeScript will show exactly what's missing
+4. **Test Compliance**: Write tests to verify all modules meet interface requirements
 
 #### **Import/Export Standards**
 - **Named default exports**: Assign objects to variables before default export
@@ -685,7 +727,6 @@ const project: ProjectData = {
     description: 'A short summary of the project.',
     detailedDescription: 'Comprehensive description...',
     category: 'Full-Stack Development',
-    status: 'completed',
     startDate: '2024-01',
     endDate: '2024-03',
     duration: '3 months',

@@ -1,23 +1,40 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * Merge Sort Exercise Implementation
+ * 🔀 Merge Sort - The Reliable Divide-and-Conquer Champion
  * 
  * DESCRIPTION:
- * Sorts an array using merge sort.
+ * 🎯 **The Stable Sorting Powerhouse**
+ * Merge Sort is the gold standard for stable, predictable sorting! Using the elegant divide-and-conquer paradigm, it consistently delivers O(n log n) performance regardless of input data distribution.
  * 
- * EXAMPLE:
- * [5, 2, 8, 1] → [1, 2, 5, 8]
+ * 🧠 **The Divide-and-Conquer Strategy:**
+ * • **Divide:** Split array into two halves recursively until single elements
+ * • **Conquer:** Sort each half (base case: single elements are already sorted)
+ * • **Combine:** Merge sorted halves back together in sorted order
+ * • **Stability:** Equal elements maintain their relative order (crucial for complex data)
  * 
- * CONCEPTS:
- * - Recursion
- * - Divide-and-conquer
+ * ⚡ **Two Implementation Approaches:**
+ * • **Recursive:** Classic top-down approach, elegant and intuitive
+ * • **Iterative:** Bottom-up approach, avoids recursion overhead
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **Database Systems:** Sorting large datasets with predictable performance
+ * • **External Sorting:** Handling datasets larger than available memory
+ * • **Stable Sort Requirements:** When maintaining order of equal elements matters
+ * • **Parallel Computing:** Easy to parallelize due to divide-and-conquer nature
+ * • **Library Implementations:** Foundation for many language standard libraries
+ * 
+ * 💡 **Learning Value:**
+ * • Divide-and-conquer algorithm design paradigm
+ * • Recursion tree analysis and complexity calculation
+ * • Stable vs unstable sorting trade-offs
+ * • Memory usage patterns in sorting algorithms
  * 
  * PERFORMANCE:
- * - Time: O(n log n)
- * - Space: O(n)
+ * - Time: O(n log n) guaranteed - no worst-case degradation
+ * - Space: O(n) for auxiliary arrays during merging
  * 
- * Multiple implementations included to show different approaches.
+ * Two implementations show recursive vs iterative divide-and-conquer approaches.
  */
 
 export function mergeSort(arr: number[]): number[] {
@@ -65,6 +82,7 @@ export function mergeSortIterative(arr: number[]): number[] {
 export const metadata: ExerciseMetadata = {
   title: "Merge Sort",
   description: "Sorts an array using merge sort",
+  detailedDescription: "🎯 **The Stable Sorting Powerhouse**\nMerge Sort is the gold standard for stable, predictable sorting! Using the elegant divide-and-conquer paradigm, it consistently delivers O(n log n) performance regardless of input data distribution.\n\n🧠 **The Divide-and-Conquer Strategy:**\n• **Divide:** Split array into two halves recursively until single elements\n• **Conquer:** Sort each half (base case: single elements are already sorted)\n• **Combine:** Merge sorted halves back together in sorted order\n• **Stability:** Equal elements maintain their relative order (crucial for complex data)\n\n⚡ **Two Implementation Approaches:**\n• **Recursive:** Classic top-down approach, elegant and intuitive\n• **Iterative:** Bottom-up approach, avoids recursion overhead\n\n🚀 **Real-World Applications:**\n• **Database Systems:** Sorting large datasets with predictable performance\n• **External Sorting:** Handling datasets larger than available memory\n• **Stable Sort Requirements:** When maintaining order of equal elements matters\n• **Parallel Computing:** Easy to parallelize due to divide-and-conquer nature\n• **Library Implementations:** Foundation for many language standard libraries\n\n💡 **Learning Value:**\n• Divide-and-conquer algorithm design paradigm\n• Recursion tree analysis and complexity calculation\n• Stable vs unstable sorting trade-offs\n• Memory usage patterns in sorting algorithms",
   concepts: ["recursion", "divide-and-conquer"],
   timeComplexity: "O(n log n)",
   spaceComplexity: "O(n)",

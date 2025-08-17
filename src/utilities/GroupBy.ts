@@ -1,6 +1,44 @@
 import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
+/**
+ * 📊 GroupBy - The Data Organization Powerhouse
+ * 
+ * DESCRIPTION:
+ * 🗂️ **The Ultimate Data Sorter**
+ * GroupBy transforms flat arrays into organized collections by grouping items with common characteristics. Essential for data analysis, report generation, and creating structured views from unstructured data!
+ * 
+ * 🧠 **The Grouping Strategy:**
+ * • **Key Extraction:** Use function or property to determine group membership
+ * • **Dynamic Buckets:** Automatically create groups as new keys are encountered
+ * • **Preserve Order:** Items maintain their relative order within groups
+ * • **Type Safety:** Full TypeScript support with proper key constraints
+ * 
+ * ⚡ **Two Flexible Approaches:**
+ * • **Function-Based:** Maximum flexibility with custom key selector logic
+ * • **Property-Based:** Simple grouping by object property names
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **Data Analytics:** Group sales by region, product, or time period
+ * • **User Management:** Organize users by role, department, or status
+ * • **E-commerce:** Group products by category, brand, or price range
+ * • **Reporting Systems:** Create summary reports from transaction data
+ * • **Content Management:** Organize articles by author, tag, or publication date
+ * • **Financial Analysis:** Group transactions by type, account, or date
+ * 
+ * 💡 **Learning Value:**
+ * • Functional programming patterns and higher-order functions
+ * • TypeScript generics and type constraints
+ * • Data transformation and aggregation techniques
+ * • Object property access and dynamic key creation
+ * 
+ * PERFORMANCE:
+ * - Time: O(n) single pass through array
+ * - Space: O(n) for grouped result structure
+ * 
+ * Two implementations show function-based flexibility vs property-based simplicity.
+ */
+
 export function groupBy<T, K extends string | number | symbol>(
   array: T[],
   keySelector: (item: T) => K
@@ -36,6 +74,7 @@ export function groupByProperty<T>(
 export const metadata: UtilityMetadata = {
   title: "GroupBy Function",
   description: "Groups array items by a key selector function or property name",
+  detailedDescription: "🗂️ **The Ultimate Data Sorter**\nGroupBy transforms flat arrays into organized collections by grouping items with common characteristics. Essential for data analysis, report generation, and creating structured views from unstructured data!\n\n🧠 **The Grouping Strategy:**\n• **Key Extraction:** Use function or property to determine group membership\n• **Dynamic Buckets:** Automatically create groups as new keys are encountered\n• **Preserve Order:** Items maintain their relative order within groups\n• **Type Safety:** Full TypeScript support with proper key constraints\n\n⚡ **Two Flexible Approaches:**\n• **Function-Based:** Maximum flexibility with custom key selector logic\n• **Property-Based:** Simple grouping by object property names\n\n🚀 **Real-World Applications:**\n• **Data Analytics:** Group sales by region, product, or time period\n• **User Management:** Organize users by role, department, or status\n• **E-commerce:** Group products by category, brand, or price range\n• **Reporting Systems:** Create summary reports from transaction data\n• **Content Management:** Organize articles by author, tag, or publication date\n• **Financial Analysis:** Group transactions by type, account, or date\n\n💡 **Learning Value:**\n• Functional programming patterns and higher-order functions\n• TypeScript generics and type constraints\n• Data transformation and aggregation techniques\n• Object property access and dynamic key creation",
   category: "Data Manipulation",
   concepts: ["array manipulation", "data grouping", "functional programming", "data transformation"],
   timeComplexity: "O(n) where n is array length",

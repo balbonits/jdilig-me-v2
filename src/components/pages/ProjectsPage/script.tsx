@@ -38,7 +38,6 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                     <div className={styles.heroContent}>
                       <div className={styles.heroHeader}>
                         <h3 className={styles.heroTitle}>{project.metadata.title}</h3>
-                        <div className={styles.heroBadge}>{project.metadata.status}</div>
                       </div>
                       <p className={styles.heroDescription}>{project.metadata.description}</p>
                       <div className={styles.heroStats}>

@@ -1,23 +1,39 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * Factorial Calculator Exercise Implementation
+ * 🧮 Factorial Calculator - Mathematical Foundation Building
  * 
  * DESCRIPTION:
- * Computes factorial of a non-negative integer.
+ * 📐 **The Mathematical Building Block**
+ * Factorial computation is a cornerstone of combinatorics, probability, and algorithmic thinking! Calculate n! (n factorial) which represents the number of ways to arrange n distinct objects.
  * 
- * EXAMPLE:
- * 5 → 120
+ * 🔢 **The Mathematical Concept:**
+ * • **Definition:** n! = n × (n-1) × (n-2) × ... × 1
+ * • **Base Cases:** 0! = 1, 1! = 1 (mathematical convention)
+ * • **Growth Rate:** Extremely fast - 10! = 3.6 million, 20! = 2.4 quintillion!
+ * • **Edge Cases:** Only defined for non-negative integers
  * 
- * CONCEPTS:
- * - Recursion or iteration
- * - Validation
+ * ⚡ **Two Classic Approaches:**
+ * • **Recursive:** Elegant mathematical definition, n × factorial(n-1)
+ * • **Iterative:** Space-efficient loop, better for large values
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **Combinatorics:** Permutations, arrangements, and ordering problems
+ * • **Probability:** Calculating possible outcomes in statistics
+ * • **Algorithms:** Dynamic programming and memoization examples
+ * • **Cryptography:** Key generation and mathematical security proofs
+ * 
+ * 💡 **Learning Value:**
+ * • Recursion vs iteration trade-offs (space vs readability)
+ * • Input validation and edge case handling
+ * • Mathematical algorithm implementation
+ * • Stack overflow risks with deep recursion
  * 
  * PERFORMANCE:
- * - Time: O(n)
- * - Space: O(n) recursive, O(1) iterative
+ * - Time: O(n) - must multiply n numbers
+ * - Space: O(n) recursive call stack, O(1) iterative approach
  * 
- * Multiple implementations included to show different approaches.
+ * Multiple implementations included to show recursion vs iteration trade-offs.
  */
 
 export function factorial(n: number): number {
@@ -38,6 +54,7 @@ export function factorialIterative(n: number): number {
 export const metadata: ExerciseMetadata = {
   title: "Factorial Calculator",
   description: "Computes the factorial of a non-negative integer",
+  detailedDescription: "📐 **The Mathematical Building Block**\nFactorial computation is a cornerstone of combinatorics, probability, and algorithmic thinking! Calculate n! (n factorial) which represents the number of ways to arrange n distinct objects.\n\n🔢 **The Mathematical Concept:**\n• **Definition:** n! = n × (n-1) × (n-2) × ... × 1\n• **Base Cases:** 0! = 1, 1! = 1 (mathematical convention)\n• **Growth Rate:** Extremely fast - 10! = 3.6 million, 20! = 2.4 quintillion!\n• **Edge Cases:** Only defined for non-negative integers\n\n⚡ **Two Classic Approaches:**\n• **Recursive:** Elegant mathematical definition, n × factorial(n-1)\n• **Iterative:** Space-efficient loop, better for large values\n\n🚀 **Real-World Applications:**\n• **Combinatorics:** Permutations, arrangements, and ordering problems\n• **Probability:** Calculating possible outcomes in statistics\n• **Algorithms:** Dynamic programming and memoization examples\n• **Cryptography:** Key generation and mathematical security proofs\n\n💡 **Learning Value:**\n• Recursion vs iteration trade-offs (space vs readability)\n• Input validation and edge case handling\n• Mathematical algorithm implementation\n• Stack overflow risks with deep recursion",
   concepts: ["recursion", "iteration", "input validation", "mathematics"],
   timeComplexity: "O(n)",
   spaceComplexity: "O(n) for recursive, O(1) for iterative",

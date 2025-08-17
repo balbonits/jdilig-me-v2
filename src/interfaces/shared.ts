@@ -85,12 +85,12 @@ export type APIVersion = 'v1' | 'v2' | 'v3';
 export interface BaseMetadata {
   title: string;
   description: string;
+  detailedDescription?: string; // Optional - rich content with emojis and structure
   concepts: string[];
   timeComplexity: string;
   spaceComplexity: string;
   difficulty: DifficultyLevel;
-  // Rich description fields from JSDoc comments
-  detailedDescription?: string;
+  // Optional rich description fields from JSDoc comments
   constraints?: string[];
   examples?: string[];
   performanceNotes?: string;

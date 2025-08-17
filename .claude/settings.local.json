@@ -43,7 +43,10 @@
       "WebFetch(domain:www.linkedin.com)",
       "Bash(npx vercel:*)",
       "Bash(git reset:*)",
-      "WebFetch(domain:jdilig-2jjuh6ayt-john-diligs-projects.vercel.app)"
+      "WebFetch(domain:jdilig-2jjuh6ayt-john-diligs-projects.vercel.app)",
+      "Bash(for file in IsValidURL Pick Retry Slugify Omit)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(done)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

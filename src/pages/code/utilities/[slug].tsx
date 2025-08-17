@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Breadcrumb, FormattedDescription } from '@/components/ui';
+import { Modal, Breadcrumb } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
@@ -134,10 +134,9 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
             
             {/* Main Description */}
             <div className={styles.descriptionContainer}>
-              <FormattedDescription 
-                text={metadata.detailedDescription || metadata.description}
-                className={styles.descriptionText}
-              />
+              <p className={styles.descriptionText}>
+                {metadata.detailedDescription || metadata.description}
+              </p>
             </div>
             
             <div className={styles.detailsGrid}>

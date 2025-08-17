@@ -1,26 +1,42 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * Quick Sort Exercise Implementation
+ * ⚡ Quick Sort - The Speed Demon of Sorting Algorithms
  * 
  * DESCRIPTION:
- * Implement the quick sort algorithm using divide-and-conquer approach with pivot partitioning.
+ * 🚀 **The Performance Champion**
+ * Quick Sort is the go-to sorting algorithm for speed! Despite its worst-case O(n²) complexity, its average O(n log n) performance and excellent cache locality make it the default choice for most practical applications.
  * 
- * EXAMPLE:
- * [64, 34, 25, 12, 22, 11, 90] → [11, 12, 22, 25, 34, 64, 90]
+ * 🧠 **The Pivot Strategy:**
+ * • **Choose Pivot:** Select an element to partition around (strategy matters!)
+ * • **Partition:** Rearrange so smaller elements are left, larger are right
+ * • **Recursively Sort:** Apply same process to left and right partitions
+ * • **In-Place:** Sorts with minimal extra memory usage
  * 
- * CONCEPTS:
- * - Divide and Conquer
- * - Recursion
- * - In-place Sorting
- * - Partitioning
- * - Pivot Selection
+ * ⚡ **Three Strategic Approaches:**
+ * • **Classic:** Simple last-element pivot - easy to understand
+ * • **Randomized:** Random pivot selection - avoids worst-case scenarios  
+ * • **Iterative:** Stack-based approach - prevents recursion overflow
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **System Libraries:** Default sort in many programming languages (C++, Java)
+ * • **Database Engines:** Fast sorting for query optimization
+ * • **Graphics Processing:** Sorting vertices and primitives efficiently
+ * • **Search Algorithms:** Preprocessing data for faster searches
+ * • **Competitive Programming:** Fast enough for tight time constraints
+ * 
+ * 💡 **Learning Value:**
+ * • Partition-based divide-and-conquer algorithms
+ * • Pivot selection strategies and their impact
+ * • Average vs worst-case performance analysis
+ * • In-place algorithm design principles
+ * • Randomization for algorithmic improvement
  * 
  * PERFORMANCE:
- * - Time: O(n log n) average, O(n²) worst case
- * - Space: O(log n) average, O(n) worst case
+ * - Time: O(n log n) average, O(n²) worst case (rare with good pivot)
+ * - Space: O(log n) average, O(n) worst case (recursion stack)
  * 
- * Multiple implementations included to show different approaches.
+ * Three implementations show classic, randomized, and iterative approaches.
  */
 
 // Main function - in-place quick sort
@@ -96,6 +112,7 @@ export function quickSortIterative(arr: number[]): number[] {
 export const metadata: ExerciseMetadata = {
   title: "Quick Sort",
   description: "Implement the quick sort algorithm using divide-and-conquer approach with pivot partitioning.",
+  detailedDescription: "🚀 **The Performance Champion**\nQuick Sort is the go-to sorting algorithm for speed! Despite its worst-case O(n²) complexity, its average O(n log n) performance and excellent cache locality make it the default choice for most practical applications.\n\n🧠 **The Pivot Strategy:**\n• **Choose Pivot:** Select an element to partition around (strategy matters!)\n• **Partition:** Rearrange so smaller elements are left, larger are right\n• **Recursively Sort:** Apply same process to left and right partitions\n• **In-Place:** Sorts with minimal extra memory usage\n\n⚡ **Three Strategic Approaches:**\n• **Classic:** Simple last-element pivot - easy to understand\n• **Randomized:** Random pivot selection - avoids worst-case scenarios\n• **Iterative:** Stack-based approach - prevents recursion overflow\n\n🚀 **Real-World Applications:**\n• **System Libraries:** Default sort in many programming languages (C++, Java)\n• **Database Engines:** Fast sorting for query optimization\n• **Graphics Processing:** Sorting vertices and primitives efficiently\n• **Search Algorithms:** Preprocessing data for faster searches\n• **Competitive Programming:** Fast enough for tight time constraints\n\n💡 **Learning Value:**\n• Partition-based divide-and-conquer algorithms\n• Pivot selection strategies and their impact\n• Average vs worst-case performance analysis\n• In-place algorithm design principles\n• Randomization for algorithmic improvement",
   concepts: [
     "Divide and Conquer",
     "Recursion", 

@@ -5,23 +5,40 @@ import type {
 } from "@/interfaces/exercises";
 
 /**
- * FizzBuzz Exercise Implementation
+ * 🎲 FizzBuzz - The Classic Programming Interview Challenge
  * 
  * DESCRIPTION:
- * Count from 1 to n, replacing multiples of 3 with "Fizz", 5 with "Buzz", both with "FizzBuzz".
+ * 🎯 **The Ultimate Pattern Recognition Test**
+ * FizzBuzz is the quintessential programming interview question that tests your ability to handle multiple conditions elegantly. Count from 1 to n, but with a twist - numbers divisible by specific values get replaced with words!
  * 
- * EXAMPLE (n=15):
- * ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"]
+ * 🧠 **The Logic Challenge:**
+ * • **Divisible by 3:** Replace with "Fizz" 
+ * • **Divisible by 5:** Replace with "Buzz"
+ * • **Divisible by both:** Replace with "FizzBuzz" (order matters!)
+ * • **Everything else:** Keep the original number as string
  * 
- * CONCEPTS:
- * - Loops and conditionals
- * - Modulo operator
+ * ⚡ **Three Implementation Strategies:**
+ * • **Standard If-Else:** Clear, readable, checks 15 first for efficiency
+ * • **String Concatenation:** Elegant approach that builds the result dynamically
+ * • **Functional One-Liner:** Array.from + ternary operators for concise code
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **Rule Engines:** Business logic with multiple conditional branches
+ * • **Data Transformation:** Converting numeric data based on business rules
+ * • **Game Logic:** Implementing scoring systems with special conditions
+ * • **Report Generation:** Formatting data with conditional text replacement
+ * 
+ * 💡 **Learning Value:**
+ * • Conditional logic and operator precedence
+ * • Modulo arithmetic for divisibility testing
+ * • String vs numeric data handling
+ * • Code clarity vs cleverness trade-offs
  * 
  * PERFORMANCE:
- * - Time: O(n)
- * - Space: O(n)
+ * - Time: O(n) - must process each number once
+ * - Space: O(n) - output array grows with input size
  * 
- * Multiple implementations included to show different approaches.
+ * Multiple implementations included to show different approaches and trade-offs.
  */
 
 export function fizzBuzz(n: number): string[] {
@@ -59,6 +76,7 @@ export const fizzBuzzOneLiner = (n: number): string[] => {
 export const metadata: ExerciseMetadata = {
   title: "FizzBuzz",
   description: "Print numbers 1 to n, replacing multiples of 3 with 'Fizz', multiples of 5 with 'Buzz', and multiples of both with 'FizzBuzz'.",
+  detailedDescription: "🎯 **The Ultimate Pattern Recognition Test**\nFizzBuzz is the quintessential programming interview question that tests your ability to handle multiple conditions elegantly. Count from 1 to n, but with a twist - numbers divisible by specific values get replaced with words!\n\n🧠 **The Logic Challenge:**\n• **Divisible by 3:** Replace with \"Fizz\"\n• **Divisible by 5:** Replace with \"Buzz\"\n• **Divisible by both:** Replace with \"FizzBuzz\" (order matters!)\n• **Everything else:** Keep the original number as string\n\n⚡ **Three Implementation Strategies:**\n• **Standard If-Else:** Clear, readable, checks 15 first for efficiency\n• **String Concatenation:** Elegant approach that builds the result dynamically\n• **Functional One-Liner:** Array.from + ternary operators for concise code\n\n🚀 **Real-World Applications:**\n• **Rule Engines:** Business logic with multiple conditional branches\n• **Data Transformation:** Converting numeric data based on business rules\n• **Game Logic:** Implementing scoring systems with special conditions\n• **Report Generation:** Formatting data with conditional text replacement\n\n💡 **Learning Value:**\n• Conditional logic and operator precedence\n• Modulo arithmetic for divisibility testing\n• String vs numeric data handling\n• Code clarity vs cleverness trade-offs",
   concepts: ["Loops", "Conditionals", "Modular Arithmetic"],
   timeComplexity: "O(n)",
   spaceComplexity: "O(n)",

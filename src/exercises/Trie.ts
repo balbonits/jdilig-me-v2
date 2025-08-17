@@ -1,23 +1,41 @@
 import { ExerciseMetadata, ExampleCase, SolutionMetadata } from '@/interfaces/exercises';
 
 /**
- * Trie-based Autocomplete Exercise Implementation
+ * 🌲 Trie Data Structure - The Autocomplete Powerhouse
  * 
  * DESCRIPTION:
- * Trie for inserting words and suggesting completions for a prefix.
+ * 🔍 **The Search Optimization Champion**
+ * The Trie (prefix tree) is a specialized tree data structure that revolutionizes text searching and autocomplete functionality! Store thousands of words efficiently and provide instant prefix-based suggestions.
  * 
- * EXAMPLE:
- * insert("apple"); insert("app"); suggest("ap") → ["app", "apple"]
+ * 🧠 **The Tree Strategy:**
+ * • **Prefix Sharing:** Common prefixes share the same path from root
+ * • **Character Nodes:** Each node represents a character, edges form words
+ * • **Word Boundaries:** Special markers indicate complete words vs partial paths
+ * • **Traversal Magic:** DFS from prefix node finds all possible completions
  * 
- * CONCEPTS:
- * - Tree data structures
- * - DFS traversal
+ * ⚡ **Two Implementation Approaches:**
+ * • **Map-Based:** Flexible storage for any character set (Unicode support)
+ * • **Array-Based:** Optimized for lowercase a-z with direct indexing
+ * 
+ * 🚀 **Real-World Applications:**
+ * • **Search Engines:** Autocomplete suggestions and spell checking
+ * • **Code Editors:** Variable/function name completion and IntelliSense
+ * • **Mobile Keyboards:** Predictive text and word suggestions
+ * • **DNS Resolution:** Efficient domain name lookup and routing
+ * • **IP Routing:** Network packet routing through prefix matching
+ * • **Lexical Analysis:** Tokenization in compilers and parsers
+ * 
+ * 💡 **Learning Value:**
+ * • Tree-based data structure design and traversal
+ * • Space vs time optimization trade-offs
+ * • Depth-first search algorithms and recursion
+ * • Prefix matching and string processing algorithms
  * 
  * PERFORMANCE:
- * - Time: O(k) insert/suggest (k word length)
- * - Space: O(total chars)
+ * - Time: O(k) for insert/search (k = word length, independent of dictionary size!)
+ * - Space: O(total characters across all words)
  * 
- * Multiple implementations included to show different approaches.
+ * Two implementations show Map flexibility vs Array optimization approaches.
  */
 
 // Trie Node
@@ -138,6 +156,7 @@ export class TrieArray {
 export const metadata: ExerciseMetadata = {
   title: "Trie-based Autocomplete",
   description: "Trie for inserting words and suggesting completions for a prefix",
+  detailedDescription: "🔍 **The Search Optimization Champion**\nThe Trie (prefix tree) is a specialized tree data structure that revolutionizes text searching and autocomplete functionality! Store thousands of words efficiently and provide instant prefix-based suggestions.\n\n🧠 **The Tree Strategy:**\n• **Prefix Sharing:** Common prefixes share the same path from root\n• **Character Nodes:** Each node represents a character, edges form words\n• **Word Boundaries:** Special markers indicate complete words vs partial paths\n• **Traversal Magic:** DFS from prefix node finds all possible completions\n\n⚡ **Two Implementation Approaches:**\n• **Map-Based:** Flexible storage for any character set (Unicode support)\n• **Array-Based:** Optimized for lowercase a-z with direct indexing\n\n🚀 **Real-World Applications:**\n• **Search Engines:** Autocomplete suggestions and spell checking\n• **Code Editors:** Variable/function name completion and IntelliSense\n• **Mobile Keyboards:** Predictive text and word suggestions\n• **DNS Resolution:** Efficient domain name lookup and routing\n• **IP Routing:** Network packet routing through prefix matching\n• **Lexical Analysis:** Tokenization in compilers and parsers\n\n💡 **Learning Value:**\n• Tree-based data structure design and traversal\n• Space vs time optimization trade-offs\n• Depth-first search algorithms and recursion\n• Prefix matching and string processing algorithms",
   concepts: ["tree data structures", "DFS traversal"],
   timeComplexity: "O(k) insert/suggest",
   spaceComplexity: "O(total chars)",

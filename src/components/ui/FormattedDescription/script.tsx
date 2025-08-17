@@ -14,7 +14,7 @@ export default function FormattedDescription({ text, className }: FormattedDescr
     
     return paragraphs.map((paragraph, index) => {
       // Handle different formatting within paragraphs
-      let formattedContent = paragraph
+      const formattedContent = paragraph
         // Convert single newlines to spaces (within same paragraph)
         .replace(/\\n/g, ' ')
         // Handle bold text **text**

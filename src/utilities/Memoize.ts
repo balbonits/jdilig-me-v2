@@ -2,35 +2,43 @@ import type { UtilityMetadata, UtilityExample } from '@/interfaces/utilities';
 import type { SolutionMetadata } from '@/interfaces/shared';
 
 /**
- * Memoize Utility Implementation
+ * 🧠 Memoize - The Performance Memory Palace
  * 
  * DESCRIPTION:
- * Caches function results to avoid expensive recalculations for identical inputs.
- * Improves performance for pure functions with predictable argument patterns.
+ * ⚡ **The Speed Optimization Master**
+ * Memoization transforms slow functions into lightning-fast cached versions by remembering previous results! Essential for optimizing expensive calculations, recursive algorithms, and API calls without changing function behavior.
  * 
- * ENHANCED METADATA:
- * - Difficulty: Medium (cache management and closure patterns)
- * - Solution Type: function (higher-order function with caching)
- * - Time Complexity: O(1) for cached results, O(f) for new calculations
- * - Space Complexity: O(n) where n is number of unique argument combinations
- * - Concepts: Closures, Caching, Performance optimization, Pure functions
- * - Category: Performance optimization utility
+ * 🧠 **The Caching Strategy:**
+ * • **Result Storage:** Cache function outputs keyed by input parameters
+ * • **Instant Retrieval:** O(1) lookups for previously computed results
+ * • **Transparent Operation:** Memoized functions work exactly like originals
+ * • **Memory Management:** Advanced strategies prevent cache bloat and memory leaks
  * 
- * EXAMPLE:
- * memoize(expensiveCalculation) → Cached version that stores results
+ * ⚡ **Three Strategic Approaches:**
+ * • **Basic Cache:** Simple Map-based caching with unlimited growth
+ * • **LRU Cache:** Least-Recently-Used eviction prevents memory overflow
+ * • **TTL Cache:** Time-based expiration for dynamic or time-sensitive data
  * 
- * CONCEPTS:
- * - Closures and lexical scoping
- * - Caching strategies
- * - Performance optimization
- * - Pure function requirements
- * - Memory management
+ * 🚀 **Real-World Applications:**
+ * • **Fibonacci/Factorial:** Transform O(2^n) recursive algorithms to O(n)
+ * • **API Responses:** Cache expensive network requests and database queries
+ * • **Complex Calculations:** Scientific computing, mathematical functions
+ * • **React Optimization:** useMemo() hook for expensive component calculations
+ * • **Image Processing:** Cache filtered/transformed image results
+ * • **Search Results:** Cache query results for instant re-display
+ * 
+ * 💡 **Learning Value:**
+ * • Higher-order functions and closures in JavaScript
+ * • Cache management strategies and trade-offs
+ * • Performance optimization without algorithm changes
+ * • Memory management and garbage collection awareness
+ * • Pure function requirements for safe memoization
  * 
  * PERFORMANCE:
- * - Time: O(1) for cache hits, O(f) for cache misses
- * - Space: O(n) where n is unique argument combinations
+ * - Time: O(1) for cache hits, O(f) for original function execution
+ * - Space: O(n) where n is number of unique input combinations cached
  * 
- * Multiple implementations included to show different approaches.
+ * Three implementations show basic caching, LRU eviction, and TTL expiration strategies.
  */
 
 // Basic memoize implementation
@@ -146,6 +154,7 @@ export function memoizeSimple<T, R>(fn: (arg: T) => R): (arg: T) => R {
 export const metadata: UtilityMetadata = {
   title: "Memoize Function",
   description: "Caches function results to avoid expensive recalculations, improving performance for pure functions with predictable inputs",
+  detailedDescription: "⚡ **The Speed Optimization Master**\nMemoization transforms slow functions into lightning-fast cached versions by remembering previous results! Essential for optimizing expensive calculations, recursive algorithms, and API calls without changing function behavior.\n\n🧠 **The Caching Strategy:**\n• **Result Storage:** Cache function outputs keyed by input parameters\n• **Instant Retrieval:** O(1) lookups for previously computed results\n• **Transparent Operation:** Memoized functions work exactly like originals\n• **Memory Management:** Advanced strategies prevent cache bloat and memory leaks\n\n⚡ **Three Strategic Approaches:**\n• **Basic Cache:** Simple Map-based caching with unlimited growth\n• **LRU Cache:** Least-Recently-Used eviction prevents memory overflow\n• **TTL Cache:** Time-based expiration for dynamic or time-sensitive data\n\n🚀 **Real-World Applications:**\n• **Fibonacci/Factorial:** Transform O(2^n) recursive algorithms to O(n)\n• **API Responses:** Cache expensive network requests and database queries\n• **Complex Calculations:** Scientific computing, mathematical functions\n• **React Optimization:** useMemo() hook for expensive component calculations\n• **Image Processing:** Cache filtered/transformed image results\n• **Search Results:** Cache query results for instant re-display\n\n💡 **Learning Value:**\n• Higher-order functions and closures in JavaScript\n• Cache management strategies and trade-offs\n• Performance optimization without algorithm changes\n• Memory management and garbage collection awareness\n• Pure function requirements for safe memoization",
   category: "Performance",
   concepts: ["closures", "caching", "performance optimization", "pure functions"],
   timeComplexity: "O(1) for cache hits, O(f) for new calculations",

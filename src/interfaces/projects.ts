@@ -44,7 +44,6 @@ export interface ProjectMetadata {
   description: string;
   detailedDescription: string;
   category: string;
-  status: 'completed' | 'in-progress' | 'planned' | 'archived';
   startDate: string;
   endDate?: string;
   duration: string;

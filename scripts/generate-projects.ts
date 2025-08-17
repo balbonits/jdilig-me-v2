@@ -24,7 +24,6 @@ interface ProjectSummary {
   title: string;
   description: string;
   category: string;
-  status: string;
   featured: boolean;
   links: { type: string; url: string; label: string }[];
 }
@@ -70,7 +69,6 @@ class ProjectGenerator {
       title: project.metadata.title,
       description: project.metadata.description,
       category: project.metadata.category,
-      status: project.metadata.status,
       featured: project.metadata.featured,
       links: project.links
     };
@@ -243,7 +241,6 @@ class ProjectGenerator {
         description: "Brief description of what this project does and its main value proposition.",
         detailedDescription: "More comprehensive description explaining the project's purpose, target users, key features, and what makes it unique or noteworthy.",
         category: "Full-Stack Development", // or Mobile Development, Data Science, etc.
-        status: "completed", // or in-progress, planned, archived
         startDate: "2024-01",
         endDate: "2024-03",
         duration: "3 months",

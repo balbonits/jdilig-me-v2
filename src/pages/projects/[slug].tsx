@@ -258,7 +258,6 @@ export default function ProjectPage({ project }: ProjectPageProps) {
     <div className={styles.headerContent}>
       <div className={styles.headerTags}>
         <span className={styles.categoryTag}>{metadata.category}</span>
-        <span className={styles.statusTag}>{metadata.status}</span>
         <span className={styles.difficultyTag}>{metadata.difficulty}</span>
       </div>
       <div className={styles.projectMeta}>
@@ -288,10 +287,6 @@ export default function ProjectPage({ project }: ProjectPageProps) {
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Role:</span>
                 <span className={styles.detailValue}>{metadata.role}</span>
-              </div>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Status:</span>
-                <span className={styles.detailValue}>{metadata.status}</span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Difficulty:</span>
