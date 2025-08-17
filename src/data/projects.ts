@@ -1,50 +1,28 @@
 import { ProjectData } from '@/interfaces/projects';
 
-// Load projects from generated JSON file
-// This file is generated at build time from individual project JSON files in /projects/
-let projectsData: ProjectData[] = [];
+// BRUTE FORCE FIX: Direct import from TypeScript module instead of JSON
+import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';
+
+// Hardcoded project data as fallback for production issues
+const hardcodedProjectsData: ProjectData[] = [personalWebsiteV2];
 
 // Function to load projects data (used in getStaticProps/getStaticPaths)
 export async function loadProjectsData(): Promise<ProjectData[]> {
-  if (typeof window === 'undefined') {
-    // Server-side: read from file system
-    try {
-      const fs = await import('fs');
-      const path = await import('path');
-      const projectsPath = path.join(process.cwd(), 'public', 'projects.json');
-      const projectsJson = fs.readFileSync(projectsPath, 'utf-8');
-      projectsData = JSON.parse(projectsJson);
-    } catch (error) {
-      console.warn('Projects JSON not found:', error);
-      projectsData = [];
-    }
-  } else {
-    // Client-side: fetch from public directory
-    try {
-      const response = await fetch('/projects.json');
-      if (response.ok) {
-        projectsData = await response.json();
-      }
-    } catch (error) {
-      console.warn('Could not fetch projects data:', error);
-      projectsData = [];
-    }
-  }
-  
-  return projectsData;
+  // BRUTE FORCE: Always return the hardcoded data
+  return hardcodedProjectsData;
 }
 
-// Legacy exports for compatibility (used in static generation)
-export { projectsData };
+// Legacy exports for compatibility (updated to use hardcoded data)
+export const projectsData = hardcodedProjectsData;
 
 export const getFeaturedProjects = (projects?: ProjectData[]): ProjectData[] => {
-  const data = projects || projectsData;
+  const data = projects || hardcodedProjectsData;
   return data.filter(project => project.metadata.featured);
 };
 
 export const getProjectBySlug = (slug: string, projects?: ProjectData[]): ProjectData | undefined => {
-  const data = projects || projectsData;
+  const data = projects || hardcodedProjectsData;
   return data.find(project => project.slug === slug);
 };
 
-export default projectsData;
+export default hardcodedProjectsData;
