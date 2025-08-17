@@ -32,6 +32,55 @@
   gap: 2rem;
 }
 
+/* Main Description Styling */
+.mainDescription {
+  margin-bottom: 2rem;
+}
+
+.descriptionContent {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  margin: 0;
+  white-space: pre-line;
+  
+  /* Enhanced typography for rich content */
+  letter-spacing: 0.01em;
+  
+  /* Style headings within the description */
+  & h1, & h2, & h3, & h4, & h5, & h6 {
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--foreground);
+  }
+  
+  /* Style bullet points and lists */
+  & ul, & ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  & li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+  
+  /* Style code blocks within description */
+  & code {
+    background: var(--accent);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+  }
+  
+  /* Style links */
+  & a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}
+
 .subsection {
   background: var(--background);
   border: 1px solid var(--border);

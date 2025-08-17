@@ -64,7 +64,31 @@ export function ArrayReduceDeduplicate(arr: (number | string)[]): (number | stri
 export const metadata: ExerciseMetadata = {
   title: "Array Deduplication",
   description: "Removes duplicates from an array of numbers or strings",
-  detailedDescription: "🔄 **Remove the Noise, Keep the Signal**\nArray deduplication is a fundamental data cleaning operation that removes duplicate values while preserving the original order. Essential for data processing pipelines!\n\n🎯 **Why Order Matters:**\n• Preserves chronological sequence in time-series data\n• Maintains user input order in form processing\n• Keeps first occurrence, discards subsequent duplicates\n• Critical for data integrity in processing workflows\n\n⚡ **Three Deduplication Strategies:**\n• **Set-Based:** Uses Set for O(1) lookups - fastest approach\n• **Filter + indexOf:** Simple but O(n²) - good for learning\n• **Reduce + includes:** Functional approach - readable but slower\n\n🚀 **Real-World Applications:**\n• **User Input:** Remove duplicate tags, categories, or selections\n• **Data Processing:** Clean imported datasets and APIs\n• **Search Results:** Eliminate duplicate entries from multiple sources\n• **Analytics:** Unique visitor tracking and event deduplication\n\n💡 **Learning Value:**\n• Set vs Array performance characteristics\n• Time complexity analysis and optimization\n• Functional vs imperative programming styles\n• Data structure selection for specific use cases",
+  detailedDescription: `🔄 **Remove the Noise, Keep the Signal**
+Array deduplication is a fundamental data cleaning operation that removes duplicate values while preserving the original order. Essential for data processing pipelines!
+
+🎯 **Why Order Matters:**
+• Preserves chronological sequence in time-series data
+• Maintains user input order in form processing
+• Keeps first occurrence, discards subsequent duplicates
+• Critical for data integrity in processing workflows
+
+⚡ **Three Deduplication Strategies:**
+• **Set-Based:** Uses Set for O(1) lookups - fastest approach
+• **Filter + indexOf:** Simple but O(n²) - good for learning
+• **Reduce + includes:** Functional approach - readable but slower
+
+🚀 **Real-World Applications:**
+• **User Input:** Remove duplicate tags, categories, or selections
+• **Data Processing:** Clean imported datasets and APIs
+• **Search Results:** Eliminate duplicate entries from multiple sources
+• **Analytics:** Unique visitor tracking and event deduplication
+
+💡 **Learning Value:**
+• Set vs Array performance characteristics
+• Time complexity analysis and optimization
+• Functional vs imperative programming styles
+• Data structure selection for specific use cases`,
   concepts: ["array manipulation", "hash sets", "filtering", "reducing"],
   timeComplexity: "O(n) for Set-based, O(n²) for filter/reduce-based",
   spaceComplexity: "O(n)",

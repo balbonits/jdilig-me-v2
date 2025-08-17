@@ -428,6 +428,34 @@ import PageContainer from '@/components/ui/PageContainer';
 
 ## Code Quality & Development Standards
 
+### **⭐ CRITICAL - Human Readability Principle**
+**ALL CODE MUST BE READABLE BY HUMANS FIRST**
+
+Humans need to be able to read, understand, and maintain all code. Prioritize clarity over cleverness:
+
+- **Template Literals**: Use backticks for multiline strings instead of escaped `\n` characters
+- **Descriptive Names**: Choose clear variable and function names over brevity
+- **Self-Documenting Code**: Write code that explains intent without extensive comments
+- **Explicit Logic**: Prefer explicit over implicit logic flows
+- **Meaningful Comments**: Explain "why", not "what"
+- **Natural Structure**: Code should read like well-written prose
+
+**Examples:**
+```typescript
+// ✅ GOOD - Human readable
+const detailedDescription = `🔥 **Enhanced Description**
+This is a comprehensive explanation that spans multiple lines
+and uses natural formatting for human comprehension.
+
+Key benefits:
+• Easy to read and edit
+• Clear structure and formatting
+• Maintainable by any developer`;
+
+// ❌ BAD - Hard for humans to read
+const detailedDescription = "🔥 **Enhanced Description**\\nThis is a comprehensive explanation...\\n\\nKey benefits:\\n• Easy to read...";
+```
+
 ### **ESLint Configuration & Standards**
 The project maintains strict code quality through comprehensive ESLint rules:
 
@@ -435,44 +463,52 @@ The project maintains strict code quality through comprehensive ESLint rules:
 - **No `any` types**: Use specific interfaces and types from `src/interfaces/` and `src/types/`
 - **No `unknown` types**: Define proper types for function parameters and return values
 - **Proper generics**: Use constrained generics instead of broad unknown types
-- **REQUIRED fields only**: Never use optional fields (`?`) unless truly optional - breaks compile-time safety
+- **Strategic field design**: Use required fields for core data, optional for gradual enhancements
 - **Example**: Instead of `(...args: unknown[]) => unknown`, use `DebouncableFunction` type
 
 #### **TypeScript Interface Standards** ⭐ **CRITICAL**
 
-**ALL interfaces must use REQUIRED fields, not optional, for type safety:**
+**Strategic use of required vs optional fields for gradual enhancement:**
 
 ```typescript
-// ✅ CORRECT - Required fields ensure compile-time safety
+// ✅ CORRECT - Mix of required and optional fields for type safety + flexibility
 export interface BaseMetadata {
-  title: string;
-  description: string;
-  detailedDescription: string; // REQUIRED - no ? optional fields
-  concepts: string[];
-  timeComplexity: string;
-  spaceComplexity: string;
-  difficulty: DifficultyLevel;
+  title: string;                    // REQUIRED - core field
+  description: string;              // REQUIRED - core field
+  detailedDescription?: string;     // OPTIONAL - allows gradual enhancement
+  concepts: string[];               // REQUIRED - core field
+  timeComplexity: string;           // REQUIRED - core field
+  spaceComplexity: string;          // REQUIRED - core field
+  difficulty: DifficultyLevel;      // REQUIRED - core field
 }
 
-// ❌ INCORRECT - Optional fields lead to runtime errors and confusion
-export interface BaseMetadata {
-  title: string;
-  description: string;
-  detailedDescription?: string; // BAD - optional fields break type safety
-}
+// ✅ CORRECT - Component logic handles optional fields safely
+const description = metadata.detailedDescription || metadata.description;
 ```
 
-**Why Required Fields Matter:**
-- **Compile-Time Safety**: TypeScript catches missing fields before runtime
-- **Documentation**: Forces developers to provide complete metadata
-- **Component Reliability**: Components can safely access all fields without checks
-- **Maintenance**: Clear contract between data and display components
+**Interface Design Principles:**
+- **Required for Core Fields**: Essential metadata that all items must have
+- **Optional for Enhancements**: Rich content that can be added gradually
+- **Safe Component Logic**: Always provide fallbacks for optional fields
+- **Build System Support**: Generation scripts preserve existing metadata without overwriting
 
-**Implementation Pattern:**
-1. **Define Interface**: All fields required, no optional fields unless truly optional
-2. **Update Components**: Remove conditional checks and fallback logic
-3. **Add Missing Data**: TypeScript will show exactly what's missing
-4. **Test Compliance**: Write tests to verify all modules meet interface requirements
+**Critical Generation Script Pattern:**
+```typescript
+// ✅ CORRECT - Only include defined properties to avoid overwriting
+let enrichedMetadata: any = {};
+if (foundDescription) {
+  enrichedMetadata.detailedDescription = foundDescription;
+}
+// Don't add undefined values that would overwrite existing metadata
+
+const mergedMetadata = { ...metadata, ...enrichedMetadata };
+```
+
+**Lessons Learned from Metadata Overwrite Bug:**
+- **Never set undefined**: Spreading objects with undefined properties overwrites existing values
+- **Use conditional assignment**: Only add properties to objects when they have valid values
+- **Write tests for build scripts**: Generation scripts need comprehensive testing to prevent data loss
+- **Template literals over escaped strings**: Human readability is paramount for maintainability
 
 #### **Import/Export Standards**
 - **Named default exports**: Assign objects to variables before default export

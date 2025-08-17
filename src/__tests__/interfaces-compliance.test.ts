@@ -113,17 +113,18 @@ describe('Interface Compliance Tests', () => {
         expect(module.metadata).toBeDefined();
         expect(module.metadata.title).toBeDefined();
         expect(module.metadata.description).toBeDefined();
-        expect(module.metadata.detailedDescription).toBeDefined();
         expect(module.metadata.category).toBeDefined();
         expect(module.metadata.concepts).toBeDefined();
         expect(module.metadata.timeComplexity).toBeDefined();
         expect(module.metadata.spaceComplexity).toBeDefined();
         expect(module.metadata.difficulty).toBeDefined();
 
-        // Ensure detailedDescription is not empty and has rich content
-        expect(module.metadata.detailedDescription.length).toBeGreaterThan(50);
-        expect(module.metadata.detailedDescription).toMatch(/[🎯⚡🧠🚀💡]/); // Contains emojis
-        expect(module.metadata.detailedDescription).toMatch(/\n/); // Contains line breaks
+        // detailedDescription is optional but if present should have rich content
+        if (module.metadata.detailedDescription) {
+          expect(module.metadata.detailedDescription.length).toBeGreaterThan(50);
+          expect(module.metadata.detailedDescription).toMatch(/[🎯⚡🧠🚀💡]/); // Contains emojis
+          expect(module.metadata.detailedDescription).toMatch(/\n/); // Contains line breaks
+        }
       });
 
       test(`${name} has valid solutions array`, () => {

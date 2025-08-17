@@ -110,11 +110,10 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
         <div className={styles.overviewContainer}>
           {/* Description */}
           {metadata.detailedDescription && (
-            <div className={styles.subsection}>
-              <h4 className={styles.subsectionTitle}>Description</h4>
-              <p className={styles.subsectionText}>
+            <div className={styles.mainDescription}>
+              <div className={styles.descriptionContent}>
                 {metadata.detailedDescription}
-              </p>
+              </div>
             </div>
           )}
 

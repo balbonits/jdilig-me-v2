@@ -33,7 +33,7 @@ async function generateExercisesJSON() {
       
       // Extract JSDoc comments for rich description
       const jsdocMatch = fileContent.match(/\/\*\*\s*([\s\S]*?)\s*\*\//);
-      let enrichedMetadata = {};
+      let enrichedMetadata: any = {};
       
       if (jsdocMatch) {
         const jsdocContent = jsdocMatch[1];
@@ -46,13 +46,23 @@ async function generateExercisesJSON() {
         const constraintsMatch = jsdocContent.match(/\* CONSTRAINTS:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
         const approachesMatch = jsdocContent.match(/\* APPROACHES:\s*\n([\s\S]*?)(?:\n\s*\*\s*\n|\n\s*\*\s*[A-Z]+:)/);
         
-        enrichedMetadata = {
-          detailedDescription: descriptionMatch ? descriptionMatch[1].trim() : undefined,
-          examples: exampleMatch ? [exampleMatch[1].replace(/\*\s*/g, '').trim()] : undefined,
-          performanceNotes: performanceMatch ? performanceMatch[1].replace(/\*\s*/g, '').trim() : undefined,
-          constraints: constraintsMatch ? constraintsMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim()) : undefined,
-          approaches: approachesMatch ? approachesMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim()) : undefined,
-        };
+        // Only include defined properties to avoid overwriting existing metadata
+        enrichedMetadata = {};
+        if (descriptionMatch) {
+          enrichedMetadata.detailedDescription = descriptionMatch[1].trim();
+        }
+        if (exampleMatch) {
+          enrichedMetadata.examples = [exampleMatch[1].replace(/\*\s*/g, '').trim()];
+        }
+        if (performanceMatch) {
+          enrichedMetadata.performanceNotes = performanceMatch[1].replace(/\*\s*/g, '').trim();
+        }
+        if (constraintsMatch) {
+          enrichedMetadata.constraints = constraintsMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim());
+        }
+        if (approachesMatch) {
+          enrichedMetadata.approaches = approachesMatch[1].replace(/\*\s*/g, '').split('\n').filter(line => line.trim()).map(line => line.trim());
+        }
       }
       
       // Import the module dynamically

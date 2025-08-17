@@ -66,11 +66,10 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
       content: (
         <div className={styles.overviewContainer}>
           {/* Problem Description */}
-          <div className={styles.subsection}>
-            <h4 className={styles.subsectionTitle}>Description</h4>
-            <p className={styles.subsectionText}>
+          <div className={styles.mainDescription}>
+            <div className={styles.descriptionContent}>
               {exercise.metadata.detailedDescription || exercise.metadata.description}
-            </p>
+            </div>
             {exercise.metadata.examples && exercise.metadata.examples.length > 0 && (
               <div className={styles.examplesList}>
                 <h5 className={styles.examplesLabel}>Examples:</h5>
