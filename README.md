@@ -9,6 +9,7 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **Architecture**: Modular components with reusable UI primitives
 - **Theme**: Light/dark mode with CSS custom properties
 - **Testing**: Jest + React Testing Library + Playwright E2E
+- **Analytics**: Vercel Analytics + Google Analytics 4
 - **Quality**: Full ESLint compliance, automated visual regression testing
 
 ## 🎯 Features
@@ -338,6 +339,31 @@ npm run generate:utilities  # Generate utilities JSON only
 npm run generate:projects   # Generate projects JSON from TypeScript modules
 npm run process-images   # Process project images (requires slug parameter)
 ```
+
+## 📊 Analytics Configuration
+
+This project includes both Vercel Analytics and Google Analytics 4 for comprehensive tracking:
+
+### Vercel Analytics
+- **Package**: `@vercel/analytics`
+- **Configuration**: Automatically enabled on Vercel deployments
+- **Features**: Privacy-friendly, cookieless tracking (44KB)
+- **Environment**: Production only
+
+### Google Analytics 4
+- **Package**: `@next/third-parties/google`
+- **Configuration**: Requires environment variable setup
+- **Environment**: Production only with optimized script loading
+
+#### Setup Instructions
+1. Copy `.env.local.example` to `.env.local`
+2. Add your Google Analytics Measurement ID:
+   ```bash
+   NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+   ```
+3. Deploy to production - both analytics will automatically start tracking
+
+Both analytics systems follow official Next.js documentation best practices and only track in production environments.
 
 ## 🎨 TypeScript Organization
 

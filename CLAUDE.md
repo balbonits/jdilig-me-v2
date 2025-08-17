@@ -54,13 +54,17 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - **Name**: jdilig-me-v2
 - **Type**: Personal website
 - **Framework**: Next.js with Pages Router
-- **Technologies**: React, TypeScript, Tailwind CSS v4
+- **Technologies**: React, TypeScript, Tailwind CSS v4, Jest, Playwright, Vercel Analytics, Google Analytics 4
 - **Branch**: master
 - **Status**: Modular component architecture with unified UI system
 - **Architecture**: Pages Router with modular component structure and reusable UI primitives
 
 ## Website Features
 -### Recent Changes (August 2025)
+  - **Analytics Implementation**: Added Vercel Analytics (@vercel/analytics) and Google Analytics 4 (@next/third-parties/google) with official Next.js integration, environment variable support, and production-only tracking
+  - **Enhanced Descriptions System**: Implemented comprehensive, engaging descriptions with emojis and structured formatting for ALL 15 exercises and 14 utilities, improving user experience and educational value
+  - **Projects Page Fix**: Brute force solution to eliminate empty sections issue by directly importing TypeScript modules instead of JSON dependencies
+  - **Navigation Enhancement**: Added Code sub-menu with Exercises and Utilities links for improved site navigation
   - Implemented custom favicon and app icons using assets in /public/images/favicon (multi-size PNG, ICO, Apple touch, manifest)
   - Added Playwright E2E test to verify favicon and app icon links in <head>
 - Added SEOHead to Utilities and Exercises pages for correct page titles and SEO meta tags (fixes E2E Playwright title checks)

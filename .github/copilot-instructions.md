@@ -31,6 +31,8 @@ This workflow helps maintain a living, up-to-date project knowledge base.
 
 **memorize: Never use the Task tool as a shortcut when the user explicitly asks for manual work - they want to see the actual implementation, not delegation.**
 
+**memorize: Analytics implementation uses official packages: @vercel/analytics for Vercel Analytics, @next/third-parties/google for Google Analytics 4, with production-only tracking and environment variable configuration.**
+
 This file contains context and references for the jdilig-me-v2 project to help Claude understand the codebase structure and conventions.
 
 ## 🤖 **Shared Context System**
