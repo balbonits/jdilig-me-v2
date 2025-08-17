@@ -43,6 +43,34 @@ export function pickBy<T extends Record<string, unknown>>(
 export const metadata: UtilityMetadata = {
   title: "Pick Function",
   description: "Creates new objects by selecting only specified properties from source objects",
+  detailedDescription: `🎯 **Property Selection Made Simple**
+Pick functions create new objects by selecting only the properties you need, offering clean data transformation and immutable object manipulation!
+
+🔍 **Key Features:**
+• **Basic Pick:** Select specific properties by key names
+• **Pick By Predicate:** Filter properties using custom logic
+• **Type Safety:** Full TypeScript support with compile-time checking
+• **Immutability:** Original objects remain unchanged
+
+⚡ **Multiple Implementations:**
+• **pick(obj, keys):** Direct property selection by key array
+• **pickBy(obj, predicate):** Conditional selection using predicate function
+• **Type-safe operations:** Maintains property types and relationships
+
+🚀 **Real-World Applications:**
+• **API Responses:** Extract only needed fields from large objects
+• **Data Privacy:** Remove sensitive fields before sending to client
+• **Form Processing:** Select user-input fields from larger state
+• **Database Results:** Pick specific columns from query results
+• **Configuration Objects:** Extract relevant settings for components
+
+💡 **Benefits:**
+• Clean, readable data transformations
+• Immutable operations prevent side effects
+• Type safety prevents runtime errors
+• Memory efficient - only copies needed properties
+• Functional programming patterns
+• Easy to test and debug`,
   category: "Data Manipulation",
   concepts: ["object manipulation", "property selection", "immutability", "type safety"],
   timeComplexity: "O(k) where k is number of keys to pick",

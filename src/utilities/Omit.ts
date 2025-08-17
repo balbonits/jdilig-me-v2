@@ -200,6 +200,32 @@ export function omitByPattern<T extends Record<string, unknown>>(
 export const metadata: UtilityMetadata = {
   title: "Omit Function",
   description: "Creates new objects by excluding specified properties, supporting various filtering strategies including nested paths and predicates",
+  detailedDescription: `🚫 **Selective Object Filtering**
+Create clean objects by excluding unwanted properties! Omit provides flexible strategies for removing specific fields while preserving everything else.
+
+🎯 **Multiple Filtering Strategies:**
+• **Basic Omit:** Remove specific property names
+• **Nested Omit:** Handle deep object paths like 'user.profile.email'
+• **Predicate Omit:** Use custom functions for complex filtering logic
+• **Pattern Omit:** Remove properties matching regex patterns
+
+⚡ **Smart Implementation Features:**
+• **Type Safety:** Full TypeScript support with proper typing
+• **Immutable:** Never modifies original objects
+• **Performance:** Optimized for both single and bulk operations
+• **Flexible:** Works with any object structure or property type
+
+🚀 **Real-World Applications:**
+• **API Responses:** Remove sensitive data before sending to client
+• **Form Processing:** Strip internal fields from user submissions
+• **Data Sanitization:** Clean objects before database storage
+• **Component Props:** Remove handler props before spreading to DOM
+
+💡 **Benefits Over Manual Filtering:**
+• Cleaner, more readable code
+• Consistent object transformation patterns
+• Better error handling and edge cases
+• Reusable across different data structures`,
   category: "Data Manipulation",
   concepts: ["object manipulation", "property filtering", "immutability", "type safety"],
   timeComplexity: "O(n) where n is source object properties",

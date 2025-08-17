@@ -48,6 +48,36 @@ export function slugifyAdvanced(text: string, options: {
 export const metadata: UtilityMetadata = {
   title: "Slugify Function",
   description: "Converts strings to URL-friendly slugs by removing special characters and replacing spaces",
+  detailedDescription: `🔗 **URL-Friendly Text Transformation**
+Slugify functions convert any text into clean, URL-safe strings perfect for web addresses, file names, and identifiers!
+
+🎯 **Core Functionality:**
+• **Character Normalization:** Remove special characters and accents
+• **Space Replacement:** Convert spaces to hyphens or custom separators
+• **Case Transformation:** Lowercase conversion for consistency
+• **Cleanup:** Remove leading/trailing separators and extra whitespace
+
+⚡ **Multiple Implementations:**
+• **Basic Slugify:** Simple, fast conversion with default settings
+• **Advanced Slugify:** Configurable options for complex requirements
+• **Custom Separators:** Use hyphens, underscores, or custom characters
+• **Length Limiting:** Truncate slugs to specific maximum lengths
+
+🚀 **Real-World Applications:**
+• **Blog URLs:** Convert post titles to SEO-friendly URLs
+• **File Names:** Create safe file names from user input
+• **Database Identifiers:** Generate unique, readable record IDs
+• **CSS Classes:** Convert component names to valid CSS selectors
+• **Route Parameters:** Create clean navigation paths
+• **Search Terms:** Normalize search queries for consistency
+
+💡 **Advanced Features:**
+• **Strict Mode:** Extra restrictive character filtering
+• **Multilingual Support:** Handle international characters properly
+• **Performance Optimized:** Efficient regex patterns for speed
+• **Configurable Output:** Control every aspect of transformation
+• **Safe Defaults:** Sensible settings that work in most cases
+• **Error Handling:** Graceful handling of invalid inputs`,
   category: "String Manipulation",
   concepts: ["string manipulation", "regular expressions", "URL formatting", "text processing"],
   timeComplexity: "O(n) where n is string length",

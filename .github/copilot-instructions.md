@@ -21,6 +21,16 @@ memorize: All new utility functions must include at least one usage example and 
 
 This workflow helps maintain a living, up-to-date project knowledge base.
 
+## ⭐ CRITICAL DEVELOPMENT PRINCIPLES
+
+**memorize: When the user says "ALL", they mean EVERY SINGLE ONE - no exceptions, no shortcuts, no Task tool delegation. Do the work manually and systematically.**
+
+**memorize: Human readability is paramount - always use template literals (backticks) for multiline strings instead of escaped \n characters.**
+
+**memorize: All enhanced descriptions (detailedDescription) must be comprehensive, engaging, and use proper emoji formatting with bullet points and structured sections.**
+
+**memorize: Never use the Task tool as a shortcut when the user explicitly asks for manual work - they want to see the actual implementation, not delegation.**
+
 This file contains context and references for the jdilig-me-v2 project to help Claude understand the codebase structure and conventions.
 
 ## 🤖 **Shared Context System**

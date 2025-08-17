@@ -186,6 +186,35 @@ function sleep(ms: number): Promise<void> {
 export const metadata: UtilityMetadata = {
   title: "Retry Function",
   description: "Automatically retries failed operations with configurable backoff strategies, essential for handling unreliable network operations",
+  detailedDescription: `🔄 **Resilient Operations Made Easy**
+Retry utilities provide robust error handling for unreliable operations, automatically recovering from transient failures with intelligent backoff strategies!
+
+🛡️ **Core Features:**
+• **Basic Retry:** Configurable attempts with linear or exponential backoff
+• **Jitter Support:** Prevents thundering herd problems in distributed systems
+• **Circuit Breaker:** Protects systems from cascading failures
+• **Conditional Retry:** Custom logic to determine if retry should occur
+• **Synchronous Support:** Simple retry for non-async operations
+
+⚡ **Intelligent Backoff Strategies:**
+• **Linear Delay:** Fixed intervals between attempts
+• **Exponential Backoff:** Increasingly longer delays (1s, 2s, 4s, 8s...)
+• **Jitter:** Random delays to prevent synchronized retry storms
+• **Max Delay:** Cap exponential growth to reasonable limits
+
+🚀 **Real-World Applications:**
+• **API Calls:** Handle network timeouts and temporary service failures
+• **Database Connections:** Retry failed queries and connection issues
+• **File Operations:** Handle temporary file locks and I/O errors
+• **Payment Processing:** Retry failed payment gateway requests
+• **Microservices:** Resilient inter-service communication
+• **Data Synchronization:** Retry failed sync operations
+
+💡 **Advanced Patterns:**
+• **Circuit Breaker:** Fail fast when service is consistently down
+• **Custom Predicates:** Retry only specific error types
+• **Progress Callbacks:** Monitor retry attempts and log failures
+• **Resource Protection:** Prevent system overload during failures`,
   category: "Reliability",
   concepts: ["async/await", "error handling", "exponential backoff", "promises"],
   timeComplexity: "O(n) where n is retry attempts",

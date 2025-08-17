@@ -46,7 +46,11 @@
       "WebFetch(domain:jdilig-2jjuh6ayt-john-diligs-projects.vercel.app)",
       "Bash(for file in IsValidURL Pick Retry Slugify Omit)",
       "Bash(do echo \"=== $file ===\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(for:*)",
+      "Bash(do if ! grep -q \"detailedDescription:\" \"$file\")",
+      "Bash(fi)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

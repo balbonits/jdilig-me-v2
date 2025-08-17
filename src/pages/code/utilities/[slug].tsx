@@ -133,9 +133,9 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
             
             {/* Main Description */}
             <div className={styles.descriptionContainer}>
-              <p className={styles.descriptionText}>
+              <div className={styles.descriptionContent}>
                 {metadata.detailedDescription || metadata.description}
-              </p>
+              </div>
             </div>
             
             <div className={styles.detailsGrid}>
