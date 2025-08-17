@@ -50,7 +50,9 @@
       "Bash(for:*)",
       "Bash(do if ! grep -q \"detailedDescription:\" \"$file\")",
       "Bash(fi)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(npm i:*)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
