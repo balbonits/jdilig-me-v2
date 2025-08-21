@@ -17,6 +17,7 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **Personal Portfolio**: Resume, projects, and professional experience
 - **Code Showcase**: 15+ algorithm exercises with multiple solutions and complexity analysis
 - **Utility Functions**: Reusable TypeScript utilities with documentation
+- **Modular About Components**: JourneyCard, ExperienceCard, SkillCard, ContactSection for reusable professional displays
 - **Responsive Design**: Mobile-first approach across all components
 - **Theme System**: Smooth light/dark mode transitions
 - **Accessibility**: WCAG 2.1 AA compliant with comprehensive ARIA support

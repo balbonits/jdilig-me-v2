@@ -1,0 +1,1 @@
+export { default, type JourneyCardProps } from './script';

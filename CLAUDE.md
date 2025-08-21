@@ -42,9 +42,10 @@ This document serves as a **persistent knowledge base** that is shared between d
 
 ## 🛠️ **Technical Debt & Refactoring**
 For comprehensive technical debt tracking, component refactoring plans, and development priorities, see **[TECH_DEBT.md](./TECH_DEBT.md)**. This document contains:
-- Modularization opportunities (AboutContent component ~600 lines → modular components)
+- **✅ COMPLETED**: AboutContent component modularization (JourneyCard, ExperienceCard, SkillCard, ContactSection)
+- **NEW**: "My Notes" feature for Code page (medium priority)
 - CSS anti-patterns and design system improvements
-- Component audit checklists and migration strategies
+- Component audit checklists and migration strategies  
 - Performance optimization plans
 - Testing and accessibility improvements
 
@@ -279,6 +280,12 @@ body { /* Global typography, base styles */ }
 - **MobileMenu**: Floating overlay navigation menu for mobile viewports with backdrop blur and slide animation
 - **Breadcrumb**: Navigation breadcrumb component with accessibility support and responsive design
 
+### Modular About Components ✅ **NEW**
+- **JourneyCard**: Personal journey and values display with icon, title, and description
+- **ExperienceCard**: Professional experience with company, badge, and achievements
+- **SkillCard**: Technical skills by category with proficiency levels and skill tags
+- **ContactSection**: Contact information hero with status badge and structured contact methods
+
 ### Mobile-First Responsive Design
 
 ### Modal Component
@@ -381,6 +388,12 @@ projects/                  # Project data & images (consolidated)
 ## TypeScript Organization
 
 The project uses a clear separation between **interfaces** and **types**:
+
+### **Component Architecture Updates ✅ COMPLETED**
+- **Modular About Components**: Complete separation of AboutContent into reusable UI components
+- **Type Safety**: Added CardColorVariant type for consistent card color theming
+- **Interface Exports**: Proper TypeScript interface exports for all new UI components
+- **Data Organization**: Centralized about.ts data module with typed interfaces
 
 ### **Interface Hierarchy**
 The codebase follows a shared template pattern: **Shared** (collection) → **Showcase** (template) → **Exercise, Utility** (specific types)
@@ -933,7 +946,11 @@ export default project;
     2. `npm test` (Jest unit tests)
     3. `npx playwright test` (E2E tests) — **E2E tests are commit-essential: all must pass before commit, not just before deploy.**
     4. `npm run build` (build check)
-3. **Git Flow:**
+3. **Development Server Management:**
+  - **CRITICAL**: Always kill `npm run dev` after testing and before committing code
+  - Running dev servers can interfere with E2E tests and cause port conflicts
+  - Use `pkill -f "next dev"` or Ctrl+C to terminate properly
+4. **Git Flow:**
   - Stage all changes (`git add`)
   - Write a detailed commit message documenting all work
   - Commit and push (or notify user to push if not possible)

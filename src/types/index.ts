@@ -9,6 +9,7 @@ export type DeepPartial<T> = {
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
 export type Size = 'sm' | 'md' | 'lg';
 export type Theme = 'light' | 'dark';
+export type CardColorVariant = 'blue' | 'purple' | 'teal' | 'pink' | 'orange' | 'green' | 'red';
 
 // Navigation types
 export interface NavItem {

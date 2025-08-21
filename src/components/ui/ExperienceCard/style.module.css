@@ -1,0 +1,80 @@
+/* ExperienceCard - Professional experience and company showcase */
+
+.experienceCard {
+  /* Card-specific overrides inherit from base Card component */
+}
+
+.experienceHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  /* Follows card design system alignment patterns */
+  flex-shrink: 0;
+}
+
+.experienceIcon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  /* Slightly smaller than journey icons for hierarchy */
+}
+
+.experienceTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--foreground);
+  /* Smaller than journey titles for content hierarchy */
+}
+
+.experienceBadge {
+  background: var(--badge-bg-color-default, rgba(0, 0, 0, 0.1));
+  backdrop-filter: blur(10px);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--badge-border-color-default, rgba(0, 0, 0, 0.2));
+  display: inline-block;
+  color: var(--foreground, #374151);
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+  /* Industry/category indicator with professional styling */
+}
+
+.experienceCard:hover .experienceBadge {
+  background: var(--badge-bg-color-hover, rgba(0, 0, 0, 0.15));
+  /* Interactive feedback on card hover */
+}
+
+.experienceDescription {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.85;
+  color: var(--foreground);
+  /* Detailed description with readable typography */
+}
+
+/* Mobile responsiveness */
+@media (min-width: 768px) {
+  .experienceIcon {
+    font-size: 2.5rem;
+  }
+  
+  .experienceTitle {
+    font-size: 1.5rem;
+  }
+  
+  .experienceDescription {
+    font-size: 1rem;
+  }
+  
+  .experienceBadge {
+    font-size: 0.8rem;
+  }
+}

@@ -25,6 +25,33 @@ This document tracks technical debt and planned refactoring work to maintain cod
 
 ### Previously Completed 
 
+## Medium Priority 🟡
+
+### 1. My Notes Feature for Code Page
+**Status**: Planning
+**Priority**: Medium
+
+**Description**: Add "My Notes" section to the Code page - a collection of learnings, thoughts, and general ideas & experiences as a developer. This will showcase personal insights on:
+- Learning React & front-end development journey
+- Personal conventions, standards, and syntax preferences
+- Development philosophy and best practices
+- Code patterns and architectural decisions
+- Lessons learned from real projects
+
+**Implementation Ideas**:
+- Create a new section alongside Exercises and Utilities
+- Use Markdown files for easy content authoring
+- Include categories like "React Patterns", "Code Standards", "Learning Journey", "Best Practices"
+- Add timestamps and tags for organization
+- Consider a blog-like layout with preview cards
+- Enable search/filter by topic or date
+
+**Benefits**:
+- Shows personality and thought process as a developer
+- Demonstrates continuous learning mindset
+- Provides value to other developers
+- Makes the portfolio more personal and engaging
+
 ## High Priority 🔴
 
 ### ✅ 1. Google Analytics Integration for Performance Metrics **[COMPLETED]**

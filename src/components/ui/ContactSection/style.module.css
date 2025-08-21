@@ -1,0 +1,175 @@
+/* ContactSection - Professional contact information display */
+
+.contactHero {
+  background: var(--banner-bg-color-contact);
+  border: 1px solid var(--banner-border-color-default);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  color: var(--foreground, #1a202c);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--banner-shadow-default);
+  transition: all 0.3s ease;
+  min-height: 350px;
+  /* Professional contact hero with hover effects */
+}
+
+.contactHero:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--banner-shadow-hover);
+  background: var(--banner-bg-color-contact-hover);
+  /* Subtle interaction feedback */
+}
+
+.contactContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* Structured content layout */
+}
+
+.contactHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  /* Responsive header with title and status */
+}
+
+.contactTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  /* Prominent section title */
+}
+
+.contactBadge {
+  background: var(--badge-bg-color-default);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  border: 1px solid var(--badge-border-color-default);
+  color: var(--foreground, #374151);
+  transition: all 0.2s ease;
+  /* Status indicator badge */
+}
+
+.contactHero:hover .contactBadge {
+  background: var(--badge-bg-color-hover, rgba(0, 0, 0, 0.15));
+  /* Interactive feedback */
+}
+
+.contactDescription {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.9;
+  /* Descriptive text with good readability */
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  /* Responsive contact items grid */
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--contact-item-bg, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  border: 1px solid var(--contact-item-border, rgba(255, 255, 255, 0.2));
+  transition: all 0.2s ease;
+  /* Individual contact method cards */
+}
+
+.contactItem:hover {
+  background: var(--contact-item-bg-hover, rgba(255, 255, 255, 0.15));
+  transform: translateY(-2px);
+  /* Subtle hover effects */
+}
+
+.contactIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  /* Contact method icons */
+}
+
+.contactText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  /* Text content with proper overflow handling */
+}
+
+.contactLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  /* Contact method labels */
+}
+
+.contactValue {
+  font-size: 1rem;
+  font-weight: 500;
+  word-break: break-word;
+  /* Contact values with overflow protection */
+}
+
+.contactValue a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  /* Clickable contact links */
+}
+
+.contactValue a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  /* Link hover feedback */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .contactHero {
+    min-height: auto;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .contactTitle {
+    font-size: 1.875rem;
+  }
+  
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .contactItem {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .contactGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
