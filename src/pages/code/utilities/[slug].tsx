@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Breadcrumb } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
@@ -8,15 +8,27 @@ import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
 import { useModal } from '@/hooks/useModal';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { loadUtilitiesData, loadUtilityBySlug } from '@/utils/data-fetchers';
 import styles from './utility-showcase.module.css';
 
 interface UsageExamplesProps {
   examples: { description: string; code: string }[];
   onExampleClick: (example: { description: string; code: string }) => void;
+  utilitySlug: string;
 }
 
-function UsageExamples({ examples, onExampleClick }: UsageExamplesProps) {
+function UsageExamples({ examples, onExampleClick, utilitySlug }: UsageExamplesProps) {
+  // Analytics hook for tracking example interactions
+  const { trackCodeInteraction } = useAnalytics();
+
+  // Handle example click with analytics tracking
+  const handleExampleClick = (example: { description: string; code: string }) => {
+    // Track when users click on usage examples - indicates interest in practical application
+    trackCodeInteraction('example_click', utilitySlug, 'utility');
+    onExampleClick(example);
+  };
+
   return (
     <div className={styles.examplesGrid}>
       {examples.map((example, idx) => (
@@ -26,8 +38,8 @@ function UsageExamples({ examples, onExampleClick }: UsageExamplesProps) {
           tabIndex={0}
           role="button"
           aria-label={`Open usage example: ${example.description}`}
-          onClick={() => onExampleClick(example)}
-          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onExampleClick(example)}
+          onClick={() => handleExampleClick(example)}
+          onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && handleExampleClick(example)}
         >
           <h4 className={styles.exampleTitle}>{example.description}</h4>
           <pre className={styles.exampleCode}>
@@ -46,6 +58,38 @@ interface UtilityPageProps {
 export default function UtilityPage({ utility }: UtilityPageProps) {
   const router = useRouter();
   const modal = useModal<{ description: string; code: string }>();
+  
+  // Analytics hook for tracking detailed utility page interactions
+  // Provides insights into solution preferences, copy behavior, and practical usage interest
+  const { trackCodeView, trackCodeInteraction } = useAnalytics();
+
+  // Track utility page view on component mount
+  // Helps understand which utility functions get the most detailed attention
+  useEffect(() => {
+    trackCodeView({
+      action: 'utility_page_view',
+      category: 'Code Showcase',
+      utilitySlug: utility.slug,
+      utilityCategory: utility.metadata.category,
+    });
+  }, [utility, trackCodeView]);
+
+  // Track when users copy utility code
+  // Indicates genuine interest and potential code reuse in real projects
+  const handleCopyCode = (solutionName: string, solutionCode: string) => {
+    navigator.clipboard.writeText(solutionCode);
+    
+    // Track code copy events to understand which utility solutions are most valuable
+    trackCodeInteraction('code_copy', utility.slug, 'utility');
+    
+    // Additional tracking for the specific solution approach
+    trackCodeView({
+      action: 'utility_code_copy',
+      category: 'Code Showcase',
+      utilitySlug: utility.slug,
+      solutionType: solutionName,
+    });
+  };
 
   if (router.isFallback) {
     return <div>Loading utility...</div>;
@@ -86,7 +130,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
             </div>
           </div>
           <button 
-            onClick={() => navigator.clipboard.writeText(solution.code)}
+            onClick={() => handleCopyCode(solution.name, solution.code)}
             className={styles.copyButton}
           >
             Copy
@@ -183,7 +227,7 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
     {
       id: 'examples',
       title: 'Usage Examples',
-      content: <UsageExamples examples={examples} onExampleClick={modal.openModal} />
+      content: <UsageExamples examples={examples} onExampleClick={modal.openModal} utilitySlug={utility.slug} />
   }
   ];
 

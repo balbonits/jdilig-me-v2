@@ -52,7 +52,8 @@
       "Bash(fi)",
       "Bash(pkill:*)",
       "Bash(npm i:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(brew install:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

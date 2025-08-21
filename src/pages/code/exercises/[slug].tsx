@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { ExerciseData } from '@/interfaces/exercises';
@@ -7,6 +7,7 @@ import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
 import { loadExercisesData, loadExerciseBySlug } from '@/utils/data-fetchers';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import styles from './exercise-showcase.module.css';
 
 interface ExercisePageProps {
@@ -15,6 +16,40 @@ interface ExercisePageProps {
 
 export default function ExercisePage({ exercise }: ExercisePageProps) {
   const router = useRouter();
+  
+  // Analytics hook for tracking detailed exercise page interactions
+  // Provides insights into solution preferences, copy behavior, and engagement depth
+  const { trackCodeView, trackCodeInteraction } = useAnalytics();
+
+  // Track exercise page view on component mount
+  // Helps understand which specific algorithms get the most detailed attention
+  useEffect(() => {
+    trackCodeView({
+      action: 'exercise_page_view',
+      category: 'Code Showcase',
+      exerciseSlug: exercise.slug,
+      difficulty: exercise.metadata.difficulty,
+      complexity: exercise.metadata.timeComplexity,
+      solutionType: exercise.solutions.find(s => s.isOptimal)?.approach || 'multiple',
+    });
+  }, [exercise, trackCodeView]);
+
+  // Track when users copy solution code
+  // Indicates genuine interest and potential code reuse
+  const handleCopyCode = (solutionName: string, solutionCode: string) => {
+    navigator.clipboard.writeText(solutionCode);
+    
+    // Track code copy events to understand which solutions are most valuable
+    trackCodeInteraction('code_copy', exercise.slug, 'exercise');
+    
+    // Additional tracking for the specific solution approach
+    trackCodeView({
+      action: 'solution_code_copy',
+      category: 'Code Showcase',
+      exerciseSlug: exercise.slug,
+      solutionType: solutionName,
+    });
+  };
 
   if (router.isFallback) {
     return <div>Loading exercise...</div>;
@@ -42,7 +77,7 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
             </div>
           </div>
           <button 
-            onClick={() => navigator.clipboard.writeText(solution.code)}
+            onClick={() => handleCopyCode(solution.name, solution.code)}
             className={styles.copyButton}
           >
             Copy

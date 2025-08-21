@@ -1,9 +1,28 @@
 import React from 'react';
 import Link from 'next/link';
 import { PageContainer, PageHeader, SectionContainer } from '@/components/ui';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import styles from './style.module.css';
 
 export default function CodePage() {
+  // Analytics hook for tracking user interactions on the code showcase page
+  // This helps understand which sections users find most interesting
+  const { trackNavigation, trackEngagement } = useAnalytics();
+
+  // Track clicks on exercise showcase card
+  // Provides insights into user interest in algorithm problems
+  const handleExerciseClick = () => {
+    trackNavigation('/code/exercises', 'code-showcase-card');
+    trackEngagement('click', 'exercise-hero-card');
+  };
+
+  // Track clicks on utilities showcase card
+  // Helps measure interest in practical utility functions
+  const handleUtilityClick = () => {
+    trackNavigation('/code/utilities', 'code-showcase-card');
+    trackEngagement('click', 'utility-hero-card');
+  };
+
   return (
     <PageContainer>
       <PageHeader title="Code Showcase">
@@ -12,7 +31,7 @@ export default function CodePage() {
 
       <SectionContainer>
         <div className={styles.heroGrid}>
-          <Link href="/code/exercises" className={styles.heroLink}>
+          <Link href="/code/exercises" className={styles.heroLink} onClick={handleExerciseClick}>
             <div className={styles.heroBanner}>
               <div className={styles.heroContent}>
                 <div className={styles.heroHeader}>
@@ -47,7 +66,7 @@ export default function CodePage() {
             </div>
           </Link>
 
-          <Link href="/code/utilities" className={styles.heroLink}>
+          <Link href="/code/utilities" className={styles.heroLink} onClick={handleUtilityClick}>
             <div className={styles.heroBanner}>
               <div className={styles.heroContent}>
                 <div className={styles.heroHeader}>

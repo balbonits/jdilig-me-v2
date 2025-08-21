@@ -61,7 +61,7 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 
 ## Website Features
 -### Recent Changes (August 2025)
-  - **Analytics Implementation**: Added Vercel Analytics (@vercel/analytics) and Google Analytics 4 (@next/third-parties/google) with official Next.js integration, environment variable support, and production-only tracking
+  - **Comprehensive Analytics Implementation**: Added Google Analytics 4 with official Next.js integration (@next/third-parties/google), Vercel Analytics (@vercel/analytics), Core Web Vitals tracking, and custom event system for detailed user behavior insights across code showcase interactions
   - **Enhanced Descriptions System**: Implemented comprehensive, engaging descriptions with emojis and structured formatting for ALL 15 exercises and 14 utilities, improving user experience and educational value
   - **Projects Page Fix**: Brute force solution to eliminate empty sections issue by directly importing TypeScript modules instead of JSON dependencies
   - **Navigation Enhancement**: Added Code sub-menu with Exercises and Utilities links for improved site navigation
@@ -94,6 +94,71 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 - **Multiple Solutions**: Tabbed interface showing different algorithmic approaches
 - **Complexity Analysis**: Time/space complexity with optimal solution detection
 - **Pascal Case Convention**: All code showcase files use PascalCase naming
+
+## 📊 Analytics & Performance Monitoring
+
+### **Comprehensive Analytics Implementation** ✅ **COMPLETED HIGH PRIORITY**
+**Professional-grade analytics system for demonstrating modern web development expertise**
+
+#### **Dual Analytics Platform**
+- **Google Analytics 4**: Official Next.js integration (@next/third-parties/google) with proper TypeScript definitions
+- **Vercel Analytics**: Automatic deployment analytics with zero-configuration setup
+- **Production-Only Tracking**: Environment-gated analytics (only active with `NEXT_PUBLIC_GA_ID` in production)
+- **Privacy-Focused**: No tracking in development, respects user privacy
+
+#### **Core Web Vitals Integration**
+- **Performance Monitoring**: Automatic tracking of LCP, FID, CLS, FCP, and TTFB metrics
+- **Google Analytics Integration**: Core Web Vitals sent to GA4 with custom dimensions
+- **Vercel Analytics Integration**: Dual reporting for comprehensive performance insights
+- **Rating System**: Automatic good/needs-improvement/poor classification
+
+#### **Custom Event Tracking System**
+**Comprehensive user behavior analytics across all code showcase interactions:**
+
+**Code Showcase Events:**
+- **Exercise/Utility Card Clicks**: Track which algorithms and utilities generate most interest
+- **Page Views**: Detailed tracking of individual exercise/utility page visits with metadata (difficulty, complexity, category)
+- **Code Copy Events**: Track when users copy solution code (indicates genuine interest and potential reuse)
+- **Solution Tab Interactions**: Monitor which algorithmic approaches users prefer
+- **Example Modal Opens**: Track interest in practical usage examples for utilities
+
+**Navigation & Engagement:**
+- **Theme Changes**: Monitor light/dark mode preferences
+- **Page Navigation**: Track user journey through the site with referrer information
+- **Engagement Actions**: Button clicks, modal opens, and interaction depth
+
+#### **Analytics Architecture**
+```typescript
+// Custom Analytics Hook (/src/hooks/useAnalytics.ts)
+- trackCodeView(): Exercise/utility specific tracking with metadata
+- trackCodeInteraction(): User interaction events (clicks, copies, views)
+- trackProjectView(): Project showcase engagement
+- trackPerformance(): Performance metrics and Core Web Vitals
+- trackNavigation(): Page transitions and user journey
+- trackEngagement(): General user engagement events
+- trackThemeChange(): Theme preference tracking
+```
+
+#### **Analytics Integration Points**
+- **Code Showcase Pages**: All exercise and utility pages track views, interactions, and code copying
+- **Homepage**: Navigation tracking for code showcase sections
+- **Project Pages**: Project view and interaction tracking
+- **Global**: Theme changes, Core Web Vitals, and navigation events
+
+#### **Environment Configuration**
+```bash
+# .env.local (production)
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  # Google Analytics 4 Measurement ID
+# Vercel Analytics: Auto-enabled on Vercel deployments
+```
+
+#### **Technical Benefits for Demonstrating Expertise**
+- **Official Next.js Integration**: Uses @next/third-parties/google (modern approach)
+- **Type Safety**: Full TypeScript definitions for gtag and va functions
+- **Performance Optimized**: No impact on Core Web Vitals, deferred loading
+- **Privacy Compliant**: Production-only tracking with environment gating
+- **Error Handling**: Graceful degradation when analytics services unavailable
+- **Modern Patterns**: Custom hooks, proper React integration, and clean separation of concerns
 
 ## Design Principles
 - **Modular Architecture**: Each component follows index.tsx -> script.tsx -> style.module.css pattern
@@ -576,13 +641,13 @@ Automatic analysis marks best solutions with ★ badges based on time complexity
 
 ## Development Commands
 ```bash
-npm run dev              # Start development server
+npm run dev              # Start development server (no analytics in dev)
 npm run dev:clean        # Clear .next cache and start dev server
 npm run dev:fresh        # Clear cache, regenerate JSON, and start dev server
 npm run build            # Generate code JSON + build Next.js
 npm run build:next       # Build Next.js only  
 npm run build:clean      # Clear cache and build
-npm run start            # Start production server
+npm run start            # Start production server (analytics active with env vars)
 npm run lint             # Run ESLint
 npm run test             # Run Jest tests
 npm run test:watch       # Run tests in watch mode
@@ -596,6 +661,17 @@ npm run generate:exercises  # Generate exercises JSON only
 npm run generate:utilities  # Generate utilities JSON only
 npm run generate:projects   # Generate projects JSON from TypeScript modules
 npm run process-images   # Process project images (requires slug parameter)
+```
+
+### Analytics Setup Commands
+```bash
+# Setup analytics environment (production only)
+cp .env.local.example .env.local  # Copy environment template
+# Edit .env.local and add your Google Analytics ID:
+# NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+
+# Test analytics in production build
+npm run build && npm run start    # Analytics will be active with env vars
 ```
 
 ## Code Conventions

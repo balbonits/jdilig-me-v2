@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { UtilityData } from '@/interfaces/utilities';
 import { PageContainer, PageHeader, SectionContainer, Section, Grid, Card } from '@/components/ui';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import styles from './style.module.css';
 
 interface UtilitiesPageProps {
@@ -10,6 +11,26 @@ interface UtilitiesPageProps {
 
 
 const UtilitiesPage: React.FC<UtilitiesPageProps> = ({ utilities }) => {
+  // Analytics hook for tracking utility function interactions
+  // Helps understand which utility categories and functions are most valuable to users
+  const { trackCodeView, trackCodeInteraction } = useAnalytics();
+
+  // Track when user clicks on a utility card
+  // Provides insights into which utility functions generate the most interest
+  const handleUtilityClick = (utility: UtilityData) => {
+    // Track the specific utility being viewed
+    trackCodeView({
+      action: 'utility_card_click',
+      category: 'Code Showcase',
+      utilitySlug: utility.slug,
+      // Include category for understanding which types of utilities are popular
+      utilityCategory: utility.metadata.category,
+    });
+
+    // Track the interaction type for UX analysis
+    trackCodeInteraction('card_click', utility.slug, 'utility');
+  };
+
   return (
     <PageContainer>
       <PageHeader
@@ -27,6 +48,7 @@ const UtilitiesPage: React.FC<UtilitiesPageProps> = ({ utilities }) => {
                 key={utility.slug}
                 href={`/code/utilities/${utility.slug}`}
                 className={styles.utilityLink}
+                onClick={() => handleUtilityClick(utility)}
               >
                 <Card className={styles.utilityCard}>
                   <div className={styles.cardHeader}>

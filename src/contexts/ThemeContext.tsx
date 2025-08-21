@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -11,11 +12,15 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>('light');
+  const { trackThemeChange } = useAnalytics();
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
+    
+    // Track theme change for user behavior insights
+    trackThemeChange(newTheme);
   };
 
   useEffect(() => {

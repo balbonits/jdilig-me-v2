@@ -9,7 +9,7 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **Architecture**: Modular components with reusable UI primitives
 - **Theme**: Light/dark mode with CSS custom properties
 - **Testing**: Jest + React Testing Library + Playwright E2E
-- **Analytics**: Vercel Analytics + Google Analytics 4
+- **Analytics**: Vercel Analytics + Google Analytics 4 with Core Web Vitals tracking
 - **Quality**: Full ESLint compliance, automated visual regression testing
 
 ## 🎯 Features
@@ -23,6 +23,32 @@ A modern, responsive personal website built with Next.js, TypeScript, and Tailwi
 - **ProfileImage System**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features
 - **PWA Ready**: Offline support, app shortcuts, and installable interface
 
+## 📊 Analytics & Performance Monitoring
+
+### Professional Analytics Implementation
+- **Google Analytics 4**: Official Next.js integration (@next/third-parties/google) with TypeScript definitions
+- **Vercel Analytics**: Automatic deployment analytics with zero-configuration setup
+- **Core Web Vitals**: Automatic tracking of LCP, FID, CLS, FCP, and TTFB metrics
+- **Custom Events**: Comprehensive user behavior tracking across code showcase interactions
+
+### User Behavior Tracking
+- **Code Showcase**: Exercise/utility card clicks, page views, and code copy events
+- **Navigation**: User journey analysis with referrer tracking
+- **Engagement**: Theme changes, modal interactions, and usage depth
+- **Performance**: Real-time Core Web Vitals monitoring with GA4 integration
+
+### Configuration
+```bash
+# .env.local (production only)
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  # Google Analytics 4 Measurement ID
+# Vercel Analytics: Auto-enabled on Vercel deployments
+```
+
+### Privacy & Performance
+- **Production-Only**: No tracking in development mode
+- **Zero Performance Impact**: Deferred loading, no Core Web Vitals impact  
+- **Type Safe**: Full TypeScript definitions for gtag and va functions
+- **Error Handling**: Graceful degradation when analytics unavailable
 
 ## 🖼️ Assets
 - Favicon and app icons are located in `/public/images/favicon` (multi-size PNG, ICO, Apple touch, manifest)
