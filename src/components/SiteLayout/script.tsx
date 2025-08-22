@@ -1,5 +1,6 @@
 import SiteHeader from '@/components/SiteHeader';
 import FloatingShare from '@/components/FloatingShare';
+import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import { cn } from '@/utils';
 import styles from './style.module.css';
 
@@ -24,6 +25,7 @@ export default function SiteLayout({ children, className }: SiteLayoutProps) {
       </footer>
       
       <FloatingShare />
+      <PWAInstallPrompt />
     </div>
   );
 }
