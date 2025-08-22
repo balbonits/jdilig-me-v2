@@ -63,7 +63,14 @@ export default function ExperienceCard({
       </div>
       
       <div className={styles.experienceBadge}>
-        {badge}
+        {badge.includes('•') ? (
+          <>
+            <span className={styles.badgeTitle}>{badge.split('•')[0].trim()}</span>
+            <span className={styles.badgeDates}>{badge.split('•')[1].trim()}</span>
+          </>
+        ) : (
+          badge
+        )}
       </div>
       
       <p className={styles.experienceDescription}>

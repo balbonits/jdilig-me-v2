@@ -1,5 +1,10 @@
 /* About Content - Section Layout Styles Only */
 
+/* Contact Section */
+.contactSection {
+  margin-bottom: 3rem;
+}
+
 /* Journey Cards Section */
 .journeySection {
   margin-bottom: 3rem;
@@ -17,6 +22,7 @@
 
 /* Mobile Responsive */
 @media (max-width: 767px) {
+  .contactSection,
   .journeySection,
   .experienceSection,
   .skillsSection {

@@ -82,6 +82,26 @@ export default function ContactSection({
           {description}
         </p>
         
+        {/* Primary CTAs for Recruiter Engagement */}
+        <div className={styles.contactCTA}>
+          <a 
+            href="mailto:rjdofficemail@gmail.com?subject=Job%20Opportunity%20-%20Senior%20Frontend%20Engineer"
+            className={styles.ctaButton}
+            aria-label="Send email to discuss job opportunities"
+          >
+            📧 Contact for Opportunities
+          </a>
+          <a 
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.ctaSecondary}
+            aria-label="Download resume PDF in new window"
+          >
+            📄 Download Resume
+          </a>
+        </div>
+        
         <div 
           className={styles.contactGrid}
           role="group"

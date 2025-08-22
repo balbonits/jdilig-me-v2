@@ -164,7 +164,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  # Google Analytics 4 Measurement ID
 ## Design Principles
 - **Modular Architecture**: Each component follows index.tsx -> script.tsx -> style.module.css pattern
 - **CSS Modules**: Scoped styles using .module.css files
-- **Theme System**: Light/dark mode using CSS custom properties and class-based switching
+- **Theme System**: Professional three-tier theming (default/:root, .light, .dark) with comprehensive CSS custom properties
 - **Mobile-First Design**: All components use mobile-first responsive approach with min-width media queries
 - **Unified UI System**: Reusable UI primitives for consistent design across all pages
 - **Frontend Library Mindset**: Building reusable, scalable patterns for future component library development
@@ -172,6 +172,133 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  # Google Analytics 4 Measurement ID
 - Clean, maintainable code structure
 - Consistent component organization
 - **Tailwind Integration**: Uses Tailwind color system via CSS custom properties
+
+## 🎨 **Professional Theming System** ⭐ **CRITICAL**
+
+### **Three-Tier Architecture**
+Our theming system uses a sophisticated three-tier approach for maximum flexibility and reliability:
+
+1. **Default/Fallback (`:root`)**: Base professional color palette with enterprise-grade values
+2. **Light Theme (`.light`)**: Explicit light mode values for recruiters and professional presentation
+3. **Dark Theme (`.dark`)**: High-contrast dark mode optimized for accessibility and reduced eye strain
+
+### **Professional Color Philosophy**
+**Recruiter-Focused Design**: All colors chosen to convey competence, professionalism, and technical expertise to hiring managers and technical leads.
+
+```css
+/* Enterprise Professional Colors */
+--primary-brand: #2563eb;      /* Professional blue - confidence & trust */
+--success-accent: #059669;     /* Achievement green - success & growth */
+--expertise-highlight: #7c3aed; /* Technical purple - innovation & expertise */
+--corporate-neutral: #64748b;   /* Enterprise gray - stability & reliability */
+--warning-attention: #d97706;   /* Strategic orange - attention & energy */
+```
+
+### **Component Color System**
+**Hierarchical Color Inheritance**: Component variables reference base color palette, ensuring automatic theme transitions.
+
+```css
+/* Base Color Palette (defined per theme) */
+--color-blue: rgba(103, 126, 234, 0.15);        /* Light mode */
+--color-blue: rgba(120, 145, 255, 0.2);         /* Dark mode */
+
+/* Component Variables (inherit automatically) */
+--card-bg-color-default: var(--color-neutral);
+--badge-bg-color-default: var(--color-blue);
+--banner-bg-color-default: var(--color-blue);
+```
+
+### **Theme Variable Categories**
+
+#### **1. Professional Text Colors**
+```css
+--text-primary: #111827;    /* High contrast primary text */
+--text-secondary: #374151;  /* Secondary content */
+--text-muted: #6b7280;     /* Supporting information */
+--text-light: #9ca3af;     /* Subtle details */
+```
+
+#### **2. Professional Background Colors**
+```css
+--bg-primary: #ffffff;      /* Pure white for cleanliness */
+--bg-secondary: #f9fafb;    /* Subtle sections */
+--bg-accent: #f3f4f6;      /* Card backgrounds */
+--bg-highlight: #e5e7eb;   /* Highlight areas */
+```
+
+#### **3. Component Color Palette**
+**8-Color System with Hover States**: Blue, Purple, Teal, Pink, Orange, Green, Red, Yellow + Neutral
+- **Light Mode**: 0.15 base opacity, 0.25 hover
+- **Dark Mode**: 0.2 base opacity, 0.3 hover (better visibility)
+
+#### **4. Component-Specific Variables**
+- **Cards**: `--card-bg-color-{variant}`, `--card-bg-color-{variant}-hover`
+- **Banners**: `--banner-bg-color-{type}`, `--banner-bg-color-{type}-hover`
+- **Badges**: `--badge-bg-color-{state}`, `--badge-border-color-{state}`
+- **Tags**: `--tag-bg-color-{state}`, `--tag-border-color-{state}`
+- **Sections**: `--section-bg-color-{state}`, `--section-border-color-{state}`
+- **Contacts**: `--contact-card-bg-color-{1-7}` (7-color rotation system)
+
+### **Theme Implementation Pattern**
+
+#### **Adding New Component Variables**
+```css
+/* 1. Define in :root with descriptive naming */
+:root {
+  --new-component-bg-color-default: var(--color-neutral);
+  --new-component-bg-color-hover: var(--color-neutral-hover);
+  --new-component-border-color: var(--border-color-default);
+}
+
+/* 2. Override in .light if needed (usually inherit from :root) */
+.light {
+  /* Usually inherits correctly from :root */
+}
+
+/* 3. Override in .dark if different behavior needed */
+.dark {
+  /* Usually inherits correctly from base colors */
+}
+```
+
+#### **CSS Variable Naming Convention**
+```
+--{component}-{property}-{state}
+```
+**Examples**:
+- `--card-bg-color-default`
+- `--banner-border-color-hover`
+- `--badge-shadow-hover`
+- `--contact-card-bg-color-3`
+
+### **Visibility Optimization**
+**Light Mode**: Enhanced visibility with `rgba(*, *, *, 0.15)` base opacity
+**Dark Mode**: Better contrast with `rgba(*, *, *, 0.2)` base opacity
+**Hover States**: Increased opacity (+0.1) for clear interaction feedback
+
+### **Professional Benefits**
+1. **Consistent Brand Identity**: All colors reinforce professional competence
+2. **Accessibility Compliance**: High contrast ratios for WCAG 2.1 AA
+3. **Scalable Architecture**: New components inherit theme behavior automatically
+4. **Recruiter Appeal**: Colors chosen specifically for hiring manager psychology
+5. **Technical Excellence**: Demonstrates advanced CSS architecture knowledge
+
+### **Usage in Components**
+```css
+/* Component styles reference theme variables */
+.myComponent {
+  background: var(--card-bg-color-default);
+  border: 1px solid var(--border-color-default);
+  color: var(--text-primary);
+}
+
+.myComponent:hover {
+  background: var(--card-bg-color-hover);
+  border-color: var(--border-color-medium);
+}
+```
+
+**Theme switching handled automatically** - no component-level theme logic needed.
 
 ## CSS Architecture Standards ⭐ **CRITICAL**
 

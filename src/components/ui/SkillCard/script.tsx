@@ -41,6 +41,25 @@ export default function SkillCard({
   color,
   className,
 }: SkillCardProps) {
+  // Helper function to extract years from skill string
+  const extractYears = (skill: string): number => {
+    const match = skill.match(/\((\d+(?:-\d+)?)\s*years?\)/);
+    if (match) {
+      // Handle ranges like "6-8 years" by taking the maximum
+      if (match[1].includes('-')) {
+        const years = match[1].split('-').map(Number);
+        return Math.max(...years);
+      }
+      return parseInt(match[1], 10);
+    }
+    return 0;
+  };
+
+  // Sort skills by years (descending) and take top 4
+  const topSkills = [...skills]
+    .sort((a, b) => extractYears(b) - extractYears(a))
+    .slice(0, 4);
+
   return (
     <Card 
       colorVariant={color}
@@ -63,7 +82,7 @@ export default function SkillCard({
         role="group"
         aria-label={`Skills in ${title} category`}
       >
-        {skills.map((skill, index) => (
+        {topSkills.map((skill, index) => (
           <span 
             key={index} 
             className={styles.skillTag}

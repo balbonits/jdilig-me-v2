@@ -29,6 +29,7 @@
 - [ ] **My Notes Feature** - Developer insights blog
 - [ ] **Mobile Playwright Testing** - Touch, navigation, PWA
 - [ ] **Enhanced Animations** - Page entry, cards, transitions
+- [ ] **Advanced Theme System** - Customizable theme engine with user-defined themes
 
 ### 🟢 Low Priority
 - [ ] **Performance Optimization** - Bundle splitting, lazy loading
@@ -263,6 +264,116 @@ This document tracks technical debt and planned refactoring work to maintain cod
 - Improved professional network referrals
 
 **Priority**: HIGH - Directly impacts career opportunities and professional growth
+
+## 🟡 Medium Priority Initiatives
+
+### 1. Advanced Theme System - Customizable Theme Engine
+**Vision**: Transform the current three-tier theming system into a comprehensive, user-customizable theme platform
+
+**Current State**: Professional three-tier architecture (`:root`, `.light`, `.dark`) with component inheritance
+**Future State**: Dynamic theme engine with user-defined custom themes and CSS templating tools
+
+**Core Requirements**:
+- **Shared CSS Variables**: Standardized theme API that controls all site styling
+- **Theme Toggle Menu**: Enhanced theme selector supporting multiple custom themes
+- **CSS Templating Tool**: User interface for creating and editing custom themes
+- **Theme Persistence**: Local storage and potential cloud sync for custom themes
+- **Import/Export**: Share custom themes between users or import community themes
+
+**Technical Architecture**:
+```typescript
+// Theme System API
+interface ThemeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  author: string;
+  variables: ThemeVariables;
+  metadata: ThemeMetadata;
+}
+
+interface ThemeVariables {
+  // Core color palette
+  colors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    neutral: string;
+    success: string;
+    warning: string;
+    error: string;
+    [key: string]: string;
+  };
+  
+  // Typography system
+  typography: {
+    fontFamily: string;
+    fontSize: ScaleDefinition;
+    fontWeight: WeightDefinition;
+    lineHeight: ScaleDefinition;
+  };
+  
+  // Spacing and layout
+  spacing: ScaleDefinition;
+  borderRadius: ScaleDefinition;
+  shadows: ShadowDefinition;
+}
+```
+
+**CSS Templating System**:
+```css
+/* Template-based theme generation */
+.theme-template {
+  --color-primary: {PRIMARY_COLOR};
+  --color-secondary: {SECONDARY_COLOR};
+  --color-accent: {ACCENT_COLOR};
+  
+  /* Auto-generated variations */
+  --color-primary-light: {PRIMARY_COLOR_LIGHT};
+  --color-primary-dark: {PRIMARY_COLOR_DARK};
+  --color-primary-alpha: {PRIMARY_COLOR_ALPHA};
+}
+```
+
+**User Interface Components**:
+- **Theme Builder**: Visual color picker, typography selector, spacing controls
+- **Live Preview**: Real-time theme preview on actual site components
+- **Theme Gallery**: Community themes, featured themes, user collections
+- **Export Tools**: CSS download, JSON export, shareable theme URLs
+
+**Implementation Phases**:
+1. **Foundation**: Extract current theme system into standardized theme API
+2. **Builder UI**: Create visual theme customization interface
+3. **Template Engine**: Implement CSS variable templating system
+4. **Persistence**: Add theme storage, import/export functionality
+5. **Community**: Theme sharing, gallery, and social features
+
+**Business Value**:
+- **User Engagement**: Interactive customization increases site stickiness
+- **Portfolio Differentiation**: Unique feature demonstrating advanced CSS architecture
+- **Technical Showcase**: Advanced React state management, CSS-in-JS, design systems
+- **Community Building**: Theme sharing creates user-generated content ecosystem
+
+**Technical Benefits**:
+- **Accessibility**: Custom themes can enhance readability and contrast preferences
+- **Brand Flexibility**: Easy corporate theme creation for different contexts
+- **Developer Experience**: Visual theme building reduces CSS development time
+- **Performance**: Optimized CSS variable injection and minimal runtime overhead
+
+**Inspiration Sources**:
+- **Tailwind CSS Playground**: Visual configuration with live preview
+- **Material Design Theme Builder**: Google's comprehensive theming system
+- **VS Code Themes**: Community-driven theme ecosystem with import/export
+- **Figma Design Tokens**: Professional design system management tools
+
+**Success Metrics**:
+- Theme creation engagement and completion rates
+- Custom theme usage vs default themes
+- Community theme sharing and adoption
+- Performance impact of dynamic theming
+- User satisfaction with customization depth
+
+**Priority Justification**: Medium priority due to significant development investment required, but high impact on user engagement and technical demonstration value for potential employers.
 
 ### 3. Component Audit & Standardization
 **Problem**: AboutContent has repetitive card patterns that violate DRY principles

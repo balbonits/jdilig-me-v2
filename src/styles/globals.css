@@ -7,36 +7,58 @@
   :root {
     --background: var(--color-white);
     --foreground: var(--color-gray-900);
-    --primary: var(--color-blue-500);
+    --primary: var(--color-blue-600); /* Professional blue - more authoritative */
     --primary-foreground: var(--color-white);
     --muted: var(--color-gray-500);
-    --card: var(--color-gray-50);
+    --card: var(--color-white); /* Pure white for professional cleanliness */
     --border: var(--color-gray-200);
-    --accent: var(--color-gray-100);
+    --accent: var(--color-gray-50); /* Subtler accent */
     --accent-foreground: var(--color-gray-700);
+    
+    /* ===== PROFESSIONAL RECRUITER-FOCUSED PALETTE ===== */
+    /* Enterprise-grade colors designed for credibility and authority */
+    
+    /* Primary Professional Colors */
+    --primary-brand: #2563eb;      /* Professional blue - confidence & trust */
+    --success-accent: #059669;     /* Achievement green - success & growth */
+    --expertise-highlight: #7c3aed; /* Technical purple - innovation & expertise */
+    --corporate-neutral: #64748b;   /* Enterprise gray - stability & reliability */
+    --warning-attention: #d97706;   /* Strategic orange - attention & energy */
+    
+    /* Professional Text Colors */
+    --text-primary: #111827;        /* High contrast for readability */
+    --text-secondary: #374151;      /* Secondary text with authority */
+    --text-muted: #6b7280;         /* Subtle text that remains professional */
+    --text-light: #9ca3af;         /* Light text for supporting information */
+    
+    /* Professional Background Colors */
+    --bg-primary: #ffffff;          /* Pure white for cleanliness */
+    --bg-secondary: #f9fafb;        /* Subtle gray for sections */
+    --bg-accent: #f3f4f6;          /* Light accent for cards */
+    --bg-highlight: #e5e7eb;       /* Highlight background */
     
     /* ===== COMPONENT LIBRARY COLOR SYSTEM ===== */
     /* Semantic color variables for component states and types */
     
-    /* Base Color Palette */
-    --color-blue: rgba(103, 126, 234, 0.1);
-    --color-blue-hover: rgba(103, 126, 234, 0.15);
-    --color-purple: rgba(118, 75, 162, 0.1);
-    --color-purple-hover: rgba(118, 75, 162, 0.15);
-    --color-teal: rgba(17, 153, 142, 0.1);
-    --color-teal-hover: rgba(17, 153, 142, 0.15);
-    --color-pink: rgba(247, 112, 154, 0.1);
-    --color-pink-hover: rgba(247, 112, 154, 0.15);
-    --color-orange: rgba(255, 149, 0, 0.1);
-    --color-orange-hover: rgba(255, 149, 0, 0.15);
-    --color-green: rgba(56, 239, 125, 0.1);
-    --color-green-hover: rgba(56, 239, 125, 0.15);
-    --color-red: rgba(255, 99, 132, 0.1);
-    --color-red-hover: rgba(255, 99, 132, 0.15);
-    --color-yellow: rgba(255, 205, 86, 0.1);
-    --color-yellow-hover: rgba(255, 205, 86, 0.15);
-    --color-neutral: rgba(0, 0, 0, 0.03);
-    --color-neutral-hover: rgba(0, 0, 0, 0.05);
+    /* Base Color Palette - Enhanced Light Mode Visibility */
+    --color-blue: rgba(103, 126, 234, 0.15);
+    --color-blue-hover: rgba(103, 126, 234, 0.25);
+    --color-purple: rgba(118, 75, 162, 0.15);
+    --color-purple-hover: rgba(118, 75, 162, 0.25);
+    --color-teal: rgba(17, 153, 142, 0.15);
+    --color-teal-hover: rgba(17, 153, 142, 0.25);
+    --color-pink: rgba(247, 112, 154, 0.15);
+    --color-pink-hover: rgba(247, 112, 154, 0.25);
+    --color-orange: rgba(255, 149, 0, 0.15);
+    --color-orange-hover: rgba(255, 149, 0, 0.25);
+    --color-green: rgba(56, 239, 125, 0.15);
+    --color-green-hover: rgba(56, 239, 125, 0.25);
+    --color-red: rgba(255, 99, 132, 0.15);
+    --color-red-hover: rgba(255, 99, 132, 0.25);
+    --color-yellow: rgba(255, 205, 86, 0.15);
+    --color-yellow-hover: rgba(255, 205, 86, 0.25);
+    --color-neutral: rgba(0, 0, 0, 0.06);
+    --color-neutral-hover: rgba(0, 0, 0, 0.1);
     
     /* Card Component Variables */
     --card-bg-color-default: var(--color-neutral);
@@ -145,25 +167,45 @@
     --border: var(--color-gray-700);
     --accent: var(--color-gray-800);
     --accent-foreground: var(--color-gray-300);
-    /* Dark Mode Component Library Colors - Enhanced Vibrant Colors */
-    --color-blue: rgba(120, 145, 255, 0.3);
-    --color-blue-hover: rgba(120, 145, 255, 0.4);
-    --color-purple: rgba(140, 100, 200, 0.3);
-    --color-purple-hover: rgba(140, 100, 200, 0.4);
-    --color-teal: rgba(20, 180, 170, 0.3);
-    --color-teal-hover: rgba(20, 180, 170, 0.4);
-    --color-pink: rgba(255, 130, 180, 0.3);
-    --color-pink-hover: rgba(255, 130, 180, 0.4);
-    --color-orange: rgba(255, 165, 0, 0.3);
-    --color-orange-hover: rgba(255, 165, 0, 0.4);
-    --color-green: rgba(80, 255, 150, 0.3);
-    --color-green-hover: rgba(80, 255, 150, 0.4);
-    --color-red: rgba(255, 110, 140, 0.3);
-    --color-red-hover: rgba(255, 110, 140, 0.4);
-    --color-yellow: rgba(255, 220, 100, 0.3);
-    --color-yellow-hover: rgba(255, 220, 100, 0.4);
-    --color-neutral: rgba(255, 255, 255, 0.05);
-    --color-neutral-hover: rgba(255, 255, 255, 0.08);
+    
+    /* Dark Mode Professional Colors */
+    --primary-brand: #60a5fa;              /* Lighter blue for dark mode */
+    --success-accent: #10b981;             /* Brighter green for dark mode */
+    --expertise-highlight: #a78bfa;        /* Lighter purple for dark mode */
+    --corporate-neutral: #94a3b8;          /* Lighter gray for dark mode */
+    --warning-attention: #f59e0b;          /* Brighter orange for dark mode */
+    
+    /* Dark Mode Professional Text Colors */
+    --text-primary: #f9fafb;               /* Light gray for high contrast */
+    --text-secondary: #e5e7eb;             /* Medium light gray */
+    --text-muted: #9ca3af;                 /* Muted gray for supporting text */
+    --text-light: #6b7280;                 /* Darker gray for subtle text */
+    
+    /* Dark Mode Professional Background Colors */
+    --bg-primary: #111827;                 /* Dark background */
+    --bg-secondary: #1f2937;               /* Slightly lighter for sections */
+    --bg-accent: #374151;                  /* Medium for cards */
+    --bg-highlight: #4b5563;               /* Lighter for highlights */
+    
+    /* Dark Mode Component Library Colors - Better Visibility */
+    --color-blue: rgba(120, 145, 255, 0.2);
+    --color-blue-hover: rgba(120, 145, 255, 0.3);
+    --color-purple: rgba(140, 100, 200, 0.2);
+    --color-purple-hover: rgba(140, 100, 200, 0.3);
+    --color-teal: rgba(20, 180, 170, 0.2);
+    --color-teal-hover: rgba(20, 180, 170, 0.3);
+    --color-pink: rgba(255, 130, 180, 0.2);
+    --color-pink-hover: rgba(255, 130, 180, 0.3);
+    --color-orange: rgba(255, 165, 0, 0.2);
+    --color-orange-hover: rgba(255, 165, 0, 0.3);
+    --color-green: rgba(80, 255, 150, 0.2);
+    --color-green-hover: rgba(80, 255, 150, 0.3);
+    --color-red: rgba(255, 110, 140, 0.2);
+    --color-red-hover: rgba(255, 110, 140, 0.3);
+    --color-yellow: rgba(255, 220, 100, 0.2);
+    --color-yellow-hover: rgba(255, 220, 100, 0.3);
+    --color-neutral: rgba(255, 255, 255, 0.1);
+    --color-neutral-hover: rgba(255, 255, 255, 0.15);
     /* Dark Mode Borders */
     --border-color-default: rgba(255, 255, 255, 0.2);
     --border-color-light: rgba(255, 255, 255, 0.15);
@@ -195,7 +237,46 @@
     --accent: var(--color-gray-100);
     --accent-foreground: var(--color-gray-700);
     
-    /* Light Mode Component Library Colors (same as :root) */
+    /* Light Mode Professional Colors (inherit from :root) */
+    --primary-brand: #2563eb;
+    --success-accent: #059669;
+    --expertise-highlight: #7c3aed;
+    --corporate-neutral: #64748b;
+    --warning-attention: #d97706;
+    
+    /* Light Mode Professional Text Colors (inherit from :root) */
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    
+    /* Light Mode Professional Background Colors (inherit from :root) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-accent: #f3f4f6;
+    --bg-highlight: #e5e7eb;
+    
+    /* Light Mode Enhanced Color Palette (inherit from :root enhanced values) */
+    --color-blue: rgba(103, 126, 234, 0.15);
+    --color-blue-hover: rgba(103, 126, 234, 0.25);
+    --color-purple: rgba(118, 75, 162, 0.15);
+    --color-purple-hover: rgba(118, 75, 162, 0.25);
+    --color-teal: rgba(17, 153, 142, 0.15);
+    --color-teal-hover: rgba(17, 153, 142, 0.25);
+    --color-pink: rgba(247, 112, 154, 0.15);
+    --color-pink-hover: rgba(247, 112, 154, 0.25);
+    --color-orange: rgba(255, 149, 0, 0.15);
+    --color-orange-hover: rgba(255, 149, 0, 0.25);
+    --color-green: rgba(56, 239, 125, 0.15);
+    --color-green-hover: rgba(56, 239, 125, 0.25);
+    --color-red: rgba(255, 99, 132, 0.15);
+    --color-red-hover: rgba(255, 99, 132, 0.25);
+    --color-neutral: rgba(0, 0, 0, 0.06);
+    --color-neutral-hover: rgba(0, 0, 0, 0.1);
+    
+    /* Light Mode Section Colors */
+    --section-bg-color-default: var(--color-neutral);
+    --section-bg-color-hover: var(--color-neutral-hover);
   }
   
   .dark {
@@ -209,15 +290,113 @@
     --accent: var(--color-gray-800);
     --accent-foreground: var(--color-gray-300);
     
-    /* Dark Mode Component Library Colors (same as prefers-color-scheme: dark) */
+    /* Dark Mode Professional Colors (same as :global(.dark)) */
+    --primary-brand: #60a5fa;
+    --success-accent: #10b981;
+    --expertise-highlight: #a78bfa;
+    --corporate-neutral: #94a3b8;
+    --warning-attention: #f59e0b;
+    
+    /* Dark Mode Professional Text Colors (same as :global(.dark)) */
+    --text-primary: #f9fafb;
+    --text-secondary: #e5e7eb;
+    --text-muted: #9ca3af;
+    --text-light: #6b7280;
+    
+    /* Dark Mode Professional Background Colors (same as :global(.dark)) */
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-accent: #374151;
+    --bg-highlight: #4b5563;
+    
+    /* Dark Mode Component Library Colors - Better Visibility */
+    --color-blue: rgba(120, 145, 255, 0.2);
+    --color-blue-hover: rgba(120, 145, 255, 0.3);
+    --color-purple: rgba(140, 100, 200, 0.2);
+    --color-purple-hover: rgba(140, 100, 200, 0.3);
+    --color-teal: rgba(20, 180, 170, 0.2);
+    --color-teal-hover: rgba(20, 180, 170, 0.3);
+    --color-pink: rgba(255, 130, 180, 0.2);
+    --color-pink-hover: rgba(255, 130, 180, 0.3);
+    --color-orange: rgba(255, 165, 0, 0.2);
+    --color-orange-hover: rgba(255, 165, 0, 0.3);
+    --color-green: rgba(80, 255, 150, 0.2);
+    --color-green-hover: rgba(80, 255, 150, 0.3);
+    --color-red: rgba(255, 110, 140, 0.2);
+    --color-red-hover: rgba(255, 110, 140, 0.3);
+    --color-neutral: rgba(255, 255, 255, 0.1);
+    --color-neutral-hover: rgba(255, 255, 255, 0.15);
+    
+    /* Dark Mode Section Colors */
+    --section-bg-color-default: var(--color-neutral);
+    --section-bg-color-hover: var(--color-neutral-hover);
   }
 
 @layer base {
+  /* Professional Typography System */
   body {
     background-color: var(--background);
-    color: var(--foreground);
-    font-family: system-ui, sans-serif;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    letter-spacing: -0.01em; /* Slight negative letter spacing for professional look */
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  /* Professional Heading Hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  /* Professional Text Elements */
+  p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Technical Code Styling */
+  code, pre {
+    font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  }
+
+  /* Professional Link Styling */
+  a {
+    color: var(--primary-brand);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--expertise-highlight);
+  }
+
+  /* Professional Spacing */
+  .professional-spacing {
+    margin: 1.5rem 0;
+  }
+
+  /* Enhanced Focus States for Accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--primary-brand);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }

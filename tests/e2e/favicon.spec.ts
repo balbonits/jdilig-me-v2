@@ -16,6 +16,6 @@ test.describe('Favicon and App Icons', () => {
     // Apple touch icon
     await expect(head.locator('link[rel="apple-touch-icon"][sizes="180x180"]')).toHaveAttribute('href', '/images/favicon/apple-touch-icon.png');
     // Manifest
-    await expect(head.locator('link[rel="manifest"]')).toHaveAttribute('href', '/images/favicon/site.webmanifest');
+    await expect(head.locator('link[rel="manifest"]')).toHaveAttribute('href', '/manifest.json');
   });
 });

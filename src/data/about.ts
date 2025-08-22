@@ -46,27 +46,27 @@ export interface ExperienceItem {
 
 export const experienceData: ExperienceItem[] = [
   {
-    id: 'aws',
-    icon: '⚡',
-    title: 'Amazon Web Services',
-    badge: 'Cloud Computing',
-    description: 'Enhanced AWS QuickSight UI with TypeScript and React.js, building data visualization interfaces used by millions. Developed cloud-native solutions and testing frameworks.',
-    color: 'pink'
+    id: 'fox',
+    icon: '🏆',
+    title: 'FOX Sports',
+    badge: 'Front-End Developer • March 2012-August 2019',
+    description: 'Elevated UI/UX on FOXSports.com, FX.com, FOXNation.com, boosting engagement, accessibility, performance markedly. Managed live coverage (e.g., 2018 FIFA World Cup) for real-time updates in peak traffic.',
+    color: 'orange'
   },
   {
-    id: 'fox',
-    icon: '📺',
-    title: 'FOXSports.com',
-    badge: 'Media & Entertainment', 
-    description: 'Developed frontend solutions for high-traffic video streaming platforms serving millions of users. Optimized video player performance and user experience.',
-    color: 'orange'
+    id: 'aws',
+    icon: '☁️',
+    title: 'Amazon Web Services',
+    badge: 'Front-End Developer • July 2022-May 2023',
+    description: 'Enhanced AWS QuickSight UI with TypeScript/React.js, improving engagement and efficiency notably. Optimized performance by resolving UI bugs for seamless experiences.',
+    color: 'pink'
   },
   {
     id: 'tbn',
     icon: '📡',
-    title: 'TBN',
-    badge: 'Broadcasting & Media',
-    description: 'Provided frontend consulting for modern web solutions for global broadcasting operations. Enhanced user interfaces for content management and distribution systems.',
+    title: 'Trinity Broadcasting Network',
+    badge: 'React/CMS Developer • June 2023-August 2024',
+    description: 'Enhanced web presence with cross-platform UX/UI and CMS integration, boosting user engagement significantly. Implemented subscription flows for TBNPlus.com and MeritPlus.com, introducing revenue streams via adaptive solutions.',
     color: 'green'
   }
 ];
@@ -82,24 +82,24 @@ export interface SkillItem {
 
 export const skillsData: SkillItem[] = [
   {
-    id: 'frontend-mastery',
-    title: 'Frontend Mastery',
-    level: 'Core',
-    skills: ['React.js', 'TypeScript', 'Next.js', 'JavaScript ES6+', 'HTML5/CSS3', 'Responsive Design'],
+    id: 'frontend-core',
+    title: 'Frontend Core',
+    level: '18 years',
+    skills: ['JavaScript (16 years)', 'HTML5/CSS3 (18 years)', 'React.js (7 years)', 'TypeScript (5 years)', 'Responsive Web Design (18 years)'],
     color: 'red'
   },
   {
-    id: 'styling-design',
-    title: 'Styling & Design',
+    id: 'frameworks-tools',
+    title: 'Frameworks & Tools',
     level: 'Advanced',
-    skills: ['CSS Modules', 'Tailwind CSS', 'SASS/LESS', 'PostCSS', 'UI/UX Design', 'Performance'],
+    skills: ['Redux (4 years)', 'WordPress (7 years)', 'SASS/LESS (6-8 years)', 'Webpack (6 years)', 'Git (14 years)', 'RESTful APIs (14 years)'],
     color: 'blue'
   },
   {
-    id: 'tools-workflow',
-    title: 'Tools & Workflow',
-    level: 'Professional',
-    skills: ['Git/GitHub', 'Jest/Testing', 'Webpack/Build', 'Agile/Scrum', 'Code Review', 'Mentoring'],
+    id: 'testing-analytics',
+    title: 'Testing & Analytics',
+    level: 'Experienced',
+    skills: ['Jest/Enzyme (3 years)', 'Google Analytics/Segment (4 years)', 'UX Research/Wireframing (6 years)', 'Agile Methodologies (14 years)'],
     color: 'purple'
   }
 ];
@@ -128,19 +128,19 @@ export const contactData: ContactItem[] = [
   }
 ];
 
-// Hero Banner Data
+// Hero Banner Data - Accurate Professional Profile
 export const heroData = {
   title: "John Dilig",
-  badge: "Front-End Developer",
-  description: "Passionate front-end developer with 18 years crafting exceptional user experiences. I transform complex problems into elegant, performant web solutions.",
+  badge: "Front-end Developer",
+  description: "Front-end Developer with 18+ years building responsive, high-traffic web apps and cross-platform solutions. Expert in JavaScript, React.js, and CMS integration. Proven in boosting user engagement, optimizing performance, and driving revenue via innovative UI/UX.",
   stats: [
-    { number: "18", label: "Years" },
-    { number: "50+", label: "Projects" },
-    { number: "5", label: "Major Companies" }
+    { number: "18", label: "Years Experience" },
+    { number: "10M+", label: "Users Served" },
+    { number: "3", label: "Fortune 500s" }
   ],
-  tags: ["React", "TypeScript", "Next.js", "Performance", "UI/UX"],
+  tags: ["UI/UX Expert", "React.js", "TypeScript", "Cross-platform", "Web Accessibility"],
   imageUrl: "/images/profile.png",
-  imageAlt: "John Dilig - Front-End Developer",
+  imageAlt: "John Dilig - Senior Frontend Engineer",
   imageShape: "circle" as const,
   variant: "profile" as const
 };

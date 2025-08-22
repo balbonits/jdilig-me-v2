@@ -52,8 +52,6 @@
   margin: 0;
   padding: 0;
   /* Responsive tag layout with automatic wrapping */
-  margin-top: auto;
-  /* Push tags to bottom of card for alignment */
 }
 
 .skillTag {
