@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { createMockLocalStorage, createMockMatchMedia, setupFakeTimers } from '../__tests__/test-utils';
+import { createMockLocalStorage, createMockMatchMedia, setupFakeTimers } from '@/__tests__/test-utils';
 
 // Mock the ThemeContext - we'll test it in isolation
 const mockThemeContext = {
@@ -80,7 +80,7 @@ describe('useTheme Hook', () => {
     });
 
     test('toggles between light and dark themes', () => {
-      const { result } = renderHook(() => useTheme());
+      const { result, rerender } = renderHook(() => useTheme());
 
       act(() => {
         result.current.toggleTheme();
@@ -88,14 +88,18 @@ describe('useTheme Hook', () => {
 
       expect(mockThemeContext.setTheme).toHaveBeenCalledWith('dark');
 
-      // Simulate theme change
+      // Simulate theme change by updating the mock and re-rendering
       mockThemeContext.theme = 'dark';
+      rerender();
 
       act(() => {
         result.current.toggleTheme();
       });
 
       expect(mockThemeContext.setTheme).toHaveBeenCalledWith('light');
+      
+      // Reset for cleanup
+      mockThemeContext.theme = 'light';
     });
 
     test('sets system theme preference', () => {
@@ -215,7 +219,7 @@ describe('useTheme Hook', () => {
 
     test('handles matchMedia unavailability', () => {
       // Remove matchMedia
-      delete (window as any).matchMedia;
+      delete (window as Window & { matchMedia?: unknown }).matchMedia;
 
       const { result } = renderHook(() => useTheme());
 
@@ -227,7 +231,7 @@ describe('useTheme Hook', () => {
 
   describe('Edge Cases', () => {
     test('handles invalid theme values', () => {
-      const invalidTheme = 'invalid-theme' as any;
+      const invalidTheme = 'invalid-theme' as 'light' | 'dark' | 'system';
       
       act(() => {
         mockThemeContext.setTheme(invalidTheme);

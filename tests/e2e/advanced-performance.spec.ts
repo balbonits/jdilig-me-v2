@@ -235,7 +235,7 @@ test.describe('Advanced Performance Testing', () => {
       
       if (swRegistered) {
         // Go offline and test cached content
-        await page.setOfflineMode(true);
+        await page.context().setOffline(true);
         await page.reload({ waitUntil: 'domcontentloaded' });
         
         // Should still show content from cache

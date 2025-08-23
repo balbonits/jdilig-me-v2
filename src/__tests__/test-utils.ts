@@ -36,7 +36,7 @@ export const createMockLocalStorage = () => {
   };
 
   // Expose store for test inspection
-  (mockStorage as any).__store = store;
+  (mockStorage as Storage & { __store: Record<string, string> }).__store = store;
   
   return mockStorage;
 };
@@ -67,7 +67,7 @@ export const createMockIntersectionObserver = () => {
     unobserve: jest.fn(),
   };
 
-  (window as any).IntersectionObserver = jest.fn().mockImplementation((callback) => {
+  (window as Window & { IntersectionObserver: unknown }).IntersectionObserver = jest.fn().mockImplementation(() => {
     return mockObserver;
   });
 
@@ -84,7 +84,7 @@ export const createMockResizeObserver = () => {
     unobserve: jest.fn(),
   };
 
-  (window as any).ResizeObserver = jest.fn().mockImplementation((callback) => {
+  (window as Window & { ResizeObserver: unknown }).ResizeObserver = jest.fn().mockImplementation(() => {
     return mockObserver;
   });
 
@@ -108,7 +108,7 @@ export const renderWithProviders = (
  * Creates a mock component for testing component composition
  */
 export const createMockComponent = (name: string) => {
-  const MockComponent = ({ children, ...props }: any) => {
+  const MockComponent = ({ children, ...props }: { children?: React.ReactNode; [key: string]: unknown }) => {
     return React.createElement(
       'div', 
       { 'data-testid': `mock-${name.toLowerCase()}`, ...props },
@@ -124,7 +124,7 @@ export const createMockComponent = (name: string) => {
 /**
  * Waits for multiple async operations to complete
  */
-export const waitForMultiple = (promises: Promise<any>[]) => {
+export const waitForMultiple = (promises: Promise<unknown>[]) => {
   return Promise.allSettled(promises);
 };
 
@@ -133,7 +133,7 @@ export const waitForMultiple = (promises: Promise<any>[]) => {
  */
 export const createControllablePromise = <T>() => {
   let resolve: (value: T) => void;
-  let reject: (reason?: any) => void;
+  let reject: (reason?: unknown) => void;
   
   const promise = new Promise<T>((res, rej) => {
     resolve = res;
@@ -176,12 +176,12 @@ export const createWindowSpy = <K extends keyof Window>(
   const spy = jest.spyOn(window, method);
   
   if (implementation) {
-    spy.mockImplementation(implementation as any);
+    spy.mockImplementation(implementation as (...args: unknown[]) => unknown);
   }
 
   const restore = () => {
     spy.mockRestore();
-    (window as any)[method] = original;
+    (window as Window & Record<string, unknown>)[method] = original;
   };
 
   return { spy, restore };

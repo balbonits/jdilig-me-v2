@@ -1,11 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import SkillCard from './script';
-import { createMockData, createConsoleSpy } from '../../../__tests__/test-utils';
+import { createMockData, createConsoleSpy } from '@/__tests__/test-utils';
 
 // Mock the Card component to focus on SkillCard-specific logic
 jest.mock('../Card', () => {
-  return function MockCard({ children, colorVariant, className, ...props }: any) {
+  return function MockCard({ children, colorVariant, className, ...props }: { 
+    children?: React.ReactNode; 
+    colorVariant?: string; 
+    className?: string; 
+    [key: string]: unknown;
+  }) {
     return (
       <div 
         data-testid="mock-card" 

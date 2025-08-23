@@ -180,21 +180,18 @@ export const test = base.extend<PageFixtures & ContextFixtures & TestData>({
 
   // Offline testing fixture
   offlinePage: async ({ page }, use) => {
-    // Initially online
-    await page.setOfflineMode(false);
-    
-    // Add helper method to toggle offline
-    (page as any).goOffline = async () => {
-      await page.setOfflineMode(true);
+    // Add helper method to toggle offline via context
+    (page as Page & { goOffline: () => Promise<void>; goOnline: () => Promise<void> }).goOffline = async () => {
+      await page.context().setOffline(true);
       await page.reload({ waitUntil: 'networkidle' });
     };
     
-    (page as any).goOnline = async () => {
-      await page.setOfflineMode(false);
+    (page as Page & { goOffline: () => Promise<void>; goOnline: () => Promise<void> }).goOnline = async () => {
+      await page.context().setOffline(false);
       await page.reload({ waitUntil: 'networkidle' });
     };
 
-    await use(page);
+    await use(page as Page & { goOffline: () => Promise<void>; goOnline: () => Promise<void> });
   },
 
   // Slow network context
@@ -251,8 +248,14 @@ export const customExpect = {
       return {
         // Core Web Vitals
         lcp: performance.getEntriesByType('largest-contentful-paint')[0]?.startTime || 0,
-        fid: performance.getEntriesByType('first-input')[0]?.processingStart || 0,
-        cls: (performance as any).getEntriesByType?.('layout-shift')?.reduce?.((sum: number, entry: any) => sum + entry.value, 0) || 0,
+        fid: (() => {
+          const firstInput = performance.getEntriesByType('first-input')[0] as PerformanceEntry & { processingStart?: number; startTime: number };
+          return firstInput ? (firstInput.processingStart || firstInput.startTime) - firstInput.startTime : 0;
+        })(),
+        cls: (() => {
+          const shifts = performance.getEntriesByType('layout-shift') as PerformanceEntry[];
+          return shifts.reduce((sum: number, entry) => sum + (entry as PerformanceEntry & { value: number }).value, 0);
+        })(),
         
         // Loading metrics
         domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart,

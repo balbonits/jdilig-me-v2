@@ -293,7 +293,7 @@ test.describe('Advanced User Journey Testing', () => {
       await page.waitForLoadState('networkidle');
       
       // Go offline
-      await page.setOfflineMode(true);
+      await page.context().setOffline(true);
       
       // Should still work offline
       await page.reload({ waitUntil: 'domcontentloaded' });
@@ -302,7 +302,7 @@ test.describe('Advanced User Journey Testing', () => {
       await expect(page.locator('h1')).toBeVisible({ timeout: 10000 });
       
       // Go back online
-      await page.setOfflineMode(false);
+      await page.context().setOffline(false);
     });
 
     test('should handle installation flow', async ({ page }) => {
