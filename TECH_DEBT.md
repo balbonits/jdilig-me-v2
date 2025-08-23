@@ -206,6 +206,65 @@ This document tracks technical debt and planned refactoring work to maintain cod
 - **Modern Feel**: Brings site up to current design standards
 - **Differentiation**: Sets portfolio apart from static competitors
 
+## Immediate Next Session Tasks 🚨 **PRIORITY**
+
+### 1. Complete AI Project Integration System
+**Status**: In Progress - Template Updated, Pipeline Design Complete
+**Priority**: IMMEDIATE - Next session tasks
+
+**Remaining Implementation Tasks**:
+
+#### **A. Finish AI_PROJECT_SETUP.md Template Updates**
+- [ ] Complete showcase.config.ts template structure in document
+- [ ] Add remote repository configuration details
+- [ ] Update image path references for remote repo structure
+- [ ] Add final validation checklist for AI assistants
+- [ ] Test template with example project configuration
+
+#### **B. Build GitHub Links List-Driven Pipeline**
+- [ ] Create `/config/ai-projects.ts` configuration file
+- [ ] Implement `scripts/generate-ai-projects.ts` GitHub fetcher
+- [ ] Add `utils/github-fetcher.ts` for API integration
+- [ ] Create auto-enrichment system for missing project data
+- [ ] Update main build script to include AI projects generation
+- [ ] Add error handling and fallback for failed fetches
+
+#### **C. Pipeline Integration & Testing**
+- [ ] Update `package.json` scripts for new AI projects workflow
+- [ ] Test with Gemini CLI Demo project as first case
+- [ ] Create migration strategy from manual to automated system
+- [ ] Add GitHub API token configuration (optional, for rate limits)
+- [ ] Document the complete AI project integration workflow
+
+**Technical Requirements**:
+```typescript
+// Target Implementation
+export const aiProjectsConfig = [
+  {
+    name: "gemini-cli-demo",
+    githubUrl: "https://github.com/balbonits/gemini-cli-demo",
+    showcaseConfigPath: "showcase/showcase.config.ts",
+    enabled: true,
+    priority: 1
+  }
+];
+```
+
+**Success Criteria**:
+- [ ] AI_PROJECT_SETUP.md template is complete and ready for AI assistants
+- [ ] Build pipeline can fetch showcase configs from remote repositories
+- [ ] `npm run generate` includes AI projects in output
+- [ ] At least one AI project (Gemini CLI Demo) successfully integrated via new system
+- [ ] Documentation updated with new workflow
+
+**Benefits After Implementation**:
+- ✅ **Zero Manual Work**: Just add GitHub URLs to config list
+- ✅ **Self-Updating**: Projects update when they change their showcase config
+- ✅ **Scalable**: Unlimited AI projects with minimal maintenance
+- ✅ **Quality Control**: Can enable/disable projects as needed
+
+**Priority Justification**: This system enables effortless scaling of AI project showcases, eliminating manual work and enabling rapid portfolio growth with high-quality AI-built projects.
+
 ## High Priority 🔴
 
 ### 1. Complete PWA Implementation
@@ -850,6 +909,34 @@ const { ref, inView } = useInView({ triggerOnce: true });
 ```
 
 ## Low Priority 🟢
+
+### 1. Data Collections File Size Optimization
+**Problem**: Next.js build warnings about large page data files exceeding 128 kB threshold
+**Current Issues**: 
+- `/code/utilities` page data: 234 kB (82% over threshold)
+- `/code/exercises` page data: 144 kB (13% over threshold)
+
+**Root Cause**: Comprehensive descriptions and examples in exercise/utility JSON files are creating large static data bundles
+
+**Optimization Strategies**:
+1. **Lazy Loading**: Load detailed descriptions only when individual exercise/utility pages are visited
+2. **Data Splitting**: Separate summary data (for index pages) from detailed content (for individual pages)
+3. **Content Compression**: Minify descriptions and remove excessive whitespace
+4. **Progressive Enhancement**: Load basic content first, detailed content on demand
+
+**Implementation Plan**:
+- Split current JSON into summary + detail files
+- Update data fetchers to handle split data structure
+- Implement lazy loading for detailed content
+- Monitor bundle sizes after optimization
+
+**Benefits**:
+- Faster initial page loads for code showcase pages
+- Better Core Web Vitals scores
+- Eliminate build warnings
+- Improved user experience on slower networks
+
+**Priority**: LOW - Build warnings don't affect functionality, but optimization would improve performance
 
 ### 6. Development Journey Documentation (DEV_JOURNEY.md)
 **Problem**: No centralized documentation of development decisions, discussions, and project evolution

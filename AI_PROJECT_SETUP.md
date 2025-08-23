@@ -1,6 +1,14 @@
-# AI Assistant Guide: Adding Project to Portfolio Showcase
+# AI Project Creation & Portfolio Integration Guide
 
-**Instructions for AI assistants (Claude Code, Gemini, etc.):** Follow this guide to add this project to my portfolio showcase at https://www.jdilig.me
+**Instructions for AI assistants (Claude Code, Gemini, etc.):** This guide covers both creating a project for me AND integrating it into my portfolio showcase at https://www.jdilig.me
+
+## 🚀 **Project Request & Integration Process**
+
+**When I send you this document, I'm asking you to:**
+1. **Build the requested project** (specs will be provided separately)
+2. **Deploy it to a live URL** (Vercel, Netlify, etc.)
+3. **Create a showcase configuration** following this guide
+4. **Put the config in your repo** so our build pipeline can fetch it automatically
 
 ## 🎯 Overview
 
@@ -8,7 +16,12 @@ This project needs to be added to my personal portfolio website which uses a Typ
 
 ## 📋 Required Steps (AI: Execute These in Order)
 
-### Step 1: Deploy to Vercel First
+### Step 0: Build the Requested Project First
+- **CRITICAL**: Complete the project functionality as specified
+- Ensure all features work correctly and meet requirements
+- Test thoroughly before proceeding to deployment
+
+### Step 1: Deploy to Vercel (or Similar Platform)
 - **CRITICAL**: Deploy this project to Vercel before adding to portfolio
 - Get the live demo URL (e.g., `https://your-project.vercel.app`)
 - Ensure the deployment is working and accessible
@@ -27,27 +40,50 @@ After deployment, capture these screenshots:
 - Show the app in use, not empty states
 - Include both desktop and mobile views
 
-### Step 3: Create Project Data Module
+### Step 3: Create Showcase Configuration in YOUR Repo
 
-Create this exact file structure in the portfolio repo:
+Create this file structure in **your project repository** (not the portfolio repo):
+
 ```
-projects/[project-slug]/
-├── [project-slug].ts          # TypeScript project data
-├── images/                    # Screenshots from Step 2
-│   ├── 01-desktop-home.png
+your-project-repo/
+├── showcase/
+│   └── showcase.config.ts     # Portfolio showcase configuration
+├── images/ (or docs/images/)
+│   ├── 01-desktop-home.png    # Screenshots from Step 2
 │   ├── 02-mobile-interface.png
 │   └── ...
-└── PROJECT.md                 # Optional documentation
+└── README.md                  # Your project documentation
 ```
 
-### Step 4: Project TypeScript Template
+**Why in your repo?**
+- Our build pipeline will fetch this config automatically
+- You maintain control of your project's presentation
+- Updates to your showcase config auto-update our portfolio
 
-Create `projects/[project-slug]/[project-slug].ts` with this template:
+### Step 4: Showcase Configuration Template
+
+Create `showcase/showcase.config.ts` in **your repository** with this template:
 
 ```typescript
-import { ProjectData } from '@/interfaces/projects';
+// showcase/showcase.config.ts in YOUR repository
+// This file will be fetched automatically by our build pipeline
 
-const project: ProjectData = {
+// Import the type definition (we'll provide the interface structure below)
+interface ProjectData {
+  slug: string;
+  metadata: ProjectMetadata;
+  techStack: TechStackCategory[];
+  features: Feature[];
+  highlights?: Highlight[];
+  screenshots?: Screenshot[];
+  links: Link[];
+  metrics?: Metric[];
+  lessons?: string[];
+  challenges?: string[];
+  futureImprovements?: string[];
+}
+
+const showcaseConfig: ProjectData = {
   slug: 'your-project-slug',
   metadata: {
     title: 'Your Project Title',
@@ -152,6 +188,26 @@ const project: ProjectData = {
       description: 'Comprehensive command interface'
     }
   ],
+  screenshots: [
+    {
+      src: 'https://raw.githubusercontent.com/[username]/[repo]/main/showcase/images/01-desktop-home.png',
+      alt: 'Application homepage on desktop',
+      caption: 'Main interface showing key features',
+      category: 'desktop'
+    },
+    {
+      src: 'https://raw.githubusercontent.com/[username]/[repo]/main/showcase/images/02-mobile-interface.png',
+      alt: 'Mobile responsive view',
+      caption: 'Mobile interface with touch-optimized controls',
+      category: 'mobile'
+    },
+    {
+      src: 'https://raw.githubusercontent.com/[username]/[repo]/main/showcase/images/03-feature-demo.png',
+      alt: 'Key feature demonstration',
+      caption: 'Main feature in action',
+      category: 'feature'
+    }
+  ],
   lessons: [
     'AI API integration patterns',
     'CLI UX design principles',
@@ -169,7 +225,7 @@ const project: ProjectData = {
   ]
 };
 
-export default project;
+export default showcaseConfig;
 ```
 
 ## 📝 **Content Formatting Standards** ⚠️ **CRITICAL**
@@ -314,6 +370,85 @@ npm run generate:projects
 npm run build
 npm test
 ```
+
+## 📦 Type Definitions for Your Config
+
+Add these TypeScript interfaces to your `showcase.config.ts` file:
+
+```typescript
+interface ProjectMetadata {
+  title: string;
+  name: string;
+  description: string;
+  detailedDescription: string;
+  category: string;
+  startDate: string;
+  role: string;
+  difficulty: 'Beginner' | 'Easy' | 'Medium' | 'Hard' | 'Expert';
+  featured: boolean;
+}
+
+interface TechStackCategory {
+  category: string;
+  items: string[];
+}
+
+interface Feature {
+  title: string;
+  description: string;
+  impact: string;
+}
+
+interface Highlight {
+  title: string;
+  description: string;
+  achievements: string[];
+}
+
+interface Screenshot {
+  src: string;
+  alt: string;
+  caption: string;
+  category: 'desktop' | 'mobile' | 'tablet' | 'feature';
+}
+
+interface Link {
+  type: 'github' | 'live' | 'docs' | 'demo';
+  url: string;
+  label: string;
+}
+
+interface Metric {
+  label: string;
+  value: string;
+  description: string;
+}
+```
+
+## ✅ Final Checklist for AI Assistants
+
+Before submitting your showcase configuration:
+
+- [ ] Project is deployed and live URL is working
+- [ ] All screenshots are in `showcase/images/` folder in your repo
+- [ ] Screenshot URLs use GitHub raw content URLs
+- [ ] `showcase.config.ts` exports `showcaseConfig` as default
+- [ ] All metrics have specific values (not generic descriptions)
+- [ ] DetailedDescription uses proper markdown formatting
+- [ ] Tech stack categories are logical and complete
+- [ ] Links include both GitHub and live demo URLs
+- [ ] File is committed and pushed to your repository
+- [ ] Notify me with your GitHub repo URL so I can add it to the pipeline
+
+## 🔄 How We'll Fetch Your Config
+
+Once you've completed the setup:
+
+1. **You provide**: Your GitHub repository URL
+2. **We add**: Your repo to our AI projects configuration list
+3. **Our pipeline fetches**: `showcase/showcase.config.ts` from your repo
+4. **Automatic integration**: Your project appears on the portfolio site
+5. **Self-updating**: Changes to your config auto-update the portfolio
 
 ## 🎯 Project-Specific Guidance
 
