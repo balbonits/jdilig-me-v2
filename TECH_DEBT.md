@@ -22,8 +22,9 @@
 - [ ] **Site Design Enhancement** - Visual polish for recruiters
 - [x] **AboutContent Modularization** - COMPLETED ✅
 - [ ] **Code Showcase Search** - Filter by concepts/tags
-- [ ] **Expand Unit Test Coverage** - Comprehensive testing
-- [ ] **Comprehensive E2E Tests** - Full user flows
+- [ ] **Advanced Testing Enhancement** - Improve Jest & Playwright with mocks, spies, fixtures, and network interception
+- [ ] **Comprehensive E2E Tests** - Full user flows with advanced Playwright patterns
+- [ ] **AI Development Journey Page** - Feature page documenting the dev journey of building the site using AI
 
 ### 🟡 Medium Priority  
 - [ ] **My Notes Feature** - Developer insights blog
@@ -35,6 +36,7 @@
 - [ ] **Performance Optimization** - Bundle splitting, lazy loading
 - [ ] **Design System Migration** - Atomic components, tokens  
 - [ ] **Component Library** - Standalone package
+- [ ] **Markdown Renderer** - Add site-wide markdown parsing for all large text/content to properly render **bold**, *italic*, `code`, and other markdown syntax
 
 ---
 

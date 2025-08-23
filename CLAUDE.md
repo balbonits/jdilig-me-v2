@@ -54,6 +54,7 @@ When discussing "tech debt" or refactoring, always reference this centralized do
 ## Project Overview
 - **Name**: jdilig-me-v2
 - **Type**: Personal website
+- **Public URL**: https://www.jdilig.me
 - **Framework**: Next.js with Pages Router
 - **Technologies**: React, TypeScript, Tailwind CSS v4, Jest, Playwright, Vercel Analytics, Google Analytics 4
 - **Branch**: master
