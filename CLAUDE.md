@@ -672,6 +672,77 @@ Reusable utility types and UI/system-level definitions:
 
 **Rule of Thumb**: Interface = "What data looks like" (business domain), Type = "How code behaves" (technical implementation)
 
+### **TypeScript Standards ⭐ CRITICAL**
+
+**Zero Tolerance for `any` Types in Production Code:**
+- **NEVER use `any` types** - always define specific interfaces and types
+- **Use proper type definitions** for all function parameters, return values, and object properties
+- **Extend types strategically** using intersection types and conditional generics
+
+#### **Approved Type Patterns for Common Scenarios:**
+
+**Mock Component Props:**
+```typescript
+// ✅ CORRECT - Specific interface
+interface MockProps {
+  children?: React.ReactNode;
+  colorVariant?: string;
+  className?: string;
+  [key: string]: unknown; // For spread props
+}
+
+// ❌ WRONG - Using any
+const props: any
+```
+
+**Browser API Mocking:**
+```typescript
+// ✅ CORRECT - Extended window type
+(window as Window & { matchMedia?: unknown }).matchMedia;
+(window as Window & { IntersectionObserver: unknown }).IntersectionObserver;
+
+// ❌ WRONG - any casting
+(window as any).matchMedia;
+```
+
+**Test Utilities:**
+```typescript
+// ✅ CORRECT - Proper generic constraints
+export const waitForMultiple = (promises: Promise<unknown>[]) => Promise.allSettled(promises);
+export const createControlledPromise = <T>() => { reject: (reason?: unknown) => void };
+
+// ❌ WRONG - any types
+const promises: Promise<any>[]
+```
+
+**Playwright Performance Metrics:**
+```typescript
+// ✅ CORRECT - Extended PerformanceEntry with specific properties
+const firstInput = performance.getEntriesByType('first-input')[0] as PerformanceEntry & { processingStart?: number; startTime: number };
+
+// ❌ WRONG - any casting
+const firstInput = performance.getEntriesByType('first-input')[0] as any;
+```
+
+#### **ESLint Compliance Requirements:**
+- **@typescript-eslint/no-explicit-any**: MUST be error-free in production builds
+- **@typescript-eslint/no-unused-vars**: Address all unused parameters (use underscore prefix if needed)
+- **Strict type checking**: All function signatures must have proper types
+
+#### **Testing Type Standards:**
+- **Mock factories**: Use specific interfaces for test data generation
+- **Spy utilities**: Proper function signature typing with generic constraints
+- **Playwright fixtures**: Extended Page/Context types for custom methods
+- **Browser API mocks**: Window interface extensions instead of any casting
+
+#### **Build-Blocking Policy:**
+- **Vercel deployment** will fail on any ESLint `any` type errors
+- **All TypeScript errors** must be resolved before production deployment
+- **Jest tests** must pass with proper type compliance
+- **Next.js build** requires zero TypeScript/ESLint errors
+
+**This standard prevents production deployment failures and ensures enterprise-grade code quality.**
+
 ## Component Architecture
 
 ### Modular Component Philosophy
