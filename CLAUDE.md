@@ -1217,16 +1217,16 @@ export default project;
 
 ### **Project Addition Workflow**
 
-**Simple Approach** (see `ADD_PROJECT_SIMPLE.md`):
-1. Upload images to `raw-images/{project-slug}/` following naming convention
-2. Write `PROJECT.md` with complete project documentation 
-3. Run `npm run process-images {slug}` and `npm run generate:projects`
+**🤖 AI Assistant Approach** ⭐ **RECOMMENDED** (see `AI_PROJECT_SETUP.md`):
+- **Universal Guide**: Works with any AI assistant (Claude Code, Gemini, ChatGPT, etc.)
+- **Complete Template**: TypeScript project data template with proper interface structure
+- **Step-by-Step Process**: Deploy → Screenshots → Create Project Module → Process & Build
+- **Quality Assurance**: Professional standards, build verification, and success criteria
+- **Copy & Paste Ready**: Drop the file in any project repo and instruct AI to follow
 
-**Comprehensive Approach** (see `PROJECT_GUIDE.md`):
-- Detailed project data structure guide
-- Image processing workflow with `IMAGE_WORKFLOW.md`
-- Metadata collection checklist
-- Integration testing steps
+**Legacy Workflows**:
+1. **Simple** (`ADD_PROJECT_SIMPLE.md`): Upload images → write PROJECT.md → run processing
+2. **Comprehensive** (`PROJECT_GUIDE.md`): Detailed manual workflow with metadata checklist
 
 **Benefits:**
 - Type safety and autocompletion
@@ -1304,7 +1304,8 @@ fi
 - **CLAUDE.md**: Current project context and development guidelines
 - **HISTORY.md**: Historical changes and major updates
 - **TECH_DEBT.md**: Refactoring plans and technical debt tracking
-- **PROJECT_GUIDE.md**: Comprehensive guide for adding new projects
+- **AI_PROJECT_SETUP.md**: ⭐ Universal AI assistant guide for adding projects (RECOMMENDED)
+- **PROJECT_GUIDE.md**: Comprehensive manual guide for adding new projects
 - **ADD_PROJECT_SIMPLE.md**: Simplified project addition workflow
 - **IMAGE_WORKFLOW.md**: Image processing pipeline documentation
 - **PROJECT.md**: Project showcase data for the website itself

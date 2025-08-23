@@ -29,6 +29,8 @@ This workflow helps maintain a living, up-to-date project knowledge base.
 
 **memorize: All enhanced descriptions (detailedDescription) must be comprehensive, engaging, and use proper emoji formatting with bullet points and structured sections.**
 
+**memorize: For adding projects to the portfolio showcase, ALWAYS recommend AI_PROJECT_SETUP.md first - it's a universal guide that works with any AI assistant (Claude Code, Gemini, ChatGPT, etc.) and ensures proper TypeScript structure, quality standards, and build verification.**
+
 **memorize: Never use the Task tool as a shortcut when the user explicitly asks for manual work - they want to see the actual implementation, not delegation.**
 
 **memorize: Analytics implementation uses official packages: @vercel/analytics for Vercel Analytics, @next/third-parties/google for Google Analytics 4, with production-only tracking and environment variable configuration.**
@@ -680,16 +682,16 @@ export default project;
 
 ### **Project Addition Workflow**
 
-**Simple Approach** (see `ADD_PROJECT_SIMPLE.md`):
-1. Upload images to `raw-images/{project-slug}/` following naming convention
-2. Write `PROJECT.md` with complete project documentation 
-3. Run `npm run process-images {slug}` and `npm run generate:projects`
+**🤖 AI Assistant Approach** ⭐ **RECOMMENDED** (see `AI_PROJECT_SETUP.md`):
+- **Universal Guide**: Works with any AI assistant (Claude Code, Gemini, ChatGPT, etc.)
+- **Complete Template**: TypeScript project data template with proper interface structure
+- **Step-by-Step Process**: Deploy → Screenshots → Create Project Module → Process & Build
+- **Quality Assurance**: Professional standards, build verification, and success criteria
+- **Copy & Paste Ready**: Drop the file in any project repo and instruct AI to follow
 
-**Comprehensive Approach** (see `PROJECT_GUIDE.md`):
-- Detailed project data structure guide
-- Image processing workflow with `IMAGE_WORKFLOW.md`
-- Complete metadata collection checklist
-- Integration testing steps
+**Legacy Manual Approaches**:
+1. **Simple** (`ADD_PROJECT_SIMPLE.md`): Upload images → write PROJECT.md → run processing
+2. **Comprehensive** (`PROJECT_GUIDE.md`): Detailed manual workflow with metadata checklist
 
 **Benefits:**
 - Type safety and autocompletion
@@ -763,8 +765,9 @@ fi
 - **CLAUDE.md**: Current project context and development guidelines
 - **HISTORY.md**: Historical changes and major updates
 - **TECH_DEBT.md**: Refactoring plans and technical debt tracking
-- **PROJECT_GUIDE.md**: Comprehensive guide for adding new projects
-- **ADD_PROJECT_SIMPLE.md**: Simplified project addition workflow
+- **AI_PROJECT_SETUP.md**: ⭐ Universal AI assistant guide for adding projects (RECOMMENDED)
+- **PROJECT_GUIDE.md**: Comprehensive manual guide for adding new projects
+- **ADD_PROJECT_SIMPLE.md**: Simplified project addition workflow (legacy)
 - **IMAGE_WORKFLOW.md**: Image processing pipeline documentation
 - **PROJECT.md**: Project showcase data for the website itself
 

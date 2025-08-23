@@ -1,6 +1,25 @@
 # How to Add a New Project - Complete Guide
 
-This guide walks you through adding a new project to the showcase system.
+## 🤖 **RECOMMENDED: AI Assistant Workflow**
+
+⭐ **For the easiest project addition experience**, use **`AI_PROJECT_SETUP.md`**:
+
+1. **Copy `AI_PROJECT_SETUP.md`** to your new project repository
+2. **Tell any AI assistant**: "Please follow the instructions in AI_PROJECT_SETUP.md to add this project to my portfolio"
+3. **The AI will handle everything**: deployment verification, TypeScript data creation, image processing, and build validation
+
+**Benefits of AI Workflow:**
+- ✅ Works with any AI (Claude Code, Gemini, ChatGPT, etc.)
+- ✅ Ensures proper TypeScript structure and interface compliance
+- ✅ Includes quality assurance and professional standards
+- ✅ No manual template copying or command memorization needed
+- ✅ Built-in error prevention and build verification
+
+---
+
+## 📋 **Manual Workflow** (Legacy Approach)
+
+If you prefer to add projects manually, this guide walks you through the traditional process:
 
 ## 📂 **Step 1: Prepare Project Assets (Auto-Processing)**
 

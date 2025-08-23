@@ -150,9 +150,10 @@ Automated image optimization with naming convention detection:
 - **Commands**: `npm run process-images [slug]` or `npm run process-images all`
 
 ### Project Addition Workflow
-1. **Simple**: Upload images to `raw-images/{slug}/`, write `PROJECT.md`, run processing
-2. **Comprehensive**: Follow `PROJECT_GUIDE.md` for detailed workflow
-3. **Documentation**: See `ADD_PROJECT_SIMPLE.md` and `IMAGE_WORKFLOW.md`
+1. **🤖 AI Assistant Workflow** ⭐ **RECOMMENDED**: Use `AI_PROJECT_SETUP.md` - comprehensive guide for any AI assistant (Claude Code, Gemini, etc.) to add projects seamlessly
+2. **Simple**: Upload images to `raw-images/{slug}/`, write `PROJECT.md`, run processing  
+3. **Comprehensive**: Follow `PROJECT_GUIDE.md` for detailed manual workflow
+4. **Documentation**: See `ADD_PROJECT_SIMPLE.md` and `IMAGE_WORKFLOW.md` for legacy approaches
 
 **Benefits:**
 - Type safety and autocompletion
