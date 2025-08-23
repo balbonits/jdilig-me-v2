@@ -7,8 +7,8 @@
  */
 
 // Import actual data sources to get real counts
-import personalWebsiteV2 from '@root/projects/personal-website-v2/personal-website-v2';
-import geminiCliDemo from '@root/projects/gemini-cli-demo/gemini-cli-demo';
+import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';
+import geminiCliDemo from '../../projects/gemini-cli-demo/gemini-cli-demo';
 
 // Centralized data collections (single source of truth)
 export const ALL_PROJECTS = [

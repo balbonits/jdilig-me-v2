@@ -51,6 +51,56 @@ For comprehensive technical debt tracking, component refactoring plans, and deve
 
 When discussing "tech debt" or refactoring, always reference this centralized document.
 
+## 🐛 **Critical Debugging Journey: Infinite Refresh Bug (August 2025)**
+
+**Problem:** Adding Gemini CLI Demo project caused infinite refresh loops in Next.js development server.
+
+**Root Cause Analysis:**
+- **Initial Assumption**: Gemini CLI Demo data was malformed → ❌ **FALSE**
+- **Actual Issue**: Direct TypeScript module imports in `src/data/projects.ts` caused webpack Hot Module Replacement (HMR) conflicts
+- **Trigger**: Importing both `personalWebsiteV2` and `geminiCliDemo` as TS modules created circular dependencies during hot reloading
+
+**Technical Details:**
+```typescript
+// ❌ PROBLEMATIC - Causes infinite refresh
+import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';
+import geminiCliDemo from '../../projects/gemini-cli-demo/gemini-cli-demo';
+
+// ✅ SOLUTION - Use stable JSON imports
+import projectsJsonData from '../../public/projects.json';
+```
+
+**Why Personal Website v2 Worked Initially:**
+- It was already in the stable JSON files from previous builds
+- The issue only manifested when importing BOTH projects as direct TS modules
+- Single TS import worked, but multiple imports triggered the HMR conflict
+
+**Debug Process:**
+1. **Isolated the issue**: Disabled Gemini CLI Demo import → refresh stopped
+2. **Identified webpack symptoms**: Continuous `Fast Refresh had to perform a full reload` warnings
+3. **Tested different approaches**: @root alias, require() vs import, etc.
+4. **Found solution**: Switch to stable JSON imports instead of direct TS modules
+
+**Final Architecture:**
+```
+./projects/{name}/{name}.ts → [build script] → /public/projects.json → src/data/projects.ts
+    (source of truth)           (copy)            (stable)           (import)
+```
+
+**Key Learnings:**
+- **Source of truth vs stable imports**: TypeScript modules in `./projects/` remain the authoritative source, but production code should import from stable JSON files
+- **HMR conflicts**: Direct imports of complex data structures can cause webpack hot reloading issues
+- **Build-time vs runtime**: Use build scripts to copy/transform data, then import the stable output
+- **Debug methodology**: Isolate changes systematically rather than assuming data content issues
+
+**Prevention:**
+- Always use the existing build system pipeline for data imports
+- Avoid direct TypeScript module imports in data layer files
+- Test with multiple projects, not just single additions
+- Monitor webpack output for HMR warnings as early indicators
+
+This debugging experience reinforces the value of our established build pipeline and shows why we have JSON generation systems in place.
+
 ## Project Overview
 - **Name**: jdilig-me-v2
 - **Type**: Personal website

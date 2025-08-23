@@ -1,4 +1,43 @@
 
+## [2025-08-23] Critical Debugging: Infinite Refresh Bug Resolution ✅ COMPLETED
+
+### **The Problem**
+- **Symptom**: Adding Gemini CLI Demo project to portfolio caused infinite refresh loops in Next.js development server
+- **Initial Impact**: Development server unusable with continuous `Fast Refresh had to perform a full reload` warnings
+- **User Frustration**: Assumed project data was malformed, questioned why Personal Website v2 worked but Gemini CLI Demo broke everything
+
+### **The Investigation** 
+- **False Lead**: Initially blamed Gemini CLI Demo data content → **WRONG ASSUMPTION**
+- **Real Culprit**: Direct TypeScript module imports in `src/data/projects.ts` caused webpack Hot Module Replacement (HMR) conflicts
+- **Technical Root Cause**: Multiple TS imports (`personalWebsiteV2` + `geminiCliDemo`) created circular dependencies during hot reloading
+
+### **The Solution**
+- **Architecture Change**: Switch from direct TS imports to stable JSON imports
+- **Before (Broken)**: `import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';`  
+- **After (Working)**: `import projectsJsonData from '../../public/projects.json';`
+- **Result**: Maintains `./projects/` as source of truth, but uses stable JSON for runtime imports
+
+### **Key Technical Insights**
+- **HMR Limitation**: Webpack struggles with complex data structure imports in hot reload scenarios
+- **Build Pipeline Value**: Our existing JSON generation system prevented this issue - should always use it
+- **Debug Methodology**: Systematic isolation (disable one import) revealed the true cause faster than data inspection
+- **False Debugging Paths**: Tried @root alias, require() vs import, cache clearing - none addressed root cause
+
+### **Professional Learning Experience**
+- **Assumption Testing**: Question initial assumptions - data content wasn't the issue
+- **System Architecture**: Separation of concerns (source of truth vs stable imports) prevents these conflicts  
+- **Development Experience**: How webpack HMR can fail in unexpected ways with complex imports
+- **User Empathy**: "Why does one project work but not another?" - non-obvious technical issues can be frustrating
+
+### **Long-term Prevention**
+- **Best Practice Reinforced**: Always use build pipeline for data transformation
+- **Documentation**: Added debugging journey to CLAUDE.md for future reference
+- **Architecture Validation**: This incident proves our JSON generation system design was correct
+
+**Outcome**: Both projects now display correctly, build system stable, all tests passing. A valuable debugging experience that reinforces our architectural decisions.
+
+---
+
 ## [2025-08-23] AI Project Setup Workflow & Testing Enhancement ✅ COMPLETED
 
 ### **AI_PROJECT_SETUP.md - Universal Project Addition Guide**

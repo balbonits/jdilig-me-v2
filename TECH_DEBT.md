@@ -1,3 +1,48 @@
+## [2025-08-23] Debugging Best Practices: HMR Infinite Refresh
+**⚠️ Critical Learning: Next.js HMR + Complex TypeScript Imports**
+
+### **Symptoms to Watch For**
+- Development server infinite refresh loops
+- Continuous `Fast Refresh had to perform a full reload` warnings
+- Webpack hot-update JSON 404 errors repeating endlessly
+- Dev server becomes unusable, constant page reloading
+
+### **Root Cause Pattern**
+- **Direct TypeScript module imports** in data layer files (`src/data/`) containing complex objects
+- **Multiple TS imports** trigger webpack Hot Module Replacement conflicts
+- **Not the data content** - the import mechanism itself causes issues
+
+### **Debug Methodology**
+1. **Isolate systematically**: Disable imports one by one to identify the trigger
+2. **Monitor webpack output**: Look for HMR warnings as early indicators
+3. **Question assumptions**: Data malformation is rarely the cause
+4. **Test incremental changes**: Single imports may work, multiple may fail
+
+### **Solution Pattern**
+```typescript
+// ❌ CAUSES INFINITE REFRESH
+import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';
+import geminiCliDemo from '../../projects/gemini-cli-demo/gemini-cli-demo';
+
+// ✅ STABLE SOLUTION  
+import projectsJsonData from '../../public/projects.json';
+```
+
+### **Architecture Principle**
+- **Source of truth**: Keep TypeScript modules in `./projects/` for maintainability
+- **Runtime imports**: Use stable JSON files for actual application imports
+- **Build pipeline**: Copy/transform TS → JSON at build time, never directly import TS in data layer
+
+### **Prevention Checklist**
+- [ ] Use existing build scripts for data transformation
+- [ ] Import from `/public/*.json` instead of direct TS modules
+- [ ] Test with multiple data items, not just single additions
+- [ ] Monitor HMR output during development for early warning signs
+
+**Lesson**: Our build pipeline design was correct from the start - this incident validates the architecture.
+
+---
+
 ## [2025-08-12] E2E Playwright Test Policy
 - E2E Playwright test failures (including visual snapshot mismatches) are now build-blocking.
 - Playwright snapshot maintenance is a required part of the commit workflow.
