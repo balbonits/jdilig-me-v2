@@ -15,8 +15,8 @@
     "category": "Full-Stack Development",
     "status": "completed",
     "startDate": "2024-11",
-    "endDate": "2025-01", 
-    "duration": "3 months",
+    " 
+    "
     "role": "Full-Stack Developer & Designer",
     "difficulty": "Expert",
     "featured": true

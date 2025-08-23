@@ -261,7 +261,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
         <span className={styles.difficultyTag}>{metadata.difficulty}</span>
       </div>
       <div className={styles.projectMeta}>
-        <span className={styles.duration}>{metadata.duration}</span>
+        <span className={styles.startDate}>Started: {metadata.startDate}</span>
         <span className={styles.role}>{metadata.role}</span>
       </div>
       <div className={styles.projectDescription}>
@@ -281,8 +281,8 @@ export default function ProjectPage({ project }: ProjectPageProps) {
           <div className={styles.projectDetails}>
             <div className={styles.detailsGrid}>
               <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>Duration:</span>
-                <span className={styles.detailValue}>{metadata.duration}</span>
+                <span className={styles.detailLabel}>Started:</span>
+                <span className={styles.detailValue}>{metadata.startDate}</span>
               </div>
               <div className={styles.detailItem}>
                 <span className={styles.detailLabel}>Role:</span>

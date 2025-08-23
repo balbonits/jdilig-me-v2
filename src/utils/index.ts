@@ -1,10 +1,6 @@
-// Site-only utility functions
+// Client-side utility functions only
 export { cn, classNames } from './classnames';
-export { 
-  fetchExercises, 
-  fetchUtilities, 
-  fetchAllCodeData, 
-  fetchExerciseBySlug, 
-  fetchUtilityBySlug 
-} from './data-fetchers';
 export { shortenUrl, getShortenedUrlSafe } from './urlShortener';
+
+// Note: data-fetchers are not exported here to avoid server-side fs imports on client
+// Import data-fetchers directly when needed in SSG/SSR contexts

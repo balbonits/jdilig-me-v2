@@ -1182,8 +1182,6 @@ const project: ProjectData = {
     detailedDescription: 'Comprehensive description...',
     category: 'Full-Stack Development',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
     role: 'Full-Stack Developer',
     difficulty: 'Hard',
     featured: true
@@ -1252,6 +1250,57 @@ export default project;
 - **PWA**: Offline support, app shortcuts, installable with custom icons
 
 
+
+## Project Addition Routine ⭐ **MANDATORY WORKFLOW**
+
+**Complete workflow for adding projects to the showcase page:**
+
+### **Step 1: Project Preparation**
+1. **Verify live deployment** - Ensure project is deployed and accessible via URL
+2. **Capture screenshots** following naming convention:
+   - `01-desktop-homepage.png` (main landing page, desktop view)
+   - `02-feature-[description].png` (key features/functionality)
+   - `03-mobile-[description].png` (mobile responsive views if applicable)
+   - Place in `projects/{project-slug}/images/` directory
+
+### **Step 2: Create Project Data Module**
+1. **Create TypeScript module** at `projects/{project-slug}/{project-slug}.ts`
+2. **Use proper TypeScript interface** extending `ProjectData` from `@/interfaces/projects`
+3. **Include comprehensive metadata**:
+   - Complete title, description, detailedDescription
+   - Proper category, role, difficulty
+   - Featured status (true for showcase projects)
+4. **Add tech stack, features, highlights** with detailed descriptions
+5. **Include live and GitHub links** in proper format
+
+### **Step 3: Image Processing & Build**
+1. **Rename images** to follow convention: `[number]-[category]-[description].[ext]`
+2. **Process images**: `npm run process-images {project-slug}`
+3. **Generate projects JSON**: `npm run generate:projects`
+4. **Build and test**: `npm run build` (verify 38+ pages generate successfully)
+
+### **Step 4: Verification & Deployment**
+1. **Run full test suite**: `npm run lint && npm test && npx playwright test`
+   - **CRITICAL**: New projects will cause visual snapshot failures - this is expected
+   - Update snapshots with `npx playwright test --update-snapshots` after manual verification
+   - Verify counting tests pass (projects page should show correct number of project cards)
+2. **Verify JSON generation**: Check `public/projects.json` and `public/projects-index.json` contain new project
+3. **Test locally**: Start dev server and verify project appears on `/projects` page with correct count
+4. **Commit changes**: Use comprehensive commit message documenting all changes (but do NOT push yet)
+5. **Final test verification**: Run tests once more to ensure snapshots are updated correctly
+6. **Push to deploy**: `git push` to trigger Vercel deployment
+7. **Verify live deployment**: After push, confirm project appears on live site (may take 2-3 minutes)
+
+### **Step 5: Documentation Updates**
+1. **Update CLAUDE.md**: Add project to recent changes if significant
+2. **Update README.md**: If new commands or processes are introduced
+3. **Update HISTORY.md**: Document project addition in historical record
+
+**⚠️ CRITICAL DEPLOYMENT NOTE:**
+- Projects won't appear on live site until changes are **pushed to remote repository**
+- Local commits must be pushed to trigger Vercel deployment
+- Always verify with `git status` and `git push` after committing
+- Live site updates typically take 2-3 minutes after successful deployment
 
 ## Development & Commit Workflow ⚠️ CRITICAL
 **Commit Message Standard:**

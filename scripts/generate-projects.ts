@@ -242,8 +242,6 @@ class ProjectGenerator {
         detailedDescription: "More comprehensive description explaining the project's purpose, target users, key features, and what makes it unique or noteworthy.",
         category: "Full-Stack Development", // or Mobile Development, Data Science, etc.
         startDate: "2024-01",
-        endDate: "2024-03",
-        duration: "3 months",
         role: "Full-Stack Developer",
         team: "Solo project", // optional
         difficulty: "Medium", // Beginner, Easy, Medium, Hard, Expert

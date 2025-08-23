@@ -45,8 +45,6 @@ export interface ProjectMetadata {
   detailedDescription: string;
   category: string;
   startDate: string;
-  endDate?: string;
-  duration?: string;
   role: string;
   team?: string;
   difficulty: DifficultyLevel;

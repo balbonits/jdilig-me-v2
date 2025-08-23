@@ -647,8 +647,8 @@ const project: ProjectData = {
     category: 'Full-Stack Development',
     status: 'completed',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
+    
+    
     role: 'Full-Stack Developer',
     difficulty: 'Hard',
     featured: true

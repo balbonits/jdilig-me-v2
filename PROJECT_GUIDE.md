@@ -148,8 +148,8 @@ Before adding a project, gather this information:
     category: 'Full-Stack Development',  // or 'Mobile App', 'Data Science', etc.
     status: 'completed',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
+    
+    
     role: 'Full-Stack Developer',
     team: 'Solo project',  // Optional
     difficulty: 'Hard',

@@ -12,8 +12,8 @@ const mockProject: ProjectData = {
     detailedDescription: 'This is a detailed description of the test project.',
     category: 'Full-Stack Development',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
+    
+    
     role: 'Full-Stack Developer',
     difficulty: 'Expert',
     featured: true,
@@ -106,7 +106,7 @@ describe('ProjectPage', () => {
   it('renders project details in overview section', () => {
     render(<ProjectPage project={mockProject} />);
     
-    expect(screen.getAllByText('3 months')).toHaveLength(2); // appears in header and details
+    expect(screen.getByText('Started: 2024-01')).toBeInTheDocument(); // appears in header
     expect(screen.getAllByText('Full-Stack Developer')).toHaveLength(2); // appears in header and details
   });
 

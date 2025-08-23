@@ -16,8 +16,8 @@ const mockProjectModule = {
     detailedDescription: '🚀 **Test Project Overview**\nThis is a comprehensive test project showcasing advanced development practices.\n\n✨ **Key Features:**\n• Modern architecture and design patterns\n• Comprehensive testing and documentation\n• Performance optimization and scalability\n\n🛠️ **Technical Implementation:**\n• TypeScript for type safety\n• React for dynamic user interfaces\n• Next.js for server-side rendering',
     category: 'Full-Stack Development',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
+    
+    
     role: 'Full-Stack Developer',
     difficulty: 'Hard',
     featured: true
@@ -71,8 +71,8 @@ const project: ProjectData = {
     detailedDescription: '🚀 **Test Project Overview**\\nThis is a comprehensive test project showcasing advanced development practices.\\n\\n✨ **Key Features:**\\n• Modern architecture and design patterns\\n• Comprehensive testing and documentation\\n• Performance optimization and scalability\\n\\n🛠️ **Technical Implementation:**\\n• TypeScript for type safety\\n• React for dynamic user interfaces\\n• Next.js for server-side rendering',
     category: 'Full-Stack Development',
     startDate: '2024-01',
-    endDate: '2024-03',
-    duration: '3 months',
+    
+    
     role: 'Full-Stack Developer',
     difficulty: 'Hard',
     featured: true

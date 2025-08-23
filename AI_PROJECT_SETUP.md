@@ -71,8 +71,8 @@ const project: ProjectData = {
 • Solutions implemented`,
     category: 'AI/CLI Development', // or appropriate category
     startDate: 'YYYY-MM',
-    endDate: 'YYYY-MM',
-    duration: 'X weeks',
+    
+    
     role: 'Full-Stack Developer',
     difficulty: 'Medium', // Beginner | Easy | Medium | Hard | Expert
     featured: true

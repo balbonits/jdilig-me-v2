@@ -23,11 +23,9 @@ const project: ProjectData = {
 • Gemini generated the code, managed the project structure, and wrote the documentation based on natural language prompts from the user.`,
     category: 'AI/CLI Development',
     startDate: '2025-08',
-    endDate: '2025-08',
-    duration: '1 day',
     role: 'AI Interaction Designer & Project Lead',
     difficulty: 'Medium',
-    featured: true
+    featured: false
   },
   techStack: [
     {
@@ -92,7 +90,28 @@ const project: ProjectData = {
     'Add more complex applications to the showcase.',
     'Explore different ways to interact with the AI to build applications.',
     'Integrate more third-party APIs and libraries.'
-  ]
+  ],
+  screenshots: [
+    {
+      src: '/images/projects/gemini-cli-demo/01-desktop-homepage-desktop.webp',
+      alt: 'Gemini CLI Demo Homepage',
+      caption: 'Main landing page showcasing web component-based applications built with Gemini CLI',
+      category: 'desktop'
+    },
+    {
+      src: '/images/projects/gemini-cli-demo/02-feature-todo-app-feature.webp',
+      alt: 'Todo App Feature',
+      caption: 'Interactive todo list application demonstrating state management and user interaction',
+      category: 'feature'
+    },
+    {
+      src: '/images/projects/gemini-cli-demo/03-feature-drawing-app-feature.webp',
+      alt: 'Drawing App Feature',
+      caption: 'Creative drawing application showcasing canvas manipulation and tool selection',
+      category: 'feature'
+    }
+  ],
+  metrics: []
 };
 
 export default project;

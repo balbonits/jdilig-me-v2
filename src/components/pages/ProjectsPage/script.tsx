@@ -42,8 +42,8 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                       <p className={styles.heroDescription}>{project.metadata.description}</p>
                       <div className={styles.heroStats}>
                         <div className={styles.stat}>
-                          <span className={styles.statNumber}>{project.metadata.duration}</span>
-                          <span className={styles.statLabel}>Duration</span>
+                          <span className={styles.statNumber}>{project.metadata.startDate}</span>
+                          <span className={styles.statLabel}>Started</span>
                         </div>
                         <div className={styles.stat}>
                           <span className={styles.statNumber}>{project.metadata.difficulty}</span>
