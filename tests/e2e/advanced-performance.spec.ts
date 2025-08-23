@@ -5,7 +5,7 @@
  * device constraints, and user interaction patterns.
  */
 
-import { test, customExpect } from '../fixtures/playwright-fixtures';
+import { test, expect, customExpect } from '../fixtures/playwright-fixtures';
 
 test.describe('Advanced Performance Testing', () => {
   test.describe('Core Web Vitals', () => {
