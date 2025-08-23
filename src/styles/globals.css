@@ -219,6 +219,22 @@
       --tag-bg-color-default: var(--color-red);
       --tag-bg-color-hover: var(--color-red-hover);
       
+      /* Dark Mode Card Background Variables */
+      --card-bg-color-default: var(--bg-secondary); /* Dark gray for better visual separation */
+      --card-bg-color-hover: var(--bg-accent); /* Darker gray hover */
+      --card-bg-color-blue: var(--color-blue);
+      --card-bg-color-blue-hover: var(--color-blue-hover);
+      --card-bg-color-purple: var(--color-purple);
+      --card-bg-color-purple-hover: var(--color-purple-hover);
+      --card-bg-color-teal: var(--color-teal);
+      --card-bg-color-teal-hover: var(--color-teal-hover);
+      --card-bg-color-pink: var(--color-pink);
+      --card-bg-color-pink-hover: var(--color-pink-hover);
+      --card-bg-color-orange: var(--color-orange);
+      --card-bg-color-orange-hover: var(--color-orange-hover);
+      --card-bg-color-green: var(--color-green);
+      --card-bg-color-green-hover: var(--color-green-hover);
+      
       /* Dark Mode Shadows */
       --shadow-color-default: rgba(0, 0, 0, 0.3);
       --shadow-color-hover: rgba(0, 0, 0, 0.4);
@@ -326,6 +342,22 @@
     --color-red-hover: rgba(255, 110, 140, 0.3);
     --color-neutral: rgba(255, 255, 255, 0.1);
     --color-neutral-hover: rgba(255, 255, 255, 0.15);
+    
+    /* Dark Mode Card Background Variables */
+    --card-bg-color-default: var(--bg-secondary); /* Dark gray for better visual separation */
+    --card-bg-color-hover: var(--bg-accent); /* Darker gray hover */
+    --card-bg-color-blue: var(--color-blue);
+    --card-bg-color-blue-hover: var(--color-blue-hover);
+    --card-bg-color-purple: var(--color-purple);
+    --card-bg-color-purple-hover: var(--color-purple-hover);
+    --card-bg-color-teal: var(--color-teal);
+    --card-bg-color-teal-hover: var(--color-teal-hover);
+    --card-bg-color-pink: var(--color-pink);
+    --card-bg-color-pink-hover: var(--color-pink-hover);
+    --card-bg-color-orange: var(--color-orange);
+    --card-bg-color-orange-hover: var(--color-orange-hover);
+    --card-bg-color-green: var(--color-green);
+    --card-bg-color-green-hover: var(--color-green-hover);
     
     /* Dark Mode Section Colors */
     --section-bg-color-default: var(--color-neutral);
