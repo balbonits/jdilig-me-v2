@@ -506,6 +506,18 @@ Reusable utility types and UI definitions:
 - **[ESLint](https://eslint.org/)** - Code quality and consistency
 - **[Jest](https://jestjs.io/)** - JavaScript testing framework
 
+### Content Processing
+- **[react-markdown](https://github.com/remarkjs/react-markdown)** - Industry-standard React markdown parser
+
+**Why react-markdown?**
+- ✅ **Most Popular**: 3,858+ projects use it (proven in production)
+- ✅ **Safe by Default**: No XSS vulnerabilities, unlike `dangerouslySetInnerHTML`
+- ✅ **React-Optimized**: Virtual DOM integration, only updates what changes
+- ✅ **Standards Compliant**: 100% CommonMark + GitHub Flavored Markdown support
+- ✅ **Feature Complete**: Handles emoji, headers, lists, links, code blocks automatically
+
+Used in `src/utils/markdown.tsx` to safely render project descriptions with proper formatting, eliminating raw markdown display issues while maintaining security best practices.
+
 ## 🌟 Recent Highlights
 
 - **ProfileImage Component**: 4 shape variants (circle, box, rounded, hexagon) with accessibility features

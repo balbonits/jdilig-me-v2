@@ -53,22 +53,25 @@ const project: ProjectData = {
     title: 'Your Project Title',
     name: 'your-project-slug',
     description: 'Brief one-line description for cards',
-    detailedDescription: `Comprehensive project description with:
+    detailedDescription: `Comprehensive project description with proper markdown formatting:
 
-**Key Features:**
-• Feature 1 with impact
-• Feature 2 with benefits
-• Feature 3 with results
+## Key Features
 
-**Technical Implementation:**
-• Architecture decisions
-• Technology choices
-• Performance considerations
+- Feature 1 with specific impact measurement
+- Feature 2 with quantifiable benefits  
+- Feature 3 with concrete results
 
-**Development Process:**
-• How it was built
-• Challenges overcome
-• Solutions implemented`,
+## Technical Implementation
+
+- **Framework-Free Architecture**: Specific tech stack details
+- **Modern Standards**: ES6+ features and best practices
+- **Performance Optimized**: Specific performance metrics
+
+## Development Process
+
+- **Collaborative Approach**: How the work was organized
+- **Iterative Development**: Specific methodologies used
+- **Quality Assurance**: Testing and validation approaches`,
     category: 'AI/CLI Development', // or appropriate category
     startDate: 'YYYY-MM',
     
@@ -127,6 +130,28 @@ const project: ProjectData = {
       label: 'Live Demo'
     }
   ],
+  metrics: [
+    {
+      label: 'Code Coverage',
+      value: '85%',
+      description: 'Unit tests + integration test coverage'
+    },
+    {
+      label: 'Performance',
+      value: '<200ms',
+      description: 'Average API response time'
+    },
+    {
+      label: 'Code Quality',
+      value: '100% TypeScript',
+      description: 'Full type safety with strict mode'
+    },
+    {
+      label: 'CLI Commands',
+      value: '12+ commands',
+      description: 'Comprehensive command interface'
+    }
+  ],
   lessons: [
     'AI API integration patterns',
     'CLI UX design principles',
@@ -146,6 +171,134 @@ const project: ProjectData = {
 
 export default project;
 ```
+
+## 📝 **Content Formatting Standards** ⚠️ **CRITICAL**
+
+**Different AI models format content inconsistently. Follow these standards exactly:**
+
+### **Markdown Format Requirements**
+```markdown
+// ✅ CORRECT - Use these patterns
+## Section Headers
+- Standard markdown bullets (dash + space)
+- **Bold text** using double asterisks
+- Clean paragraph spacing with double newlines
+
+// ❌ WRONG - Avoid these patterns  
+**Section Headers:** (bolded instead of header)
+• Unicode bullets (causes rendering issues)
+__Bold text__ (underscores instead of asterisks)
+***Triple asterisk bold*** (inconsistent formatting)
+```
+
+### **detailedDescription Template** 
+**Use this EXACT structure for consistency:**
+```typescript
+detailedDescription: `Brief overview paragraph introducing the project and its primary value proposition.
+
+## Key Features
+
+- Specific feature with measurable impact
+- Another feature with quantifiable benefit
+- Third feature with concrete outcome
+
+## Technical Implementation  
+
+- **Architecture Pattern**: Specific technical approach with details
+- **Technology Choice**: Stack decisions with reasoning
+- **Performance Aspect**: Metrics or optimization details
+
+## Development Process
+
+- **Methodology**: How the project was built
+- **Collaboration**: Team or AI interaction patterns
+- **Quality Control**: Testing and validation approaches`,
+```
+
+### **Content Quality Checklist**
+Before submitting project data, verify:
+
+- [ ] Uses `## Headers` (not `**Headers:**`)
+- [ ] Uses `-` bullets (not `•`, `▪`, `◦`, or other unicode)
+- [ ] Uses `**bold**` (not `__bold__` or `***bold***`)
+- [ ] Has proper paragraph spacing (double newlines)
+- [ ] Includes specific, measurable details (not generic descriptions)
+- [ ] Each section has 3-4 bullet points for visual balance
+- [ ] Bold labels in bullets use pattern: `**Label**: description`
+
+### **Common AI Model Issues & Fixes**
+
+| AI Model | Common Issue | Fix |
+|----------|-------------|-----|
+| Gemini | Uses `•` unicode bullets | Change to `-` markdown bullets |
+| GPT | Uses `__bold__` formatting | Change to `**bold**` |
+| Claude | Sometimes over-structures | Simplify to 3 main sections |
+| Other | Mixed formatting styles | Follow template exactly |
+
+### **Project Metrics Cards** ⭐ **CRITICAL FOR IMPACT**
+
+**These gradient cards are what make projects impressive to recruiters and technical evaluators.**
+
+The portfolio displays **metrics cards** with quantifiable project statistics. **You must provide these** - they demonstrate technical depth and professionalism.
+
+**📝 Reference Example**: The `personal-website-v2` project has comprehensive metrics provided by Claude Code:
+- `84+ tests` (30 E2E across 5 browsers + 54 unit tests)  
+- `38 pages` (Static site generation with optimized bundles)
+- `100% TypeScript` (Strict mode with comprehensive type safety)
+- `15+ UI components` (Reusable, tested, and documented)
+
+**Your project should match or exceed this level of detail.**
+
+#### **Required Metrics Categories**
+**Choose 4 metrics that best represent your project's technical achievements:**
+
+| Category | Examples | Value Format |
+|----------|----------|-------------|
+| **Code Quality** | `100% TypeScript`, `95% Test Coverage`, `Zero ESLint Errors` | Percentage or absolute |
+| **Performance** | `<200ms API Response`, `98 Lighthouse Score`, `<1s Load Time` | Time or score |
+| **Scale/Volume** | `1000+ Downloads`, `50+ Components`, `12 API Endpoints` | Count with `+` |
+| **Testing** | `84+ Tests`, `5 Browser Coverage`, `E2E + Unit Testing` | Count or coverage |
+| **Features** | `15+ Commands`, `8 Integrations`, `6 Export Formats` | Count with description |
+
+#### **Metrics Template**
+```typescript
+metrics: [
+  {
+    label: 'Test Coverage',           // Short, impactful label
+    value: '85%',                    // Bold, quantified value  
+    description: 'Unit + E2E tests across 5 browsers' // Context/details
+  },
+  {
+    label: 'Performance', 
+    value: '<100ms',
+    description: 'Average response time with caching'
+  },
+  {
+    label: 'Code Quality',
+    value: '100% TypeScript', 
+    description: 'Strict mode with comprehensive type safety'
+  },
+  {
+    label: 'Features',
+    value: '12+ commands',
+    description: 'Full-featured CLI interface'
+  }
+]
+```
+
+#### **Impact Guidelines**
+- **Quantify everything**: Use numbers, percentages, counts
+- **Show technical depth**: Testing, performance, quality metrics
+- **Highlight scale**: Components, features, coverage, users
+- **Demonstrate rigor**: Code quality, testing, performance standards
+- **Be specific**: `<200ms` not "fast", `85%` not "good coverage"
+
+### **Testing Your Content**
+1. Add your project data to the TypeScript file
+2. Run `npm run generate:projects` to update JSON
+3. Check the project showcase page visually
+4. Verify markdown renders properly with headers, bullets, and bold text
+5. **Verify metrics cards display** with gradient styling and proper values
 
 ### Step 5: Process Images and Generate
 

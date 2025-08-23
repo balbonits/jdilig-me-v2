@@ -93,7 +93,8 @@ describe('ProjectPage', () => {
     render(<ProjectPage project={mockProject} />);
     
     expect(screen.getByText('Test Project')).toBeInTheDocument();
-    expect(screen.getByText('This is a detailed description of the test project.')).toBeInTheDocument();
+    // Note: detailedDescription now appears in Project Overview section, not header
+    expect(screen.getByText('Project Overview')).toBeInTheDocument();
   });
 
   it('renders project metadata tags', () => {

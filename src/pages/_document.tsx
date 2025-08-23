@@ -32,20 +32,32 @@ export default function Document() {
   <meta name="msapplication-TileColor" content="#3b82f6" />
   <meta name="theme-color" content="#3b82f6" />
         
-        {/* Service Worker Registration */}
+        {/* Service Worker Registration - Production Only */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              if ('serviceWorker' in navigator) {
+              // Only register service worker in production to avoid development caching issues
+              if ('serviceWorker' in navigator && '${process.env.NODE_ENV}' === 'production') {
                 window.addEventListener('load', function() {
                   navigator.serviceWorker.register('/sw.js')
                     .then(function(registration) {
                       // Service worker registered successfully
+                      console.log('ServiceWorker registration successful');
                     })
                     .catch(function(registrationError) {
                       // Service worker registration failed silently
+                      console.log('ServiceWorker registration failed:', registrationError);
                     });
                 });
+              } else if ('${process.env.NODE_ENV}' === 'development') {
+                // Unregister any existing service workers in development
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) {
+                      registration.unregister();
+                    }
+                  });
+                }
               }
             `,
           }}

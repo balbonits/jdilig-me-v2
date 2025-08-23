@@ -6,21 +6,24 @@ const project: ProjectData = {
     title: 'Gemini CLI Demo',
     name: 'gemini-cli-demo',
     description: 'A showcase of web component-based applications built with Gemini CLI.',
-    detailedDescription: `This project is a showcase of web component-based applications built entirely by Gemini, a large language model from Google. The showcase demonstrates Gemini's ability to understand high-level requirements, break them down into smaller tasks, and generate the code for a complete web application.
+    detailedDescription: `This project showcases web component-based applications built entirely by Gemini, Google's large language model. The showcase demonstrates Gemini's ability to understand high-level requirements, break them down into smaller tasks, and generate complete web applications.
 
-**Key Features:**
-• A showcase of multiple web component-based applications.
-• Each app is self-contained and can be launched in a modal window.
-• The showcase includes a To-Do List App, a Calculator, a Weather App, a Drawing App, a Data Visualization App, and a JSFiddle Clone.
+Key Features:
+- Multiple self-contained web component applications
+- Each app launches in a modal window for focused interaction  
+- Comprehensive application suite: To-Do List, Calculator, Weather App, Drawing App, Data Visualization, and JSFiddle Clone
+- Pure vanilla JavaScript implementation with modern Web Components architecture
 
-**Technical Implementation:**
-• The entire project is built with vanilla JavaScript, HTML, and CSS, with no external frameworks or libraries (except for Chart.js in the Data Visualization App).
-• The application architecture is based on Web Components, with each app and its sub-components built as custom elements.
-• The project uses a modular and organized file structure, with each app in its own directory.
+Technical Implementation:
+- Framework-free architecture built with vanilla JavaScript, HTML, and CSS (Chart.js only exception for data visualization)
+- Web Components standard with each application and sub-component implemented as custom elements
+- Modular file structure with organized directory system and each app in its own namespace
+- Modern JavaScript ES6+ features with clean, maintainable code patterns
 
-**Development Process:**
-• The project was built through a collaborative process between the user and Gemini.
-• Gemini generated the code, managed the project structure, and wrote the documentation based on natural language prompts from the user.`,
+Development Process:
+- AI-human collaboration built through iterative collaboration between user requirements and Gemini's code generation
+- Natural language driven development based on conversational prompts and requirements  
+- Automated documentation with project structure and documentation generated alongside the codebase`,
     category: 'AI/CLI Development',
     startDate: '2025-08',
     role: 'AI Interaction Designer & Project Lead',

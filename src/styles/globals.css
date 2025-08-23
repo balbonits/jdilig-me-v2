@@ -61,8 +61,8 @@
     --color-neutral-hover: rgba(0, 0, 0, 0.1);
     
     /* Card Component Variables */
-    --card-bg-color-default: var(--color-neutral);
-    --card-bg-color-hover: var(--color-neutral-hover);
+    --card-bg-color-default: var(--bg-secondary); /* Light gray for better visual separation */
+    --card-bg-color-hover: var(--bg-accent); /* Light gray hover */
     --card-bg-color-blue: var(--color-blue);
     --card-bg-color-blue-hover: var(--color-blue-hover);
     --card-bg-color-purple: var(--color-purple);

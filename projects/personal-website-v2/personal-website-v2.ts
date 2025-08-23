@@ -6,7 +6,29 @@ const project: ProjectData = {
     title: 'Personal Website v2',
     name: 'jdilig-me-v2',
     description: 'A modern, accessible personal website with unified design system, comprehensive analytics, and enhanced educational content.',
-    detailedDescription: 'Modern rebuild featuring a unified UI component system, modular architecture, comprehensive testing, and dual analytics integration. Includes advanced features like interactive code showcases with enhanced descriptions, modal systems, navigation improvements, production reliability fixes, and full accessibility compliance with WCAG 2.1 AA standards.',
+    detailedDescription: `A modern, production-ready personal portfolio website showcasing advanced frontend engineering practices. This comprehensive rebuild demonstrates enterprise-level development standards with unified component architecture, comprehensive testing infrastructure, and professional analytics integration.
+
+Key Features:
+- Interactive algorithm showcase with 15+ coding exercises and complexity analysis
+- Comprehensive UI component library with 15+ reusable primitives
+- Advanced modal system with TypeScript generics and proper z-index management
+- Multi-shape ProfileImage component supporting circle, box, rounded, and hexagon variants
+- Robust testing infrastructure with 84+ tests across unit, E2E, and visual regression
+- Dual analytics integration with Vercel Analytics and Google Analytics 4
+
+Technical Implementation:
+- Next.js 15 with Pages Router and static site generation for optimal performance
+- TypeScript strict mode with comprehensive type safety and interface definitions
+- Tailwind CSS v4 integration with CSS Modules for component-scoped styling
+- Mobile-first responsive design with consistent breakpoint system
+- WCAG 2.1 AA accessibility compliance with comprehensive ARIA implementation
+- Production-ready build pipeline with automated JSON generation and image optimization
+
+Development Process:
+- Test-driven development with Jest unit tests and Playwright E2E testing across 5 browsers
+- Component-driven architecture following separation of concerns and reusability principles
+- Performance-first approach with Core Web Vitals tracking and optimization
+- Comprehensive documentation with project context management and AI collaboration workflows`,
     category: 'Full-Stack Development',
     startDate: '2024-11',
     role: 'Full-Stack Developer & Designer',

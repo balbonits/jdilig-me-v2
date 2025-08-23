@@ -91,9 +91,11 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                   <Card className={styles.projectCard}>
                     <div className={styles.cardHeader}>
                       <h3 className={styles.projectTitle}>{project.metadata.title}</h3>
-                      <div className={styles.projectStatus}>
-                        {project.metadata.featured ? 'Featured' : 'Project'}
-                      </div>
+                      {project.metadata.featured && (
+                        <div className={styles.projectStatus}>
+                          Featured
+                        </div>
+                      )}
                     </div>
 
                     <p className={styles.projectDescription}>

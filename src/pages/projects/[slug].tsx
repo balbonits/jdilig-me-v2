@@ -14,6 +14,104 @@ interface ProjectPageProps {
   project: ProjectData;
 }
 
+// Process description text into structured sections with proper containers
+function processText(text: string): React.ReactNode {
+  if (!text) return null;
+  
+  // Normalize escaped sequences
+  const normalized = text
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'");
+  
+  // Split into sections and process
+  const sections: React.ReactNode[] = [];
+  const lines = normalized.split('\n');
+  let currentSection: { title: string; content: string[] } | null = null;
+  let introContent: string[] = [];
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Section headers (end with colon)
+    if (line.endsWith(':') && line.length > 1) {
+      // Save intro content
+      if (introContent.length > 0) {
+        sections.push(
+          <div key="intro" className={styles.descriptionIntro}>
+            {introContent.map((content, idx) => (
+              <p key={idx} style={{ marginBottom: '1rem', lineHeight: '1.6', textAlign: 'left' }}>
+                {content}
+              </p>
+            ))}
+          </div>
+        );
+        introContent = [];
+      }
+      
+      // Save previous section
+      if (currentSection) {
+        sections.push(
+          <div key={currentSection.title} className={styles.descriptionSection}>
+            <h4 className={styles.sectionTitle}>{currentSection.title}</h4>
+            <div className={styles.sectionContent}>
+              {currentSection.content.map((item, idx) => (
+                <div key={idx} className={styles.listItem}>
+                  <span className={styles.bullet}>•</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      
+      // Start new section
+      currentSection = {
+        title: line,
+        content: []
+      };
+    }
+    // Bullet points
+    else if (line.startsWith('- ')) {
+      if (currentSection) {
+        currentSection.content.push(line.substring(2));
+      }
+    }
+    // Regular content
+    else if (line.length > 0) {
+      if (currentSection) {
+        currentSection.content.push(line);
+      } else {
+        introContent.push(line);
+      }
+    }
+  }
+  
+  // Save final section
+  if (currentSection) {
+    sections.push(
+      <div key={currentSection.title} className={styles.descriptionSection}>
+        <h4 className={styles.sectionTitle}>{currentSection.title}</h4>
+        <div className={styles.sectionContent}>
+          {currentSection.content.map((item, idx) => (
+            <div key={idx} className={styles.listItem}>
+              <span className={styles.bullet}>•</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  
+  return (
+    <div className={styles.descriptionContainer}>
+      {sections}
+    </div>
+  );
+}
+
 function TechStackSection({ techStack }: { techStack: ProjectData['techStack'] }) {
   return (
     <div className={styles.techStackContainer}>
@@ -264,9 +362,6 @@ export default function ProjectPage({ project }: ProjectPageProps) {
         <span className={styles.startDate}>Started: {metadata.startDate}</span>
         <span className={styles.role}>{metadata.role}</span>
       </div>
-      <div className={styles.projectDescription}>
-        {metadata.detailedDescription}
-      </div>
     </div>
   );
 
@@ -276,6 +371,11 @@ export default function ProjectPage({ project }: ProjectPageProps) {
       title: 'Project Overview',
       content: (
         <div className={styles.overviewContainer}>
+          {/* Description content above screenshots */}
+          <div className={styles.overviewDescription}>
+            {processText(metadata.detailedDescription || '')}
+          </div>
+          
           <ScreenshotsSection screenshots={screenshots} />
           
           <div className={styles.projectDetails}>
