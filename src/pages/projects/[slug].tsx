@@ -6,6 +6,7 @@ import { Showcase, Modal, Grid } from '@/components/ui';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import { loadProjectsData, getProjectBySlug } from '@/data/projects';
 import { useModal } from '@/hooks/useModal';
+import { processMarkdown } from '@/lib/markdown';
 import SEOHead from '@/components/SEOHead';
 import Image from 'next/image';
 import styles from './project-showcase.module.css';
@@ -14,100 +15,46 @@ interface ProjectPageProps {
   project: ProjectData;
 }
 
-// Process description text into structured sections with proper containers
-function processText(text: string): React.ReactNode {
+// Render processed markdown content as React components
+function renderMarkdownContent(text: string): React.ReactNode {
   if (!text) return null;
   
-  // Normalize escaped sequences
-  const normalized = text
-    .replace(/\\n/g, '\n')
-    .replace(/\\"/g, '"')
-    .replace(/\\'/g, "'");
+  const { intro, sections } = processMarkdown(text);
+  const components: React.ReactNode[] = [];
   
-  // Split into sections and process
-  const sections: React.ReactNode[] = [];
-  const lines = normalized.split('\n');
-  let currentSection: { title: string; content: string[] } | null = null;
-  let introContent: string[] = [];
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    // Section headers (end with colon)
-    if (line.endsWith(':') && line.length > 1) {
-      // Save intro content
-      if (introContent.length > 0) {
-        sections.push(
-          <div key="intro" className={styles.descriptionIntro}>
-            {introContent.map((content, idx) => (
-              <p key={idx} style={{ marginBottom: '1rem', lineHeight: '1.6', textAlign: 'left' }}>
-                {content}
-              </p>
-            ))}
-          </div>
-        );
-        introContent = [];
-      }
-      
-      // Save previous section
-      if (currentSection) {
-        sections.push(
-          <div key={currentSection.title} className={styles.descriptionSection}>
-            <h4 className={styles.sectionTitle}>{currentSection.title}</h4>
-            <div className={styles.sectionContent}>
-              {currentSection.content.map((item, idx) => (
-                <div key={idx} className={styles.listItem}>
-                  <span className={styles.bullet}>•</span>
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      }
-      
-      // Start new section
-      currentSection = {
-        title: line,
-        content: []
-      };
-    }
-    // Bullet points
-    else if (line.startsWith('- ')) {
-      if (currentSection) {
-        currentSection.content.push(line.substring(2));
-      }
-    }
-    // Regular content
-    else if (line.length > 0) {
-      if (currentSection) {
-        currentSection.content.push(line);
-      } else {
-        introContent.push(line);
-      }
-    }
+  // Render intro content
+  if (intro.length > 0) {
+    components.push(
+      <div key="intro" className={styles.descriptionIntro}>
+        {intro.map((content, idx) => (
+          <p key={idx} style={{ marginBottom: '1rem', lineHeight: '1.6', textAlign: 'left' }}>
+            {content}
+          </p>
+        ))}
+      </div>
+    );
   }
   
-  // Save final section
-  if (currentSection) {
-    sections.push(
-      <div key={currentSection.title} className={styles.descriptionSection}>
-        <h4 className={styles.sectionTitle}>{currentSection.title}</h4>
+  // Render sections
+  sections.forEach((section) => {
+    components.push(
+      <div key={section.title} className={styles.descriptionSection}>
+        <h4 className={styles.sectionTitle}>{section.title}</h4>
         <div className={styles.sectionContent}>
-          {currentSection.content.map((item, idx) => (
+          {section.content.map((item, idx) => (
             <div key={idx} className={styles.listItem}>
               <span className={styles.bullet}>•</span>
-              <span>{item}</span>
+              <span dangerouslySetInnerHTML={{ __html: item }}></span>
             </div>
           ))}
         </div>
       </div>
     );
-  }
+  });
   
   return (
     <div className={styles.descriptionContainer}>
-      {sections}
+      {components}
     </div>
   );
 }
@@ -373,7 +320,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
         <div className={styles.overviewContainer}>
           {/* Description content above screenshots */}
           <div className={styles.overviewDescription}>
-            {processText(metadata.detailedDescription || '')}
+            {renderMarkdownContent(metadata.detailedDescription || '')}
           </div>
           
           <ScreenshotsSection screenshots={screenshots} />

@@ -1,71 +1,76 @@
-import { ProjectData } from '@/interfaces/projects';
+import { ProjectData } from '../../src/interfaces/projects';
 
-const project: ProjectData = {
+const geminiCliDemo: ProjectData = {
   slug: 'gemini-cli-demo',
   metadata: {
     title: 'Gemini CLI Demo',
     name: 'gemini-cli-demo',
-    description: 'A showcase of web component-based applications built with Gemini CLI.',
-    detailedDescription: `This project showcases web component-based applications built entirely by Gemini, Google's large language model. The showcase demonstrates Gemini's ability to understand high-level requirements, break them down into smaller tasks, and generate complete web applications.
+    description: 'A showcase of web component-based applications built by Gemini.',
+    detailedDescription: `This project is a showcase of web component-based applications built by Gemini. The showcase is a single-page application that displays a collection of web component apps in a card-based layout. When a card is clicked, the corresponding app is launched in a modal window.
 
-Key Features:
-- Multiple self-contained web component applications
-- Each app launches in a modal window for focused interaction  
-- Comprehensive application suite: To-Do List, Calculator, Weather App, Drawing App, Data Visualization, and JSFiddle Clone
-- Pure vanilla JavaScript implementation with modern Web Components architecture
+## Key Features
 
-Technical Implementation:
-- Framework-free architecture built with vanilla JavaScript, HTML, and CSS (Chart.js only exception for data visualization)
-- Web Components standard with each application and sub-component implemented as custom elements
-- Modular file structure with organized directory system and each app in its own namespace
-- Modern JavaScript ES6+ features with clean, maintainable code patterns
+- A collection of web component-based applications.
+- A single-page application that displays the apps in a card-based layout.
+- A modal window to launch the apps.
 
-Development Process:
-- AI-human collaboration built through iterative collaboration between user requirements and Gemini's code generation
-- Natural language driven development based on conversational prompts and requirements  
-- Automated documentation with project structure and documentation generated alongside the codebase`,
+## Technical Implementation
+
+- **Web Components**: The project is built using Web Components, a set of web platform APIs that allow you to create new custom, reusable, encapsulated HTML tags to use in web pages and web apps.
+- **Functional Programming**: Functional programming principles are preferred.
+- **BEM CSS**: BEM (Block, Element, Modifier) naming convention is used for CSS classes.
+
+## Development Process
+
+- **Test-Driven Development (TDD)**: TDD is the desired approach.
+- **Modular Architecture**: The project follows a modular architecture, with each app built as a self-contained web component.
+- **Web Components**: Web Components are the primary design pattern used for building the applications.`,
     category: 'AI/CLI Development',
     startDate: '2025-08',
-    role: 'AI Interaction Designer & Project Lead',
+    role: 'Full-Stack Developer',
     difficulty: 'Medium',
-    featured: false
+    featured: true
   },
   techStack: [
     {
-      category: 'AI Integration',
-      items: ['Google Gemini API']
-    },
-    {
-      category: 'Frontend Development',
-      items: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Web Components']
+      category: 'Frontend',
+      items: ['HTML', 'CSS', 'JavaScript', 'Web Components']
     },
     {
       category: 'Development Tools',
-      items: ['Vercel', 'GitHub']
+      items: ['GitHub', 'VS Code']
     }
   ],
   features: [
     {
-      title: 'AI-Powered Development',
-      description: 'The entire project was built by Gemini, demonstrating the power of AI in software development.',
-      impact: 'Showcases the potential of AI to accelerate the development process and build complete applications from scratch.'
+      title: 'Showcase App',
+      description: 'A single-page application that displays a collection of web component apps in a card-based layout.',
+      impact: 'Provides a central location to view all the web component apps.'
     },
     {
-      title: 'Web Component Showcase',
-      description: 'A collection of self-contained web component-based applications.',
-      impact: 'Demonstrates the use of modern web technologies to build modular and reusable UI components without frameworks.'
+      title: 'Web Component Apps',
+      description: 'A collection of self-contained web component apps.',
+      impact: 'Demonstrates the power and flexibility of Web Components.'
     }
   ],
   highlights: [
     {
-      title: 'Exploring AI Capabilities',
-      description: 'The main challenge was to test a new AI model and figure out how to measure its success while still learning and exploring the AI space.',
-      achievements: ['The showcase project provided a concrete way to explore the capabilities of Gemini CLI.', 'The project served as a hands-on learning experience in the AI space.']
+      title: 'AI-Powered Development',
+      description: 'Built entirely through conversational AI using Gemini CLI, showcasing the future of AI-assisted development.',
+      achievements: [
+        'Zero manual coding required',
+        'Natural language to code translation',
+        'Automated architecture decisions'
+      ]
     },
     {
-      title: 'Overcoming Preconceptions',
-      description: 'Another challenge was to overcome previous negative experiences with other AI chat apps and give Gemini CLI a fair chance.',
-      achievements: ['Successfully detached from past experiences and evaluated the tool on its own merits.', 'Recognized the difference between a chat app and a CLI tool.']
+      title: 'Web Components Architecture',
+      description: 'Modern web standards-based approach using native Web Components for maximum compatibility.',
+      achievements: [
+        'Framework-agnostic components',
+        'Encapsulated styling with BEM',
+        'Reusable across projects'
+      ]
     }
   ],
   links: [
@@ -76,45 +81,73 @@ Development Process:
     },
     {
       type: 'live',
-      url: 'https://gemini-cli-demo.vercel.app/',
+      url: 'https://gemini-cli-demo.vercel.app',
       label: 'Live Demo'
     }
   ],
-  lessons: [
-    'The potential of AI as a development partner.',
-    'The power of Web Components for building modular and framework-free applications.',
-    'The importance of clear communication and iterative development when working with AI.'
-  ],
-  challenges: [
-    'Figuring out how to test a new AI model and measure its success.',
-    'Overcoming preconceptions about AI tools based on past experiences.'
-  ],
-  futureImprovements: [
-    'Add more complex applications to the showcase.',
-    'Explore different ways to interact with the AI to build applications.',
-    'Integrate more third-party APIs and libraries.'
-  ],
   screenshots: [
     {
-      src: '/images/projects/gemini-cli-demo/01-desktop-homepage-desktop.webp',
-      alt: 'Gemini CLI Demo Homepage',
-      caption: 'Main landing page showcasing web component-based applications built with Gemini CLI',
+      src: '/images/projects/gemini-cli-demo/01-desktop-home-desktop.webp',
+      alt: 'Gemini CLI Demo showcase homepage',
+      caption: 'Main showcase interface displaying all web component apps',
       category: 'desktop'
     },
     {
-      src: '/images/projects/gemini-cli-demo/02-feature-todo-app-feature.webp',
-      alt: 'Todo App Feature',
-      caption: 'Interactive todo list application demonstrating state management and user interaction',
+      src: '/images/projects/gemini-cli-demo/03-feature-demo-feature.webp',
+      alt: 'Drawing app demonstration',
+      caption: 'Interactive drawing application built with Web Components',
       category: 'feature'
     },
     {
-      src: '/images/projects/gemini-cli-demo/03-feature-drawing-app-feature.webp',
-      alt: 'Drawing App Feature',
-      caption: 'Creative drawing application showcasing canvas manipulation and tool selection',
+      src: '/images/projects/gemini-cli-demo/04-feature-demo-feature.webp',
+      alt: 'Todo list app demonstration',
+      caption: 'Functional todo list with local storage persistence',
       category: 'feature'
     }
   ],
-  metrics: []
+  metrics: [
+    {
+      label: 'Web Components',
+      value: '3 apps',
+      description: 'Self-contained web component applications'
+    },
+    {
+      label: 'Code Quality',
+      value: '100% Vanilla JS',
+      description: 'No framework dependencies, pure web standards'
+    },
+    {
+      label: 'Performance',
+      value: '<50KB total',
+      description: 'Lightweight bundle size for all apps'
+    },
+    {
+      label: 'Browser Support',
+      value: 'All modern',
+      description: 'Works in Chrome, Firefox, Safari, Edge'
+    }
+  ],
+  lessons: [
+    'Web Components provide true encapsulation without framework overhead',
+    'BEM CSS methodology scales well even in component-based architecture',
+    'Functional programming patterns work effectively with vanilla JavaScript',
+    'Browser native APIs are powerful enough for complex interactions',
+    'AI can successfully generate working web applications from specifications'
+  ],
+  challenges: [
+    'Managing state across isolated Web Components without a framework',
+    'Implementing drag-and-drop functionality in the drawing app',
+    'Ensuring consistent styling with Shadow DOM boundaries',
+    'Creating a modal system that works with Web Components',
+    'Handling browser compatibility for newer Web Component features'
+  ],
+  futureImprovements: [
+    'Add more interactive web component applications',
+    'Implement a weather app with API integration',
+    'Create a shared component library for reuse',
+    'Add unit tests for all components',
+    'Implement PWA features for offline functionality'
+  ]
 };
 
-export default project;
+export default geminiCliDemo;

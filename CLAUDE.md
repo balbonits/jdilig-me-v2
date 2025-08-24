@@ -12,6 +12,14 @@ This serves as a **persistent knowledge base** shared between AI sessions for pr
 - NEVER add status fields to project data or interfaces  
 - Use "current", "working", "functional", "implemented" instead
 
+### Project Card Display Rules
+- Projects in "Featured" section: No badges needed (already in Featured section)
+- Projects in "All Projects & Case Studies" section: Show type badge
+  - "Featured" - if project is also in Featured section
+  - "Case Study" - if category contains "case study"
+  - "Project" - for all other projects
+- The featured field in data is ONLY for determining what shows in Featured section
+
 ### TypeScript Standards
 - **Zero tolerance for `any` types** - Use specific interfaces/types
 - **ESLint compliance required** - All errors are build-blocking

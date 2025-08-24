@@ -26,7 +26,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
       <SectionContainer>
 
         {/* Featured Projects Section */}
-        <Section title="Featured Projects">
+        <Section title="Featured">
           <div className={styles.heroGrid}>
             {featuredProjects.map((project, index) => {
               const primaryTechStack = project.techStack[0]?.items.slice(0, 4) || [];
@@ -79,7 +79,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
 
 
         {/* All Projects Section */}
-        <Section title="All Projects">
+        <Section title="All Projects & Case Studies">
           <Grid columns={3} gap="2rem" className={styles.projectsGrid}>
             {allProjects.map((project) => {
               const primaryTechStack = project.techStack[0]?.items.slice(0, 3) || [];
@@ -91,11 +91,10 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
                   <Card className={styles.projectCard}>
                     <div className={styles.cardHeader}>
                       <h3 className={styles.projectTitle}>{project.metadata.title}</h3>
-                      {project.metadata.featured && (
-                        <div className={styles.projectStatus}>
-                          Featured
-                        </div>
-                      )}
+                      <div className={styles.projectStatus}>
+                        {featuredProjects.includes(project) ? 'Featured' : 
+                         project.metadata.category.toLowerCase().includes('case study') ? 'Case Study' : 'Project'}
+                      </div>
                     </div>
 
                     <p className={styles.projectDescription}>
