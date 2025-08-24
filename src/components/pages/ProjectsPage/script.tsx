@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid } from '@/components/ui';
+import { PageContainer, PageHeader, SectionContainer, Section, Card, Grid, Breadcrumb } from '@/components/ui';
 import { ProjectData } from '@/interfaces/projects';
 import styles from './style.module.css';
 
@@ -19,6 +19,13 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
 
   return (
     <PageContainer>
+      <Breadcrumb 
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Projects', href: '/projects' }
+        ]}
+      />
+      
       <PageHeader title="Projects" subtitle="Portfolio & Case Studies">
         A showcase of my development work, including full-stack projects, technical deep-dives, and implementation details.
       </PageHeader>

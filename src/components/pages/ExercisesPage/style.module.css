@@ -59,7 +59,7 @@
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
-  white-space: nowrap;
+  flex-shrink: 0;
   border: 1px solid var(--border);
 }
 
@@ -84,7 +84,7 @@
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
-  white-space: nowrap;
+  word-break: break-word;
 }
 
 .moreTag {

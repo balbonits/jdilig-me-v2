@@ -39,17 +39,27 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     };
   }, [router.events, onClose]);
 
-  // Prevent body scroll when menu is open
+  // Prevent body scroll when menu is open and set viewport height
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      
+      // Calculate actual viewport height and set CSS variable
+      const setViewportHeight = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      };
+      
+      setViewportHeight();
+      window.addEventListener('resize', setViewportHeight);
+      
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('resize', setViewportHeight);
+      };
     } else {
       document.body.style.overflow = '';
     }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isOpen]);
 
   // Handle escape key
@@ -135,7 +145,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           })}
         </nav>
 
-        {/* Footer with theme toggle and resume link */}
+        {/* Footer with theme toggle, resume link, and contact info */}
         <div className={styles.footer}>
           <button
             className={styles.themeToggle}
@@ -155,6 +165,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             📄
             <span>Download Resume</span>
           </a>
+          
         </div>
       </div>
     </>
