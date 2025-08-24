@@ -1,21 +1,23 @@
-/* Hero Banner Grid - matching Code page style */
+/* Hero Banner Grid - Mobile-first responsive */
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-8);
+  gap: var(--space-6);
   margin-top: var(--space-4);
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
   .heroGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-10);
+    gap: var(--space-8);
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .heroGrid {
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: var(--space-10);
   }
 }
 
@@ -36,13 +38,30 @@
   position: relative;
   background: var(--card);
   border-radius: var(--space-4);
-  padding: var(--space-10);
-  min-height: 450px;
+  padding: var(--space-6);
+  min-height: 350px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   color: var(--foreground);
   border: 1px solid var(--border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1.5px 6px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+@media (min-width: 768px) {
+  .heroBanner {
+    padding: var(--space-8);
+    min-height: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroBanner {
+    padding: var(--space-10);
+    min-height: 450px;
+  }
 }
 
 /* Semantic variant classes instead of numbered variants */
@@ -226,13 +245,8 @@
   border-color: var(--primary);
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive Adjustments */
 @media (max-width: 767px) {
-  .heroBanner {
-    padding: 2rem;
-    min-height: 400px;
-  }
-  
   .heroTitle {
     font-size: var(--text-2xl);
   }

@@ -80,7 +80,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
 
         {/* All Projects Section */}
         <Section title="All Projects & Case Studies">
-          <Grid columns={3} gap="2rem" className={styles.projectsGrid}>
+          <Grid gap="2rem" className={styles.projectsGrid}>
             {allProjects.map((project) => {
               const primaryTechStack = project.techStack[0]?.items.slice(0, 3) || [];
               // Create a shortened description (first sentence or first 100 characters)
