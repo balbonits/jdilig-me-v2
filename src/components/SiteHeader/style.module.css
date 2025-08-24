@@ -181,17 +181,6 @@
     .navContainer {
       padding: 0.5rem;
     }
-  }
-
-  @media (max-width: 375px) {
-    .navContainer {
-      padding: 0.25rem;
-    }
-    
-    .title {
-      font-size: 1.1rem;
-    }
-  }
 
     /* Hide desktop navigation on mobile */
     .navLinks {
@@ -209,6 +198,16 @@
 
     .title {
       font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 375px) {
+    .navContainer {
+      padding: 0.25rem;
+    }
+    
+    .title {
+      font-size: 1.1rem;
     }
   }
 

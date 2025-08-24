@@ -232,6 +232,23 @@ import PageContainer from '@/components/ui/PageContainer';
 }
 ```
 
+## 🚨 CRITICAL DEPLOYMENT PROTOCOL
+
+### 🔴 PRODUCTION WARNING
+**EVERY PUSH GOES LIVE IMMEDIATELY**
+- No dev environment - pushes deploy to https://www.jdilig.me instantly
+- NEVER commit/push without explicit user approval
+- NEVER assume user wants deployment
+- Test completely before mentioning commit
+
+### Testing Requirements
+```bash
+npm run dev    # Must work without errors
+npm run lint   # Must pass with zero errors
+npm test       # Must pass all tests  
+npm run build  # Must succeed
+```
+
 ## Code Quality & Development Standards
 
 ### **ESLint Configuration & Standards**

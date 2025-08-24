@@ -178,30 +178,39 @@ projects/{name}/
 6. Update snapshots: `npx playwright test --update-snapshots`
 7. Commit & push to deploy
 
-## ⚠️ Development Workflow (CRITICAL)
+## 🚨 CRITICAL DEVELOPMENT WORKFLOW
 
-### Before Committing
-1. **Update Documentation**
-   - CLAUDE.md - Project context
-   - HISTORY.md - Recent changes
-   - TECH_DEBT.md - Technical debt
-   - README.md - Technical docs
+### 🔴 PRODUCTION DEPLOYMENT WARNING
+**EVERY PUSH GOES LIVE IMMEDIATELY - NO DEV ENVIRONMENT**
+- Pushes deploy directly to production at https://www.jdilig.me
+- Broken code affects live users instantly
+- NEVER push without complete testing
 
-2. **Run Tests (ALL REQUIRED)**
-   ```bash
-   npm run lint
-   npm test
-   npx playwright test
-   npm run build
-   ```
+### Testing Requirements (MANDATORY)
+**ALL tests must PASS before any commit consideration:**
+```bash
+npm run dev          # Test dev server works
+npm run lint         # Zero ESLint errors
+npm test             # All Jest tests pass
+npm run build        # Production build succeeds
+npx playwright test  # E2E tests pass (optional for docs)
+```
 
-3. **Kill Dev Server**
-   - CRITICAL: Stop `npm run dev` before committing
-   - Use `pkill -f "next dev"` or Ctrl+C
+### Commit/Push Protocol
+1. **NEVER commit or push without explicit user approval**
+2. **NEVER assume user wants immediate deployment**  
+3. **Always ask: "Should I commit these changes?"**
+4. **Wait for explicit "commit" or "push" commands**
+5. **If build/tests fail, fix completely before mentioning commit**
 
-4. **Commit with Detail**
-   - Itemized format for multiple changes
-   - All test errors are build-blocking
+### Pre-Commit Checklist
+- [ ] Dev server runs without errors (`npm run dev`)
+- [ ] All syntax errors fixed (CSS, TypeScript, etc.)  
+- [ ] Build succeeds (`npm run build`)
+- [ ] Linting passes (`npm run lint`)
+- [ ] Tests pass (`npm test`)
+- [ ] Changes tested in browser
+- [ ] User explicitly approved commit/push
 
 ### Smart Test Skip (Docs Only)
 ```bash

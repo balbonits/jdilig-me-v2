@@ -322,11 +322,34 @@
 /* Mobile Responsive */
 @media (max-width: 767px) {
   .subsection {
-    padding: 1.25rem;
+    padding: 1rem;
   }
   
   .detailsRow {
     flex-direction: column;
     gap: 1rem;
+  }
+  
+  /* Fix code overflow on mobile */
+  .modalCode,
+  .exampleCode,
+  .testCode {
+    font-size: 0.8rem;
+    word-break: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 375px) {
+  .subsection {
+    padding: 0.75rem;
+  }
+  
+  /* Further reduce code font size for iPhone SE */
+  .modalCode,
+  .exampleCode, 
+  .testCode {
+    font-size: 0.75rem;
   }
 }
