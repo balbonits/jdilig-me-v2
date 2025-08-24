@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding: 1rem 0.5rem;
   }
 
   .brand {
@@ -179,8 +179,19 @@
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .navContainer {
-      padding: 1rem;
+      padding: 0.5rem;
     }
+  }
+
+  @media (max-width: 375px) {
+    .navContainer {
+      padding: 0.25rem;
+    }
+    
+    .title {
+      font-size: 1.1rem;
+    }
+  }
 
     /* Hide desktop navigation on mobile */
     .navLinks {

@@ -1,8 +1,20 @@
-/* Mobile-first approach */
+/* Mobile-first approach - minimal padding for iPhone SE */
 .page {
-  padding: 1rem;
+  padding: 0.5rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@media (min-width: 375px) {
+  .page {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .page {
+    padding: 1rem;
+  }
 }
 
 /* Tablet and up */
