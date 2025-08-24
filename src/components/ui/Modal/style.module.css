@@ -12,8 +12,8 @@
 }
 
 .modal {
-  background: var(--card, #fff);
-  color: var(--foreground, #222);
+  background: var(--card-bg-color-default);
+  color: var(--text-primary);
   border-radius: 1rem;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   max-width: 90vw;

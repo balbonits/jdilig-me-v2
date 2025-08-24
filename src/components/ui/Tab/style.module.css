@@ -3,13 +3,13 @@
   width: 100%;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color-default);
   min-width: 0;
 }
 
 /* Background variants */
 .withBackground {
-  background: white;
+  background: var(--card-bg-color-default);
 }
 
 .noBackground {
@@ -49,8 +49,4 @@
   }
 }
 
-/* Dark mode */
-.dark .withBackground {
-  background: #111827;
-  border-color: #374151;
-}
+/* Dark mode styles are handled automatically via CSS custom properties */

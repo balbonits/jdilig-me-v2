@@ -259,9 +259,9 @@
 .featureImpact {
   font-size: 0.875rem;
   padding: 0.75rem;
-  background: var(--success-light, #e8f5e8);
+  background: var(--color-green);
   border-radius: 0.5rem;
-  border-left: 4px solid var(--success, #4caf50);
+  border-left: 4px solid var(--success-accent);
 }
 
 /* Highlights Section */
@@ -376,12 +376,12 @@
 }
 
 .link-github {
-  background: var(--text-primary, #333);
-  color: white;
+  background: var(--text-primary);
+  color: var(--bg-primary);
 }
 
 .link-github:hover {
-  background: var(--text-secondary, #666);
+  background: var(--text-secondary);
   transform: translateY(-1px);
 }
 
@@ -407,7 +407,7 @@
 }
 
 .insightCategory {
-  background: var(--card-background, #f8f9fa);
+  background: var(--card-bg-color-default);
   padding: 1.5rem;
   border-radius: 0.75rem;
   border: 1px solid var(--border);
@@ -447,7 +447,7 @@
 .screenshotsPlaceholder {
   text-align: center;
   padding: 2rem;
-  background: var(--card-background, #f8f9fa);
+  background: var(--card-bg-color-default);
   border-radius: 0.75rem;
   border: 2px dashed var(--border-light, #e0e0e0);
 }
@@ -465,7 +465,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: var(--background, #fff);
+  background: var(--card-bg-color-default);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   min-height: 200px;
@@ -493,7 +493,7 @@
 
 .screenshotCard {
   position: relative;
-  background: var(--card-background, #f8f9fa);
+  background: var(--card-bg-color-default);
   border-radius: 0.75rem;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

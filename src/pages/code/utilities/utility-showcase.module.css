@@ -258,8 +258,8 @@
 
 .copyButton {
   padding: 0.5rem 1rem;
-  background: var(--primary);
-  color: white;
+  background: var(--primary-brand);
+  color: var(--bg-primary);
   border: none;
   border-radius: 0.375rem;
   font-size: 0.875rem;
@@ -269,7 +269,7 @@
 }
 
 .copyButton:hover {
-  background: var(--primary);
+  background: var(--expertise-highlight);
   opacity: 0.9;
 }
 

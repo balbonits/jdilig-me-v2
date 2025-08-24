@@ -7,16 +7,16 @@
 .noContent {
   padding: 2rem;
   text-align: center;
-  color: #6b7280;
-  background: white;
+  color: var(--text-muted);
+  background: var(--card-bg-color-default);
   border-radius: 0.5rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color-default);
 }
 
 .tabHeaders {
   display: flex;
   gap: 0.25rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--border-color-default);
   margin-bottom: 1rem;
   overflow-x: auto;
 }
@@ -37,17 +37,17 @@
 }
 
 .tabHeader:hover {
-  background: #f9fafb;
+  background: var(--card-bg-color-hover);
 }
 
 .tabHeader.active {
-  border-bottom-color: #3b82f6;
-  background: #f9fafb;
+  border-bottom-color: var(--primary-brand);
+  background: var(--card-bg-color-default);
 }
 
 .tabHeader.highlighted .tabLabel {
   font-weight: 600;
-  color: #2563eb;
+  color: var(--primary-brand);
 }
 
 .tabLabel {
@@ -56,25 +56,25 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text-primary);
 }
 
 .badge {
-  color: #2563eb;
+  color: var(--primary-brand);
   font-size: 0.75rem;
 }
 
 .metadata {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-muted);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
 .tabContent {
-  background: white;
+  background: var(--card-bg-color-default);
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color-default);
   min-width: 0;
 }
 
@@ -118,43 +118,4 @@
   }
 }
 
-/* Dark mode */
-.dark .noContent {
-  background: #111827;
-  color: #9ca3af;
-  border-color: #374151;
-}
-
-.dark .tabHeaders {
-  border-color: #374151;
-}
-
-.dark .tabHeader:hover {
-  background: #1f2937;
-}
-
-.dark .tabHeader.active {
-  border-bottom-color: #3b82f6;
-  background: #1f2937;
-}
-
-.dark .tabHeader.highlighted .tabLabel {
-  color: #60a5fa;
-}
-
-.dark .tabLabel {
-  color: #f3f4f6;
-}
-
-.dark .badge {
-  color: #60a5fa;
-}
-
-.dark .metadata {
-  color: #9ca3af;
-}
-
-.dark .tabContent {
-  background: #111827;
-  border-color: #374151;
-}
+/* Dark mode styles are handled automatically via CSS custom properties */
