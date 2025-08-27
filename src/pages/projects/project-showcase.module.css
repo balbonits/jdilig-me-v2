@@ -620,3 +620,62 @@
     gap: 1.5rem;
   }
 }
+
+/* Image Loading States */
+.imageLoading,
+.imageError {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted-background);
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+
+.imageLoading {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.imageError {
+  background: var(--destructive-background);
+  color: var(--destructive);
+}
+
+.loadingSpinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--border);
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingText,
+.errorText {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.errorIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.7;
+}
+
+.errorText {
+  color: var(--destructive);
+}

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { ProjectData, ProjectScreenshot } from '@/interfaces/projects';
-import { Showcase, Modal, Grid } from '@/components/ui';
+import { Showcase, Modal, Grid, Breadcrumb } from '@/components/ui';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import { loadProjectsData, getProjectBySlug } from '@/data/projects';
 import { useModal } from '@/hooks/useModal';
@@ -13,6 +13,50 @@ import styles from './project-showcase.module.css';
 
 interface ProjectPageProps {
   project: ProjectData;
+}
+
+// Image with loading state
+function ImageWithLoading({ src, alt, fill, className, width, height }: {
+  src: string;
+  alt: string;
+  fill?: boolean;
+  className?: string;
+  width?: number;
+  height?: number;
+}) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {isLoading && (
+        <div className={styles.imageLoading}>
+          <div className={styles.loadingSpinner}></div>
+          <span className={styles.loadingText}>Loading...</span>
+        </div>
+      )}
+      {hasError && (
+        <div className={styles.imageError}>
+          <span className={styles.errorIcon}>📷</span>
+          <span className={styles.errorText}>Failed to load image</span>
+        </div>
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        fill={fill}
+        width={width}
+        height={height}
+        className={className}
+        onLoad={() => setIsLoading(false)}
+        onError={() => {
+          setIsLoading(false);
+          setHasError(true);
+        }}
+        style={hasError ? { display: 'none' } : undefined}
+      />
+    </div>
+  );
 }
 
 // Render processed markdown content as React components
@@ -188,7 +232,7 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
             onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && modal.openModal(screenshot)}
           >
             <div className={styles.screenshotImage}>
-              <Image
+              <ImageWithLoading
                 src={screenshot.src}
                 alt={screenshot.alt}
                 fill
@@ -210,7 +254,7 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
       {modal.isOpen && modal.data && (
         <Modal open onClose={modal.closeModal} title={modal.data.caption}>
           <div className={styles.modalImageContainer}>
-            <Image
+            <ImageWithLoading
               src={modal.data.src}
               alt={modal.data.alt}
               width={1200}
@@ -380,6 +424,13 @@ export default function ProjectPage({ project }: ProjectPageProps) {
         pathname={`/projects/${project.slug}`}
         title={`${metadata.title} - Project Showcase`}
         description={metadata.description}
+      />
+      <Breadcrumb 
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Projects', href: '/projects' },
+          { label: metadata.title, href: `/projects/${project.slug}` }
+        ]}
       />
       <Showcase
         title={metadata.title}
