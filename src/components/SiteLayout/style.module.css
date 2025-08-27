@@ -23,4 +23,16 @@
     color: var(--muted);
     font-size: 0.875rem;
   }
+
+  .versionInfo {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .versionInfo span {
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
 }

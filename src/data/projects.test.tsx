@@ -92,7 +92,7 @@ describe('ProjectPage', () => {
   it('renders project title and basic information', () => {
     render(<ProjectPage project={mockProject} />);
     
-    expect(screen.getByText('Test Project')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Test Project' })).toBeInTheDocument();
     // Note: detailedDescription now appears in Project Overview section, not header
     expect(screen.getByText('Project Overview')).toBeInTheDocument();
   });
@@ -202,7 +202,7 @@ describe('ProjectPage', () => {
 
     render(<ProjectPage project={minimalProject} />);
     
-    expect(screen.getByText('Test Project')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Test Project' })).toBeInTheDocument();
     expect(screen.queryByText('Lessons Learned')).not.toBeInTheDocument();
     expect(screen.queryByText('Challenges Overcome')).not.toBeInTheDocument();
     expect(screen.queryByText('Future Improvements')).not.toBeInTheDocument();

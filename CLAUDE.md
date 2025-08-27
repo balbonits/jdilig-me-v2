@@ -235,7 +235,30 @@ fi
 - Never spread undefined values (overwrites existing)
 - Always provide fallbacks for optional fields
 
+## 🚀 Automated Versioning System
+- **semantic-release** with **GitHub Actions** for commit-based versioning
+- **Conventional Commits** determine version bumps automatically
+- **GitHub releases** created with changelogs for every version
+- **Version info** displayed in website footer with build metadata
+- **Quality gates** ensure tests pass before releases
+
+### Version Workflow
+```bash
+feat: add new feature     # Minor bump (1.0.0 → 1.1.0)
+fix: resolve bug         # Patch bump (1.0.0 → 1.0.1)  
+feat!: breaking change   # Major bump (1.0.0 → 2.0.0)
+docs: update readme     # No version bump
+```
+
+### Files & Configuration
+- `.github/workflows/release.yml` - GitHub Actions release workflow
+- `.releaserc.json` - semantic-release configuration  
+- `.commitlintrc.json` - conventional commit validation
+- `scripts/get-version.ts` - version info generation
+- `public/version.json` - build-time version metadata
+
 ## 📚 Key References
+- **VERSIONING.md** - Complete automated versioning system documentation
 - **TECH_DEBT.md** - Refactoring plans and priorities
 - **AI_PROJECT_SETUP.md** - AI assistant project guide
 - **HISTORY.md** - Historical changes record
