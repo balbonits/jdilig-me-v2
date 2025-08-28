@@ -1,0 +1,265 @@
+/* Pattern Showcase - Following Exercise Showcase Design Pattern */
+
+/* Header Tags */
+.headerTags {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.categoryTag {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.countTag {
+  background: var(--accent);
+  color: var(--muted);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+/* Overview Section Content */
+.overviewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Main Description Styling */
+.mainDescription {
+  margin-bottom: 2rem;
+}
+
+.descriptionContent {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  margin: 0;
+  white-space: pre-line;
+  
+  /* Enhanced typography for rich content */
+  letter-spacing: 0.01em;
+  
+  /* Style headings within the description */
+  & h1, & h2, & h3, & h4, & h5, & h6 {
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--foreground);
+  }
+  
+  /* Style bullet points and lists */
+  & ul, & ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  & li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+  
+  /* Style code blocks within description */
+  & code {
+    background: var(--accent);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+  }
+  
+  /* Style links */
+  & a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+}
+
+.subsection {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subsection:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.subsectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Examples List */
+.examplesList {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.examplesLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0 0 1rem 0;
+}
+
+.exampleBlock {
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Concepts */
+.conceptsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.conceptTag {
+  background: var(--accent);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.conceptTag:hover {
+  background: var(--primary);
+  color: var(--background);
+  transform: translateY(-1px);
+}
+
+/* Complexity Analysis */
+.complexityGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.complexityRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.complexityItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+}
+
+.complexityLabel {
+  font-weight: 600;
+  color: var(--foreground);
+  min-width: fit-content;
+}
+
+.complexityValue {
+  background: var(--background);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+}
+
+/* Implementation Section */
+.implementationContainer {
+  margin-top: 0;
+}
+
+/* Solution Tabs */
+.solutionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1rem 0.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.solutionInfo h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.solutionMeta {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.copyButton {
+  background: var(--primary);
+  color: var(--background);
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copyButton:hover {
+  background: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.codeBlock {
+  background: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 1rem;
+  margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .complexityRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .solutionHeader {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .copyButton {
+    align-self: flex-start;
+  }
+}

@@ -23,10 +23,17 @@ export default function CodePage() {
     trackEngagement('click', 'utility-hero-card');
   };
 
+  // Track clicks on patterns showcase card
+  // Helps measure interest in design patterns
+  const handlePatternsClick = () => {
+    trackNavigation('/code/patterns', 'code-showcase-card');
+    trackEngagement('click', 'patterns-hero-card');
+  };
+
   return (
     <PageContainer>
       <PageHeader title="Code Showcase">
-        Frontend engineering expertise through algorithms, utilities, and clean TypeScript implementations.
+        Frontend engineering expertise through algorithms, utilities, design patterns, and clean TypeScript implementations.
       </PageHeader>
 
       <SectionContainer>
@@ -96,6 +103,41 @@ export default function CodePage() {
                   <span>Performance</span>
                   <span>Type Safety</span>
                   <span>Frontend Focus</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/code/patterns" className={styles.heroLink} onClick={handlePatternsClick}>
+            <div className={styles.heroBanner}>
+              <div className={styles.heroContent}>
+                <div className={styles.heroHeader}>
+                  <h3 className={styles.heroTitle}>Design Patterns</h3>
+                  <div className={styles.heroBadge}>25+ Patterns</div>
+                </div>
+                <p className={styles.heroDescription}>
+                  Software design solutions in TypeScript. Gang of Four patterns plus modern 
+                  JavaScript approaches for building maintainable, scalable applications.
+                </p>
+                <div className={styles.heroStats}>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>4</span>
+                    <span className={styles.statLabel}>Categories</span>
+                  </div>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>3-5</span>
+                    <span className={styles.statLabel}>Solutions Each</span>
+                  </div>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>25+</span>
+                    <span className={styles.statLabel}>Patterns</span>
+                  </div>
+                </div>
+                <div className={styles.heroTech}>
+                  <span>Creational</span>
+                  <span>Structural</span>
+                  <span>Behavioral</span>
+                  <span>Modern JS/TS</span>
                 </div>
               </div>
             </div>
