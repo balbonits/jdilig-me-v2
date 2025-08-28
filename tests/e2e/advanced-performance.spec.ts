@@ -65,7 +65,7 @@ test.describe('Advanced Performance Testing', () => {
       await mockNetworkResponses.goto('/');
       
       // Content should still be readable without CSS
-      await expect(mockNetworkResponses.locator('h1')).toBeVisible();
+      await expect(mockNetworkResponses.locator('h1#hero-title')).toBeVisible();
       await expect(mockNetworkResponses.locator('main')).toBeVisible();
       
       // Re-enable CSS
@@ -88,7 +88,7 @@ test.describe('Advanced Performance Testing', () => {
       await mockNetworkResponses.goto('/');
       
       // Page should still be functional
-      await expect(mockNetworkResponses.locator('h1')).toBeVisible();
+      await expect(mockNetworkResponses.locator('h1#hero-title')).toBeVisible();
       
       // Check for proper fallback handling
       const images = await mockNetworkResponses.locator('img').all();

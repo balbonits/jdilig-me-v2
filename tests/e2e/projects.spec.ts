@@ -31,8 +31,8 @@ test.describe('Projects Page', () => {
     // Get featured projects from central data
     const featuredProjects = EXPECTED_PROJECTS.filter(p => p.featured);
     
-    // Verify featured section exists
-    await expect(page.getByText('Featured Projects')).toBeVisible();
+    // Verify featured section exists (use role to be specific)
+    await expect(page.getByRole('heading', { name: 'Featured' })).toBeVisible();
     
     // Verify featured project descriptions are visible (use first() to avoid duplicates)
     for (const project of featuredProjects) {

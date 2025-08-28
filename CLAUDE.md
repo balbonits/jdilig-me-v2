@@ -276,3 +276,4 @@ docs: update readme     # No version bump
 - Never create files unless necessary
 - Always prefer editing over creating
 - Never proactively create documentation
+- when resolving issues & bugs, write tests first to verify the issue & the fix before debugging/resolving.

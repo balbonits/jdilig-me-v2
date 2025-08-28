@@ -5,7 +5,7 @@ const project: ProjectData = {
   metadata: {
     title: 'Personal Website v2',
     name: 'jdilig-me-v2',
-    description: 'A modern, accessible personal website with unified design system, comprehensive analytics, and enhanced educational content.',
+    description: 'A modern, accessible personal website with automated versioning, comprehensive testing infrastructure, and enterprise-grade CI/CD pipeline.',
     detailedDescription: `A modern, production-ready personal portfolio website showcasing advanced frontend engineering practices. This comprehensive rebuild demonstrates enterprise-level development standards with unified component architecture, comprehensive testing infrastructure, and professional analytics integration.
 
 Key Features:
@@ -116,26 +116,48 @@ Development Process:
   metrics: [
     {
       label: 'Test Coverage',
-      value: '84+ tests',
-      description: '30 E2E tests across 5 browsers + 54 unit tests'
+      value: '325+ E2E tests',
+      description: '249 Jest unit tests + 325+ Playwright E2E tests across 5 browsers'
     },
     {
       label: 'Performance',
-      value: '38 pages',
-      description: 'Static site generation with optimized bundle sizes'
+      value: '40 pages',
+      description: 'Static site generation with automated Core Web Vitals monitoring'
     },
     {
       label: 'Code Quality',
       value: '100% TypeScript',
-      description: 'Strict mode with comprehensive type safety'
+      description: 'Strict mode with automated quality gates and version management'
     },
     {
       label: 'Components',
       value: '15+ UI components',
-      description: 'Reusable, tested, and documented'
+      description: 'Reusable, tested, and documented with automated versioning'
     }
   ],
   highlights: [
+    {
+      title: 'Enterprise-Grade Automated Versioning System',
+      description: 'Implemented semantic-release with GitHub Actions for fully automated versioning, quality gates, and production deployments.',
+      achievements: [
+        'Conventional Commits with enforced validation via commitlint and husky',
+        'Automated version bumps: feat (minor), fix (patch), feat! (major)',
+        'Quality gates: ESLint → Jest → Build → Deploy pipeline',
+        'GitHub releases with auto-generated changelogs',
+        'Version display in website footer with build metadata'
+      ]
+    },
+    {
+      title: 'Advanced E2E Test Infrastructure',
+      description: 'Comprehensive Playwright testing suite with visual regression, performance monitoring, and cross-browser compatibility.',
+      achievements: [
+        '325+ E2E tests across 5 browsers (Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari)',
+        'Visual regression testing with automated snapshot updates',
+        'Core Web Vitals performance monitoring and thresholds',
+        'PWA functionality testing with service worker validation',
+        'Advanced test data management with centralized collections'
+      ]
+    },
     {
       title: 'Custom Modal Hook Implementation',
       description: 'Created a reusable TypeScript hook for modal state management with proper positioning and accessibility.',
@@ -220,26 +242,39 @@ Development Process:
     }
   ],
   lessons: [
+    'Automated versioning with semantic-release eliminates manual release management and ensures consistent deployments',
+    'Conventional commits provide clear change history and enable automated changelog generation',
+    'Test-first approach for bug fixes prevents regressions and ensures comprehensive coverage',
+    'Centralized test data management with dynamic imports keeps E2E tests synchronized with actual data',
+    'Visual regression testing catches UI changes that unit tests might miss',
     'Modal positioning requires careful consideration of z-index and container overflow',
     'TypeScript generics greatly improve hook reusability and type safety',
-    'Comprehensive testing prevents regressions and improves confidence in deployments',
     'Mobile-first design approach leads to better responsive experiences',
     'Path aliases significantly improve code maintainability and readability',
     'Accessibility should be built-in from the start, not added as an afterthought'
   ],
   challenges: [
+    'Implementing comprehensive E2E test suite with 325+ tests across 5 browsers while maintaining performance',
+    'Resolving H1 selector ambiguity in tests due to multiple heading elements on homepage',
+    'Updating visual regression snapshots when adding new projects without breaking existing tests',
+    'Configuring PWA tests to work reliably across different browser environments and test conditions',
+    'Setting up automated versioning with proper commit message validation and quality gate enforcement',
     'Tailwind CSS v4 theme() functions not working properly - required fallback CSS values',
     'Modal container overflow issues required architectural changes to move modals to page level',
     'Test file organization needed adjustment to prevent Next.js build conflicts',
     'Balancing component reusability with specific use case requirements'
   ],
   futureImprovements: [
-    'Add more interactive code examples with live execution',
-    'Implement advanced filtering and search for code showcase',
-    'Add more project case studies and detailed documentation',
-    'Enhance accessibility with voice navigation support',
-    'Implement progressive web app features',
-    'Add internationalization support'
+    'Implement automated performance budgets and Core Web Vitals alerts in CI/CD pipeline',
+    'Add mutation testing to complement existing test coverage and identify test quality gaps',
+    'Create automated accessibility audits with pa11y integration in GitHub Actions workflow',
+    'Implement semantic versioning for individual components with independent release cycles',
+    'Add more interactive code examples with live execution and real-time feedback',
+    'Implement advanced filtering and search for code showcase with fuzzy matching',
+    'Add more project case studies and detailed documentation with architectural decision records',
+    'Enhance accessibility with voice navigation support and advanced ARIA patterns',
+    'Implement progressive web app features with offline-first data synchronization',
+    'Add internationalization support with automated translation workflows'
   ]
 };
 

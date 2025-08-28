@@ -9,16 +9,18 @@
 // Import actual data sources to get real counts
 import personalWebsiteV2 from '../../projects/personal-website-v2/personal-website-v2';
 import geminiCliDemo from '../../projects/gemini-cli-demo/gemini-cli-demo';
+import horseRacingTextGame from '../../projects/horse-racing-text-game/horse-racing-text-game';
 
 // Centralized data collections (single source of truth)
 export const ALL_PROJECTS = [
   personalWebsiteV2,    // Featured project first
-  geminiCliDemo         // Then other projects
+  geminiCliDemo,        // Featured project second
+  horseRacingTextGame   // Featured project third
 ] as const;
 
 // Dynamically calculated expected counts (auto-updates when data changes)
 export const EXPECTED_COUNTS = {
-  projects: ALL_PROJECTS.length,      // Dynamically calculated: 2
+  projects: ALL_PROJECTS.length,      // Dynamically calculated: 3
   exercises: 15,                      // TODO: Import from exercises collection
   utilities: 14,                      // TODO: Import from utilities collection
 } as const;
