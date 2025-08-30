@@ -1,3 +1,22 @@
+## [2025-08-30] Pattern Data Loading: Remove Deprecated Code
+
+### **Issue: Legacy Pattern Loading Functions**
+- **File**: `src/utils/data-fetchers.ts`
+- **Functions to Remove**: `getPatternBySlug`, `extractPatternCode`, `slugToFileName`
+- **Reason**: These functions use old file-system-based code extraction instead of generated JSON
+- **Impact**: They generate placeholder code with "// See pattern module for full code"
+
+### **Action Required**
+1. Remove deprecated `getPatternBySlug` function and helpers
+2. Ensure all pattern pages use `loadPatternBySlug` (JSON-based)
+3. Clean up unused TypeScript pattern module imports in data layer
+4. Remove any remaining file-system code parsing logic
+
+### **Migration Status**
+- ✅ Updated pattern pages to use `loadPatternBySlug`
+- ❌ **TODO**: Remove deprecated functions entirely
+- ❌ **TODO**: Clean up related helper functions
+
 ## [2025-08-23] Debugging Best Practices: HMR Infinite Refresh
 **⚠️ Critical Learning: Next.js HMR + Complex TypeScript Imports**
 

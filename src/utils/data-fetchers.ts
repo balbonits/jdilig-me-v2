@@ -323,6 +323,7 @@ function slugToFileName(slug: string): string {
 }
 
 /**
+ * @deprecated Use loadPatternBySlug instead - this function uses old file system parsing
  * Get pattern by slug synchronously (for static generation)
  * @param slug The pattern slug to find
  * @returns PatternData The pattern data

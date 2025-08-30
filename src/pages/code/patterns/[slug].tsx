@@ -6,7 +6,7 @@ import { TabContainer, Tab, Showcase, Breadcrumb, MarkdownRenderer } from '@/com
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
-import { getAllPatternSlugs, getPatternBySlug } from '@/utils/data-fetchers';
+import { getAllPatternSlugs, loadPatternBySlug } from '@/utils/data-fetchers';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import SEOHead from '@/components/SEOHead';
 import styles from './pattern-showcase.module.css';
@@ -214,7 +214,7 @@ export const getStaticProps: GetStaticProps<PatternPageProps> = async ({ params 
   }
 
   try {
-    const pattern = await getPatternBySlug(params.slug);
+    const pattern = await loadPatternBySlug(params.slug);
     
     return {
       props: {
