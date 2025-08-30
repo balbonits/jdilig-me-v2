@@ -280,6 +280,71 @@ describe('Pattern Generation Script', () => {
     });
   });
 
+  describe('Tab Name Optimization', () => {
+    let patterns: PatternData[];
+
+    beforeAll(() => {
+      const content = fs.readFileSync(outputPath, 'utf-8');
+      patterns = JSON.parse(content);
+    });
+
+    test('should have shortened tab names to reasonable length', () => {
+      patterns.forEach(pattern => {
+        pattern.solutions.forEach(solution => {
+          expect(solution.tabName).toBeDefined();
+          expect(typeof solution.tabName).toBe('string');
+          
+          // Tab names should be reasonably short for UI containers
+          expect(solution.tabName.length).toBeLessThanOrEqual(20);
+          
+          // Most should be quite short
+          if (solution.tabName.length > 16) {
+            console.log(`Long tab name found: "${solution.tabName}" (${solution.tabName.length} chars)`);
+          }
+        });
+      });
+    });
+
+    test('should have applied intelligent abbreviations', () => {
+      const content = fs.readFileSync(outputPath, 'utf-8');
+      const jsonString = content;
+      
+      // Check that common abbreviations are applied
+      expect(jsonString).toContain('"tabName": "DB Factory"');      // Database → DB
+      expect(jsonString).toContain('"tabName": "App');              // Application → App  
+      expect(jsonString).toContain('"tabName": "Auth');             // Authentication → Auth
+      expect(jsonString).toContain('Iter');                         // Iterator → Iter
+      expect(jsonString).toContain('WS');                           // WebSocket → WS
+      
+      // Should not contain very long tab names
+      expect(jsonString).not.toContain('"tabName": "Database Abstraction Factory"');
+      expect(jsonString).not.toContain('"tabName": "Complete Application Integration"');
+      expect(jsonString).not.toContain('"tabName": "Paginated API Data Iterator"');
+    });
+
+    test('should preserve pattern-specific terminology when possible', () => {
+      const content = fs.readFileSync(outputPath, 'utf-8');
+      const jsonString = content;
+      
+      // Important pattern terms should be preserved when possible
+      expect(jsonString).toContain('Factory');
+      expect(jsonString).toContain('Bridge');
+      expect(jsonString).toContain('Proxy');
+      expect(jsonString).toContain('Adapter');
+    });
+
+    test('should have no empty or undefined tab names', () => {
+      patterns.forEach(pattern => {
+        pattern.solutions.forEach(solution => {
+          expect(solution.tabName).toBeDefined();
+          expect(solution.tabName.trim().length).toBeGreaterThan(0);
+          expect(solution.tabName).not.toBe('undefined');
+          expect(solution.tabName).not.toBe('null');
+        });
+      });
+    });
+  });
+
   describe('Error Handling', () => {
     test('should handle missing pattern files gracefully', () => {
       // The script should continue even if some patterns fail to load

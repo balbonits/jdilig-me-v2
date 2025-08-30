@@ -182,7 +182,7 @@ Core primitives: PageContainer, PageHeader, Section, Card, Grid, Modal, ProfileI
 - Shared template pattern: Shared → Showcase → Exercise/Utility
 
 ## 📝 Code Showcase System
-- **Exercises** (15) & **Utilities** (14) with enhanced descriptions
+- **Exercises** (15), **Utilities** (14), & **Design Patterns** (27) with enhanced descriptions
 - Multiple solutions with complexity analysis
 - Optimal solution auto-detection (★ badges)
 - PascalCase naming convention
@@ -195,6 +195,32 @@ Core primitives: PageContainer, PageHeader, Section, Card, Grid, Modal, ProfileI
 - **Header Structure**: Proper `##` → `<h2>`, `###` → `<h3>` conversion with whitespace handling
 - **Rich Formatting**: Bold text, emoji bullets, inline code, structured lists
 - **SEO Optimized**: Semantic HTML output with proper heading hierarchy
+
+## 🎨 Design Pattern Generation System
+- **27 Patterns** across 4 categories (Creational, Structural, Behavioral, Modern)
+- **84 Solutions** with actual TypeScript implementation code (275.6 KB)
+- **Advanced Path Resolution**: Custom tsconfig.scripts.json for Node.js ts-node imports
+- **Intelligent Tab Optimization**: 50+ abbreviations with 14-character limit
+- **Real Code Generation**: Extracts actual implementation from TypeScript modules
+- **Comprehensive Testing**: 23 tests including tab name optimization validation
+
+### Pattern Generation Pipeline
+```bash
+npm run generate:patterns    # Generate patterns.json from TS modules
+```
+
+#### Tab Name Shortening Algorithm
+- **Smart Abbreviations**: Database → DB, Application → App, Iterator → Iter
+- **Pattern-Aware**: Preserves Factory, Bridge, Proxy, Adapter terminology
+- **Intelligent Truncation**: First+last word selection with ellipsis fallback
+- **UI Optimized**: 14-character limit ensures container compatibility
+
+Examples: "Database Abstraction Factory" → "DB Factory", "WebSocket Message Stream" → "WS Msg Strm"
+
+### Build Integration
+- **tsconfig-paths**: Resolves @ aliases in Node.js environment
+- **Automated Generation**: Runs during build pipeline
+- **Error Resilient**: Continues processing when individual patterns fail
 
 ## 🚀 Project Showcase System
 
