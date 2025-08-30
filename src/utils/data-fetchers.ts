@@ -208,14 +208,14 @@ export async function loadPatternBySlug(slug: string): Promise<PatternData | und
  * @returns string[] Array of pattern slugs
  */
 export function getAllPatternSlugs(): string[] {
-  // Return all implemented design pattern slugs
+  // Return all implemented design pattern slugs in kebab-case
   return [
-    'abstractfactory',
+    'abstract-factory',
     'adapter', 
-    'asynciterator',
+    'async-iterator',
     'bridge',
     'builder',
-    'chainofresponsibility',
+    'chain-of-responsibility',
     'command',
     'composite',
     'decorator',
@@ -230,12 +230,12 @@ export function getAllPatternSlugs(): string[] {
     'observer',
     'prototype',
     'proxy',
-    'proxyobservables',
-    'revealingmodule',
+    'proxy-observables',
+    'revealing-module',
     'singleton',
     'state',
     'strategy',
-    'templatemethod',
+    'template-method',
     'visitor'
   ];
 }
@@ -248,7 +248,8 @@ async function extractPatternCode(slug: string): Promise<{ [key: string]: string
   const fs = await import('fs');
   const path = await import('path');
   
-  const patternPath = path.join(process.cwd(), 'src', 'patterns', `${slug.charAt(0).toUpperCase() + slug.slice(1)}.ts`);
+  const fileName = slugToFileName(slug);
+  const patternPath = path.join(process.cwd(), 'src', 'patterns', `${fileName}.ts`);
   const sourceCode = fs.readFileSync(patternPath, 'utf-8');
   
   const codeExtracts: { [key: string]: string } = {};
@@ -310,33 +311,33 @@ async function extractPatternCode(slug: string): Promise<{ [key: string]: string
 }
 
 /**
+ * Convert kebab-case slug to PascalCase filename
+ * @param slug kebab-case slug like 'proxy-observables'
+ * @returns PascalCase filename like 'ProxyObservables'
+ */
+function slugToFileName(slug: string): string {
+  return slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('');
+}
+
+/**
  * Get pattern by slug synchronously (for static generation)
  * @param slug The pattern slug to find
  * @returns PatternData The pattern data
  * @throws Error if pattern not found
  */
 export async function getPatternBySlug(slug: string): Promise<PatternData> {
-  // Import pattern modules dynamically for static generation
-  let patternModule;
+  // Convert kebab-case slug to PascalCase filename
+  const fileName = slugToFileName(slug);
   
-  switch (slug) {
-    case 'singleton':
-      patternModule = await import('@/patterns/Singleton');
-      break;
-    case 'observer':
-      patternModule = await import('@/patterns/Observer');
-      break;
-    case 'factory':
-      patternModule = await import('@/patterns/Factory');
-      break;
-    case 'strategy':
-      patternModule = await import('@/patterns/Strategy');
-      break;
-    case 'decorator':
-      patternModule = await import('@/patterns/Decorator');
-      break;
-    default:
-      throw new Error(`Pattern not found: ${slug}`);
+  // Import pattern module dynamically
+  let patternModule;
+  try {
+    patternModule = await import(`@/patterns/${fileName}`);
+  } catch {
+    throw new Error(`Pattern not found: ${slug} (tried ${fileName}.ts)`);
   }
 
   const moduleDefault = patternModule.default;
@@ -348,7 +349,7 @@ export async function getPatternBySlug(slug: string): Promise<PatternData> {
   const codeExtracts = await extractPatternCode(slug);
 
   // Create solutions with actual code
-  const solutionsWithCode = moduleDefault.solutions.map((sol): Solution => {
+  const solutionsWithCode = moduleDefault.solutions.map((sol: Solution): Solution => {
     const code = codeExtracts[sol.name] || `// ${sol.name} implementation\n// See pattern module for full code`;
     return { ...sol, code };
   });
