@@ -208,8 +208,36 @@ export async function loadPatternBySlug(slug: string): Promise<PatternData | und
  * @returns string[] Array of pattern slugs
  */
 export function getAllPatternSlugs(): string[] {
-  // For now, return the slugs we have implemented
-  return ['singleton', 'observer', 'factory', 'strategy', 'decorator'];
+  // Return all implemented design pattern slugs
+  return [
+    'abstractfactory',
+    'adapter', 
+    'asynciterator',
+    'bridge',
+    'builder',
+    'chainofresponsibility',
+    'command',
+    'composite',
+    'decorator',
+    'facade',
+    'factory',
+    'flyweight',
+    'iterator',
+    'mediator',
+    'memento',
+    'mixin',
+    'module',
+    'observer',
+    'prototype',
+    'proxy',
+    'proxyobservables',
+    'revealingmodule',
+    'singleton',
+    'state',
+    'strategy',
+    'templatemethod',
+    'visitor'
+  ];
 }
 
 /**
