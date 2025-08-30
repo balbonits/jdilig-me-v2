@@ -265,7 +265,7 @@ class ReactiveForm {
     this.observable = new ProxyObservable(this.fields, { debounce: 300 });
     
     // Auto-validate on change
-    this.observable.addListener((target, property, _value, _oldValue) => {
+    this.observable.addListener((target, property) => {
       this.validateField(String(property));
       this.notifyValidationChange();
     });

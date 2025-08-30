@@ -1,1 +1,18 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🚀 Running comprehensive test suite before commit..."
+
+echo "📝 Step 1/4: Running ESLint..."
+npm run lint
+
+echo "🧪 Step 2/4: Running Jest tests..."
 npm test
+
+echo "🎭 Step 3/4: Running Playwright E2E tests..."
+npx playwright test --reporter=line
+
+echo "🏗️  Step 4/4: Running production build..."
+npm run build
+
+echo "✅ All tests passed! Proceeding with commit."

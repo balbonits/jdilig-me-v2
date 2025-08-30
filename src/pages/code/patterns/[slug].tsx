@@ -62,7 +62,7 @@ export default function PatternPage({ pattern }: PatternPageProps) {
   // Create solution tabs
   const tabs: TabItem[] = pattern.solutions.map(solution => ({
     id: solution.name,
-    label: solution.approach,
+    label: solution.tabName || solution.approach,
     content: (
       <Tab padding="none">
         <div className={styles.solutionHeader}>
@@ -215,6 +215,12 @@ export const getStaticProps: GetStaticProps<PatternPageProps> = async ({ params 
 
   try {
     const pattern = await loadPatternBySlug(params.slug);
+    
+    if (!pattern) {
+      return {
+        notFound: true
+      };
+    }
     
     return {
       props: {

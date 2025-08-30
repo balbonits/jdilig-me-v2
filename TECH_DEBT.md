@@ -1,3 +1,21 @@
+## [2025-08-30] Performance: Convert Client-Side Rendering to Static Site Generation
+
+### **Issue: HTML Fragmentation and Performance**
+- **Problem**: Some pages may be using client-side rendering instead of optimal SSG
+- **Impact**: Potential HTML fragmentation, slower initial page loads, SEO concerns
+- **Investigation Needed**: Audit pages for proper SSG implementation
+
+### **Action Required**
+1. Audit all pages for CSR vs SSG usage patterns
+2. Investigate HTML fragmentation issues across the site
+3. Convert any CSR-heavy pages to SSG where appropriate
+4. Optimize build-time data generation for better performance
+5. Review Core Web Vitals impact after changes
+
+### **Priority**: Medium
+- User experience and SEO implications
+- Should be addressed in v2 planning cycle
+
 ## [2025-08-30] Pattern Data Loading: Remove Deprecated Code
 
 ### **Issue: Legacy Pattern Loading Functions**

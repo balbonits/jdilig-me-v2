@@ -1,7 +1,6 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
 import { Solution } from '../interfaces/shared';
 import type { 
-  ApiRequestOptions,
   ApiRequestBody,
   EventCallback, 
   EventListener,
@@ -184,7 +183,7 @@ const ApiClientModule = (function() {
     };
   };
   
-  const simulateApiCall = <T>(endpoint: string, _options: Partial<ApiRequestOptions> = {}): Promise<ApiResponse<T>> => {
+  const simulateApiCall = <T>(endpoint: string): Promise<ApiResponse<T>> => {
     return new Promise((resolve, reject) => {
       // Simulate network delay
       window.setTimeout(() => {
@@ -220,44 +219,30 @@ const ApiClientModule = (function() {
   // Public functions
   const get = <T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
     buildUrl(endpoint); // Validate URL format
-    const finalHeaders = mergeHeaders(headers);
+    mergeHeaders(headers); // Validate headers
     
-    return simulateApiCall<T>(endpoint, {
-      method: 'GET',
-      headers: finalHeaders
-    }).catch(handleApiError);
+    return simulateApiCall<T>(endpoint).catch(handleApiError);
   }
   
   const post = <T>(endpoint: string, data: ApiRequestBody, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
     buildUrl(endpoint); // Validate URL format
-    const finalHeaders = mergeHeaders(headers);
+    mergeHeaders(headers); // Validate headers
     
-    return simulateApiCall<T>(endpoint, {
-      method: 'POST',
-      headers: finalHeaders,
-      body: JSON.stringify(data)
-    }).catch(handleApiError);
+    return simulateApiCall<T>(endpoint).catch(handleApiError);
   }
   
   const put = <T>(endpoint: string, data: ApiRequestBody, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
     buildUrl(endpoint); // Validate URL format
-    const finalHeaders = mergeHeaders(headers);
+    mergeHeaders(headers); // Validate headers
     
-    return simulateApiCall<T>(endpoint, {
-      method: 'PUT',
-      headers: finalHeaders,
-      body: JSON.stringify(data)
-    }).catch(handleApiError);
+    return simulateApiCall<T>(endpoint).catch(handleApiError);
   }
   
   const deleteRequest = <T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
     buildUrl(endpoint); // Validate URL format
-    const finalHeaders = mergeHeaders(headers);
+    mergeHeaders(headers); // Validate headers
     
-    return simulateApiCall<T>(endpoint, {
-      method: 'DELETE',
-      headers: finalHeaders
-    }).catch(handleApiError);
+    return simulateApiCall<T>(endpoint).catch(handleApiError);
   }
   
   const setApiKey = (key: string): void => {
