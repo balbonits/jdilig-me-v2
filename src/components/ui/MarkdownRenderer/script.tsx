@@ -27,8 +27,7 @@ interface MarkdownRendererProps {
  */
 export default function MarkdownRenderer({ 
   content, 
-  className = '', 
-  type = 'detailed' 
+  className = ''
 }: MarkdownRendererProps) {
   if (!content) {
     return null;

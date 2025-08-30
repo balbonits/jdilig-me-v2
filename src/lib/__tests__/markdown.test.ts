@@ -256,8 +256,8 @@ Debouncing prevents functions from firing too frequently by delaying execution u
     describe('Edge Cases', () => {
       test('should handle empty input', () => {
         expect(detailedDescriptionToHtml('')).toBe('');
-        expect(detailedDescriptionToHtml(null as any)).toBe('');
-        expect(detailedDescriptionToHtml(undefined as any)).toBe('');
+        expect(detailedDescriptionToHtml(null as string)).toBe('');
+        expect(detailedDescriptionToHtml(undefined as string)).toBe('');
       });
 
       test('should handle input with only whitespace', () => {

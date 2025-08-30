@@ -12,9 +12,9 @@
 // Polyfill fetch for Node.js environment
 import { TextDecoder, TextEncoder } from 'util';
 
-// @ts-ignore
+// @ts-expect-error - Node.js polyfill for browser APIs
 global.TextEncoder = TextEncoder;
-// @ts-ignore  
+// @ts-expect-error - Node.js polyfill for browser APIs
 global.TextDecoder = TextDecoder;
 
 // Mock fetch with node-fetch-like behavior for testing

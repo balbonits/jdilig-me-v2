@@ -13,7 +13,6 @@
  */
 
 import { detailedDescriptionToHtml } from '../markdown';
-import { WebFetch } from '../../test-utils/browser-mocks';
 
 // Mock fetch for testing
 global.fetch = jest.fn();
