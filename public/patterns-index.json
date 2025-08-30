@@ -8,6 +8,14 @@
     "solutionCount": 3
   },
   {
+    "slug": "adapter",
+    "title": "Adapter Pattern",
+    "description": "Make incompatible interfaces work together through translation",
+    "category": "Structural",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
     "slug": "async-iterator",
     "title": "Async Iterator Pattern",
     "description": "Process asynchronous data streams using modern iteration protocols",
@@ -24,9 +32,25 @@
     "solutionCount": 3
   },
   {
+    "slug": "builder",
+    "title": "Builder Pattern",
+    "description": "Construct complex objects step by step with flexible configuration",
+    "category": "Creational",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
     "slug": "chain-of-responsibility",
     "title": "Chain of Responsibility Pattern",
     "description": "Pass requests along a chain of handlers until one handles it",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "command",
+    "title": "Command Pattern",
+    "description": "Encapsulate requests as objects for undo, queue, and log operations",
     "category": "Behavioral",
     "difficulty": "Medium",
     "solutionCount": 3
@@ -40,11 +64,43 @@
     "solutionCount": 3
   },
   {
+    "slug": "decorator",
+    "title": "Decorator Pattern",
+    "description": "Add new behaviors to objects dynamically without altering structure",
+    "category": "Structural",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "facade",
+    "title": "Facade Pattern",
+    "description": "Provide simplified interface to complex subsystems",
+    "category": "Structural",
+    "difficulty": "Easy",
+    "solutionCount": 3
+  },
+  {
+    "slug": "factory",
+    "title": "Factory Pattern",
+    "description": "Creates objects without specifying their concrete classes",
+    "category": "Creational",
+    "difficulty": "Easy",
+    "solutionCount": 3
+  },
+  {
     "slug": "flyweight",
     "title": "Flyweight Pattern",
     "description": "Share common state efficiently among large numbers of objects",
     "category": "Structural",
     "difficulty": "Hard",
+    "solutionCount": 3
+  },
+  {
+    "slug": "iterator",
+    "title": "Iterator Pattern",
+    "description": "Access elements sequentially without exposing underlying structure",
+    "category": "Behavioral",
+    "difficulty": "Medium",
     "solutionCount": 3
   },
   {
@@ -80,6 +136,30 @@
     "solutionCount": 4
   },
   {
+    "slug": "observer",
+    "title": "Observer Pattern",
+    "description": "Notify multiple objects about state changes automatically",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "prototype",
+    "title": "Prototype Pattern",
+    "description": "Clone existing objects efficiently instead of creating from scratch",
+    "category": "Creational",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "proxy",
+    "title": "Proxy Pattern",
+    "description": "Control access to objects through placeholder intermediaries",
+    "category": "Structural",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
     "slug": "proxy-observables",
     "title": "Proxy-Based Observables",
     "description": "Create reactive objects using ES6 Proxy for automatic change detection",
@@ -96,11 +176,43 @@
     "solutionCount": 3
   },
   {
+    "slug": "singleton",
+    "title": "Singleton Pattern",
+    "description": "Ensures a class has only one instance with global access point",
+    "category": "Creational",
+    "difficulty": "Easy",
+    "solutionCount": 3
+  },
+  {
+    "slug": "state",
+    "title": "State Pattern",
+    "description": "Change object behavior based on internal state transitions",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "strategy",
+    "title": "Strategy Pattern",
+    "description": "Encapsulate algorithms and make them interchangeable at runtime",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
     "slug": "template-method",
     "title": "Template Method Pattern",
     "description": "Define algorithm skeleton, let subclasses override specific steps",
     "category": "Behavioral",
     "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "visitor",
+    "title": "Visitor Pattern",
+    "description": "Separate algorithms from objects they operate on",
+    "category": "Behavioral",
+    "difficulty": "Hard",
     "solutionCount": 3
   }
 ]

@@ -48,7 +48,7 @@
     "solutions": [
       {
         "name": "ui-theme-factory",
-        "tabName": "UI Theme Factory",
+        "tabName": "UI Factory",
         "code": "// UI Factory implementation for different themes\nclass LightUIFactory implements UIFactory {\n  createButton(text: string): Button {\n    return new LightButton(text);\n  }\n\n  createInput(placeholder: string): Input {\n    return new LightInput(placeholder);\n  }\n\n  createModal(title: string, content: string): Modal {\n    return new LightModal(title, content);\n  }\n}\n\nclass DarkUIFactory implements UIFactory {\n  createButton(text: string): Button {\n    return new DarkButton(text);\n  }\n\n  createInput(placeholder: string): Input {\n    return new DarkInput(placeholder);\n  }\n\n  createModal(title: string, content: string): Modal {\n    return new DarkModal(title, content);\n  }\n}",
         "approach": "Create consistent UI components for different themes",
         "isOptimal": true,
@@ -58,7 +58,7 @@
       },
       {
         "name": "database-factory",
-        "tabName": "Database Abstraction Factory",
+        "tabName": "DB Factory",
         "code": "// Database Factory implementation for different engines\nclass PostgreSQLFactory implements DatabaseFactory {\n  createConnection(connectionString: string): Connection {\n    return new PostgreSQLConnection(connectionString);\n  }\n\n  createQuery<T>(table: string): Query<T> {\n    return new PostgreSQLQuery<T>(table);\n  }\n\n  createTransaction(): Transaction {\n    return new PostgreSQLTransaction();\n  }\n}\n\nclass MySQLFactory implements DatabaseFactory {\n  createConnection(connectionString: string): Connection {\n    return new MySQLConnection(connectionString);\n  }\n\n  createQuery<T>(table: string): Query<T> {\n    return new MySQLQuery<T>(table);\n  }\n\n  createTransaction(): Transaction {\n    return new MySQLTransaction();\n  }\n}",
         "approach": "Create compatible database components for different engines",
         "isOptimal": false,
@@ -68,7 +68,7 @@
       },
       {
         "name": "application-integration",
-        "tabName": "Complete Application Integration",
+        "tabName": "App Int",
         "code": "// Application that uses abstract factories\nexport class Application {\n  constructor(private uiFactory: UIFactory, private dbFactory: DatabaseFactory) {}\n\n  public createUserInterface(): void {\n    const loginButton = this.uiFactory.createButton('Login');\n    const usernameInput = this.uiFactory.createInput('Enter username');\n    const loginModal = this.uiFactory.createModal('Login', 'Please enter your credentials');\n\n    console.log('UI Components created:');\n    console.log(loginButton.render());\n    console.log(usernameInput.render());\n    console.log(loginModal.render());\n  }\n\n  public async setupDatabase(): Promise<void> {\n    const connection = this.dbFactory.createConnection('localhost:5432/myapp');\n    await connection.connect();\n\n    const userQuery = this.dbFactory.createQuery<{id: string, username: string, email: string}>('users');\n    await userQuery.select(['id', 'username', 'email']).execute();\n\n    const transaction = this.dbFactory.createTransaction();\n    await transaction.begin();\n    await transaction.commit();\n  }\n}\n\n// Factory functions\nexport function createLightThemeApp() {\n  const uiFactory = new LightUIFactory();\n  const dbFactory = new PostgreSQLFactory();\n  return new Application(uiFactory, dbFactory);\n}\n\nexport function createDarkThemeApp() {\n  const uiFactory = new DarkUIFactory();\n  const dbFactory = new PostgreSQLFactory();\n  return new Application(uiFactory, dbFactory);\n}",
         "approach": "Combine UI and database factories in application",
         "isOptimal": false,
@@ -102,6 +102,103 @@
       "ui-theme-factory",
       "database-factory",
       "application-integration"
+    ]
+  },
+  {
+    "name": "Adapter",
+    "slug": "adapter",
+    "metadata": {
+      "title": "Adapter Pattern",
+      "description": "Make incompatible interfaces work together through translation",
+      "detailedDescription": "🔗 **The Adapter Pattern - Interface Compatibility**\n\nAllows incompatible interfaces to work together by providing a wrapper that translates one interface to another. Perfect for integration!\n\n🎯 **Core Problem Solved:**\n• Integrate incompatible interfaces without modifying existing code\n• Wrap third-party libraries with consistent APIs\n• Bridge legacy systems with modern applications\n• Enable code reuse across different interface requirements\n\n🔍 **Three Implementation Approaches:**\n• **Object Adapter:** Composition-based adapter using existing objects\n• **Class Adapter:** Inheritance-based adapter (less common in JS/TS)\n• **Function Adapter:** Simple function-based interface translation\n\n🚀 **Real-World Applications:**\n• API wrappers and gateway adapters\n• Database ORM adapters for different databases\n• Payment gateway integration layers\n• Legacy code integration with modern systems\n• Third-party library wrapper implementations\n• File system adapters across platforms\n\n⚡ **Modern Usage Examples:**\n• React component wrappers for different UI libraries\n• GraphQL adapters for REST APIs\n• Node.js stream adapters\n• Cloud provider SDK adapters",
+      "category": "Structural",
+      "difficulty": "Medium",
+      "concepts": [
+        "interface translation",
+        "wrapper pattern",
+        "compatibility layer"
+      ],
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "useCases": [
+        "API Design",
+        "System Integration",
+        "Code Organization"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Facade",
+        "Bridge",
+        "Decorator"
+      ],
+      "frameworkSupport": [
+        "TypeScript interfaces",
+        "Dependency injection",
+        "Express.js middleware"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "object-adapter",
+        "tabName": "Object Adapter",
+        "approach": "Composition-Based Interface Translation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "code": "// Target interface our application expects\ninterface ModernPrinter {\n  print(document: string): void;\n  isReady(): boolean;\n  getJobCount(): number;\n}\n\n// Legacy class we need to adapt\nclass LegacyPrinter {\n  public printOldWay(text: string): void {\n    console.log(`LEGACY PRINT: ${text.toUpperCase()}`);\n  }\n\n  public getStatus(): string {\n    return \"READY_TO_PRINT\";\n  }\n}\n\n// Adapter that makes legacy printer work with modern interface\nclass PrinterAdapter implements ModernPrinter {\n  private jobCount: number = 0;\n\n  constructor(private legacyPrinter: LegacyPrinter) {}\n\n  public print(document: string): void {\n    // Translate modern call to legacy method\n    this.legacyPrinter.printOldWay(document);\n    this.jobCount++;\n  }\n\n  public isReady(): boolean {\n    // Translate legacy status to boolean\n    return this.legacyPrinter.getStatus() === \"READY_TO_PRINT\";\n  }\n\n  public getJobCount(): number {\n    return this.jobCount;\n  }\n}\n\n// Usage\nconst legacyPrinter = new LegacyPrinter();\nconst adapter = new PrinterAdapter(legacyPrinter);\n\nadapter.print(\"Hello World\"); // Works with modern interface\nconsole.log(adapter.isReady()); // true\nconsole.log(adapter.getJobCount()); // 1"
+      },
+      {
+        "name": "function-adapter",
+        "tabName": "Func Adapter",
+        "approach": "Functional Interface Translation",
+        "type": "function",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": false,
+        "code": "// Simple function-based adapter for data transformation\nfunction createArrayAdapter<T, R>(\n  legacyArray: T[], \n  transformer: (item: T) => R\n): R[] {\n  return legacyArray.map(transformer);\n}\n\n// Example: Adapting legacy user data format\ninterface LegacyUser {\n  name: string;\n  age: number;\n}\n\ninterface ModernUser {\n  fullName: string;\n  yearOfBirth: number;\n  id: string;\n}\n\nconst legacyUsers: LegacyUser[] = [\n  { name: \"John Doe\", age: 30 },\n  { name: \"Jane Smith\", age: 25 }\n];\n\n// Adapter function transforms the data\nconst modernUsers = createArrayAdapter(legacyUsers, (user) => ({\n  fullName: user.name,\n  yearOfBirth: new Date().getFullYear() - user.age,\n  id: Math.random().toString(36).substr(2, 9)\n}));\n\nconsole.log(modernUsers);\n// [\n//   { fullName: \"John Doe\", yearOfBirth: 1994, id: \"abc123\" },\n//   { fullName: \"Jane Smith\", yearOfBirth: 1999, id: \"def456\" }\n// ]"
+      },
+      {
+        "name": "api-adapter",
+        "tabName": "API Adapter",
+        "approach": "Service Interface Unification",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "// Different payment gateway interfaces\ninterface PayPalGateway {\n  makePayment(amount: number, currency: string): Promise<{\n    success: boolean;\n    transactionId: string;\n  }>;\n}\n\ninterface StripeGateway {\n  charge(amountInCents: number, currency: string): Promise<{\n    paid: boolean;\n    id: string;\n  }>;\n}\n\n// Unified interface for our application\ninterface UnifiedPaymentGateway {\n  processPayment(amount: number, currency: string): Promise<{\n    success: boolean;\n    transactionId: string;\n  }>;\n}\n\n// Adapters for each payment provider\nclass PayPalAdapter implements UnifiedPaymentGateway {\n  constructor(private paypal: PayPalGateway) {}\n\n  async processPayment(amount: number, currency: string) {\n    const result = await this.paypal.makePayment(amount, currency);\n    return {\n      success: result.success,\n      transactionId: result.transactionId\n    };\n  }\n}\n\nclass StripeAdapter implements UnifiedPaymentGateway {\n  constructor(private stripe: StripeGateway) {}\n\n  async processPayment(amount: number, currency: string) {\n    // Convert dollars to cents for Stripe\n    const amountInCents = Math.round(amount * 100);\n    const result = await this.stripe.charge(amountInCents, currency);\n    \n    return {\n      success: result.paid,\n      transactionId: result.id\n    };\n  }\n}\n\n// Usage - same interface for different providers\nconst paypalAdapter = new PayPalAdapter(paypalService);\nconst stripeAdapter = new StripeAdapter(stripeService);\n\n// Both work with the same interface\nawait paypalAdapter.processPayment(50.00, 'USD');\nawait stripeAdapter.processPayment(50.00, 'USD');"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Legacy printer integration",
+        "description": "Adapt old printer API to modern interface",
+        "input": "new PrinterAdapter(legacyPrinter).print('Hello World')",
+        "output": "LEGACY PRINT: HELLO WORLD (with job counting)"
+      },
+      {
+        "scenario": "Weather API adaptation",
+        "description": "Convert old weather API format to new standard",
+        "input": "weatherAdapter.getWeatherData()",
+        "output": "{ temperature: 75, description: 'sunny', humidity: 60, timestamp: Date }"
+      },
+      {
+        "scenario": "Payment gateway unification",
+        "description": "Unified interface for different payment providers",
+        "input": "stripeAdapter.processPayment(10.00, 'USD')",
+        "output": "{ success: true, transactionId: 'stripe_abc123' }"
+      }
+    ],
+    "code": "// Target interface our application expects\ninterface ModernPrinter {\n  print(document: string): void;\n  isReady(): boolean;\n  getJobCount(): number;\n}\n\n// Legacy class we need to adapt\nclass LegacyPrinter {\n  public printOldWay(text: string): void {\n    console.log(`LEGACY PRINT: ${text.toUpperCase()}`);\n  }\n\n  public getStatus(): string {\n    return \"READY_TO_PRINT\";\n  }\n}\n\n// Adapter that makes legacy printer work with modern interface\nclass PrinterAdapter implements ModernPrinter {\n  private jobCount: number = 0;\n\n  constructor(private legacyPrinter: LegacyPrinter) {}\n\n  public print(document: string): void {\n    // Translate modern call to legacy method\n    this.legacyPrinter.printOldWay(document);\n    this.jobCount++;\n  }\n\n  public isReady(): boolean {\n    // Translate legacy status to boolean\n    return this.legacyPrinter.getStatus() === \"READY_TO_PRINT\";\n  }\n\n  public getJobCount(): number {\n    return this.jobCount;\n  }\n}\n\n// Usage\nconst legacyPrinter = new LegacyPrinter();\nconst adapter = new PrinterAdapter(legacyPrinter);\n\nadapter.print(\"Hello World\"); // Works with modern interface\nconsole.log(adapter.isReady()); // true\nconsole.log(adapter.getJobCount()); // 1",
+    "functions": [
+      "object-adapter",
+      "function-adapter",
+      "api-adapter"
     ]
   },
   {
@@ -153,7 +250,7 @@
     "solutions": [
       {
         "name": "paginated-data",
-        "tabName": "Paginated API Data Iterator",
+        "tabName": "Paged Iter",
         "approach": "Stream large datasets through automatic pagination",
         "isOptimal": true,
         "timeComplexity": "O(n)",
@@ -163,7 +260,7 @@
       },
       {
         "name": "file-processing",
-        "tabName": "File Chunk Stream Iterator",
+        "tabName": "File Iter",
         "approach": "Process large files in manageable chunks",
         "isOptimal": false,
         "timeComplexity": "O(n)",
@@ -173,7 +270,7 @@
       },
       {
         "name": "request-queue",
-        "tabName": "HTTP Request Queue Iterator",
+        "tabName": "HTTP Iter",
         "approach": "Process API requests with priority queuing",
         "isOptimal": false,
         "timeComplexity": "O(log n)",
@@ -183,7 +280,7 @@
       },
       {
         "name": "websocket-stream",
-        "tabName": "WebSocket Message Stream",
+        "tabName": "WS Msg Strm",
         "approach": "Stream real-time WebSocket messages",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -268,7 +365,7 @@
     "solutions": [
       {
         "name": "graphics-rendering",
-        "tabName": "Graphics Rendering Bridge",
+        "tabName": "GFX Bridge",
         "approach": "Shapes that can render using different graphics APIs",
         "type": "class",
         "isOptimal": true,
@@ -278,7 +375,7 @@
       },
       {
         "name": "messaging-system",
-        "tabName": "Message Delivery Bridge",
+        "tabName": "Msg Del Bridge",
         "approach": "Messages that can be sent through different channels",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -288,7 +385,7 @@
       },
       {
         "name": "database-access",
-        "tabName": "Database Access Bridge",
+        "tabName": "DB Bridge",
         "approach": "Repository pattern with different database implementations",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -322,6 +419,104 @@
       "graphics-rendering",
       "messaging-system",
       "database-access"
+    ]
+  },
+  {
+    "name": "Builder",
+    "slug": "builder",
+    "metadata": {
+      "title": "Builder Pattern",
+      "description": "Construct complex objects step by step with flexible configuration",
+      "detailedDescription": "🏗️ **The Builder Pattern - Complex Object Construction**\n\nConstructs complex objects step by step, allowing different representations of the same construction process. Perfect for creating objects with many optional parameters!\n\n🎯 **Core Problem Solved:**\n• Avoid telescoping constructor parameters\n• Create objects with complex initialization\n• Support different representations of same object\n• Enable step-by-step construction process\n\n🔍 **Three Implementation Approaches:**\n• **Method Chaining:** Fluent interface with returning 'this'\n• **Director Pattern:** Separate builder from construction logic\n• **Functional Builder:** Immutable approach with function composition\n\n🚀 **Real-World Applications:**\n• SQL query builders and ORM query construction\n• HTTP request builders in API clients\n• Configuration objects for complex systems\n• Test data builders in testing frameworks\n• UI component builders and form generators\n• Document and report generators\n\n⚡ **Modern Usage Examples:**\n• React component prop builders\n• GraphQL query builders\n• Docker container configuration\n• Webpack configuration builders",
+      "category": "Creational",
+      "difficulty": "Medium",
+      "concepts": [
+        "step-by-step construction",
+        "fluent interface",
+        "object composition"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "useCases": [
+        "API Design",
+        "Code Organization",
+        "Library Development"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Factory Method",
+        "Abstract Factory",
+        "Prototype"
+      ],
+      "frameworkSupport": [
+        "jQuery (chaining)",
+        "Lodash",
+        "Immutable.js",
+        "Builder libraries"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "method-chaining",
+        "tabName": "Chaining",
+        "approach": "Fluent Interface with Method Chaining",
+        "type": "class",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "code": "class QueryBuilder {\n  private selectFields: string[] = [];\n  private fromTable: string = '';\n  private whereConditions: string[] = [];\n\n  public select(fields: string[]): QueryBuilder {\n    this.selectFields = [...fields];\n    return this; // Enable chaining\n  }\n\n  public from(table: string): QueryBuilder {\n    this.fromTable = table;\n    return this;\n  }\n\n  public where(condition: string): QueryBuilder {\n    this.whereConditions.push(condition);\n    return this;\n  }\n\n  public build(): string {\n    let query = `SELECT ${this.selectFields.join(', ')} FROM ${this.fromTable}`;\n    \n    if (this.whereConditions.length > 0) {\n      query += ` WHERE ${this.whereConditions.join(' AND ')}`;\n    }\n    \n    return query;\n  }\n}\n\n// Usage\nconst query = new QueryBuilder()\n  .select(['name', 'email'])\n  .from('users')\n  .where('active = 1')\n  .where('age > 18')\n  .build();"
+      },
+      {
+        "name": "director-pattern",
+        "tabName": "Director",
+        "approach": "Separate Builder from Construction Logic",
+        "type": "class",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "abstract class HouseBuilder {\n  protected house: Partial<House> = {};\n\n  public abstract buildFoundation(): void;\n  public abstract buildWalls(): void;\n  public abstract buildRoof(): void;\n\n  public getResult(): House {\n    const result = this.house as House;\n    this.reset();\n    return result;\n  }\n\n  public reset(): void {\n    this.house = {};\n  }\n}\n\nclass ModernHouseBuilder extends HouseBuilder {\n  public buildFoundation(): void {\n    this.house.foundation = 'concrete slab with radiant heating';\n  }\n\n  public buildWalls(): void {\n    this.house.walls = 'glass and steel with smart home integration';\n  }\n\n  public buildRoof(): void {\n    this.house.roof = 'flat roof with solar panels';\n  }\n}\n\nclass HouseDirector {\n  public buildBasicHouse(builder: HouseBuilder): House {\n    builder.buildFoundation();\n    builder.buildWalls();\n    builder.buildRoof();\n    return builder.getResult();\n  }\n}\n\n// Usage\nconst director = new HouseDirector();\nconst modernBuilder = new ModernHouseBuilder();\nconst house = director.buildBasicHouse(modernBuilder);"
+      },
+      {
+        "name": "functional-builder",
+        "tabName": "Functi Builder",
+        "approach": "Immutable Functional Composition",
+        "type": "function",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": false,
+        "code": "class UserProfileBuilder {\n  constructor(private profile: Partial<UserProfile> = {}) {}\n\n  static create(name: string, email: string): UserProfileBuilder {\n    return new UserProfileBuilder({ name, email });\n  }\n\n  withAge(age: number): UserProfileBuilder {\n    return new UserProfileBuilder({ ...this.profile, age });\n  }\n\n  withPreferences(preferences: string[]): UserProfileBuilder {\n    return new UserProfileBuilder({ ...this.profile, preferences });\n  }\n\n  withTheme(theme: 'light' | 'dark'): UserProfileBuilder {\n    return new UserProfileBuilder({ ...this.profile, theme });\n  }\n\n  build(): UserProfile {\n    if (!this.profile.name || !this.profile.email) {\n      throw new Error('Name and email are required');\n    }\n    return this.profile as UserProfile;\n  }\n}\n\n// Usage - immutable chain\nconst profile = UserProfileBuilder\n  .create('John Doe', 'john@example.com')\n  .withAge(30)\n  .withTheme('dark')\n  .withPreferences(['tech', 'gaming'])\n  .build();"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "SQL query construction",
+        "description": "Build complex SQL queries step by step",
+        "input": "QueryBuilder().select(['name', 'email']).from('users').where('active = 1')",
+        "output": "SELECT name, email FROM users WHERE active = 1"
+      },
+      {
+        "scenario": "House construction",
+        "description": "Build different types of houses using director pattern",
+        "input": "HouseDirector.buildLuxuryHouse(new ModernHouseBuilder())",
+        "output": "House with concrete foundation, glass walls, flat roof, garage, and pool"
+      },
+      {
+        "scenario": "User profile creation",
+        "description": "Create user profiles with optional settings",
+        "input": "UserProfileBuilder.create('John', 'john@example.com').withAge(30).withTheme('dark')",
+        "output": "UserProfile with name, email, age 30, and dark theme"
+      }
+    ],
+    "code": "class QueryBuilder {\n  private selectFields: string[] = [];\n  private fromTable: string = '';\n  private whereConditions: string[] = [];\n\n  public select(fields: string[]): QueryBuilder {\n    this.selectFields = [...fields];\n    return this; // Enable chaining\n  }\n\n  public from(table: string): QueryBuilder {\n    this.fromTable = table;\n    return this;\n  }\n\n  public where(condition: string): QueryBuilder {\n    this.whereConditions.push(condition);\n    return this;\n  }\n\n  public build(): string {\n    let query = `SELECT ${this.selectFields.join(', ')} FROM ${this.fromTable}`;\n    \n    if (this.whereConditions.length > 0) {\n      query += ` WHERE ${this.whereConditions.join(' AND ')}`;\n    }\n    \n    return query;\n  }\n}\n\n// Usage\nconst query = new QueryBuilder()\n  .select(['name', 'email'])\n  .from('users')\n  .where('active = 1')\n  .where('age > 18')\n  .build();",
+    "functions": [
+      "method-chaining",
+      "director-pattern",
+      "functional-builder"
     ]
   },
   {
@@ -393,7 +588,7 @@
       },
       {
         "name": "http-middleware",
-        "tabName": "HTTP Middleware",
+        "tabName": "HTTP MW",
         "approach": "Process web requests through CORS, auth, and rate limiting",
         "code": "// HTTP Middleware Chain Implementation\nabstract class Middleware {\n  private nextMiddleware: Middleware | null = null;\n\n  setNext(middleware: Middleware): Middleware {\n    this.nextMiddleware = middleware;\n    return middleware;\n  }\n\n  process(request: HTTPRequest): { proceed: boolean; message: string } {\n    const result = this.doProcess(request);\n    \n    if (!result.proceed) {\n      return result;\n    }\n    \n    if (this.nextMiddleware) {\n      return this.nextMiddleware.process(request);\n    }\n    \n    return { proceed: true, message: 'Request processed successfully' };\n  }\n\n  protected abstract doProcess(request: HTTPRequest): { proceed: boolean; message: string };\n}\n\nclass CORSMiddleware extends Middleware {\n  protected doProcess(request: HTTPRequest): { proceed: boolean; message: string } {\n    const origin = request.headers['origin'];\n    const allowedOrigins = ['https://example.com', 'https://app.example.com'];\n    \n    if (origin && !allowedOrigins.includes(origin)) {\n      return { proceed: false, message: 'CORS: Origin not allowed' };\n    }\n    \n    return { proceed: true, message: 'CORS: Origin validated' };\n  }\n}",
         "isOptimal": false,
@@ -427,6 +622,107 @@
       "support-system",
       "authentication-chain",
       "http-middleware"
+    ]
+  },
+  {
+    "name": "Command",
+    "slug": "command",
+    "metadata": {
+      "title": "Command Pattern",
+      "description": "Encapsulate requests as objects for undo, queue, and log operations",
+      "detailedDescription": "🎭 **The Command Pattern - Request Encapsulation**\n\nEncapsulates requests as objects, allowing you to parameterize clients with different requests, queue operations, and support undo!\n\n🎯 **Core Problem Solved:**\n• Decouple sender of request from receiver\n• Support undo/redo operations easily\n• Queue and schedule operations for later execution\n• Log and audit all operations performed\n\n🔍 **Three Implementation Approaches:**\n• **Simple Command:** Basic command interface with execute method\n• **Macro Command:** Composite commands executing multiple operations\n• **Undoable Command:** Commands supporting undo/redo functionality\n\n🚀 **Real-World Applications:**\n• Text editor undo/redo functionality\n• GUI button actions and menu operations\n• Database transaction logging and rollback\n• Task scheduling and background job processing\n• Remote procedure calls and API requests\n• Smart home device control systems\n\n⚡ **Modern Usage Examples:**\n• Redux actions in React state management\n• Event sourcing in microservices\n• Command buses in CQRS architecture\n• Async task queues in Node.js applications",
+      "category": "Behavioral",
+      "difficulty": "Medium",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(n)",
+      "concepts": [
+        "Request Encapsulation",
+        "Undo/Redo Operations",
+        "Operation Queuing",
+        "Decoupling",
+        "Action Objects"
+      ],
+      "useCases": [
+        "State Management",
+        "Code Organization",
+        "API Design",
+        "Performance Optimization"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Memento",
+        "Observer",
+        "Strategy"
+      ],
+      "frameworkSupport": [
+        "Redux",
+        "MobX",
+        "EventBus libraries",
+        "Task queue systems"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "text-editor-commands",
+        "tabName": "Text Edit Cmds",
+        "approach": "Undoable Operations Implementation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true,
+        "code": "// Command interface\ninterface Command {\n  execute(): void;\n  undo?(): void;\n}\n\n// Receiver - performs the actual work\nclass TextEditor {\n  private content: string = '';\n\n  insertText(text: string, position: number): void {\n    this.content = this.content.slice(0, position) + \n                   text + \n                   this.content.slice(position);\n  }\n\n  deleteText(position: number, length: number): string {\n    const deleted = this.content.slice(position, position + length);\n    this.content = this.content.slice(0, position) + \n                   this.content.slice(position + length);\n    return deleted;\n  }\n\n  getContent(): string {\n    return this.content;\n  }\n}\n\n// Concrete commands\nclass InsertTextCommand implements Command {\n  constructor(\n    private editor: TextEditor,\n    private text: string,\n    private position: number\n  ) {}\n\n  execute(): void {\n    this.editor.insertText(this.text, this.position);\n  }\n\n  undo(): void {\n    this.editor.deleteText(this.position, this.text.length);\n  }\n}\n\nclass DeleteTextCommand implements Command {\n  private deletedText: string = '';\n\n  constructor(\n    private editor: TextEditor,\n    private position: number,\n    private length: number\n  ) {}\n\n  execute(): void {\n    this.deletedText = this.editor.deleteText(this.position, this.length);\n  }\n\n  undo(): void {\n    this.editor.insertText(this.deletedText, this.position);\n  }\n}\n\n// Invoker with undo/redo support\nclass EditorInvoker {\n  private history: Command[] = [];\n  private currentPosition: number = -1;\n\n  executeCommand(command: Command): void {\n    // Clear redo history when executing new command\n    this.history = this.history.slice(0, this.currentPosition + 1);\n    \n    command.execute();\n    this.history.push(command);\n    this.currentPosition++;\n  }\n\n  undo(): boolean {\n    if (this.currentPosition >= 0) {\n      const command = this.history[this.currentPosition];\n      if (command.undo) {\n        command.undo();\n        this.currentPosition--;\n        return true;\n      }\n    }\n    return false;\n  }\n\n  redo(): boolean {\n    if (this.currentPosition < this.history.length - 1) {\n      this.currentPosition++;\n      this.history[this.currentPosition].execute();\n      return true;\n    }\n    return false;\n  }\n}\n\n// Usage\nconst editor = new TextEditor();\nconst invoker = new EditorInvoker();\n\ninvoker.executeCommand(new InsertTextCommand(editor, 'Hello', 0));\ninvoker.executeCommand(new InsertTextCommand(editor, ' World', 5));\nconsole.log(editor.getContent()); // \"Hello World\"\n\ninvoker.undo(); // Removes \" World\"\nconsole.log(editor.getContent()); // \"Hello\"\n\ninvoker.redo(); // Adds \" World\" back\nconsole.log(editor.getContent()); // \"Hello World\""
+      },
+      {
+        "name": "device-control-commands",
+        "tabName": "Device Control",
+        "approach": "Smart Home System Implementation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "interface Device {\n  turnOn(): void;\n  turnOff(): void;\n  getName(): string;\n}\n\nclass Light implements Device {\n  constructor(private name: string, private isOn: boolean = false) {}\n\n  turnOn(): void {\n    this.isOn = true;\n    console.log(`${this.name} light is ON`);\n  }\n\n  turnOff(): void {\n    this.isOn = false;\n    console.log(`${this.name} light is OFF`);\n  }\n\n  getName(): string {\n    return this.name;\n  }\n}\n\n// Device commands\nclass TurnOnCommand implements Command {\n  constructor(private device: Device) {}\n\n  execute(): void {\n    this.device.turnOn();\n  }\n\n  undo(): void {\n    this.device.turnOff();\n  }\n}\n\nclass TurnOffCommand implements Command {\n  constructor(private device: Device) {}\n\n  execute(): void {\n    this.device.turnOff();\n  }\n\n  undo(): void {\n    this.device.turnOn();\n  }\n}\n\n// Remote control invoker\nclass RemoteControl {\n  private commands: Map<string, Command> = new Map();\n  private lastCommand: Command | null = null;\n\n  setCommand(slot: string, command: Command): void {\n    this.commands.set(slot, command);\n  }\n\n  pressButton(slot: string): void {\n    const command = this.commands.get(slot);\n    if (command) {\n      command.execute();\n      this.lastCommand = command;\n    }\n  }\n\n  pressUndo(): void {\n    if (this.lastCommand?.undo) {\n      this.lastCommand.undo();\n    }\n  }\n}\n\n// Usage\nconst livingRoomLight = new Light('Living Room');\nconst kitchenLight = new Light('Kitchen');\n\nconst remote = new RemoteControl();\nremote.setCommand('1', new TurnOnCommand(livingRoomLight));\nremote.setCommand('2', new TurnOffCommand(livingRoomLight));\nremote.setCommand('3', new TurnOnCommand(kitchenLight));\n\nremote.pressButton('1'); // Living Room light is ON\nremote.pressButton('3'); // Kitchen light is ON\nremote.pressUndo();      // Kitchen light is OFF"
+      },
+      {
+        "name": "task-queue-commands",
+        "tabName": "Task Q Sys",
+        "approach": "Asynchronous Command Processing",
+        "type": "class",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": false,
+        "code": "interface Task {\n  id: string;\n  execute(): Promise<void>;\n  retry?(): Promise<void>;\n}\n\nclass EmailTask implements Task {\n  constructor(\n    public id: string,\n    private to: string,\n    private subject: string\n  ) {}\n\n  async execute(): Promise<void> {\n    console.log(`Sending email to ${this.to}: ${this.subject}`);\n    // Simulate async operation\n    await new Promise(resolve => setTimeout(resolve, 100));\n  }\n\n  async retry(): Promise<void> {\n    console.log(`Retrying email: ${this.id}`);\n    await this.execute();\n  }\n}\n\nclass DatabaseTask implements Task {\n  constructor(\n    public id: string,\n    private query: string\n  ) {}\n\n  async execute(): Promise<void> {\n    console.log(`Executing query: ${this.query}`);\n    await new Promise(resolve => setTimeout(resolve, 50));\n  }\n}\n\n// Task queue with command pattern\nclass TaskQueue {\n  private pending: Task[] = [];\n  private completed: Task[] = [];\n  private failed: Task[] = [];\n\n  addTask(task: Task): void {\n    this.pending.push(task);\n    console.log(`Task queued: ${task.id}`);\n  }\n\n  async processQueue(): Promise<void> {\n    console.log('Processing queue...');\n    \n    while (this.pending.length > 0) {\n      const task = this.pending.shift()!;\n      \n      try {\n        await task.execute();\n        this.completed.push(task);\n        console.log(`Completed: ${task.id}`);\n      } catch (error) {\n        console.log(`Failed: ${task.id}`);\n        this.failed.push(task);\n      }\n    }\n  }\n\n  async retryFailedTasks(): Promise<void> {\n    const tasksToRetry = [...this.failed];\n    this.failed = [];\n\n    for (const task of tasksToRetry) {\n      try {\n        await (task.retry ? task.retry() : task.execute());\n        this.completed.push(task);\n      } catch (error) {\n        this.failed.push(task);\n      }\n    }\n  }\n}\n\n// Usage\nconst taskQueue = new TaskQueue();\n\ntaskQueue.addTask(new EmailTask('1', 'user@example.com', 'Welcome'));\ntaskQueue.addTask(new DatabaseTask('2', 'UPDATE users SET active = true'));\ntaskQueue.addTask(new EmailTask('3', 'admin@example.com', 'Report'));\n\nawait taskQueue.processQueue();\n// All tasks executed asynchronously"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Text editor undo/redo",
+        "description": "Execute and undo text editing operations",
+        "input": "invoker.executeCommand(new InsertTextCommand(editor, 'Hello', 0))",
+        "output": "Text inserted, can be undone with invoker.undo()"
+      },
+      {
+        "scenario": "Smart home remote control",
+        "description": "Control devices with unified interface",
+        "input": "remote.pressButton('living-room-light')",
+        "output": "Living room light is ON (can be undone with remote.pressUndo())"
+      },
+      {
+        "scenario": "Background task processing",
+        "description": "Queue and process tasks asynchronously",
+        "input": "taskQueue.addTask(new EmailTask('1', 'user@example.com', 'Hello', 'Message'))",
+        "output": "Task queued and processed: Email sent to user@example.com"
+      }
+    ],
+    "code": "// Command interface\ninterface Command {\n  execute(): void;\n  undo?(): void;\n}\n\n// Receiver - performs the actual work\nclass TextEditor {\n  private content: string = '';\n\n  insertText(text: string, position: number): void {\n    this.content = this.content.slice(0, position) + \n                   text + \n                   this.content.slice(position);\n  }\n\n  deleteText(position: number, length: number): string {\n    const deleted = this.content.slice(position, position + length);\n    this.content = this.content.slice(0, position) + \n                   this.content.slice(position + length);\n    return deleted;\n  }\n\n  getContent(): string {\n    return this.content;\n  }\n}\n\n// Concrete commands\nclass InsertTextCommand implements Command {\n  constructor(\n    private editor: TextEditor,\n    private text: string,\n    private position: number\n  ) {}\n\n  execute(): void {\n    this.editor.insertText(this.text, this.position);\n  }\n\n  undo(): void {\n    this.editor.deleteText(this.position, this.text.length);\n  }\n}\n\nclass DeleteTextCommand implements Command {\n  private deletedText: string = '';\n\n  constructor(\n    private editor: TextEditor,\n    private position: number,\n    private length: number\n  ) {}\n\n  execute(): void {\n    this.deletedText = this.editor.deleteText(this.position, this.length);\n  }\n\n  undo(): void {\n    this.editor.insertText(this.deletedText, this.position);\n  }\n}\n\n// Invoker with undo/redo support\nclass EditorInvoker {\n  private history: Command[] = [];\n  private currentPosition: number = -1;\n\n  executeCommand(command: Command): void {\n    // Clear redo history when executing new command\n    this.history = this.history.slice(0, this.currentPosition + 1);\n    \n    command.execute();\n    this.history.push(command);\n    this.currentPosition++;\n  }\n\n  undo(): boolean {\n    if (this.currentPosition >= 0) {\n      const command = this.history[this.currentPosition];\n      if (command.undo) {\n        command.undo();\n        this.currentPosition--;\n        return true;\n      }\n    }\n    return false;\n  }\n\n  redo(): boolean {\n    if (this.currentPosition < this.history.length - 1) {\n      this.currentPosition++;\n      this.history[this.currentPosition].execute();\n      return true;\n    }\n    return false;\n  }\n}\n\n// Usage\nconst editor = new TextEditor();\nconst invoker = new EditorInvoker();\n\ninvoker.executeCommand(new InsertTextCommand(editor, 'Hello', 0));\ninvoker.executeCommand(new InsertTextCommand(editor, ' World', 5));\nconsole.log(editor.getContent()); // \"Hello World\"\n\ninvoker.undo(); // Removes \" World\"\nconsole.log(editor.getContent()); // \"Hello\"\n\ninvoker.redo(); // Adds \" World\" back\nconsole.log(editor.getContent()); // \"Hello World\"",
+    "functions": [
+      "text-editor-commands",
+      "device-control-commands",
+      "task-queue-commands"
     ]
   },
   {
@@ -497,7 +793,7 @@
       },
       {
         "name": "expression-tree",
-        "tabName": "Expression Tree",
+        "tabName": "Expressi… Tree",
         "approach": "Numbers and operations forming evaluable expressions",
         "code": "// Expression Tree Composite Implementation\nabstract class Expression {\n  abstract evaluate(): number;\n  abstract toString(): string;\n}\n\nclass Number extends Expression {\n  constructor(private value: number) {\n    super();\n  }\n\n  evaluate(): number {\n    return this.value;\n  }\n\n  toString(): string {\n    return this.value.toString();\n  }\n}\n\nclass BinaryOperation extends Expression {\n  constructor(\n    private left: Expression,\n    private operator: string,\n    private right: Expression\n  ) {\n    super();\n  }\n\n  evaluate(): number {\n    const leftVal = this.left.evaluate();\n    const rightVal = this.right.evaluate();\n    \n    switch (this.operator) {\n      case '+': return leftVal + rightVal;\n      case '-': return leftVal - rightVal;\n      case '*': return leftVal * rightVal;\n      case '/': return leftVal / rightVal;\n      default: throw new Error(`Unknown operator: ${this.operator}`);\n    }\n  }\n\n  toString(): string {\n    return `(${this.left.toString()} ${this.operator} ${this.right.toString()})`;\n  }\n}",
         "isOptimal": false,
@@ -531,6 +827,353 @@
       "file-system",
       "ui-components",
       "expression-tree"
+    ]
+  },
+  {
+    "name": "Decorator",
+    "slug": "decorator",
+    "metadata": {
+      "title": "Decorator Pattern",
+      "description": "Add new behaviors to objects dynamically without altering structure",
+      "detailedDescription": "🔗 **The Decorator Pattern - Dynamic Behavior Enhancement**\n\nAttaches new behaviors to objects by placing them inside special wrapper objects. Perfect for extending functionality without inheritance!\n\n🎯 **Core Problem Solved:**\n• Add behavior to objects at runtime\n• Avoid rigid inheritance hierarchies\n• Combine multiple enhancements flexibly\n• Follow Single Responsibility Principle\n\n🔍 **Three Implementation Approaches:**\n• **Class-based:** Traditional decorator with component interfaces\n• **Function-based:** Higher-order functions (HOFs) for enhancement\n• **Proxy-based:** JavaScript Proxy for transparent decoration\n\n🚀 **Real-World Applications:**\n• Express.js middleware (logging, auth, compression)\n• React Higher-Order Components (HOCs)\n• Coffee shop ordering system (milk, sugar, extras)\n• HTTP request/response processing\n• Data processing pipelines\n• API endpoint enhancement\n\n⚡ **Modern Usage Examples:**\n• Function composition in functional programming\n• React hooks for component enhancement\n• Python @decorator syntax\n• JavaScript Proxy for method interception",
+      "timeComplexity": "O(1) - per decoration layer",
+      "spaceComplexity": "O(n) - for n decorator layers",
+      "difficulty": "Medium",
+      "category": "Structural",
+      "concepts": [
+        "Object Wrapping",
+        "Dynamic Behavior",
+        "Runtime Enhancement",
+        "Composition over Inheritance",
+        "Single Responsibility"
+      ],
+      "useCases": [
+        "Code Organization",
+        "API Design",
+        "Event Handling"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Proxy",
+        "Composite",
+        "Strategy"
+      ],
+      "modernAlternatives": [
+        "Higher-order functions",
+        "React hooks",
+        "JavaScript Proxy",
+        "Function composition"
+      ],
+      "frameworkSupport": [
+        "Express.js",
+        "React",
+        "Angular",
+        "Python decorators",
+        "Java annotations"
+      ],
+      "advantages": [
+        "Adds behavior to objects dynamically",
+        "More flexible than static inheritance",
+        "Supports composition of multiple enhancements",
+        "Follows Single Responsibility Principle"
+      ],
+      "disadvantages": [
+        "Can result in many small objects",
+        "Can make debugging more complex",
+        "Order of decoration may matter",
+        "Performance overhead from wrapper layers"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "DataProcessorDecorator",
+        "tabName": "Class-based",
+        "approach": "Traditional OOP decorator pattern",
+        "code": "// Class-based Decorator Implementation\ninterface DataProcessor {\n  process(data: string): string;\n  getDescription(): string;\n}\n\nclass BasicDataProcessor implements DataProcessor {\n  process(data: string): string {\n    return data;\n  }\n\n  getDescription(): string {\n    return 'Basic data processor';\n  }\n}\n\nabstract class DataProcessorDecorator implements DataProcessor {\n  constructor(protected processor: DataProcessor) {}\n\n  process(data: string): string {\n    return this.processor.process(data);\n  }\n\n  getDescription(): string {\n    return this.processor.getDescription();\n  }\n}\n\nclass EncryptionDecorator extends DataProcessorDecorator {\n  process(data: string): string {\n    const processed = super.process(data);\n    return Buffer.from(processed).toString('base64');\n  }\n\n  getDescription(): string {\n    return super.getDescription() + ' + Encryption';\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "withRetry",
+        "tabName": "Function-based",
+        "approach": "Higher-order functions for decoration",
+        "code": "// Function-based Decorator Implementation\ntype AsyncFunction<T, R> = (input: T) => Promise<R>;\n\nfunction withRetry<T, R>(maxAttempts: number, delay: number = 1000) {\n  return function(fn: AsyncFunction<T, R>): AsyncFunction<T, R> {\n    return async function(input: T): Promise<R> {\n      let lastError: Error | undefined;\n      \n      for (let attempt = 1; attempt <= maxAttempts; attempt++) {\n        try {\n          return await fn(input);\n        } catch (error) {\n          lastError = error as Error;\n          \n          if (attempt < maxAttempts) {\n            await new Promise(resolve => setTimeout(resolve, delay));\n          }\n        }\n      }\n      \n      throw new Error(`All ${maxAttempts} attempts failed`);\n    };\n  };\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "function"
+      },
+      {
+        "name": "createLoggingProxy",
+        "tabName": "Proxy-based",
+        "approach": "JavaScript Proxy for transparent decoration",
+        "code": "// Proxy-based Decorator Implementation\nfunction createLoggingProxy<T extends object>(target: T, name: string): T {\n  return new Proxy(target, {\n    get(obj, prop) {\n      const value = obj[prop as keyof T];\n      \n      if (typeof value === 'function') {\n        return function(...args: unknown[]) {\n          console.log(`[PROXY] Calling ${name}.${String(prop)}`);\n          const result = (value as (...args: unknown[]) => unknown).apply(obj, args);\n          return result;\n        };\n      }\n      \n      return value;\n    }\n  });\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "function"
+      }
+    ],
+    "examples": [
+      {
+        "input": "new EncryptionDecorator(new LoggingDecorator(processor))",
+        "output": "Enhanced processor with encryption and logging",
+        "description": "Chain multiple decorators",
+        "scenario": "Data processing - add encryption and logging to basic processor"
+      },
+      {
+        "input": "new WhipCreamDecorator(new MilkDecorator(basicCoffee))",
+        "output": "Coffee with milk and whip cream ($3.25)",
+        "description": "Coffee customization",
+        "scenario": "Coffee shop - customize basic coffee with various add-ons"
+      },
+      {
+        "input": "withRetry(3)(withTiming('api')(fetchData))",
+        "output": "Enhanced function with retry and timing",
+        "description": "Function decoration",
+        "scenario": "API client - add retry logic and performance timing to network calls"
+      },
+      {
+        "input": "createLoggingProxy(calculator, 'Calculator')",
+        "output": "Proxied calculator with automatic logging",
+        "description": "Transparent proxy decoration",
+        "scenario": "Development tools - add logging to existing objects without modification"
+      }
+    ],
+    "code": "// Class-based Decorator Implementation\ninterface DataProcessor {\n  process(data: string): string;\n  getDescription(): string;\n}\n\nclass BasicDataProcessor implements DataProcessor {\n  process(data: string): string {\n    return data;\n  }\n\n  getDescription(): string {\n    return 'Basic data processor';\n  }\n}\n\nabstract class DataProcessorDecorator implements DataProcessor {\n  constructor(protected processor: DataProcessor) {}\n\n  process(data: string): string {\n    return this.processor.process(data);\n  }\n\n  getDescription(): string {\n    return this.processor.getDescription();\n  }\n}\n\nclass EncryptionDecorator extends DataProcessorDecorator {\n  process(data: string): string {\n    const processed = super.process(data);\n    return Buffer.from(processed).toString('base64');\n  }\n\n  getDescription(): string {\n    return super.getDescription() + ' + Encryption';\n  }\n}",
+    "functions": [
+      "DataProcessorDecorator",
+      "withRetry",
+      "createLoggingProxy"
+    ]
+  },
+  {
+    "name": "Facade",
+    "slug": "facade",
+    "metadata": {
+      "title": "Facade Pattern",
+      "description": "Provide simplified interface to complex subsystems",
+      "detailedDescription": "🔗 **The Facade Pattern - Simplified Interface**\n\nProvides a simplified interface to a complex subsystem by hiding complexity behind a single, easy-to-use interface. Perfect for clean APIs!\n\n🎯 **Core Problem Solved:**\n• Hide complexity of subsystems from clients\n• Provide unified interface to multiple related classes\n• Reduce coupling between client and subsystem\n• Simplify common use cases and workflows\n\n🔍 **Three Implementation Approaches:**\n• **Single Facade:** One class wrapping multiple subsystems\n• **Multiple Facades:** Different facades for different use cases\n• **Layered Facade:** Hierarchical simplification of complex systems\n\n🚀 **Real-World Applications:**\n• API wrappers that simplify complex REST/GraphQL calls\n• Library wrappers that provide easier interfaces\n• System integration layers for multiple services\n• E-commerce order processing workflows\n• Media processing pipelines\n• Database abstraction layers\n\n⚡ **Modern Usage Examples:**\n• jQuery as facade over DOM manipulation\n• Express.js as facade over Node.js HTTP\n• ORMs as facades over SQL databases\n• Cloud SDK facades over service APIs",
+      "category": "Structural",
+      "difficulty": "Easy",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "concepts": [
+        "Interface Simplification",
+        "Subsystem Abstraction",
+        "Complexity Hiding",
+        "Unified API",
+        "Loose Coupling"
+      ],
+      "useCases": [
+        "API Design",
+        "Code Organization",
+        "System Integration"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Adapter",
+        "Mediator",
+        "Abstract Factory"
+      ],
+      "frameworkSupport": [
+        "Express.js",
+        "jQuery",
+        "ORMs",
+        "Cloud SDKs"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "application-facade",
+        "tabName": "App Facade",
+        "approach": "Multi-Service Coordination",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "code": "// Complex subsystems\nclass DatabaseService {\n  connect(connectionString: string): void { /* ... */ }\n  executeQuery(query: string): any[] { /* ... */ }\n  close(): void { /* ... */ }\n}\n\nclass CacheService {\n  connect(host: string, port: number): void { /* ... */ }\n  get(key: string): any { /* ... */ }\n  set(key: string, value: any, ttl: number): void { /* ... */ }\n}\n\nclass LoggingService {\n  initialize(logLevel: string, outputPath: string): void { /* ... */ }\n  log(level: string, message: string): void { /* ... */ }\n}\n\n// Facade simplifies interaction with all subsystems\nclass ApplicationFacade {\n  private db: DatabaseService;\n  private cache: CacheService;\n  private logger: LoggingService;\n\n  constructor() {\n    this.db = new DatabaseService();\n    this.cache = new CacheService();\n    this.logger = new LoggingService();\n  }\n\n  // Single method handles complex initialization\n  public initialize(config: {\n    dbConnection: string;\n    cacheHost: string;\n    cachePort: number;\n    logLevel: string;\n    logPath: string;\n  }): void {\n    this.logger.initialize(config.logLevel, config.logPath);\n    this.logger.log('info', 'Starting initialization');\n\n    this.db.connect(config.dbConnection);\n    this.cache.connect(config.cacheHost, config.cachePort);\n\n    this.logger.log('info', 'Initialization complete');\n  }\n\n  // Simplified user operations\n  public getUser(id: number): any {\n    this.logger.log('info', `Fetching user ${id}`);\n\n    // Check cache first\n    let user = this.cache.get(`user:${id}`);\n    if (!user) {\n      user = this.db.executeQuery(`SELECT * FROM users WHERE id = ${id}`)[0];\n      if (user) this.cache.set(`user:${id}`, user, 300);\n    }\n\n    return user;\n  }\n}"
+      },
+      {
+        "name": "ecommerce-facade",
+        "tabName": "E-comm… Facade",
+        "approach": "Workflow Simplification",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "// Multiple services for e-commerce operations\nclass InventoryService {\n  checkStock(productId: string): number { return 10; }\n  reserveItems(productId: string, quantity: number): boolean { return true; }\n}\n\nclass PaymentService {\n  processPayment(amount: number, method: string): { success: boolean } {\n    return { success: true };\n  }\n}\n\nclass ShippingService {\n  calculateShipping(address: any, weight: number): number { return 9.99; }\n  createShipment(orderId: string, address: any): string { return 'ship_123'; }\n}\n\nclass NotificationService {\n  sendOrderConfirmation(email: string, details: any): void { /* ... */ }\n}\n\n// Facade handles entire order process\nclass EcommerceFacade {\n  private inventory = new InventoryService();\n  private payment = new PaymentService();\n  private shipping = new ShippingService();\n  private notifications = new NotificationService();\n\n  // Single method orchestrates complex workflow\n  public placeOrder(orderData: {\n    productId: string;\n    quantity: number;\n    amount: number;\n    paymentMethod: string;\n    customerEmail: string;\n    shippingAddress: any;\n    weight: number;\n  }): { success: boolean; orderId?: string; error?: string } {\n    \n    // Check inventory\n    if (this.inventory.checkStock(orderData.productId) < orderData.quantity) {\n      return { success: false, error: 'Insufficient inventory' };\n    }\n\n    // Reserve items\n    if (!this.inventory.reserveItems(orderData.productId, orderData.quantity)) {\n      return { success: false, error: 'Could not reserve items' };\n    }\n\n    // Process payment\n    const payment = this.payment.processPayment(orderData.amount, orderData.paymentMethod);\n    if (!payment.success) {\n      return { success: false, error: 'Payment failed' };\n    }\n\n    // Handle shipping\n    const shippingCost = this.shipping.calculateShipping(orderData.shippingAddress, orderData.weight);\n    const orderId = `order_${Date.now()}`;\n    this.shipping.createShipment(orderId, orderData.shippingAddress);\n\n    // Send confirmation\n    this.notifications.sendOrderConfirmation(orderData.customerEmail, {\n      orderId,\n      total: orderData.amount + shippingCost\n    });\n\n    return { success: true, orderId };\n  }\n}"
+      },
+      {
+        "name": "media-facade",
+        "tabName": "Media Facade",
+        "approach": "Batch Operation Simplification",
+        "type": "class",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "// Separate processors for different media types\nclass AudioProcessor {\n  loadAudio(path: string): void { /* ... */ }\n  applyFilter(filter: string): void { /* ... */ }\n  exportAudio(output: string, format: string): void { /* ... */ }\n}\n\nclass VideoProcessor {\n  loadVideo(path: string): void { /* ... */ }\n  resize(width: number, height: number): void { /* ... */ }\n  exportVideo(output: string, format: string): void { /* ... */ }\n}\n\nclass ImageProcessor {\n  loadImage(path: string): void { /* ... */ }\n  crop(x: number, y: number, w: number, h: number): void { /* ... */ }\n  exportImage(output: string, format: string): void { /* ... */ }\n}\n\n// Facade provides unified interface for all media processing\nclass MediaProcessingFacade {\n  private audioProcessor = new AudioProcessor();\n  private videoProcessor = new VideoProcessor();\n  private imageProcessor = new ImageProcessor();\n\n  // Single method handles different media types\n  public processMediaFiles(files: Array<{\n    inputPath: string;\n    outputPath: string;\n    type: 'audio' | 'video' | 'image';\n    operations: any[];\n  }>): void {\n    files.forEach(file => {\n      switch (file.type) {\n        case 'audio':\n          this.audioProcessor.loadAudio(file.inputPath);\n          file.operations.forEach(op => {\n            if (op.type === 'filter') this.audioProcessor.applyFilter(op.value);\n          });\n          this.audioProcessor.exportAudio(file.outputPath, 'mp3');\n          break;\n          \n        case 'video':\n          this.videoProcessor.loadVideo(file.inputPath);\n          file.operations.forEach(op => {\n            if (op.type === 'resize') {\n              this.videoProcessor.resize(op.width, op.height);\n            }\n          });\n          this.videoProcessor.exportVideo(file.outputPath, 'mp4');\n          break;\n          \n        case 'image':\n          this.imageProcessor.loadImage(file.inputPath);\n          file.operations.forEach(op => {\n            if (op.type === 'crop') {\n              this.imageProcessor.crop(op.x, op.y, op.width, op.height);\n            }\n          });\n          this.imageProcessor.exportImage(file.outputPath, 'jpg');\n          break;\n      }\n    });\n  }\n}"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Application initialization",
+        "description": "Simplify complex multi-service setup",
+        "input": "facade.initialize(config)",
+        "output": "All services (DB, cache, logging, validation) initialized"
+      },
+      {
+        "scenario": "E-commerce order placement",
+        "description": "Handle entire order workflow in single call",
+        "input": "ecommerceFacade.placeOrder(orderData)",
+        "output": "{ success: true, orderId: 'order_1234567890' }"
+      },
+      {
+        "scenario": "Media file processing",
+        "description": "Process multiple media types with unified interface",
+        "input": "mediaFacade.processMediaFiles([audioFile, videoFile, imageFile])",
+        "output": "All files processed with respective operations applied"
+      }
+    ],
+    "code": "// Complex subsystems\nclass DatabaseService {\n  connect(connectionString: string): void { /* ... */ }\n  executeQuery(query: string): any[] { /* ... */ }\n  close(): void { /* ... */ }\n}\n\nclass CacheService {\n  connect(host: string, port: number): void { /* ... */ }\n  get(key: string): any { /* ... */ }\n  set(key: string, value: any, ttl: number): void { /* ... */ }\n}\n\nclass LoggingService {\n  initialize(logLevel: string, outputPath: string): void { /* ... */ }\n  log(level: string, message: string): void { /* ... */ }\n}\n\n// Facade simplifies interaction with all subsystems\nclass ApplicationFacade {\n  private db: DatabaseService;\n  private cache: CacheService;\n  private logger: LoggingService;\n\n  constructor() {\n    this.db = new DatabaseService();\n    this.cache = new CacheService();\n    this.logger = new LoggingService();\n  }\n\n  // Single method handles complex initialization\n  public initialize(config: {\n    dbConnection: string;\n    cacheHost: string;\n    cachePort: number;\n    logLevel: string;\n    logPath: string;\n  }): void {\n    this.logger.initialize(config.logLevel, config.logPath);\n    this.logger.log('info', 'Starting initialization');\n\n    this.db.connect(config.dbConnection);\n    this.cache.connect(config.cacheHost, config.cachePort);\n\n    this.logger.log('info', 'Initialization complete');\n  }\n\n  // Simplified user operations\n  public getUser(id: number): any {\n    this.logger.log('info', `Fetching user ${id}`);\n\n    // Check cache first\n    let user = this.cache.get(`user:${id}`);\n    if (!user) {\n      user = this.db.executeQuery(`SELECT * FROM users WHERE id = ${id}`)[0];\n      if (user) this.cache.set(`user:${id}`, user, 300);\n    }\n\n    return user;\n  }\n}",
+    "functions": [
+      "application-facade",
+      "ecommerce-facade",
+      "media-facade"
+    ]
+  },
+  {
+    "name": "Factory",
+    "slug": "factory",
+    "metadata": {
+      "title": "Factory Pattern",
+      "description": "Creates objects without specifying their concrete classes",
+      "detailedDescription": "🏗️ **The Factory Pattern - Object Creation Made Simple**\n\nCreates objects without specifying the exact class to create. Perfect for when you need flexibility in object creation!\n\n🎯 **Core Problem Solved:**\n• Decouple object creation from usage\n• Support multiple product types\n• Enable runtime object type decisions\n• Centralize creation logic\n\n🔍 **Three Implementation Approaches:**\n• **Simple Factory:** Static method returns objects based on input\n• **Factory Method:** Virtual method subclasses can override\n• **Abstract Factory:** Create families of related objects\n\n🚀 **Real-World Applications:**\n• UI component libraries (buttons, inputs, modals)\n• Database connection managers\n• Payment processor selection\n• Plugin systems and middleware\n• API client generators\n• Configuration-based object creation\n\n⚡ **Modern Usage Examples:**\n• React component factories\n• Database ORM adapters\n• Microservice client factories\n• Cloud provider abstractions",
+      "timeComplexity": "O(1) - constant time creation",
+      "spaceComplexity": "O(1) - per created object",
+      "difficulty": "Easy",
+      "category": "Creational",
+      "concepts": [
+        "Object Creation",
+        "Class Abstraction",
+        "Runtime Decisions",
+        "Centralized Logic",
+        "Type Flexibility"
+      ],
+      "useCases": [
+        "Code Organization",
+        "API Design",
+        "Framework Development"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Abstract Factory",
+        "Builder",
+        "Prototype"
+      ],
+      "modernAlternatives": [
+        "Dependency Injection",
+        "Factory Functions",
+        "Module Factories"
+      ],
+      "frameworkSupport": [
+        "React",
+        "Angular",
+        "Spring Framework",
+        "Express.js middleware"
+      ],
+      "advantages": [
+        "Decouples object creation from usage",
+        "Supports multiple product types",
+        "Centralizes creation logic",
+        "Easy to extend with new types"
+      ],
+      "disadvantages": [
+        "Can add unnecessary complexity",
+        "May require many factory classes",
+        "Runtime type decisions only"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "LoggerFactory",
+        "tabName": "Simple Factory",
+        "approach": "Static method with switch statement",
+        "code": "// Simple Factory Implementation\ninterface Logger {\n  log(message: string): void;\n  getType(): string;\n}\n\nclass ConsoleLogger implements Logger {\n  log(message: string): void {\n    console.log(`[CONSOLE] ${new Date().toISOString()}: ${message}`);\n  }\n\n  getType(): string {\n    return 'console';\n  }\n}\n\nclass FileLogger implements Logger {\n  constructor(private filename: string) {}\n\n  log(message: string): void {\n    const logEntry = `[FILE:${this.filename}] ${new Date().toISOString()}: ${message}`;\n    console.log(`Writing to file: ${logEntry}`);\n  }\n\n  getType(): string {\n    return 'file';\n  }\n}\n\nclass LoggerFactory {\n  public static createLogger(type: string, config?: string): Logger {\n    switch (type.toLowerCase()) {\n      case 'console':\n        return new ConsoleLogger();\n      case 'file':\n        return new FileLogger(config || 'app.log');\n      default:\n        throw new Error(`Unknown logger type: ${type}`);\n    }\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "UIComponentFactory",
+        "tabName": "Factory Method",
+        "approach": "Abstract factory with inheritance",
+        "code": "// Factory Method Implementation\ninterface UIComponent {\n  render(): string;\n  getType(): string;\n}\n\nclass Button implements UIComponent {\n  constructor(private text: string) {}\n\n  render(): string {\n    return `<button>${this.text}</button>`;\n  }\n\n  getType(): string {\n    return 'button';\n  }\n}\n\nabstract class UIComponentFactory {\n  abstract createComponent(type: string, config: string): UIComponent;\n}\n\nclass WebUIComponentFactory extends UIComponentFactory {\n  createComponent(type: string, config: string): UIComponent {\n    switch (type.toLowerCase()) {\n      case 'button':\n        return new Button(config);\n      default:\n        throw new Error(`Unknown component type: ${type}`);\n    }\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "PaymentProcessorFactory",
+        "tabName": "Registry-based",
+        "approach": "Factory with registration system",
+        "code": "// Registry-based Factory Implementation\ninterface PaymentProcessor {\n  processPayment(amount: number): Promise<{ success: boolean; transactionId: string }>;\n  getProvider(): string;\n}\n\nclass StripeProcessor implements PaymentProcessor {\n  async processPayment(amount: number): Promise<{ success: boolean; transactionId: string }> {\n    return {\n      success: true,\n      transactionId: `stripe_${Math.random().toString(36).substr(2, 9)}`\n    };\n  }\n\n  getProvider(): string {\n    return 'stripe';\n  }\n}\n\nclass PaymentProcessorFactory {\n  private static processors = new Map<string, () => PaymentProcessor>();\n\n  static register(name: string, factory: () => PaymentProcessor): void {\n    this.processors.set(name.toLowerCase(), factory);\n  }\n\n  static createProcessor(type: string): PaymentProcessor {\n    const factory = this.processors.get(type.toLowerCase());\n    if (!factory) {\n      throw new Error(`Unknown payment processor: ${type}`);\n    }\n    return factory();\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true,
+        "type": "class"
+      }
+    ],
+    "examples": [
+      {
+        "input": "LoggerFactory.createLogger('console')",
+        "output": "ConsoleLogger instance",
+        "description": "Create console logger",
+        "scenario": "Logging system - create appropriate logger based on configuration"
+      },
+      {
+        "input": "uiFactory.createComponent('button', 'Click me')",
+        "output": "Button component instance",
+        "description": "Create UI component",
+        "scenario": "Component library - generate UI elements based on type and props"
+      },
+      {
+        "input": "PaymentProcessorFactory.createProcessor('stripe')",
+        "output": "StripeProcessor instance",
+        "description": "Create payment processor",
+        "scenario": "E-commerce - select payment provider based on user preference"
+      },
+      {
+        "input": "factory.createAndRender('modal', 'Alert', 'Save changes?')",
+        "output": "Rendered modal HTML string",
+        "description": "Create and render component",
+        "scenario": "Dynamic UI - generate and display components programmatically"
+      }
+    ],
+    "code": "// Simple Factory Implementation\ninterface Logger {\n  log(message: string): void;\n  getType(): string;\n}\n\nclass ConsoleLogger implements Logger {\n  log(message: string): void {\n    console.log(`[CONSOLE] ${new Date().toISOString()}: ${message}`);\n  }\n\n  getType(): string {\n    return 'console';\n  }\n}\n\nclass FileLogger implements Logger {\n  constructor(private filename: string) {}\n\n  log(message: string): void {\n    const logEntry = `[FILE:${this.filename}] ${new Date().toISOString()}: ${message}`;\n    console.log(`Writing to file: ${logEntry}`);\n  }\n\n  getType(): string {\n    return 'file';\n  }\n}\n\nclass LoggerFactory {\n  public static createLogger(type: string, config?: string): Logger {\n    switch (type.toLowerCase()) {\n      case 'console':\n        return new ConsoleLogger();\n      case 'file':\n        return new FileLogger(config || 'app.log');\n      default:\n        throw new Error(`Unknown logger type: ${type}`);\n    }\n  }\n}",
+    "functions": [
+      "LoggerFactory",
+      "UIComponentFactory",
+      "PaymentProcessorFactory"
     ]
   },
   {
@@ -602,7 +1245,7 @@
       },
       {
         "name": "particle-system",
-        "tabName": "Particle System",
+        "tabName": "Particle Sys",
         "approach": "Particles sharing behavior and appearance data",
         "code": "// Particle system code here",
         "isOptimal": false,
@@ -642,6 +1285,111 @@
       "text-document",
       "forest-simulation",
       "particle-system"
+    ]
+  },
+  {
+    "name": "Iterator",
+    "slug": "iterator",
+    "metadata": {
+      "title": "Iterator Pattern",
+      "category": "Behavioral",
+      "difficulty": "Medium",
+      "description": "Access elements sequentially without exposing underlying structure",
+      "concepts": [
+        "design patterns",
+        "software architecture",
+        "code organization",
+        "object-oriented programming"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "detailedDescription": "\n    ## 🔄 Iterator Pattern\n\n    The **Iterator Pattern** provides a way to access elements of a collection sequentially without exposing the underlying representation. It separates the traversal logic from the collection structure.\n\n    ### Core Concepts\n\n    🔹 **Iterator Interface** - Defines methods for traversing elements (hasNext, next, reset)  \n    🔹 **Concrete Iterator** - Implements traversal logic for specific collections  \n    🔹 **Iterable Interface** - Collection that can create iterators  \n    🔹 **External Iteration** - Client controls iteration process\n\n    ### Real-World Applications\n\n    **Data Structures** - Arrays, lists, trees, graphs with different traversal strategies  \n    **File Systems** - Directory traversal with various filtering and ordering options  \n    **Database Results** - Process query results without loading all data into memory  \n    **Streaming Data** - Process large datasets one element at a time\n\n    ### Traversal Strategies\n\n    **Linear Collections** - Forward, reverse, filtered iteration  \n    **Tree Structures** - Pre-order, post-order, level-order traversal  \n    **Custom Logic** - Skip elements, transform values, conditional processing  \n    **Lazy Evaluation** - Generate elements on-demand without storing entire collection\n\n    ### Implementation Benefits\n\n    ✅ **Encapsulation** - Internal structure hidden from client code  \n    ✅ **Multiple traversals** - Different iterators can traverse same collection  \n    ✅ **Uniform interface** - Same iteration pattern across different data structures  \n    ✅ **Memory efficiency** - Process large collections without loading everything\n  ",
+      "useCases": [
+        "Data Processing",
+        "Collection Traversal",
+        "Stream Processing"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "advantages": [
+        "Hides internal structure of collections",
+        "Supports multiple simultaneous traversals",
+        "Provides uniform interface across different data structures",
+        "Enables lazy evaluation and memory-efficient processing"
+      ],
+      "disadvantages": [
+        "Can be overkill for simple collections",
+        "May have performance overhead compared to direct access",
+        "Iterator invalidation issues if collection is modified",
+        "More complex than direct collection access"
+      ],
+      "relatedPatterns": [
+        "Composite",
+        "Factory Method",
+        "Memento"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "book-collection",
+        "tabName": "Filtered Libr…",
+        "approach": "Iterator Pattern with Filtering",
+        "code": "// Book collection with filtered iteration\nclass Book {\n  constructor(\n    public title: string,\n    public author: string,\n    public year: number,\n    public genre: string\n  ) {}\n\n  toString(): string {\n    return `\"${this.title}\" by ${this.author} (${this.year})`;\n  }\n}\n\nclass BookCollection implements Iterable<Book> {\n  private books: Book[] = [];\n\n  addBook(book: Book): void {\n    this.books.push(book);\n  }\n\n  createIterator(): Iterator<Book> {\n    return new BookIterator(this.books);\n  }\n\n  createGenreIterator(genre: string): Iterator<Book> {\n    return new GenreFilterIterator(this.books, genre);\n  }\n\n  createReverseIterator(): Iterator<Book> {\n    return new ReverseBookIterator(this.books);\n  }\n}\n\nclass BookIterator implements Iterator<Book> {\n  private index = 0;\n\n  constructor(private books: Book[]) {}\n\n  hasNext(): boolean {\n    return this.index < this.books.length;\n  }\n\n  next(): Book | null {\n    if (this.hasNext()) {\n      return this.books[this.index++];\n    }\n    return null;\n  }\n\n  reset(): void {\n    this.index = 0;\n  }\n}",
+        "isOptimal": true,
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(1)",
+        "type": "class"
+      },
+      {
+        "name": "tree-traversal",
+        "tabName": "Tree Traversal",
+        "approach": "Depth-First and Breadth-First Iteration",
+        "code": "// Tree traversal with multiple strategies\nclass TreeNode<T> {\n  public children: TreeNode<T>[] = [];\n\n  constructor(public value: T) {}\n\n  addChild(node: TreeNode<T>): void {\n    this.children.push(node);\n  }\n\n  createPreOrderIterator(): Iterator<T> {\n    return new PreOrderIterator<T>(this);\n  }\n\n  createLevelOrderIterator(): Iterator<T> {\n    return new LevelOrderIterator<T>(this);\n  }\n}\n\nclass PreOrderIterator<T> implements Iterator<T> {\n  private stack: TreeNode<T>[];\n\n  constructor(root: TreeNode<T>) {\n    this.stack = [root];\n  }\n\n  hasNext(): boolean {\n    return this.stack.length > 0;\n  }\n\n  next(): T | null {\n    if (!this.hasNext()) {\n      return null;\n    }\n\n    const node = this.stack.pop()!;\n    \n    // Add children in reverse order\n    for (let i = node.children.length - 1; i >= 0; i--) {\n      this.stack.push(node.children[i]);\n    }\n\n    return node.value;\n  }\n\n  reset(): void {\n    throw new Error('Reset not supported for tree iterator');\n  }\n}",
+        "isOptimal": false,
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(h)",
+        "type": "class"
+      },
+      {
+        "name": "number-range",
+        "tabName": "Numeric Gen",
+        "approach": "Custom Iterator Implementation",
+        "code": "// Numeric range with custom iteration\nclass NumberRange implements Iterable<number> {\n  constructor(\n    private start: number,\n    private end: number,\n    private step: number = 1\n  ) {}\n\n  createIterator(): Iterator<number> {\n    return new RangeIterator(this.start, this.end, this.step);\n  }\n\n  createEvenIterator(): Iterator<number> {\n    return new EvenRangeIterator(this.start, this.end, this.step);\n  }\n}\n\nclass RangeIterator implements Iterator<number> {\n  private current: number;\n\n  constructor(\n    private start: number,\n    private end: number,\n    private step: number\n  ) {\n    this.current = start;\n  }\n\n  hasNext(): boolean {\n    return this.step > 0 ? this.current <= this.end : this.current >= this.end;\n  }\n\n  next(): number | null {\n    if (this.hasNext()) {\n      const value = this.current;\n      this.current += this.step;\n      return value;\n    }\n    return null;\n  }\n\n  reset(): void {\n    this.current = this.start;\n  }\n}",
+        "isOptimal": false,
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "type": "class"
+      }
+    ],
+    "examples": [
+      {
+        "description": "Filtered Book Collection Traversal",
+        "scenario": "Iterate through book library with different filtering strategies without exposing internal structure",
+        "input": "const library = createBookLibrary();\n\nconsole.log('All books:');\niteratorForEach(library.createIterator(), book => \n  console.log(book.toString())\n);\n\nconsole.log('\\nDystopian books:');\niteratorForEach(library.createGenreIterator('Dystopian'), book => \n  console.log(book.toString())\n);\n\nconsole.log('\\nReverse order:');\nconst reverseBooks = iteratorCollect(library.createReverseIterator());\nconsole.log(reverseBooks.slice(0, 3).map(b => b.title).join(', '));",
+        "output": "All books:\n\"1984\" by George Orwell (1949)\n\"Brave New World\" by Aldous Huxley (1932)\n\"The Hobbit\" by J.R.R. Tolkien (1937)\n...\n\nDystopian books:\n\"1984\" by George Orwell (1949)\n\"Brave New World\" by Aldous Huxley (1932)\n\nReverse order:\nNeuromancer, Foundation, Dune"
+      },
+      {
+        "description": "Multi-Strategy Tree Traversal",
+        "scenario": "Traverse file system tree using different algorithms without exposing tree structure",
+        "input": "const tree = createFileSystemTree();\n\nconsole.log('Pre-order traversal:');\nconst preOrder = iteratorCollect(tree.createPreOrderIterator());\nconsole.log(preOrder.slice(0, 5).join(' → '));\n\nconsole.log('\\nLevel-order traversal:');\nconst levelOrder = iteratorCollect(tree.createLevelOrderIterator());\nconsole.log(levelOrder.slice(0, 5).join(' → '));",
+        "output": "Pre-order traversal:\nroot/ → src/ → index.js → utils.js → lib/\n\nLevel-order traversal:\nroot/ → src/ → lib/ → test/ → package.json"
+      },
+      {
+        "description": "Custom Range Generation",
+        "scenario": "Generate numeric sequences with different patterns using iterator interface",
+        "input": "const ranges = createNumberRanges();\n\nconsole.log('Standard range (1-10):');\nconsole.log(iteratorCollect(ranges.standard.createIterator()).join(', '));\n\nconsole.log('\\nEven numbers (0-20, step 2):');\nconsole.log(iteratorCollect(ranges.step2.createEvenIterator()).join(', '));\n\nconsole.log('\\nReverse range (5 to -5):');\nconsole.log(iteratorCollect(ranges.negative.createReverseIterator()).join(', '));",
+        "output": "Standard range (1-10):\n1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\nEven numbers (0-20, step 2):\n0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20\n\nReverse range (5 to -5):\n-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5"
+      }
+    ],
+    "code": "// Book collection with filtered iteration\nclass Book {\n  constructor(\n    public title: string,\n    public author: string,\n    public year: number,\n    public genre: string\n  ) {}\n\n  toString(): string {\n    return `\"${this.title}\" by ${this.author} (${this.year})`;\n  }\n}\n\nclass BookCollection implements Iterable<Book> {\n  private books: Book[] = [];\n\n  addBook(book: Book): void {\n    this.books.push(book);\n  }\n\n  createIterator(): Iterator<Book> {\n    return new BookIterator(this.books);\n  }\n\n  createGenreIterator(genre: string): Iterator<Book> {\n    return new GenreFilterIterator(this.books, genre);\n  }\n\n  createReverseIterator(): Iterator<Book> {\n    return new ReverseBookIterator(this.books);\n  }\n}\n\nclass BookIterator implements Iterator<Book> {\n  private index = 0;\n\n  constructor(private books: Book[]) {}\n\n  hasNext(): boolean {\n    return this.index < this.books.length;\n  }\n\n  next(): Book | null {\n    if (this.hasNext()) {\n      return this.books[this.index++];\n    }\n    return null;\n  }\n\n  reset(): void {\n    this.index = 0;\n  }\n}",
+    "functions": [
+      "book-collection",
+      "tree-traversal",
+      "number-range"
     ]
   },
   {
@@ -693,7 +1441,7 @@
     "solutions": [
       {
         "name": "chat-system",
-        "tabName": "Chat Room Mediator",
+        "tabName": "Chat Mediator",
         "approach": "Centralized Communication Hub",
         "isOptimal": true,
         "timeComplexity": "O(n)",
@@ -703,7 +1451,7 @@
       },
       {
         "name": "air-traffic-control",
-        "tabName": "Aircraft Coordination",
+        "tabName": "Aircraft Coord",
         "approach": "Air Traffic Control System",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -713,7 +1461,7 @@
       },
       {
         "name": "form-validation",
-        "tabName": "UI Form Components",
+        "tabName": "UI Form Comps",
         "approach": "Form Validation Mediator",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -798,7 +1546,7 @@
     "solutions": [
       {
         "name": "text-editor",
-        "tabName": "Text Editor with Undo/Redo",
+        "tabName": "Text Undo/Redo",
         "approach": "Document editing with history management",
         "type": "class",
         "isOptimal": true,
@@ -808,7 +1556,7 @@
       },
       {
         "name": "game-save-system",
-        "tabName": "Game State Management",
+        "tabName": "Game State",
         "approach": "Save/load game progress with multiple slots",
         "type": "class",
         "isOptimal": false,
@@ -818,7 +1566,7 @@
       },
       {
         "name": "configuration-manager",
-        "tabName": "Settings Snapshot System",
+        "tabName": "Set Snap Sys",
         "approach": "Application configuration with named snapshots",
         "type": "class",
         "isOptimal": false,
@@ -903,7 +1651,7 @@
     "solutions": [
       {
         "name": "basic-mixins",
-        "tabName": "Timestamp & Validation Mixins",
+        "tabName": "Timestamp Mix…",
         "approach": "Simple mixins for timestamping and validation",
         "isOptimal": true,
         "timeComplexity": "O(1)",
@@ -913,7 +1661,7 @@
       },
       {
         "name": "serializable-product",
-        "tabName": "Multi-Mixin Product Tracking",
+        "tabName": "Multi-Mixin T…",
         "approach": "Product with serialization and timestamp tracking",
         "isOptimal": false,
         "timeComplexity": "O(n)",
@@ -923,7 +1671,7 @@
       },
       {
         "name": "full-featured-blog",
-        "tabName": "Complete Blog Post System",
+        "tabName": "Blog Post Sys",
         "approach": "Blog post with validation, serialization, timestamps, and observers",
         "isOptimal": false,
         "timeComplexity": "O(n)",
@@ -1008,7 +1756,7 @@
     "solutions": [
       {
         "name": "counter-module",
-        "tabName": "Counter with Private State",
+        "tabName": "Counter State",
         "approach": "Simple counter with private variables and history",
         "isOptimal": true,
         "timeComplexity": "O(1)",
@@ -1018,7 +1766,7 @@
       },
       {
         "name": "shopping-cart",
-        "tabName": "Shopping Cart Manager",
+        "tabName": "Shop Cart Mgr",
         "approach": "E-commerce cart with private item management",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -1028,7 +1776,7 @@
       },
       {
         "name": "auth-system",
-        "tabName": "Authentication Module",
+        "tabName": "Auth Module",
         "approach": "User authentication with session management",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -1073,6 +1821,319 @@
       "shopping-cart",
       "auth-system",
       "logger-module"
+    ]
+  },
+  {
+    "name": "Observer",
+    "slug": "observer",
+    "metadata": {
+      "title": "Observer Pattern",
+      "description": "Notify multiple objects about state changes automatically",
+      "detailedDescription": "🎭 **The Observer Pattern - Event Notification System**\n\nDefines a one-to-many dependency between objects so that when one object changes state, all dependents are notified automatically!\n\n🎯 **Core Problem Solved:**\n• Decouple objects that need to communicate\n• Notify multiple objects of state changes\n• Support dynamic subscription/unsubscription\n• Enable reactive programming patterns\n\n🔍 **Three Implementation Approaches:**\n• **Interface-based:** Traditional OOP with observer interfaces\n• **Event-driven:** Using JavaScript's EventTarget API\n• **Reactive:** Modern observables with functional operators\n\n🚀 **Real-World Applications:**\n• Newsletter and notification systems\n• Model-View-Controller architectures\n• Real-time data feeds (stocks, chat)\n• DOM event handling\n• React state management\n• WebSocket communication\n\n⚡ **Modern Framework Usage:**\n• React hooks (useState, useEffect)\n• Vue.js reactive data system\n• Angular observables (RxJS)\n• Node.js EventEmitter pattern",
+      "timeComplexity": "O(n) - notify all observers",
+      "spaceComplexity": "O(n) - store observer references",
+      "difficulty": "Medium",
+      "category": "Behavioral",
+      "concepts": [
+        "One-to-Many Dependency",
+        "Event Notification",
+        "Subscribe/Unsubscribe",
+        "Loose Coupling",
+        "State Broadcasting"
+      ],
+      "useCases": [
+        "State Management",
+        "Event Handling",
+        "Data Processing"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Mediator",
+        "Command",
+        "State"
+      ],
+      "modernAlternatives": [
+        "React hooks",
+        "Vue reactivity",
+        "RxJS Observables",
+        "EventTarget API"
+      ],
+      "frameworkSupport": [
+        "React",
+        "Vue.js",
+        "Angular",
+        "RxJS",
+        "Node.js EventEmitter"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "NewsletterService",
+        "tabName": "IFace-based",
+        "approach": "Traditional OOP with observer interfaces",
+        "type": "class",
+        "code": "class NewsletterService {\n  private subscribers: Observer<string>[] = [];\n  \n  subscribe(observer: Observer<string>): void {\n    this.subscribers.push(observer);\n  }\n  \n  notify(news: string): void {\n    this.subscribers.forEach(observer => observer.update(news));\n  }\n}",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true
+      },
+      {
+        "name": "StockPriceTracker",
+        "tabName": "Event-driven",
+        "approach": "Using JavaScript's EventTarget API",
+        "type": "class",
+        "code": "class StockPriceTracker extends EventTarget {\n  setPrice(symbol: string, price: number): void {\n    this.dispatchEvent(new CustomEvent('priceChange', {\n      detail: { symbol, price }\n    }));\n  }\n}\n\n// Usage\ntracker.addEventListener('priceChange', (event) => {\n  console.log('Price updated:', event.detail);\n});",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true
+      },
+      {
+        "name": "ReactiveObservable",
+        "tabName": "Reactive",
+        "approach": "Modern observables with operators",
+        "type": "class",
+        "code": "class ReactiveObservable<T> {\n  private observers: Array<(value: T) => void> = [];\n  \n  subscribe(callback: (value: T) => void): () => void {\n    this.observers.push(callback);\n    return () => this.unsubscribe(callback);\n  }\n  \n  next(value: T): void {\n    this.observers.forEach(callback => callback(value));\n  }\n  \n  map<U>(transform: (value: T) => U): ReactiveObservable<U> {\n    const mapped = new ReactiveObservable<U>();\n    this.subscribe(value => mapped.next(transform(value)));\n    return mapped;\n  }\n}",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true
+      }
+    ],
+    "examples": [
+      {
+        "input": "newsletter.subscribe(emailSubscriber)",
+        "output": "Subscriber added to newsletter",
+        "description": "Newsletter subscription",
+        "scenario": "Email newsletter - notify all subscribers when new article is published"
+      },
+      {
+        "input": "stockTracker.setPrice('AAPL', 150)",
+        "output": "Price change event fired",
+        "description": "Stock price update",
+        "scenario": "Stock trading app - update all UI components when price changes"
+      },
+      {
+        "input": "observable.subscribe(value => console.log(value))",
+        "output": "Observer function registered",
+        "description": "Reactive subscription",
+        "scenario": "Real-time data - react to streaming updates with functional approach"
+      },
+      {
+        "input": "observable.map(x => x * 2).filter(x => x > 10)",
+        "output": "Transformed observable chain",
+        "description": "Reactive operators",
+        "scenario": "Data transformation - chain operations on streaming data"
+      }
+    ],
+    "code": "class NewsletterService {\n  private subscribers: Observer<string>[] = [];\n  \n  subscribe(observer: Observer<string>): void {\n    this.subscribers.push(observer);\n  }\n  \n  notify(news: string): void {\n    this.subscribers.forEach(observer => observer.update(news));\n  }\n}",
+    "functions": [
+      "NewsletterService",
+      "StockPriceTracker",
+      "ReactiveObservable"
+    ]
+  },
+  {
+    "name": "Prototype",
+    "slug": "prototype",
+    "metadata": {
+      "title": "Prototype Pattern",
+      "description": "Clone existing objects efficiently instead of creating from scratch",
+      "detailedDescription": "🏗️ **The Prototype Pattern - Efficient Object Cloning**\n\nCreates new objects by cloning existing instances rather than creating from scratch. Perfect for when object creation is expensive!\n\n🎯 **Core Problem Solved:**\n• Avoid expensive object creation operations\n• Create similar objects with slight variations\n• Support runtime object creation without knowing concrete classes\n• Enable object creation without constructors\n\n🔍 **Three Implementation Approaches:**\n• **Shallow Clone:** Copy object properties but not nested objects\n• **Deep Clone:** Recursively copy all nested objects and arrays\n• **Registry Pattern:** Store prototypes in registry for reuse\n\n🚀 **Real-World Applications:**\n• Document templates and content management systems\n• Game entity spawning and character creation\n• Configuration management for different environments\n• Caching expensive-to-create objects\n• GUI component libraries with template widgets\n• Database record templates\n\n⚡ **Modern Usage Examples:**\n• Object.create() and Object.assign() in JavaScript\n• Immutable.js and data structure libraries\n• React component cloning patterns\n• Redux state management with immutable updates",
+      "category": "Creational",
+      "difficulty": "Medium",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "concepts": [
+        "Object Cloning",
+        "Deep/Shallow Copy",
+        "Template Objects",
+        "Performance Optimization",
+        "Runtime Creation"
+      ],
+      "useCases": [
+        "Code Organization",
+        "Performance Optimization",
+        "Framework Development"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Factory Method",
+        "Builder",
+        "Singleton"
+      ],
+      "frameworkSupport": [
+        "Lodash (cloneDeep)",
+        "Immutable.js",
+        "Ramda",
+        "Native Object methods"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "shallow-clone",
+        "tabName": "Shallow Clone",
+        "approach": "Copy Object Properties Only",
+        "type": "method",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "class Document {\n  constructor(\n    public title: string = '',\n    public content: string = '',\n    public metadata: Record<string, any> = {}\n  ) {}\n\n  // Shallow clone - only copies direct properties\n  public clone(): Document {\n    return new Document(\n      this.title,\n      this.content,\n      this.metadata  // Reference copied, not deep cloned\n    );\n  }\n}\n\n// Alternative using Object.assign\nconst shallowClone = (obj: any) => Object.assign({}, obj);\n\n// Or using spread operator\nconst shallowCloneSpread = (obj: any) => ({ ...obj });\n\n// Usage\nconst template = new Document('Template', 'Base content', { author: 'John' });\nconst copy = template.clone();\n\n// Issue: metadata is shared between original and copy\ncopy.metadata.author = 'Jane'; // This affects the original!"
+      },
+      {
+        "name": "deep-clone",
+        "tabName": "Deep Clone",
+        "approach": "Recursively Clone All Nested Objects",
+        "type": "method",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true,
+        "code": "class Document {\n  constructor(\n    public title: string = '',\n    public content: string = '',\n    public metadata: Record<string, unknown> = {},\n    public sections: DocumentSection[] = []\n  ) {}\n\n  // Deep clone - recursively copies all nested objects\n  public clone(): Document {\n    return new Document(\n      this.title,\n      this.content,\n      { ...this.metadata }, // Shallow copy for simple objects\n      this.sections.map(section => section.clone()) // Deep copy array\n    );\n  }\n}\n\n// Generic deep clone utility\nfunction deepClone<T>(obj: T): T {\n  if (obj === null || typeof obj !== 'object') {\n    return obj;\n  }\n\n  if (obj instanceof Date) {\n    return new Date(obj.getTime()) as T;\n  }\n\n  if (obj instanceof Array) {\n    return obj.map(item => deepClone(item)) as T;\n  }\n\n  if (typeof obj === 'object') {\n    const cloned = {} as T;\n    for (const key in obj) {\n      if (obj.hasOwnProperty(key)) {\n        cloned[key] = deepClone(obj[key]);\n      }\n    }\n    return cloned;\n  }\n\n  return obj;\n}\n\n// Usage\nconst template = new Document('Template', 'Content', { author: 'John' });\nconst copy = template.clone();\ncopy.metadata.author = 'Jane'; // Original is unaffected"
+      },
+      {
+        "name": "registry-pattern",
+        "tabName": "Registry",
+        "approach": "Centralized Prototype Storage",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(k)",
+        "isOptimal": false,
+        "code": "class EntityRegistry {\n  private prototypes: Map<string, GameEntity> = new Map();\n\n  public registerPrototype(name: string, prototype: GameEntity): void {\n    this.prototypes.set(name, prototype);\n  }\n\n  public createEntity(name: string): GameEntity | null {\n    const prototype = this.prototypes.get(name);\n    return prototype ? prototype.clone() : null;\n  }\n\n  public listAvailableTypes(): string[] {\n    return Array.from(this.prototypes.keys());\n  }\n}\n\n// Setup prototypes\nconst registry = new EntityRegistry();\nregistry.registerPrototype('warrior', new Warrior(0, 0, 150, 0.8, 20, 'sword'));\nregistry.registerPrototype('mage', new Mage(0, 0, 80, 1.2, 100, ['fireball']));\n\n// Create entities from prototypes\nconst warrior1 = registry.createEntity('warrior');\nconst warrior2 = registry.createEntity('warrior');\nconst mage1 = registry.createEntity('mage');\n\n// Each entity is independent\nwarrior1?.moveTo(100, 100);\nwarrior2?.moveTo(200, 200);\nmage1?.learnSpell('lightning');\n\nconsole.log(registry.listAvailableTypes()); // ['warrior', 'mage']"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Document template cloning",
+        "description": "Clone existing document template and customize",
+        "input": "reportTemplate.clone().setTitle('Monthly Report').addSection(summarySection)",
+        "output": "New document with custom title and additional section"
+      },
+      {
+        "scenario": "Game entity creation",
+        "description": "Clone warrior prototype to create new warrior instances",
+        "input": "warriorPrototype.clone().moveTo(100, 200).upgradeArmor(10)",
+        "output": "New warrior at position (100, 200) with upgraded armor"
+      },
+      {
+        "scenario": "Environment configuration",
+        "description": "Clone base config for different environments",
+        "input": "baseConfig.clone().updateDatabaseHost('prod.db.com').setLogLevel('error')",
+        "output": "Production config with updated database host and error-only logging"
+      }
+    ],
+    "code": "class Document {\n  constructor(\n    public title: string = '',\n    public content: string = '',\n    public metadata: Record<string, any> = {}\n  ) {}\n\n  // Shallow clone - only copies direct properties\n  public clone(): Document {\n    return new Document(\n      this.title,\n      this.content,\n      this.metadata  // Reference copied, not deep cloned\n    );\n  }\n}\n\n// Alternative using Object.assign\nconst shallowClone = (obj: any) => Object.assign({}, obj);\n\n// Or using spread operator\nconst shallowCloneSpread = (obj: any) => ({ ...obj });\n\n// Usage\nconst template = new Document('Template', 'Base content', { author: 'John' });\nconst copy = template.clone();\n\n// Issue: metadata is shared between original and copy\ncopy.metadata.author = 'Jane'; // This affects the original!",
+    "functions": [
+      "shallow-clone",
+      "deep-clone",
+      "registry-pattern"
+    ]
+  },
+  {
+    "name": "Proxy",
+    "slug": "proxy",
+    "metadata": {
+      "title": "Proxy Pattern",
+      "description": "Control access to objects through placeholder intermediaries",
+      "detailedDescription": "🔗 **The Proxy Pattern - Access Control**\n\nProvides a placeholder or surrogate for another object to control access to it. Perfect for adding functionality without changing the original!\n\n🎯 **Core Problem Solved:**\n• Control access to expensive or sensitive objects\n• Add functionality without modifying original objects\n• Implement lazy loading and resource management\n• Provide transparent access control and monitoring\n\n🔍 **Three Implementation Approaches:**\n• **Virtual Proxy:** Defer expensive operations until needed\n• **Protection Proxy:** Control access based on permissions\n• **Smart Proxy:** Add extra functionality like caching or monitoring\n\n🚀 **Real-World Applications:**\n• CDN networks as proxies for web content delivery\n• ORM lazy loading for database relationships\n• API rate limiting and throttling mechanisms\n• Image placeholders that load on demand\n• Security proxies for access control\n• Caching layers for expensive operations\n\n⚡ **Modern Usage Examples:**\n• JavaScript Proxy for object interception\n• React lazy loading components\n• Service workers as network proxies\n• Database connection pooling proxies",
+      "category": "Structural",
+      "difficulty": "Medium",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "concepts": [
+        "Access Control",
+        "Lazy Loading",
+        "Object Surrogates",
+        "Transparent Intermediation",
+        "Resource Management"
+      ],
+      "useCases": [
+        "Performance Optimization",
+        "Memory Management",
+        "API Design"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Decorator",
+        "Adapter",
+        "Facade"
+      ],
+      "frameworkSupport": [
+        "JavaScript Proxy",
+        "React.lazy",
+        "Service Workers",
+        "HTTP Proxies"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "virtual-proxy",
+        "tabName": "Virtual Proxy",
+        "approach": "Lazy Loading Implementation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "code": "// Subject interface\ninterface Image {\n  display(): void;\n  getSize(): number;\n}\n\n// Expensive real subject\nclass RealImage implements Image {\n  private filename: string;\n  private data: Buffer | null = null;\n\n  constructor(filename: string) {\n    this.filename = filename;\n    this.loadFromDisk(); // Expensive operation!\n  }\n\n  private loadFromDisk(): void {\n    console.log(`Loading image from disk: ${this.filename}`);\n    this.data = Buffer.from(`Image data for ${this.filename}`);\n  }\n\n  display(): void {\n    console.log(`Displaying image: ${this.filename}`);\n  }\n\n  getSize(): number {\n    return this.data?.length || 0;\n  }\n}\n\n// Virtual proxy delays creation until needed\nclass ImageProxy implements Image {\n  private realImage: RealImage | null = null;\n  private filename: string;\n\n  constructor(filename: string) {\n    this.filename = filename;\n    // No expensive loading here!\n  }\n\n  display(): void {\n    // Lazy loading - create real image only when needed\n    if (!this.realImage) {\n      console.log('Proxy: Creating real image (lazy loading)');\n      this.realImage = new RealImage(this.filename);\n    }\n    this.realImage.display();\n  }\n\n  getSize(): number {\n    if (!this.realImage) {\n      console.log('Proxy: Returning cached size without loading');\n      return 0; // Could return cached metadata\n    }\n    return this.realImage.getSize();\n  }\n}\n\n// Usage\nconst image = new ImageProxy('large-photo.jpg');\n// No loading happens here!\n\nconsole.log(image.getSize()); // No image loaded\nimage.display(); // Now the real image is loaded and displayed"
+      },
+      {
+        "name": "protection-proxy",
+        "tabName": "Protect… Proxy",
+        "approach": "Access Control Implementation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "interface BankAccount {\n  withdraw(amount: number): boolean;\n  deposit(amount: number): void;\n  getBalance(): number;\n}\n\nclass RealBankAccount implements BankAccount {\n  private balance: number;\n\n  constructor(initialBalance: number) {\n    this.balance = initialBalance;\n  }\n\n  withdraw(amount: number): boolean {\n    if (this.balance >= amount) {\n      this.balance -= amount;\n      console.log(`Withdrew $${amount}. Balance: $${this.balance}`);\n      return true;\n    }\n    return false;\n  }\n\n  deposit(amount: number): void {\n    this.balance += amount;\n  }\n\n  getBalance(): number {\n    return this.balance;\n  }\n}\n\n// Protection proxy controls access based on user role\nclass ProtectedBankAccountProxy implements BankAccount {\n  private realAccount: RealBankAccount;\n  private userRole: string;\n\n  constructor(account: RealBankAccount, userRole: string) {\n    this.realAccount = account;\n    this.userRole = userRole;\n  }\n\n  withdraw(amount: number): boolean {\n    // Check permissions\n    if (this.userRole !== 'owner' && this.userRole !== 'authorized') {\n      console.log('Access denied: Insufficient permissions');\n      return false;\n    }\n\n    // Business rules\n    if (amount > 1000 && this.userRole !== 'owner') {\n      console.log('Access denied: Large withdrawals require owner');\n      return false;\n    }\n\n    return this.realAccount.withdraw(amount);\n  }\n\n  deposit(amount: number): void {\n    if (this.userRole === 'guest') {\n      console.log('Access denied: Guests cannot deposit');\n      return;\n    }\n    this.realAccount.deposit(amount);\n  }\n\n  getBalance(): number {\n    if (this.userRole === 'guest') {\n      console.log('Access denied: Guests cannot view balance');\n      return 0;\n    }\n    return this.realAccount.getBalance();\n  }\n}\n\n// Usage with different permissions\nconst account = new RealBankAccount(1000);\nconst guestProxy = new ProtectedBankAccountProxy(account, 'guest');\nconst ownerProxy = new ProtectedBankAccountProxy(account, 'owner');\n\nguestProxy.withdraw(100); // Denied\nownerProxy.withdraw(100); // Allowed"
+      },
+      {
+        "name": "caching-proxy",
+        "tabName": "Caching Proxy",
+        "approach": "Performance Enhancement",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(n)",
+        "isOptimal": false,
+        "code": "interface DataService {\n  getData(key: string): Promise<string>;\n  setData(key: string, value: string): Promise<void>;\n}\n\nclass ExpensiveDataService implements DataService {\n  private data: Map<string, string> = new Map();\n\n  async getData(key: string): Promise<string> {\n    console.log(`Fetching from database: ${key}`);\n    // Simulate expensive database call\n    await new Promise(resolve => setTimeout(resolve, 1000));\n    return this.data.get(key) || `Data for ${key}`;\n  }\n\n  async setData(key: string, value: string): Promise<void> {\n    console.log(`Saving to database: ${key}`);\n    await new Promise(resolve => setTimeout(resolve, 500));\n    this.data.set(key, value);\n  }\n}\n\n// Caching proxy improves performance\nclass CachingDataProxy implements DataService {\n  private realService: ExpensiveDataService;\n  private cache: Map<string, { value: string; timestamp: number }>;\n  private cacheTTL: number = 5000; // 5 seconds\n\n  constructor(realService: ExpensiveDataService) {\n    this.realService = realService;\n    this.cache = new Map();\n  }\n\n  async getData(key: string): Promise<string> {\n    const cached = this.cache.get(key);\n    const now = Date.now();\n\n    // Return cached data if still valid\n    if (cached && (now - cached.timestamp) < this.cacheTTL) {\n      console.log(`Returning cached data for: ${key}`);\n      return cached.value;\n    }\n\n    // Cache miss or expired - fetch from real service\n    console.log(`Cache miss for: ${key}, fetching...`);\n    const data = await this.realService.getData(key);\n    \n    // Store in cache\n    this.cache.set(key, { value: data, timestamp: now });\n    return data;\n  }\n\n  async setData(key: string, value: string): Promise<void> {\n    await this.realService.setData(key, value);\n    // Update cache\n    this.cache.set(key, { value, timestamp: Date.now() });\n  }\n}\n\n// Usage\nconst expensiveService = new ExpensiveDataService();\nconst proxy = new CachingDataProxy(expensiveService);\n\nawait proxy.getData('user:123'); // Slow: fetches from database\nawait proxy.getData('user:123'); // Fast: returns from cache"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Image lazy loading",
+        "description": "Load expensive images only when needed",
+        "input": "imageProxy.display()",
+        "output": "Proxy: Creating real image (lazy loading) -> Displaying image: photo.jpg"
+      },
+      {
+        "scenario": "Bank account protection",
+        "description": "Control access based on user permissions",
+        "input": "protectedAccount.withdraw(1500) // guest user",
+        "output": "Access denied: Insufficient permissions for withdrawal"
+      },
+      {
+        "scenario": "Data service caching",
+        "description": "Cache expensive API calls automatically",
+        "input": "cachingProxy.getData('user:123')",
+        "output": "First call: fetches from API, subsequent calls: returns from cache"
+      }
+    ],
+    "code": "// Subject interface\ninterface Image {\n  display(): void;\n  getSize(): number;\n}\n\n// Expensive real subject\nclass RealImage implements Image {\n  private filename: string;\n  private data: Buffer | null = null;\n\n  constructor(filename: string) {\n    this.filename = filename;\n    this.loadFromDisk(); // Expensive operation!\n  }\n\n  private loadFromDisk(): void {\n    console.log(`Loading image from disk: ${this.filename}`);\n    this.data = Buffer.from(`Image data for ${this.filename}`);\n  }\n\n  display(): void {\n    console.log(`Displaying image: ${this.filename}`);\n  }\n\n  getSize(): number {\n    return this.data?.length || 0;\n  }\n}\n\n// Virtual proxy delays creation until needed\nclass ImageProxy implements Image {\n  private realImage: RealImage | null = null;\n  private filename: string;\n\n  constructor(filename: string) {\n    this.filename = filename;\n    // No expensive loading here!\n  }\n\n  display(): void {\n    // Lazy loading - create real image only when needed\n    if (!this.realImage) {\n      console.log('Proxy: Creating real image (lazy loading)');\n      this.realImage = new RealImage(this.filename);\n    }\n    this.realImage.display();\n  }\n\n  getSize(): number {\n    if (!this.realImage) {\n      console.log('Proxy: Returning cached size without loading');\n      return 0; // Could return cached metadata\n    }\n    return this.realImage.getSize();\n  }\n}\n\n// Usage\nconst image = new ImageProxy('large-photo.jpg');\n// No loading happens here!\n\nconsole.log(image.getSize()); // No image loaded\nimage.display(); // Now the real image is loaded and displayed",
+    "functions": [
+      "virtual-proxy",
+      "protection-proxy",
+      "caching-proxy"
     ]
   },
   {
@@ -1124,7 +2185,7 @@
     "solutions": [
       {
         "name": "basic-observable",
-        "tabName": "Basic Proxy Observable",
+        "tabName": "Basic Proxy",
         "approach": "Simple reactive object with change listeners",
         "isOptimal": true,
         "timeComplexity": "O(1)",
@@ -1134,7 +2195,7 @@
       },
       {
         "name": "state-manager",
-        "tabName": "Application State Manager",
+        "tabName": "App State Mgr",
         "approach": "Complex state management with history and deep observation",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -1144,7 +2205,7 @@
       },
       {
         "name": "reactive-form",
-        "tabName": "Form Validation System",
+        "tabName": "Form Valid Sys",
         "approach": "Real-time form validation with reactive fields",
         "isOptimal": false,
         "timeComplexity": "O(n)",
@@ -1154,7 +2215,7 @@
       },
       {
         "name": "computed-properties",
-        "tabName": "Model with Computed Properties",
+        "tabName": "Model Props",
         "approach": "Reactive model with auto-updating computed values",
         "isOptimal": false,
         "timeComplexity": "O(1)",
@@ -1240,7 +2301,7 @@
     "solutions": [
       {
         "name": "calculator-module",
-        "tabName": "Advanced Calculator",
+        "tabName": "Adv Calculator",
         "approach": "Mathematical calculator with history and chaining",
         "type": "function",
         "code": "const CalculatorModule = (function() {\n  let result = 0;\n  const history: string[] = [];\n  \n  function add(value: number): number {\n    result += value;\n    history.push(`+ ${value}`);\n    return result;\n  }\n  \n  const getCurrentResult = (): number => {\n    return result;\n  };\n  \n  return { add, getCurrentResult };\n})();",
@@ -1250,7 +2311,7 @@
       },
       {
         "name": "api-client",
-        "tabName": "HTTP API Client",
+        "tabName": "HTTP Client",
         "approach": "REST API client with authentication and resource methods",
         "type": "function",
         "code": "const ApiClientModule = (function() {\n  let apiKey = '';\n  let baseUrl = 'https://api.example.com';\n  \n  function buildUrl(endpoint: string): string {\n    return `${baseUrl}${endpoint}`;\n  }\n  \n  function get(endpoint: string) {\n    const url = buildUrl(endpoint);\n    return fetch(url, {\n      headers: { Authorization: `Bearer ${apiKey}` }\n    });\n  }\n  \n  const setApiKey = (key: string): void => {\n    apiKey = key;\n  };\n  \n  return { get, setApiKey };\n})();",
@@ -1260,7 +2321,7 @@
       },
       {
         "name": "event-emitter",
-        "tabName": "Event Management System",
+        "tabName": "Event Mgmt Sys",
         "approach": "Custom event emitter with listener management",
         "type": "function",
         "code": "const EventEmitterModule = (function() {\n  let events = new Map();\n  \n  function on(eventName: string, callback: Function): void {\n    if (!events.has(eventName)) {\n      events.set(eventName, []);\n    }\n    events.get(eventName).push(callback);\n  }\n  \n  function emit(eventName: string, data: unknown): void {\n    const listeners = events.get(eventName) || [];\n    listeners.forEach(callback => callback(data));\n  }\n  \n  return { on, emit };\n})();",
@@ -1294,6 +2355,327 @@
       "calculator-module",
       "api-client",
       "event-emitter"
+    ]
+  },
+  {
+    "name": "Singleton",
+    "slug": "singleton",
+    "metadata": {
+      "title": "Singleton Pattern",
+      "description": "Ensures a class has only one instance with global access point",
+      "detailedDescription": "🏗️ **The Singleton Pattern - Single Instance Control**\n\nEnsures a class has only one instance while providing global access to that instance. Essential for managing shared resources!\n\n🎯 **Core Problem Solved:**\n• Need exactly one instance of a class\n• Global access point required\n• Prevent multiple instantiation\n• Control resource allocation\n\n🔍 **Three Implementation Approaches:**\n• **Class-based:** Traditional OOP with private constructor\n• **Closure-based:** Functional approach using JavaScript closures\n• **Module-based:** ES6 modules are naturally singleton\n\n🚀 **Real-World Applications:**\n• Database connection pools\n• Logging systems and audit trails\n• Configuration managers\n• Cache systems and registries\n• Redux stores in React apps\n\n⚡ **Modern Considerations:**\n• Thread safety in Node.js\n• Module loading behavior\n• Memory management\n• Testing challenges and mocking",
+      "timeComplexity": "O(1) - constant time access",
+      "spaceComplexity": "O(1) - single instance storage",
+      "difficulty": "Easy",
+      "category": "Creational",
+      "concepts": [
+        "Single Instance",
+        "Global Access",
+        "Lazy Initialization",
+        "Resource Control",
+        "Private Constructor"
+      ],
+      "useCases": [
+        "State Management",
+        "Code Organization",
+        "Performance Optimization"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Factory",
+        "Builder",
+        "Prototype"
+      ],
+      "modernAlternatives": [
+        "ES6 Modules",
+        "Dependency Injection",
+        "React Context"
+      ],
+      "frameworkSupport": [
+        "Redux",
+        "Vuex",
+        "Angular Services",
+        "Node.js modules"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "DatabaseConnection",
+        "tabName": "Class-based",
+        "approach": "Traditional OOP with private constructor",
+        "code": "// Class-based Singleton (Traditional)\nexport class DatabaseConnection {\n  private static instance: DatabaseConnection | null = null;\n  private connected: boolean = false;\n  private connectionId: string;\n\n  private constructor() {\n    this.connectionId = Math.random().toString(36).substr(2, 9);\n    this.connect();\n  }\n\n  public static getInstance(): DatabaseConnection {\n    if (!DatabaseConnection.instance) {\n      DatabaseConnection.instance = new DatabaseConnection();\n    }\n    return DatabaseConnection.instance;\n  }\n\n  private connect(): void {\n    this.connected = true;\n    console.log(`Database connected with ID: ${this.connectionId}`);\n  }\n\n  public query(sql: string): string {\n    if (!this.connected) {\n      throw new Error('Database not connected');\n    }\n    return `Executing: ${sql} on connection ${this.connectionId}`;\n  }\n\n  public getConnectionId(): string {\n    return this.connectionId;\n  }\n\n  public isConnected(): boolean {\n    return this.connected;\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "createLoggerSingleton",
+        "tabName": "Closure-based",
+        "approach": "Functional approach using closures",
+        "code": "// Closure-based Singleton (Functional)\nexport const createLoggerSingleton = (() => {\n  let instance: Logger | null = null;\n\n  class Logger {\n    private logs: string[] = [];\n    private id: string;\n\n    constructor() {\n      this.id = `logger-${Date.now()}`;\n    }\n\n    public log(message: string): void {\n      const timestamp = new Date().toISOString();\n      const logEntry = `[${timestamp}] ${message}`;\n      this.logs.push(logEntry);\n      console.log(logEntry);\n    }\n\n    public getLogs(): string[] {\n      return [...this.logs];\n    }\n\n    public getId(): string {\n      return this.id;\n    }\n\n    public clear(): void {\n      this.logs = [];\n    }\n  }\n\n  return (): Logger => {\n    if (!instance) {\n      instance = new Logger();\n    }\n    return instance;\n  };\n})();",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "type": "function"
+      },
+      {
+        "name": "appConfig",
+        "tabName": "Module-based",
+        "approach": "ES6 module natural singleton",
+        "code": "// Module-based Singleton (ES6 Modules)\nclass ConfigManager {\n  private config: Record<string, unknown> = {};\n  private readonly instanceId: string;\n\n  constructor() {\n    this.instanceId = `config-${Math.random().toString(36).substr(2, 9)}`;\n    this.loadDefaultConfig();\n  }\n\n  private loadDefaultConfig(): void {\n    this.config = {\n      apiUrl: 'https://api.example.com',\n      timeout: 5000,\n      retryAttempts: 3,\n      environment: 'development'\n    };\n  }\n\n  public get<T>(key: string): T | undefined {\n    return this.config[key] as T;\n  }\n\n  public set(key: string, value: unknown): void {\n    this.config[key] = value;\n  }\n\n  public getAll(): Record<string, unknown> {\n    return { ...this.config };\n  }\n\n  public getInstanceId(): string {\n    return this.instanceId;\n  }\n\n  public update(newConfig: Record<string, unknown>): void {\n    this.config = { ...this.config, ...newConfig };\n  }\n}\n\n// Export the singleton instance (ES6 module pattern)\nexport const appConfig = new ConfigManager();",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "constant"
+      }
+    ],
+    "examples": [
+      {
+        "input": "DatabaseConnection.getInstance()",
+        "output": "DatabaseConnection instance",
+        "description": "Get database connection",
+        "scenario": "Database connection pool - ensure only one connection manager exists"
+      },
+      {
+        "input": "createLoggerSingleton()",
+        "output": "Logger instance",
+        "description": "Get logger instance",
+        "scenario": "Application logging - single logger prevents file conflicts"
+      },
+      {
+        "input": "appConfig.get('apiUrl')",
+        "output": "'https://api.example.com'",
+        "description": "Access configuration",
+        "scenario": "App configuration - one source of truth for all settings"
+      },
+      {
+        "input": "Multiple getInstance() calls",
+        "output": "Same instance reference",
+        "description": "Instance consistency",
+        "scenario": "Verify singleton behavior - all calls return same instance"
+      }
+    ],
+    "code": "// Class-based Singleton (Traditional)\nexport class DatabaseConnection {\n  private static instance: DatabaseConnection | null = null;\n  private connected: boolean = false;\n  private connectionId: string;\n\n  private constructor() {\n    this.connectionId = Math.random().toString(36).substr(2, 9);\n    this.connect();\n  }\n\n  public static getInstance(): DatabaseConnection {\n    if (!DatabaseConnection.instance) {\n      DatabaseConnection.instance = new DatabaseConnection();\n    }\n    return DatabaseConnection.instance;\n  }\n\n  private connect(): void {\n    this.connected = true;\n    console.log(`Database connected with ID: ${this.connectionId}`);\n  }\n\n  public query(sql: string): string {\n    if (!this.connected) {\n      throw new Error('Database not connected');\n    }\n    return `Executing: ${sql} on connection ${this.connectionId}`;\n  }\n\n  public getConnectionId(): string {\n    return this.connectionId;\n  }\n\n  public isConnected(): boolean {\n    return this.connected;\n  }\n}",
+    "functions": [
+      "DatabaseConnection",
+      "createLoggerSingleton",
+      "appConfig"
+    ]
+  },
+  {
+    "name": "State",
+    "slug": "state",
+    "metadata": {
+      "title": "State Pattern",
+      "description": "Change object behavior based on internal state transitions",
+      "detailedDescription": "🎭 **The State Pattern - Dynamic Behavior Change**\n\nAllows objects to alter behavior when internal state changes. The object appears to change its class dynamically!\n\n🎯 **Core Problem Solved:**\n• Eliminate large conditional statements based on state\n• Make state transitions explicit and manageable\n• Allow different behavior for same methods based on state\n• Encapsulate state-specific behavior in separate classes\n\n🔍 **Three Implementation Approaches:**\n• **State Classes:** Separate classes for each state with specific behavior\n• **State Machine:** Centralized state transition logic and management\n• **Functional State:** Functions representing different states and transitions\n\n🚀 **Real-World Applications:**\n• Media player controls (play, pause, stop states)\n• Game character behavior (idle, walking, jumping, attacking)\n• UI component states (loading, error, success, idle)\n• Network connection management (connected, disconnected, connecting)\n• Workflow and approval processes\n• Traffic light systems and automation\n\n⚡ **Modern Usage Examples:**\n• React component state management with hooks\n• Redux state machines and reducers\n• Game AI behavior trees and state machines\n• Finite state machines in Node.js applications",
+      "category": "Behavioral",
+      "difficulty": "Medium",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "concepts": [
+        "State Transitions",
+        "Dynamic Behavior",
+        "Finite State Machine",
+        "Context Switching",
+        "State Encapsulation"
+      ],
+      "useCases": [
+        "State Management",
+        "Game Development",
+        "UI Architecture"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "Strategy",
+        "Command",
+        "Observer"
+      ],
+      "frameworkSupport": [
+        "Redux",
+        "XState",
+        "React hooks",
+        "State machine libraries"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "media-player-states",
+        "tabName": "Media States",
+        "approach": "Classic State Pattern Implementation",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "code": "// State interface defining behavior contract\ninterface MediaPlayerState {\n  play(player: MediaPlayer): void;\n  pause(player: MediaPlayer): void;\n  stop(player: MediaPlayer): void;\n  getStatus(): string;\n}\n\n// Context class managing current state\nclass MediaPlayer {\n  private currentState: MediaPlayerState;\n  private currentTrack: number = 0;\n\n  constructor() {\n    this.currentState = new StoppedState();\n  }\n\n  setState(state: MediaPlayerState): void {\n    this.currentState = state;\n    console.log(`State: ${state.getStatus()}`);\n  }\n\n  play(): void { this.currentState.play(this); }\n  pause(): void { this.currentState.pause(this); }\n  stop(): void { this.currentState.stop(this); }\n}\n\n// Concrete state implementations\nclass PlayingState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Already playing');\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Pausing playback');\n    player.setState(new PausedState());\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Stopping playback');\n    player.setState(new StoppedState());\n  }\n\n  getStatus(): string { return 'Playing'; }\n}\n\nclass PausedState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Resuming playback');\n    player.setState(new PlayingState());\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Already paused');\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Stopping from pause');\n    player.setState(new StoppedState());\n  }\n\n  getStatus(): string { return 'Paused'; }\n}\n\nclass StoppedState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Starting playback');\n    player.setState(new PlayingState());\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Cannot pause when stopped');\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Already stopped');\n  }\n\n  getStatus(): string { return 'Stopped'; }\n}\n\n// Usage\nconst player = new MediaPlayer();\nplayer.play();  // Starting playback\nplayer.pause(); // Pausing playback\nplayer.play();  // Resuming playback\nplayer.stop();  // Stopping playback"
+      },
+      {
+        "name": "game-character-states",
+        "tabName": "Game Char AI",
+        "approach": "State-Based Behavior System",
+        "type": "class",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "interface CharacterState {\n  handleInput(character: GameCharacter, input: string): void;\n  update(character: GameCharacter): void;\n  getStateName(): string;\n}\n\nclass GameCharacter {\n  private currentState: CharacterState;\n  private position: { x: number; y: number } = { x: 0, y: 0 };\n\n  constructor() {\n    this.currentState = new IdleState();\n  }\n\n  setState(state: CharacterState): void {\n    this.currentState = state;\n    console.log(`Character: ${state.getStateName()}`);\n  }\n\n  handleInput(input: string): void {\n    this.currentState.handleInput(this, input);\n  }\n\n  update(): void {\n    this.currentState.update(this);\n  }\n\n  getPosition() { return this.position; }\n  setPosition(x: number, y: number) { this.position = { x, y }; }\n}\n\n// Character states with different behaviors\nclass IdleState implements CharacterState {\n  handleInput(character: GameCharacter, input: string): void {\n    switch (input) {\n      case 'MOVE':\n        character.setState(new WalkingState());\n        break;\n      case 'JUMP':\n        character.setState(new JumpingState());\n        break;\n      case 'ATTACK':\n        character.setState(new AttackingState());\n        break;\n    }\n  }\n\n  update(character: GameCharacter): void {\n    // Idle behavior - no movement\n  }\n\n  getStateName(): string { return 'Idle'; }\n}\n\nclass WalkingState implements CharacterState {\n  handleInput(character: GameCharacter, input: string): void {\n    switch (input) {\n      case 'STOP':\n        character.setState(new IdleState());\n        break;\n      case 'JUMP':\n        character.setState(new JumpingState());\n        break;\n    }\n  }\n\n  update(character: GameCharacter): void {\n    // Walking behavior - update position\n    const pos = character.getPosition();\n    character.setPosition(pos.x + 1, pos.y);\n  }\n\n  getStateName(): string { return 'Walking'; }\n}\n\nclass JumpingState implements CharacterState {\n  handleInput(character: GameCharacter, input: string): void {\n    // Cannot change state while jumping\n  }\n\n  update(character: GameCharacter): void {\n    // Jump physics - eventually return to idle\n    console.log('Applying jump physics');\n    // After jump completes...\n    character.setState(new IdleState());\n  }\n\n  getStateName(): string { return 'Jumping'; }\n}\n\n// Usage\nconst character = new GameCharacter();\ncharacter.handleInput('MOVE');   // Character: Walking\ncharacter.handleInput('JUMP');   // Character: Jumping\ncharacter.update();              // Jump physics applied, back to Idle"
+      },
+      {
+        "name": "functional-state",
+        "tabName": "Functio… State",
+        "approach": "Modern Functional Approach",
+        "type": "function",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "code": "// Functional state pattern using higher-order functions\ntype StateFunction<T> = (context: T, action: string) => StateFunction<T> | void;\n\nclass FunctionalStateMachine<T> {\n  private currentState: StateFunction<T>;\n  \n  constructor(\n    private context: T,\n    initialState: StateFunction<T>\n  ) {\n    this.currentState = initialState;\n  }\n\n  dispatch(action: string): void {\n    const nextState = this.currentState(this.context, action);\n    if (nextState) {\n      this.currentState = nextState;\n    }\n  }\n\n  getContext(): T {\n    return this.context;\n  }\n}\n\n// Example: Toggle switch with functional states\nconst createToggleSwitch = () => {\n  const context = { isOn: false };\n\n  const offState: StateFunction<typeof context> = (ctx, action) => {\n    if (action === 'TOGGLE') {\n      ctx.isOn = true;\n      console.log('Switch turned ON');\n      return onState;\n    }\n    return offState;\n  };\n\n  const onState: StateFunction<typeof context> = (ctx, action) => {\n    if (action === 'TOGGLE') {\n      ctx.isOn = false;\n      console.log('Switch turned OFF');\n      return offState;\n    }\n    return onState;\n  };\n\n  return new FunctionalStateMachine(context, offState);\n};\n\n// Usage\nconst toggle = createToggleSwitch();\n\ntoggle.dispatch('TOGGLE'); // Switch turned ON\nconsole.log(toggle.getContext().isOn); // true\n\ntoggle.dispatch('TOGGLE'); // Switch turned OFF  \nconsole.log(toggle.getContext().isOn); // false\n\n// More complex example: Counter with limits\nconst createCounter = (min: number, max: number) => {\n  const context = { value: min, min, max };\n\n  const normalState: StateFunction<typeof context> = (ctx, action) => {\n    switch (action) {\n      case 'INCREMENT':\n        if (ctx.value < ctx.max) {\n          ctx.value++;\n          return ctx.value === ctx.max ? maxState : normalState;\n        }\n        break;\n      case 'DECREMENT':\n        if (ctx.value > ctx.min) {\n          ctx.value--;\n          return ctx.value === ctx.min ? minState : normalState;\n        }\n        break;\n    }\n    return normalState;\n  };\n\n  const minState: StateFunction<typeof context> = (ctx, action) => {\n    if (action === 'INCREMENT') {\n      ctx.value++;\n      return normalState;\n    }\n    return minState;\n  };\n\n  const maxState: StateFunction<typeof context> = (ctx, action) => {\n    if (action === 'DECREMENT') {\n      ctx.value--;\n      return normalState;\n    }\n    return maxState;\n  };\n\n  return new FunctionalStateMachine(context, normalState);\n};"
+      }
+    ],
+    "examples": [
+      {
+        "scenario": "Media player control",
+        "description": "Different behavior for play button based on current state",
+        "input": "player.play() // when stopped",
+        "output": "Starting playback (state changes to Playing)"
+      },
+      {
+        "scenario": "Game character movement",
+        "description": "Handle input differently based on character state",
+        "input": "character.handleInput('JUMP') // when walking",
+        "output": "Character state: Jumping (applies jump physics)"
+      },
+      {
+        "scenario": "Traffic light automation",
+        "description": "Automatic state transitions in traffic control",
+        "input": "trafficLight.next() // when red",
+        "output": "Traffic light changed to: Green"
+      }
+    ],
+    "code": "// State interface defining behavior contract\ninterface MediaPlayerState {\n  play(player: MediaPlayer): void;\n  pause(player: MediaPlayer): void;\n  stop(player: MediaPlayer): void;\n  getStatus(): string;\n}\n\n// Context class managing current state\nclass MediaPlayer {\n  private currentState: MediaPlayerState;\n  private currentTrack: number = 0;\n\n  constructor() {\n    this.currentState = new StoppedState();\n  }\n\n  setState(state: MediaPlayerState): void {\n    this.currentState = state;\n    console.log(`State: ${state.getStatus()}`);\n  }\n\n  play(): void { this.currentState.play(this); }\n  pause(): void { this.currentState.pause(this); }\n  stop(): void { this.currentState.stop(this); }\n}\n\n// Concrete state implementations\nclass PlayingState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Already playing');\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Pausing playback');\n    player.setState(new PausedState());\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Stopping playback');\n    player.setState(new StoppedState());\n  }\n\n  getStatus(): string { return 'Playing'; }\n}\n\nclass PausedState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Resuming playback');\n    player.setState(new PlayingState());\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Already paused');\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Stopping from pause');\n    player.setState(new StoppedState());\n  }\n\n  getStatus(): string { return 'Paused'; }\n}\n\nclass StoppedState implements MediaPlayerState {\n  play(player: MediaPlayer): void {\n    console.log('Starting playback');\n    player.setState(new PlayingState());\n  }\n\n  pause(player: MediaPlayer): void {\n    console.log('Cannot pause when stopped');\n  }\n\n  stop(player: MediaPlayer): void {\n    console.log('Already stopped');\n  }\n\n  getStatus(): string { return 'Stopped'; }\n}\n\n// Usage\nconst player = new MediaPlayer();\nplayer.play();  // Starting playback\nplayer.pause(); // Pausing playback\nplayer.play();  // Resuming playback\nplayer.stop();  // Stopping playback",
+    "functions": [
+      "media-player-states",
+      "game-character-states",
+      "functional-state"
+    ]
+  },
+  {
+    "name": "Strategy",
+    "slug": "strategy",
+    "metadata": {
+      "title": "Strategy Pattern",
+      "description": "Encapsulate algorithms and make them interchangeable at runtime",
+      "detailedDescription": "🎭 **The Strategy Pattern - Interchangeable Algorithms**\n\nDefines a family of algorithms, encapsulates each one, and makes them interchangeable at runtime!\n\n🎯 **Core Problem Solved:**\n• Switch between different algorithms dynamically\n• Eliminate complex conditional statements\n• Support easy algorithm extension\n• Decouple algorithm implementation from usage\n\n🔍 **Three Implementation Approaches:**\n• **Interface-based:** Traditional OOP with strategy interfaces\n• **Function-based:** Modern functional approach with higher-order functions\n• **Class-based:** Strategy classes with shared behavior\n\n🚀 **Real-World Applications:**\n• Payment processing systems (credit card, PayPal, crypto)\n• Sorting algorithms (quicksort, mergesort, heapsort)\n• Form validation rules and strategies\n• Data compression algorithms\n• Routing and pathfinding algorithms\n• Authentication mechanisms\n\n⚡ **Modern Usage Examples:**\n• React form validation libraries\n• Data processing pipelines\n• Microservice routing strategies\n• A/B testing algorithm selection",
+      "timeComplexity": "Depends on chosen algorithm",
+      "spaceComplexity": "O(1) - strategy storage overhead",
+      "difficulty": "Medium",
+      "category": "Behavioral",
+      "concepts": [
+        "Algorithm Encapsulation",
+        "Runtime Selection",
+        "Interchangeable Behavior",
+        "Policy Pattern",
+        "Behavioral Parameterization"
+      ],
+      "useCases": [
+        "State Management",
+        "Code Organization",
+        "Performance Optimization"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "relatedPatterns": [
+        "State",
+        "Command",
+        "Template Method"
+      ],
+      "modernAlternatives": [
+        "Higher-order functions",
+        "React hooks patterns",
+        "Functional composition"
+      ],
+      "frameworkSupport": [
+        "React validation libraries",
+        "Express.js middleware",
+        "Redux middleware"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "DataSorter",
+        "tabName": "IFace-based",
+        "approach": "Traditional OOP with strategy interface",
+        "code": "// Strategy pattern for sorting algorithms\ninterface SortingStrategy {\n  sort(data: number[]): number[];\n  getName(): string;\n  getComplexity(): string;\n}\n\nclass QuickSortStrategy implements SortingStrategy {\n  sort(data: number[]): number[] {\n    if (data.length <= 1) return [...data];\n    \n    const pivot = data[Math.floor(data.length / 2)];\n    const less = data.filter(x => x < pivot);\n    const equal = data.filter(x => x === pivot);\n    const greater = data.filter(x => x > pivot);\n    \n    return [\n      ...this.sort(less),\n      ...equal,\n      ...this.sort(greater)\n    ];\n  }\n\n  getName(): string {\n    return 'Quick Sort';\n  }\n\n  getComplexity(): string {\n    return 'O(n log n) average, O(n²) worst';\n  }\n}\n\nclass DataSorter {\n  constructor(private strategy: SortingStrategy) {}\n\n  public setStrategy(strategy: SortingStrategy): void {\n    this.strategy = strategy;\n  }\n\n  public sort(data: number[]): number[] {\n    console.log(`Sorting with ${this.strategy.getName()}`);\n    return this.strategy.sort(data);\n  }\n}",
+        "timeComplexity": "Varies by algorithm",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "FormValidator",
+        "tabName": "Valid Strateg…",
+        "approach": "Map-based strategy registry",
+        "code": "// Strategy pattern for form validation\ninterface ValidationStrategy {\n  validate(value: string): { isValid: boolean; errors: string[] };\n  getType(): string;\n}\n\nclass EmailValidationStrategy implements ValidationStrategy {\n  validate(value: string): { isValid: boolean; errors: string[] } {\n    const errors: string[] = [];\n    \n    if (!value || value.trim().length === 0) {\n      errors.push('Email is required');\n    } else {\n      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n      if (!emailRegex.test(value)) {\n        errors.push('Invalid email format');\n      }\n    }\n    \n    return { isValid: errors.length === 0, errors };\n  }\n\n  getType(): string {\n    return 'email';\n  }\n}\n\nclass FormValidator {\n  private strategies: Map<string, ValidationStrategy> = new Map();\n\n  public addValidationStrategy(field: string, strategy: ValidationStrategy): void {\n    this.strategies.set(field, strategy);\n  }\n\n  public validateField(field: string, value: string): { isValid: boolean; errors: string[] } {\n    const strategy = this.strategies.get(field);\n    if (!strategy) {\n      return { isValid: true, errors: [] };\n    }\n    return strategy.validate(value);\n  }\n}",
+        "timeComplexity": "O(n) per validation",
+        "spaceComplexity": "O(n)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "PaymentProcessor",
+        "tabName": "Function-based",
+        "approach": "Modern functional strategy pattern",
+        "code": "// Functional strategy pattern for payments\nconst paymentStrategies = {\n  creditCard: async (amount: number) => {\n    await new Promise(resolve => setTimeout(resolve, 100));\n    return {\n      success: amount > 0,\n      transactionId: `cc_${Math.random().toString(36).substr(2, 9)}`,\n      fee: amount * 0.029 // 2.9% fee\n    };\n  },\n\n  paypal: async (amount: number) => {\n    await new Promise(resolve => setTimeout(resolve, 150));\n    return {\n      success: amount > 0,\n      transactionId: `pp_${Math.random().toString(36).substr(2, 9)}`,\n      fee: amount * 0.034 + 0.30 // 3.4% + $0.30 fee\n    };\n  },\n\n  bankTransfer: async (amount: number) => {\n    await new Promise(resolve => setTimeout(resolve, 300));\n    return {\n      success: amount > 0,\n      transactionId: `bt_${Math.random().toString(36).substr(2, 9)}`,\n      fee: amount > 1000 ? 0 : 5.00 // Free for amounts over $1000\n    };\n  }\n} as const;\n\nclass PaymentProcessor {\n  public async processPayment(\n    method: keyof typeof paymentStrategies,\n    amount: number\n  ) {\n    const strategy = paymentStrategies[method];\n    if (!strategy) {\n      throw new Error(`Unknown payment method: ${method}`);\n    }\n    return await strategy(amount);\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      }
+    ],
+    "examples": [
+      {
+        "input": "sorter.setStrategy(new QuickSortStrategy())",
+        "output": "Strategy changed to QuickSort",
+        "description": "Change sorting algorithm",
+        "scenario": "Data processing - choose optimal sorting algorithm based on data size"
+      },
+      {
+        "input": "validator.validateField('email', 'user@example.com')",
+        "output": "{ isValid: true, errors: [] }",
+        "description": "Email validation",
+        "scenario": "Form validation - apply different validation rules per field type"
+      },
+      {
+        "input": "processor.processPayment('creditCard', 100)",
+        "output": "{ success: true, transactionId: 'cc_xyz', fee: 2.90 }",
+        "description": "Process credit card payment",
+        "scenario": "E-commerce - handle different payment methods with varying fees"
+      },
+      {
+        "input": "sorter.sort([3, 1, 4, 1, 5, 9, 2, 6])",
+        "output": "[1, 1, 2, 3, 4, 5, 6, 9]",
+        "description": "Sort array with current strategy",
+        "scenario": "Algorithm selection - same interface, different implementations"
+      }
+    ],
+    "code": "// Strategy pattern for sorting algorithms\ninterface SortingStrategy {\n  sort(data: number[]): number[];\n  getName(): string;\n  getComplexity(): string;\n}\n\nclass QuickSortStrategy implements SortingStrategy {\n  sort(data: number[]): number[] {\n    if (data.length <= 1) return [...data];\n    \n    const pivot = data[Math.floor(data.length / 2)];\n    const less = data.filter(x => x < pivot);\n    const equal = data.filter(x => x === pivot);\n    const greater = data.filter(x => x > pivot);\n    \n    return [\n      ...this.sort(less),\n      ...equal,\n      ...this.sort(greater)\n    ];\n  }\n\n  getName(): string {\n    return 'Quick Sort';\n  }\n\n  getComplexity(): string {\n    return 'O(n log n) average, O(n²) worst';\n  }\n}\n\nclass DataSorter {\n  constructor(private strategy: SortingStrategy) {}\n\n  public setStrategy(strategy: SortingStrategy): void {\n    this.strategy = strategy;\n  }\n\n  public sort(data: number[]): number[] {\n    console.log(`Sorting with ${this.strategy.getName()}`);\n    return this.strategy.sort(data);\n  }\n}",
+    "functions": [
+      "DataSorter",
+      "FormValidator",
+      "PaymentProcessor"
     ]
   },
   {
@@ -1345,7 +2727,7 @@
     "solutions": [
       {
         "name": "data-processing",
-        "tabName": "Data Processing Pipeline",
+        "tabName": "Data Pipeline",
         "approach": "Load, validate, transform, save with format-specific implementations",
         "type": "class",
         "code": "abstract class DataProcessor {\n  processData(data: unknown[]): string {\n    const results = [];\n    results.push(this.loadData(data));\n    results.push(this.transformData(this.validateData(data)));\n    results.push(this.saveData(data));\n    return results.join(' → ');\n  }\n  \n  protected abstract loadData(data: unknown[]): string;\n  protected abstract transformData(data: unknown[]): string;\n  protected abstract saveData(data: unknown[]): string;\n  \n  protected validateData(data: unknown[]): unknown[] {\n    return data.filter(item => item != null && item !== '');\n  }\n}",
@@ -1355,7 +2737,7 @@
       },
       {
         "name": "game-ai",
-        "tabName": "Game AI Strategy Template",
+        "tabName": "Game Strat",
         "approach": "Turn-based AI with different strategic implementations",
         "type": "class",
         "code": "abstract class GameAI {\n  playTurn(): string {\n    const actions = [];\n    actions.push(this.collectResources());\n    actions.push(this.buildStructures());\n    actions.push(this.buildUnits());\n    actions.push(this.sendScouts());\n    const attack = this.sendWarriors();\n    if (attack) actions.push(attack);\n    return actions.join(' | ');\n  }\n  \n  protected abstract collectResources(): string;\n  protected abstract buildStructures(): string;\n  protected abstract buildUnits(): string;\n  \n  protected sendScouts(): string {\n    return 'Scouts deployed';\n  }\n  \n  protected sendWarriors(): string | null {\n    return null;\n  }\n}",
@@ -1365,7 +2747,7 @@
       },
       {
         "name": "document-generation",
-        "tabName": "Multi-Format Document Generator",
+        "tabName": "Multi-Format …",
         "approach": "Generate documents in HTML, Markdown, PDF formats",
         "type": "class",
         "code": "abstract class DocumentGenerator {\n  generateDocument(title: string, content: string[]): string {\n    const parts = [];\n    parts.push(this.createHeader(title));\n    parts.push(this.formatContent(content));\n    parts.push(this.addFooter());\n    \n    const metadata = this.addMetadata();\n    if (metadata) parts.push(metadata);\n    \n    return this.finalizeDocument(parts);\n  }\n  \n  protected abstract createHeader(title: string): string;\n  protected abstract formatContent(content: string[]): string;\n  protected abstract finalizeDocument(parts: string[]): string;\n  \n  protected addFooter(): string {\n    return `Generated on ${new Date().toISOString()}`;\n  }\n  \n  protected addMetadata(): string | null {\n    return null;\n  }\n}",
@@ -1399,6 +2781,111 @@
       "data-processing",
       "game-ai",
       "document-generation"
+    ]
+  },
+  {
+    "name": "Visitor",
+    "slug": "visitor",
+    "metadata": {
+      "title": "Visitor Pattern",
+      "category": "Behavioral",
+      "difficulty": "Hard",
+      "timeComplexity": "O(n) - visits each element once",
+      "spaceComplexity": "O(h) - recursion depth for tree structures",
+      "description": "Separate algorithms from objects they operate on",
+      "concepts": [
+        "design patterns",
+        "software architecture",
+        "code organization",
+        "object-oriented programming"
+      ],
+      "detailedDescription": "\n    ## 👋 Visitor Pattern\n\n    The **Visitor Pattern** separates algorithms from the objects on which they operate. It lets you define new operations without changing the classes of elements on which they operate.\n\n    ### Core Concepts\n\n    🔹 **Visitor Interface** - Declares visit methods for each element type  \n    🔹 **Concrete Visitors** - Implement specific operations on elements  \n    🔹 **Element Interface** - Declares accept method that takes visitor  \n    🔹 **Double Dispatch** - Method calls depend on both visitor and element types\n\n    ### Real-World Applications\n\n    **Compilers** - AST traversal for code generation, optimization, type checking  \n    **File Systems** - Operations on files/directories (size calculation, security scanning)  \n    **Document Processing** - Export to different formats (HTML, PDF, XML)  \n    **Game Engines** - Operations on game objects (rendering, collision, AI)\n\n    ### Double Dispatch Magic\n\n    **Single Dispatch** - Method chosen based on receiver type only  \n    **Double Dispatch** - Method chosen based on both visitor and element types  \n    **Result** - Visitor pattern enables operation-specific behavior per element type\n\n    ### Implementation Benefits\n\n    ✅ **Open/Closed Principle** - Easy to add new operations without modifying elements  \n    ✅ **Single Responsibility** - Operations grouped by visitor, not scattered across elements  \n    ✅ **Centralized Operations** - Related operations live in same visitor class  \n    ✅ **Type Safety** - Compile-time verification of visitor-element compatibility\n  ",
+      "useCases": [
+        "Compiler Design",
+        "Data Processing",
+        "Code Analysis"
+      ],
+      "realWorldApplications": [
+        "Software frameworks",
+        "Application architecture",
+        "Library development",
+        "System design"
+      ],
+      "advantages": [
+        "Easy to add new operations without changing element classes",
+        "Groups related operations in visitor classes",
+        "Can accumulate state during traversal",
+        "Works well with composite structures"
+      ],
+      "disadvantages": [
+        "Hard to add new element types (breaks all visitors)",
+        "Violates encapsulation by exposing element internals",
+        "Complex double dispatch mechanism",
+        "Circular dependencies between visitors and elements"
+      ],
+      "relatedPatterns": [
+        "Composite",
+        "Interpreter",
+        "Iterator"
+      ]
+    },
+    "solutions": [
+      {
+        "name": "shape-operations",
+        "tabName": "Shape Ops",
+        "approach": "Multiple operations on geometric shapes",
+        "code": "// Visitor pattern for shape operations\ninterface Shape {\n  accept(visitor: ShapeVisitor): string;\n}\n\ninterface ShapeVisitor {\n  visitCircle(circle: Circle): string;\n  visitRectangle(rectangle: Rectangle): string;\n  visitTriangle(triangle: Triangle): string;\n}\n\nclass Circle implements Shape {\n  constructor(public radius: number) {}\n\n  accept(visitor: ShapeVisitor): string {\n    return visitor.visitCircle(this);\n  }\n\n  getArea(): number {\n    return Math.PI * this.radius * this.radius;\n  }\n}\n\nclass Rectangle implements Shape {\n  constructor(public width: number, public height: number) {}\n\n  accept(visitor: ShapeVisitor): string {\n    return visitor.visitRectangle(this);\n  }\n\n  getArea(): number {\n    return this.width * this.height;\n  }\n}\n\nclass AreaCalculator implements ShapeVisitor {\n  visitCircle(circle: Circle): string {\n    const area = Math.PI * circle.radius * circle.radius;\n    return `Circle area: ${area.toFixed(2)}`;\n  }\n\n  visitRectangle(rectangle: Rectangle): string {\n    const area = rectangle.width * rectangle.height;\n    return `Rectangle area: ${area}`;\n  }\n\n  visitTriangle(triangle: Triangle): string {\n    const area = 0.5 * triangle.base * triangle.height;\n    return `Triangle area: ${area}`;\n  }\n}",
+        "timeComplexity": "O(1)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": true,
+        "type": "class"
+      },
+      {
+        "name": "file-system",
+        "tabName": "File Analysis",
+        "approach": "Size calculation and security scanning on files",
+        "code": "// File system visitor pattern\ninterface FileSystemItem {\n  accept(visitor: FileSystemVisitor): string;\n  getName(): string;\n}\n\ninterface FileSystemVisitor {\n  visitFile(file: File): string;\n  visitDirectory(directory: Directory): string;\n  visitSymlink(symlink: Symlink): string;\n}\n\nclass File implements FileSystemItem {\n  constructor(private name: string, private size: number, private extension: string) {}\n\n  getName(): string {\n    return this.name;\n  }\n\n  getSize(): number {\n    return this.size;\n  }\n\n  getExtension(): string {\n    return this.extension;\n  }\n\n  accept(visitor: FileSystemVisitor): string {\n    return visitor.visitFile(this);\n  }\n}\n\nclass SizeCalculator implements FileSystemVisitor {\n  visitFile(file: File): string {\n    return `${file.getName()}: ${file.getSize()}KB`;\n  }\n\n  visitDirectory(directory: Directory): string {\n    const items = directory.getItems();\n    const totalSize = items.reduce((sum, item) => {\n      if (item instanceof File) {\n        return sum + item.getSize();\n      }\n      return sum;\n    }, 0);\n    \n    return `${directory.getName()}/: ${totalSize}KB (${items.length} items)`;\n  }\n\n  visitSymlink(symlink: Symlink): string {\n    return `${symlink.getName()} -> ${symlink.getTarget()}: 0KB (symlink)`;\n  }\n}",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(1)",
+        "isOptimal": false,
+        "type": "class"
+      },
+      {
+        "name": "ast-processing",
+        "tabName": "AST Processing",
+        "approach": "Code generation and evaluation on expression trees",
+        "code": "// AST visitor pattern\ninterface ASTNode {\n  accept(visitor: ASTVisitor): string;\n}\n\ninterface ASTVisitor {\n  visitNumber(node: NumberNode): string;\n  visitBinaryOp(node: BinaryOpNode): string;\n  visitVariable(node: VariableNode): string;\n}\n\nclass NumberNode implements ASTNode {\n  constructor(public value: number) {}\n\n  accept(visitor: ASTVisitor): string {\n    return visitor.visitNumber(this);\n  }\n}\n\nclass BinaryOpNode implements ASTNode {\n  constructor(\n    public left: ASTNode,\n    public operator: string,\n    public right: ASTNode\n  ) {}\n\n  accept(visitor: ASTVisitor): string {\n    return visitor.visitBinaryOp(this);\n  }\n}\n\nclass CodeGenerator implements ASTVisitor {\n  visitNumber(node: NumberNode): string {\n    return node.value.toString();\n  }\n\n  visitBinaryOp(node: BinaryOpNode): string {\n    const left = node.left.accept(this);\n    const right = node.right.accept(this);\n    return `(${left} ${node.operator} ${right})`;\n  }\n\n  visitVariable(node: VariableNode): string {\n    return node.name;\n  }\n}",
+        "timeComplexity": "O(n)",
+        "spaceComplexity": "O(h)",
+        "isOptimal": false,
+        "type": "class"
+      }
+    ],
+    "examples": [
+      {
+        "input": "createShapeCollection()",
+        "output": "Shape operations executed",
+        "description": "Multi-Operation Shape Processing",
+        "scenario": "Perform different calculations and rendering operations on geometric shapes without modifying shape classes"
+      },
+      {
+        "input": "createFileSystem()",
+        "output": "File system analyzed",
+        "description": "File System Analysis",
+        "scenario": "Analyze file system structure with size calculation and security scanning using visitor pattern"
+      },
+      {
+        "input": "createAST()",
+        "output": "Code generated and evaluated",
+        "description": "AST Processing",
+        "scenario": "Process abstract syntax tree for both code generation and mathematical evaluation with same structure"
+      }
+    ],
+    "code": "// Visitor pattern for shape operations\ninterface Shape {\n  accept(visitor: ShapeVisitor): string;\n}\n\ninterface ShapeVisitor {\n  visitCircle(circle: Circle): string;\n  visitRectangle(rectangle: Rectangle): string;\n  visitTriangle(triangle: Triangle): string;\n}\n\nclass Circle implements Shape {\n  constructor(public radius: number) {}\n\n  accept(visitor: ShapeVisitor): string {\n    return visitor.visitCircle(this);\n  }\n\n  getArea(): number {\n    return Math.PI * this.radius * this.radius;\n  }\n}\n\nclass Rectangle implements Shape {\n  constructor(public width: number, public height: number) {}\n\n  accept(visitor: ShapeVisitor): string {\n    return visitor.visitRectangle(this);\n  }\n\n  getArea(): number {\n    return this.width * this.height;\n  }\n}\n\nclass AreaCalculator implements ShapeVisitor {\n  visitCircle(circle: Circle): string {\n    const area = Math.PI * circle.radius * circle.radius;\n    return `Circle area: ${area.toFixed(2)}`;\n  }\n\n  visitRectangle(rectangle: Rectangle): string {\n    const area = rectangle.width * rectangle.height;\n    return `Rectangle area: ${area}`;\n  }\n\n  visitTriangle(triangle: Triangle): string {\n    const area = 0.5 * triangle.base * triangle.height;\n    return `Triangle area: ${area}`;\n  }\n}",
+    "functions": [
+      "shape-operations",
+      "file-system",
+      "ast-processing"
     ]
   }
 ]

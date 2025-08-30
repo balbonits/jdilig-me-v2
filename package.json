@@ -27,7 +27,7 @@
     "generate": "npm run generate:exercises && npm run generate:utilities && npm run generate:patterns && npm run generate:projects",
     "generate:exercises": "ts-node scripts/generate-exercises.ts",
     "generate:utilities": "ts-node scripts/generate-utilities.ts",
-    "generate:patterns": "ts-node scripts/generate-patterns.ts",
+    "generate:patterns": "ts-node --project tsconfig.scripts.json scripts/generate-patterns.ts",
     "generate:projects": "ts-node scripts/generate-projects.ts",
     "generate:version": "ts-node scripts/get-version.ts",
     "process-images": "ts-node scripts/process-project-images.ts",
@@ -76,6 +76,7 @@
     "tailwindcss": "^4",
     "ts-jest": "^29.4.1",
     "ts-node": "^10",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
   }
 }
