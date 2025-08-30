@@ -3,7 +3,7 @@ import { Modal, Breadcrumb } from '@/components/ui';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { UtilityData } from '@/interfaces/utilities';
-import { TabContainer, Tab, Showcase } from '@/components/ui';
+import { TabContainer, Tab, Showcase, MarkdownRenderer } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
@@ -155,9 +155,10 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
           {/* Description */}
           {metadata.detailedDescription && (
             <div className={styles.mainDescription}>
-              <div className={styles.descriptionContent}>
-                {metadata.detailedDescription}
-              </div>
+              <MarkdownRenderer 
+              content={metadata.detailedDescription}
+              className={styles.descriptionContent}
+            />
             </div>
           )}
 
@@ -177,9 +178,10 @@ export default function UtilityPage({ utility }: UtilityPageProps) {
             
             {/* Main Description */}
             <div className={styles.descriptionContainer}>
-              <div className={styles.descriptionContent}>
-                {metadata.detailedDescription || metadata.description}
-              </div>
+              <MarkdownRenderer 
+              content={metadata.detailedDescription || metadata.description}
+              className={styles.descriptionContent}
+            />
             </div>
             
             <div className={styles.detailsGrid}>

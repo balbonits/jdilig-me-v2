@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { ExerciseData } from '@/interfaces/exercises';
-import { TabContainer, Tab, Showcase, Grid, Card, Breadcrumb } from '@/components/ui';
+import { TabContainer, Tab, Showcase, Grid, Card, Breadcrumb, MarkdownRenderer } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
@@ -102,9 +102,10 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
         <div className={styles.overviewContainer}>
           {/* Problem Description */}
           <div className={styles.mainDescription}>
-            <div className={styles.descriptionContent}>
-              {exercise.metadata.detailedDescription || exercise.metadata.description}
-            </div>
+            <MarkdownRenderer 
+              content={exercise.metadata.detailedDescription || exercise.metadata.description}
+              className={styles.descriptionContent}
+            />
             {exercise.metadata.examples && exercise.metadata.examples.length > 0 && (
               <div className={styles.examplesList}>
                 <h5 className={styles.examplesLabel}>Examples:</h5>

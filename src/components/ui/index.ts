@@ -15,6 +15,7 @@ export { default as Modal } from './Modal';
 export { default as MobileMenu } from './MobileMenu';
 export { default as NavDropdown } from './NavDropdown';
 export { default as FormattedDescription } from './FormattedDescription';
+export { default as MarkdownRenderer } from './MarkdownRenderer';
 export { default as Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
 
 // Modular Card Components for AboutContent

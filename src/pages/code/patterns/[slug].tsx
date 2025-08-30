@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { PatternData } from '@/interfaces/patterns';
-import { TabContainer, Tab, Showcase, Breadcrumb } from '@/components/ui';
+import { TabContainer, Tab, Showcase, Breadcrumb, MarkdownRenderer } from '@/components/ui';
 import type { TabItem } from '@/components/ui/TabContainer';
 import type { ShowcaseSection } from '@/components/ui/Showcase';
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb';
@@ -97,9 +97,10 @@ export default function PatternPage({ pattern }: PatternPageProps) {
       content: (
         <div className={styles.overviewContainer}>
           <div className={styles.mainDescription}>
-            <div className={styles.descriptionContent}>
-              {pattern.metadata.detailedDescription || pattern.metadata.description}
-            </div>
+            <MarkdownRenderer 
+              content={pattern.metadata.detailedDescription || pattern.metadata.description}
+              className={styles.descriptionContent}
+            />
             {pattern.examples && pattern.examples.length > 0 && (
               <div className={styles.examplesList}>
                 <h5 className={styles.examplesLabel}>Examples:</h5>
