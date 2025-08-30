@@ -41,10 +41,10 @@ export function useAnalytics() {
     });
   }, [trackEvent]);
 
-  const trackCodeInteraction = useCallback((action: string, slug: string, type: 'exercise' | 'utility') => {
+  const trackCodeInteraction = useCallback((action: string, slug: string, type: 'exercise' | 'utility' | 'pattern') => {
     trackEvent('code_interaction', {
       action,
-      [type === 'exercise' ? 'exercise_slug' : 'utility_slug']: slug,
+      [type === 'exercise' ? 'exercise_slug' : type === 'utility' ? 'utility_slug' : 'pattern_slug']: slug,
       content_type: type,
       category: 'Code Showcase',
     });

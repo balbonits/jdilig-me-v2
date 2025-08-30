@@ -1,5 +1,5 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
 // Abstract product interfaces
 interface Button {
@@ -291,6 +291,9 @@ export const metadata: PatternMetadata = {
   category: 'Creational',
   difficulty: 'Hard',
   description: 'Create families of related objects without specifying concrete classes',
+  concepts: ['abstract interfaces', 'object families', 'creational pattern', 'loose coupling'],
+  timeComplexity: 'O(1)',
+  spaceComplexity: 'O(1)',
   detailedDescription: `
     ## 🏗️ Abstract Factory Pattern
 
@@ -322,7 +325,13 @@ export const metadata: PatternMetadata = {
     PatternUseCase.CODE_ORGANIZATION,
     PatternUseCase.SYSTEM_INTEGRATION
   ],
-  advantages: [
+  realWorldApplications: [
+    'UI component libraries with theme support',
+    'Database abstraction layers with multiple drivers',
+    'Cross-platform application development',
+    'Game engines with multiple rendering backends'
+  ],
+    advantages: [
     'Ensures consistency among related objects',
     'Easy to exchange product families',
     'Promotes loose coupling between classes',
@@ -337,76 +346,150 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Factory Method', 'Builder', 'Prototype']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'ui-theme-factory',
-    title: 'UI Theme Factory',
-    description: 'Create consistent UI components for different themes',
+    tabName: 'UI Theme Factory',
+    code: `// UI Factory implementation for different themes
+class LightUIFactory implements UIFactory {
+  createButton(text: string): Button {
+    return new LightButton(text);
+  }
+
+  createInput(placeholder: string): Input {
+    return new LightInput(placeholder);
+  }
+
+  createModal(title: string, content: string): Modal {
+    return new LightModal(title, content);
+  }
+}
+
+class DarkUIFactory implements UIFactory {
+  createButton(text: string): Button {
+    return new DarkButton(text);
+  }
+
+  createInput(placeholder: string): Input {
+    return new DarkInput(placeholder);
+  }
+
+  createModal(title: string, content: string): Modal {
+    return new DarkModal(title, content);
+  }
+}`,
+    approach: 'Create consistent UI components for different themes',
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    type: 'class'
   },
   {
     name: 'database-factory',
-    title: 'Database Abstraction Factory',
-    description: 'Create compatible database components for different engines',
+    tabName: 'Database Abstraction Factory',
+    code: `// Database Factory implementation for different engines
+class PostgreSQLFactory implements DatabaseFactory {
+  createConnection(connectionString: string): Connection {
+    return new PostgreSQLConnection(connectionString);
+  }
+
+  createQuery<T>(table: string): Query<T> {
+    return new PostgreSQLQuery<T>(table);
+  }
+
+  createTransaction(): Transaction {
+    return new PostgreSQLTransaction();
+  }
+}
+
+class MySQLFactory implements DatabaseFactory {
+  createConnection(connectionString: string): Connection {
+    return new MySQLConnection(connectionString);
+  }
+
+  createQuery<T>(table: string): Query<T> {
+    return new MySQLQuery<T>(table);
+  }
+
+  createTransaction(): Transaction {
+    return new MySQLTransaction();
+  }
+}`,
+    approach: 'Create compatible database components for different engines',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'application-integration',
-    title: 'Complete Application Integration',
-    description: 'Combine UI and database factories in application',
+    tabName: 'Complete Application Integration',
+    code: `// Application that uses abstract factories
+export class Application {
+  constructor(private uiFactory: UIFactory, private dbFactory: DatabaseFactory) {}
+
+  public createUserInterface(): void {
+    const loginButton = this.uiFactory.createButton('Login');
+    const usernameInput = this.uiFactory.createInput('Enter username');
+    const loginModal = this.uiFactory.createModal('Login', 'Please enter your credentials');
+
+    console.log('UI Components created:');
+    console.log(loginButton.render());
+    console.log(usernameInput.render());
+    console.log(loginModal.render());
+  }
+
+  public async setupDatabase(): Promise<void> {
+    const connection = this.dbFactory.createConnection('localhost:5432/myapp');
+    await connection.connect();
+
+    const userQuery = this.dbFactory.createQuery<{id: string, username: string, email: string}>('users');
+    await userQuery.select(['id', 'username', 'email']).execute();
+
+    const transaction = this.dbFactory.createTransaction();
+    await transaction.begin();
+    await transaction.commit();
+  }
+}
+
+// Factory functions
+export function createLightThemeApp() {
+  const uiFactory = new LightUIFactory();
+  const dbFactory = new PostgreSQLFactory();
+  return new Application(uiFactory, dbFactory);
+}
+
+export function createDarkThemeApp() {
+  const uiFactory = new DarkUIFactory();
+  const dbFactory = new PostgreSQLFactory();
+  return new Application(uiFactory, dbFactory);
+}`,
+    approach: 'Combine UI and database factories in application',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Theme-Consistent UI Creation',
     scenario: 'Create UI components that match the selected theme automatically',
-    inputExample: `const app = createDarkThemeApp();
-app.createUserInterface();`,
-    outputExample: `UI Components created:
-<button class="btn btn-dark">Login</button>
-<input class="input input-dark" placeholder="Enter username" value="">
-<div class="modal modal-dark"><div class="modal-header">Login</div><div class="modal-body">Please enter your credentials</div></div>`,
-    explanation: 'All UI components created by the dark theme factory automatically have consistent dark styling. The abstract factory ensures theme compatibility across all components.'
+    description: 'Theme-Consistent UI Creation',
+    input: 'createDarkThemeApp().createUserInterface()',
+    output: 'UI Components with dark theme styling'
   },
   {
-    title: 'Database Abstraction',
     scenario: 'Create database components that work with specific database engines',
-    inputExample: `const dbFactory = new PostgreSQLFactory();
-const connection = dbFactory.createConnection('localhost:5432/myapp');
-const query = dbFactory.createQuery('users');
-await connection.connect();
-await query.select(['id', 'name']).where('active = true').execute();`,
-    outputExample: `Connecting to PostgreSQL: localhost:5432/myapp
-Executing PostgreSQL query: SELECT id, name FROM users WHERE active = true`,
-    explanation: 'Database factory creates PostgreSQL-specific implementations that work together. Connection, query, and transaction objects are all compatible and optimized for PostgreSQL.'
+    description: 'Database Abstraction',
+    input: 'new PostgreSQLFactory().createConnection()',
+    output: 'PostgreSQL-compatible database components'
   },
   {
-    title: 'Complete Application Setup',
     scenario: 'Configure entire application with compatible UI and database factories',
-    inputExample: `const lightApp = createLightThemeApp();
-lightApp.createUserInterface();
-await lightApp.setupDatabase();`,
-    outputExample: `UI Components created:
-<button class="btn btn-light">Login</button>
-<input class="input input-light" placeholder="Enter username" value="">
-<div class="modal modal-light"><div class="modal-header">Login</div><div class="modal-body">Please enter your credentials</div></div>
-Connecting to PostgreSQL: localhost:5432/myapp
-Executing PostgreSQL query: SELECT id, username, email FROM users
-Beginning PostgreSQL transaction
-Committing PostgreSQL transaction`,
-    explanation: 'Application uses light theme UI factory and PostgreSQL database factory together. Both factories provide compatible components that work seamlessly in the same application.'
+    description: 'Complete Application Setup',
+    input: 'createLightThemeApp() with database setup',
+    output: 'Fully configured application with light theme UI and PostgreSQL database'
   }
 ];
 
-export { UIFactory, DatabaseFactory, Button, Input, Modal, Connection, Query, Transaction };

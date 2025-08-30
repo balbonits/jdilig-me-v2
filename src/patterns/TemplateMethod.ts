@@ -1,5 +1,5 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Data Processing Template
 abstract class DataProcessor {
@@ -294,7 +294,10 @@ export const metadata: PatternMetadata = {
   title: 'Template Method Pattern',
   category: 'Behavioral',
   difficulty: 'Medium',
+  timeComplexity: 'O(n) - depends on algorithm steps',
+  spaceComplexity: 'O(1) - no additional space overhead',
   description: 'Define algorithm skeleton, let subclasses override specific steps',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 📋 Template Method Pattern
 
@@ -333,6 +336,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.ALGORITHM_IMPLEMENTATION,
     PatternUseCase.FRAMEWORK_DEVELOPMENT
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Promotes code reuse by extracting common behavior',
     'Enforces consistent algorithm structure',
@@ -348,89 +352,120 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Strategy', 'Factory Method', 'Iterator']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'data-processing',
-    title: 'Data Processing Pipeline',
-    description: 'Load, validate, transform, save with format-specific implementations',
+    tabName: 'Data Processing Pipeline',
+    approach: 'Load, validate, transform, save with format-specific implementations',
+    type: 'class',
+    code: `abstract class DataProcessor {
+  processData(data: unknown[]): string {
+    const results = [];
+    results.push(this.loadData(data));
+    results.push(this.transformData(this.validateData(data)));
+    results.push(this.saveData(data));
+    return results.join(' → ');
+  }
+  
+  protected abstract loadData(data: unknown[]): string;
+  protected abstract transformData(data: unknown[]): string;
+  protected abstract saveData(data: unknown[]): string;
+  
+  protected validateData(data: unknown[]): unknown[] {
+    return data.filter(item => item != null && item !== '');
+  }
+}`,
     isOptimal: true,
     timeComplexity: 'O(n)',
-    spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    spaceComplexity: 'O(n)'
   },
   {
     name: 'game-ai',
-    title: 'Game AI Strategy Template',
-    description: 'Turn-based AI with different strategic implementations',
+    tabName: 'Game AI Strategy Template',
+    approach: 'Turn-based AI with different strategic implementations',
+    type: 'class',
+    code: `abstract class GameAI {
+  playTurn(): string {
+    const actions = [];
+    actions.push(this.collectResources());
+    actions.push(this.buildStructures());
+    actions.push(this.buildUnits());
+    actions.push(this.sendScouts());
+    const attack = this.sendWarriors();
+    if (attack) actions.push(attack);
+    return actions.join(' | ');
+  }
+  
+  protected abstract collectResources(): string;
+  protected abstract buildStructures(): string;
+  protected abstract buildUnits(): string;
+  
+  protected sendScouts(): string {
+    return 'Scouts deployed';
+  }
+  
+  protected sendWarriors(): string | null {
+    return null;
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(1)',
-    spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    spaceComplexity: 'O(1)'
   },
   {
     name: 'document-generation',
-    title: 'Multi-Format Document Generator',
-    description: 'Generate documents in HTML, Markdown, PDF formats',
+    tabName: 'Multi-Format Document Generator',
+    approach: 'Generate documents in HTML, Markdown, PDF formats',
+    type: 'class',
+    code: `abstract class DocumentGenerator {
+  generateDocument(title: string, content: string[]): string {
+    const parts = [];
+    parts.push(this.createHeader(title));
+    parts.push(this.formatContent(content));
+    parts.push(this.addFooter());
+    
+    const metadata = this.addMetadata();
+    if (metadata) parts.push(metadata);
+    
+    return this.finalizeDocument(parts);
+  }
+  
+  protected abstract createHeader(title: string): string;
+  protected abstract formatContent(content: string[]): string;
+  protected abstract finalizeDocument(parts: string[]): string;
+  
+  protected addFooter(): string {
+    return \`Generated on \${new Date().toISOString()}\`;
+  }
+  
+  protected addMetadata(): string | null {
+    return null;
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
-    spaceComplexity: 'O(n)',
-    difficulty: 'Easy'
+    spaceComplexity: 'O(n)'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Multi-Format Data Processing',
-    scenario: 'Process data through consistent pipeline with format-specific implementations',
-    inputExample: `const processors = createDataProcessors();
-const data = ['item1', 'item2', null, 'item3', ''];
-
-console.log(processors.csv.processData(data));
-console.log('---');
-console.log(processors.json.processData(data));`,
-    outputExample: `Loaded 5 CSV records → Converted 3 records to CSV format → Saved CSV file with 3 records → Generated CSV summary report
----
-Parsed 5 JSON objects → Normalized 3 JSON objects → Stored JSON data in database (3 records)`,
-    explanation: 'All processors follow the same pipeline (load → validate → transform → save) but implement steps differently. CSV includes post-processing while JSON does not.'
+    scenario: 'Multi-Format Data Processing',
+    description: 'Process data through consistent pipeline with format-specific implementations',
+    input: "processors.csv.processData(['item1', 'item2', null, 'item3', ''])",
+    output: "Loaded 5 CSV records → Converted 3 records to CSV format → Saved CSV file with 3 records → Generated CSV summary report"
   },
   {
-    title: 'Game AI Strategies',
-    scenario: 'Implement different AI strategies using common turn structure',
-    inputExample: `const ais = createGameAIs();
-
-console.log('Aggressive AI:');
-console.log(ais.aggressive.playTurn());
-console.log('\\nDefensive AI:');
-console.log(ais.defensive.playTurn());`,
-    outputExample: `Aggressive AI:
-Quickly gathered minimum resources | Built barracks and weapon factories | Mass produced combat units | Scouts deployed to explore map | Launched full-scale attack on enemy
-
-Defensive AI:
-Methodically collected maximum resources | Built walls, towers, and defensive structures | Created balanced army with defensive focus | Scouts deployed to explore map | Positioned units in defensive formations`,
-    explanation: 'All AIs follow the same turn sequence but implement each step according to their strategy. Aggressive focuses on quick attacks, Defensive on fortification.'
+    scenario: 'Game AI Strategies',
+    description: 'Implement different AI strategies using common turn structure',
+    input: "ais.aggressive.playTurn()",
+    output: "Quickly gathered minimum resources | Built barracks and weapon factories | Mass produced combat units | Scouts deployed to explore map | Launched full-scale attack on enemy"
   },
   {
-    title: 'Cross-Format Document Generation',
-    scenario: 'Generate documents in multiple formats using consistent structure',
-    inputExample: `const generators = createDocumentGenerators();
-const title = 'Project Report';
-const content = ['Introduction text', 'Main findings', 'Conclusions'];
-
-console.log(generators.html.generateDocument(title, content));
-console.log('---');
-console.log(generators.markdown.generateDocument(title, content));`,
-    outputExample: `<html><head><title>Project Report</title></head><body><h1>Project Report</h1><p>Introduction text</p><p>Main findings</p><p>Conclusions</p>Generated on 2024-01-01T12:00:00.000Z<meta name="generator" content="HTMLGenerator" charset="utf-8"></body></html>
----
-# Project Report
-
-Introduction text
-
-Main findings
-
-Conclusions
-
-Generated on 2024-01-01T12:00:00.000Z`,
-    explanation: 'All generators follow the same structure (header → content → footer → metadata) but format output differently. HTML adds metadata while Markdown keeps it simple.'
+    scenario: 'Cross-Format Document Generation',
+    description: 'Generate documents in multiple formats using consistent structure',
+    input: "generators.html.generateDocument('Project Report', ['Introduction text', 'Main findings', 'Conclusions'])",
+    output: "<html><head><title>Project Report</title></head><body><h1>Project Report</h1><p>Introduction text</p><p>Main findings</p><p>Conclusions</p>Generated on 2024-01-01T12:00:00.000Z<meta name=\"generator\" content=\"HTMLGenerator\" charset=\"utf-8\"></body></html>"
   }
 ];
 

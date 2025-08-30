@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prefer-const */
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Calculator Revealing Module
 const CalculatorModule = (function() {
@@ -178,7 +181,7 @@ const ApiClientModule = (function() {
   function simulateApiCall<T>(endpoint: string, options: any = {}): Promise<ApiResponse<T>> {
     return new Promise((resolve, reject) => {
       // Simulate network delay
-      setTimeout(() => {
+      window.setTimeout(() => {
         // Simulate different responses based on endpoint
         if (endpoint.includes('error')) {
           reject(new Error('API Error: Not found'));
@@ -350,7 +353,7 @@ const EventEmitterModule = (function() {
     }
   }
   
-  function validateCallback(callback: Function): void {
+  function validateCallback(callback: (data: any) => void): void {
     if (typeof callback !== 'function') {
       throw new Error('Callback must be a function');
     }
@@ -366,7 +369,7 @@ const EventEmitterModule = (function() {
     return events.get(eventName) || [];
   }
   
-  function addListener(eventName: string, callback: Function, once = false): void {
+  function addListener(eventName: string, callback: (data: any) => void, once = false): void {
     validateEventName(eventName);
     validateCallback(callback);
     
@@ -384,7 +387,7 @@ const EventEmitterModule = (function() {
     debugLog(`Added ${once ? 'once' : ''} listener for "${eventName}"`);
   }
   
-  function removeListener(eventName: string, callback: Function): boolean {
+  function removeListener(eventName: string, callback: (data: any) => void): boolean {
     validateEventName(eventName);
     
     const listeners = events.get(eventName);
@@ -479,7 +482,7 @@ const EventEmitterModule = (function() {
   return {
     // Core event methods
     on: addListener,
-    once: (eventName: string, callback: Function) => addListener(eventName, callback, true),
+    once: (eventName: string, callback: (data: any) => void) => addListener(eventName, callback, true),
     off: removeListener,
     emit,
     
@@ -515,7 +518,10 @@ export const metadata: PatternMetadata = {
   category: 'Modern',
   difficulty: 'Medium',
   description: 'Define all functions privately, then reveal selected ones publicly',
-  detailedDescription: `
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
+    timeComplexity: 'O(1)',
+  spaceComplexity: 'O(n)',
+    detailedDescription: `
     ## 🎭 Revealing Module Pattern
 
     The **Revealing Module Pattern** is a variation of the Module Pattern where all functions and variables are defined privately, and then a public API is created by revealing selected private functions through the return statement.
@@ -560,6 +566,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.API_DESIGN,
     PatternUseCase.CODE_ORGANIZATION
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Explicit and clear public API definition',
     'Better organization of public vs private functions',
@@ -575,114 +582,108 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Module', 'Facade', 'Singleton']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'calculator-module',
-    title: 'Advanced Calculator',
-    description: 'Mathematical calculator with history and chaining',
+    tabName: 'Advanced Calculator',
+    approach: 'Mathematical calculator with history and chaining',
+    type: 'function',
+    code: `const CalculatorModule = (function() {
+  let result = 0;
+  let history: string[] = [];
+  
+  function add(value: number): number {
+    result += value;
+    history.push(\`+ \${value}\`);
+    return result;
+  }
+  
+  function getCurrentResult(): number {
+    return result;
+  }
+  
+  return { add, getCurrentResult };
+})();`,
     isOptimal: true,
     timeComplexity: 'O(1)',
-    spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    spaceComplexity: 'O(n)'
   },
   {
     name: 'api-client',
-    title: 'HTTP API Client',
-    description: 'REST API client with authentication and resource methods',
+    tabName: 'HTTP API Client',
+    approach: 'REST API client with authentication and resource methods',
+    type: 'function',
+    code: `const ApiClientModule = (function() {
+  let apiKey = '';
+  let baseUrl = 'https://api.example.com';
+  
+  function buildUrl(endpoint: string): string {
+    return \`\${baseUrl}\${endpoint}\`;
+  }
+  
+  function get(endpoint: string) {
+    const url = buildUrl(endpoint);
+    return fetch(url, {
+      headers: { Authorization: \`Bearer \${apiKey}\` }
+    });
+  }
+  
+  function setApiKey(key: string): void {
+    apiKey = key;
+  }
+  
+  return { get, setApiKey };
+})();`,
     isOptimal: false,
     timeComplexity: 'O(1)',
-    spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    spaceComplexity: 'O(1)'
   },
   {
     name: 'event-emitter',
-    title: 'Event Management System',
-    description: 'Custom event emitter with listener management',
+    tabName: 'Event Management System',
+    approach: 'Custom event emitter with listener management',
+    type: 'function',
+    code: `const EventEmitterModule = (function() {
+  let events = new Map();
+  
+  function on(eventName: string, callback: Function): void {
+    if (!events.has(eventName)) {
+      events.set(eventName, []);
+    }
+    events.get(eventName).push(callback);
+  }
+  
+  function emit(eventName: string, data: any): void {
+    const listeners = events.get(eventName) || [];
+    listeners.forEach(callback => callback(data));
+  }
+  
+  return { on, emit };
+})();`,
     isOptimal: false,
     timeComplexity: 'O(n)',
-    spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    spaceComplexity: 'O(n)'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Calculator with Method Chaining',
-    scenario: 'Perform mathematical operations with private validation and public calculation methods',
-    inputExample: `const calc = createCalculator();
-
-calc.add(10);
-calc.multiply(5);
-calc.subtract(20);
-
-console.log('Result:', calc.getCurrentResult());
-
-// Method chaining
-const chainResult = calc.chain()
-  .add(100)
-  .multiply(2)
-  .divide(4)
-  .result();
-
-console.log('Chain result:', chainResult);
-console.log('History:', calc.getHistory().slice(-3));`,
-    outputExample: `Result: 30
-Chain result: 75
-History: ["- 20 = 30", "+ 100 = 130", "× 2 = 260"]`,
-    explanation: 'All mathematical operations are defined privately with validation, then selectively revealed. Private functions like formatResult and validateNumber remain hidden.'
+    input: 'calc.add(10).multiply(5).getCurrentResult()',
+    output: '50',
+    description: 'Mathematical operations with private validation',
+    scenario: 'Perform mathematical operations with private validation and public calculation methods'
   },
   {
-    title: 'API Client with Resource Methods',
-    scenario: 'HTTP client with private helper functions and public resource-specific methods',
-    inputExample: `const api = createApiClient();
-
-api.setApiKey('secret-key');
-api.setBaseUrl('https://jsonplaceholder.typicode.com');
-
-console.log('Config:', api.getConfig());
-
-// Use resource methods (these use private helpers internally)
-api.users.getById(1).then(user => {
-  console.log('User:', user.name);
-}).catch(console.error);
-
-api.users.create({ name: 'Jane', email: 'jane@example.com' }).then(user => {
-  console.log('Created user:', user);
-});`,
-    outputExample: `Config: { baseUrl: 'https://jsonplaceholder.typicode.com', timeout: 5000, hasApiKey: true, defaultHeaders: {...} }
-User: John Doe
-Created user: { id: 1, name: 'Jane', email: 'jane@example.com' }`,
-    explanation: 'API client reveals only necessary methods while keeping URL building, header merging, and error handling private. Resource methods provide clean interface.'
+    input: 'api.setApiKey("key"); api.users.getById(1)',
+    output: 'User: John Doe',
+    description: 'HTTP client with private helper functions',
+    scenario: 'HTTP client with private helper functions and public resource-specific methods'
   },
   {
-    title: 'Event Emitter with Private Validation',
-    scenario: 'Event system with private validation functions and public listener management',
-    inputExample: `const emitter = createEventEmitter();
-
-emitter.setDebugging(true);
-
-const handler1 = (data) => console.log('Handler 1:', data);
-const handler2 = (data) => console.log('Handler 2:', data);
-
-emitter.on('test', handler1);
-emitter.once('test', handler2);
-
-console.log('Listeners:', emitter.getListenerCount('test'));
-
-emitter.emit('test', 'Hello World');
-emitter.emit('test', 'Second message');
-
-console.log('Listeners after:', emitter.getListenerCount('test'));`,
-    outputExample: `[EventEmitter] Added  listener for "test"
-[EventEmitter] Added once listener for "test"
-Listeners: 2
-[EventEmitter] Emitting "test" to 2 listeners
-Handler 1: Hello World
-Handler 2: Hello World
-[EventEmitter] Emitting "test" to 1 listeners
-Handler 1: Second message
-Listeners after: 1`,
-    explanation: 'Event emitter reveals listener management methods while keeping validation and internal event handling private. The "once" listener automatically removes itself after first emit.'
+    input: 'emitter.on("test", handler); emitter.emit("test", "data")',
+    output: 'Handler: data',
+    description: 'Event system with private validation',
+    scenario: 'Event system with private validation functions and public listener management'
   }
 ];
 

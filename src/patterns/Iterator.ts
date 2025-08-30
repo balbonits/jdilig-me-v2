@@ -1,5 +1,4 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 // Iterator interface
 interface Iterator<T> {
@@ -407,7 +406,7 @@ class EvenRangeIterator implements Iterator<number> {
 }
 
 // Utility functions
-export function forEach<T>(iterator: Iterator<T>, callback: (item: T) => void): void {
+export function iteratorForEach<T>(iterator: Iterator<T>, callback: (item: T) => void): void {
   while (iterator.hasNext()) {
     const item = iterator.next();
     if (item !== null) {
@@ -416,15 +415,15 @@ export function forEach<T>(iterator: Iterator<T>, callback: (item: T) => void): 
   }
 }
 
-export function collect<T>(iterator: Iterator<T>): T[] {
+export function iteratorCollect<T>(iterator: Iterator<T>): T[] {
   const result: T[] = [];
-  forEach(iterator, item => result.push(item));
+  iteratorForEach(iterator, item => result.push(item));
   return result;
 }
 
-export function filter<T>(iterator: Iterator<T>, predicate: (item: T) => boolean): T[] {
+export function iteratorFilter<T>(iterator: Iterator<T>, predicate: (item: T) => boolean): T[] {
   const result: T[] = [];
-  forEach(iterator, item => {
+  iteratorForEach(iterator, item => {
     if (predicate(item)) {
       result.push(item);
     }
@@ -433,7 +432,7 @@ export function filter<T>(iterator: Iterator<T>, predicate: (item: T) => boolean
 }
 
 // Factory functions
-export function createBookLibrary() {
+function createBookLibrary() {
   const library = new BookCollection();
   
   library.addBook(new Book('1984', 'George Orwell', 1949, 'Dystopian'));
@@ -446,7 +445,7 @@ export function createBookLibrary() {
   return library;
 }
 
-export function createFileSystemTree() {
+function createFileSystemTree() {
   const root = new TreeNode('root/');
   const src = new TreeNode('src/');
   const lib = new TreeNode('lib/');
@@ -470,7 +469,7 @@ export function createFileSystemTree() {
   return root;
 }
 
-export function createNumberRanges() {
+function createNumberRanges() {
   return {
     standard: new NumberRange(1, 10),
     step2: new NumberRange(0, 20, 2),
@@ -483,7 +482,10 @@ export const metadata: PatternMetadata = {
   category: 'Behavioral',
   difficulty: 'Medium',
   description: 'Access elements sequentially without exposing underlying structure',
-  detailedDescription: `
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
+    timeComplexity: 'O(n)',
+  spaceComplexity: 'O(1)',
+    detailedDescription: `
     ## 🔄 Iterator Pattern
 
     The **Iterator Pattern** provides a way to access elements of a collection sequentially without exposing the underlying representation. It separates the traversal logic from the collection structure.
@@ -521,6 +523,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.COLLECTION_TRAVERSAL,
     PatternUseCase.STREAM_PROCESSING
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Hides internal structure of collections',
     'Supports multiple simultaneous traversals',
@@ -536,56 +539,204 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Composite', 'Factory Method', 'Memento']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'book-collection',
-    title: 'Filtered Book Library Iterator',
-    description: 'Multiple iteration strategies for book collections',
+    tabName: 'Filtered Book Library',
+    approach: 'Iterator Pattern with Filtering',
+    code: `// Book collection with filtered iteration
+class Book {
+  constructor(
+    public title: string,
+    public author: string,
+    public year: number,
+    public genre: string
+  ) {}
+
+  toString(): string {
+    return \`"\${this.title}" by \${this.author} (\${this.year})\`;
+  }
+}
+
+class BookCollection implements Iterable<Book> {
+  private books: Book[] = [];
+
+  addBook(book: Book): void {
+    this.books.push(book);
+  }
+
+  createIterator(): Iterator<Book> {
+    return new BookIterator(this.books);
+  }
+
+  createGenreIterator(genre: string): Iterator<Book> {
+    return new GenreFilterIterator(this.books, genre);
+  }
+
+  createReverseIterator(): Iterator<Book> {
+    return new ReverseBookIterator(this.books);
+  }
+}
+
+class BookIterator implements Iterator<Book> {
+  private index = 0;
+
+  constructor(private books: Book[]) {}
+
+  hasNext(): boolean {
+    return this.index < this.books.length;
+  }
+
+  next(): Book | null {
+    if (this.hasNext()) {
+      return this.books[this.index++];
+    }
+    return null;
+  }
+
+  reset(): void {
+    this.index = 0;
+  }
+}`,
     isOptimal: true,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'tree-traversal',
-    title: 'Tree Structure Traversal',
-    description: 'Pre-order, post-order, and level-order tree iteration',
+    tabName: 'Tree Traversal',
+    approach: 'Depth-First and Breadth-First Iteration',
+    code: `// Tree traversal with multiple strategies
+class TreeNode<T> {
+  public children: TreeNode<T>[] = [];
+
+  constructor(public value: T) {}
+
+  addChild(node: TreeNode<T>): void {
+    this.children.push(node);
+  }
+
+  createPreOrderIterator(): Iterator<T> {
+    return new PreOrderIterator<T>(this);
+  }
+
+  createLevelOrderIterator(): Iterator<T> {
+    return new LevelOrderIterator<T>(this);
+  }
+}
+
+class PreOrderIterator<T> implements Iterator<T> {
+  private stack: TreeNode<T>[];
+
+  constructor(root: TreeNode<T>) {
+    this.stack = [root];
+  }
+
+  hasNext(): boolean {
+    return this.stack.length > 0;
+  }
+
+  next(): T | null {
+    if (!this.hasNext()) {
+      return null;
+    }
+
+    const node = this.stack.pop()!;
+    
+    // Add children in reverse order
+    for (let i = node.children.length - 1; i >= 0; i--) {
+      this.stack.push(node.children[i]);
+    }
+
+    return node.value;
+  }
+
+  reset(): void {
+    throw new Error('Reset not supported for tree iterator');
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(h)',
-    difficulty: 'Hard'
+    type: 'class'
   },
   {
     name: 'number-range',
-    title: 'Numeric Range Generator',
-    description: 'Generate number sequences with custom steps and filters',
+    tabName: 'Numeric Range Generator',
+    approach: 'Custom Iterator Implementation',
+    code: `// Numeric range with custom iteration
+class NumberRange implements Iterable<number> {
+  constructor(
+    private start: number,
+    private end: number,
+    private step: number = 1
+  ) {}
+
+  createIterator(): Iterator<number> {
+    return new RangeIterator(this.start, this.end, this.step);
+  }
+
+  createEvenIterator(): Iterator<number> {
+    return new EvenRangeIterator(this.start, this.end, this.step);
+  }
+}
+
+class RangeIterator implements Iterator<number> {
+  private current: number;
+
+  constructor(
+    private start: number,
+    private end: number,
+    private step: number
+  ) {
+    this.current = start;
+  }
+
+  hasNext(): boolean {
+    return this.step > 0 ? this.current <= this.end : this.current >= this.end;
+  }
+
+  next(): number | null {
+    if (this.hasNext()) {
+      const value = this.current;
+      this.current += this.step;
+      return value;
+    }
+    return null;
+  }
+
+  reset(): void {
+    this.current = this.start;
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Easy'
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Filtered Book Collection Traversal',
+    description: 'Filtered Book Collection Traversal',
     scenario: 'Iterate through book library with different filtering strategies without exposing internal structure',
-    inputExample: `const library = createBookLibrary();
+    input: `const library = createBookLibrary();
 
 console.log('All books:');
-forEach(library.createIterator(), book => 
+iteratorForEach(library.createIterator(), book => 
   console.log(book.toString())
 );
 
 console.log('\\nDystopian books:');
-forEach(library.createGenreIterator('Dystopian'), book => 
+iteratorForEach(library.createGenreIterator('Dystopian'), book => 
   console.log(book.toString())
 );
 
 console.log('\\nReverse order:');
-const reverseBooks = collect(library.createReverseIterator());
+const reverseBooks = iteratorCollect(library.createReverseIterator());
 console.log(reverseBooks.slice(0, 3).map(b => b.title).join(', '));`,
-    outputExample: `All books:
+    output: `All books:
 "1984" by George Orwell (1949)
 "Brave New World" by Aldous Huxley (1932)
 "The Hobbit" by J.R.R. Tolkien (1937)
@@ -596,57 +747,60 @@ Dystopian books:
 "Brave New World" by Aldous Huxley (1932)
 
 Reverse order:
-Neuromancer, Foundation, Dune`,
-    explanation: 'Different iterators provide various ways to traverse the same book collection. The collection\'s internal structure remains hidden while enabling flexible access patterns.'
+Neuromancer, Foundation, Dune`
   },
   {
-    title: 'Multi-Strategy Tree Traversal',
+    description: 'Multi-Strategy Tree Traversal',
     scenario: 'Traverse file system tree using different algorithms without exposing tree structure',
-    inputExample: `const tree = createFileSystemTree();
+    input: `const tree = createFileSystemTree();
 
 console.log('Pre-order traversal:');
-const preOrder = collect(tree.createPreOrderIterator());
+const preOrder = iteratorCollect(tree.createPreOrderIterator());
 console.log(preOrder.slice(0, 5).join(' → '));
 
 console.log('\\nLevel-order traversal:');
-const levelOrder = collect(tree.createLevelOrderIterator());
+const levelOrder = iteratorCollect(tree.createLevelOrderIterator());
 console.log(levelOrder.slice(0, 5).join(' → '));`,
-    outputExample: `Pre-order traversal:
+    output: `Pre-order traversal:
 root/ → src/ → index.js → utils.js → lib/
 
 Level-order traversal:
-root/ → src/ → lib/ → test/ → package.json`,
-    explanation: 'Same tree structure can be traversed using different algorithms. Each iterator encapsulates its traversal strategy while providing a uniform interface.'
+root/ → src/ → lib/ → test/ → package.json`
   },
   {
-    title: 'Custom Range Generation',
+    description: 'Custom Range Generation',
     scenario: 'Generate numeric sequences with different patterns using iterator interface',
-    inputExample: `const ranges = createNumberRanges();
+    input: `const ranges = createNumberRanges();
 
 console.log('Standard range (1-10):');
-console.log(collect(ranges.standard.createIterator()).join(', '));
+console.log(iteratorCollect(ranges.standard.createIterator()).join(', '));
 
 console.log('\\nEven numbers (0-20, step 2):');
-console.log(collect(ranges.step2.createEvenIterator()).join(', '));
+console.log(iteratorCollect(ranges.step2.createEvenIterator()).join(', '));
 
 console.log('\\nReverse range (5 to -5):');
-console.log(collect(ranges.negative.createReverseIterator()).join(', '));`,
-    outputExample: `Standard range (1-10):
+console.log(iteratorCollect(ranges.negative.createReverseIterator()).join(', '));`,
+    output: `Standard range (1-10):
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 Even numbers (0-20, step 2):
 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 
 Reverse range (5 to -5):
--5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5`,
-    explanation: 'Range iterators generate numbers on-demand without storing entire sequences. Different iterators provide forward, reverse, and filtered access to the same logical range.'
+-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5`
   }
 ];
 
+// Export classes for actual use
 export { 
-  Iterator, Iterable, Book, BookCollection, BookIterator, 
+  Book, BookCollection, BookIterator, 
   GenreFilterIterator, YearFilterIterator, ReverseBookIterator,
   TreeNode, PreOrderIterator, PostOrderIterator, LevelOrderIterator,
   NumberRange, RangeIterator, ReverseRangeIterator, EvenRangeIterator,
-  forEach, collect, filter
+  createBookLibrary, createFileSystemTree, createNumberRanges
+};
+
+// Export types for TypeScript
+export type { 
+  Iterator, Iterable
 };

@@ -83,6 +83,8 @@ export interface PatternMetadata extends BaseMetadata {
   relatedPatterns?: string[];         // Other patterns commonly used together
   modernAlternatives?: string[];      // Modern alternatives (e.g., React hooks vs Observer)
   frameworkSupport?: string[];        // Frameworks that implement this pattern
+  advantages?: string[];              // Benefits and advantages of using this pattern
+  disadvantages?: string[];           // Drawbacks and limitations of this pattern
 }
 
 // Pattern data container extends showcase interface

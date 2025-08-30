@@ -1,4 +1,5 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🎭 Command Pattern Implementation - Request Encapsulation
@@ -426,17 +427,10 @@ export const metadata: PatternMetadata = {
   difficulty: "Medium",
   timeComplexity: "O(1)",
   spaceComplexity: "O(n)",
-  useCases: ["State Management", "Code Organization", "API Design", "Performance"],
-  concepts: ["request encapsulation", "undo/redo", "macro operations", "command queuing"],
-  realWorldApplications: [
-    "Text editor operations",
-    "GUI action handling",
-    "Database transactions",
-    "Task queue systems",
-    "Smart home controls",
-    "API request handling"
-  ],
-  relatedPatterns: ["Memento", "Observer", "Strategy"],
+  concepts: ["Request Encapsulation", "Undo/Redo Operations", "Operation Queuing", "Decoupling", "Action Objects"],
+  useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.CODE_ORGANIZATION, PatternUseCase.API_DESIGN, PatternUseCase.PERFORMANCE_OPTIMIZATION],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Memento", "Observer", "Strategy"],
   frameworkSupport: ["Redux", "MobX", "EventBus libraries", "Task queue systems"]
 };
 
@@ -461,7 +455,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "text-editor-commands",
     tabName: "Text Editor Commands",

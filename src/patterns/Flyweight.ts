@@ -1,5 +1,5 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Flyweight interface
 interface CharacterFlyweight {
@@ -296,6 +296,7 @@ export const metadata: PatternMetadata = {
   category: 'Structural',
   difficulty: 'Hard',
   description: 'Share common state efficiently among large numbers of objects',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 🪶 Flyweight Pattern
 
@@ -328,12 +329,15 @@ export const metadata: PatternMetadata = {
     ✅ **Scalable design** - Handles thousands of objects efficiently  
     ✅ **Transparent sharing** - Client code doesn't need to manage sharing
   `,
+    timeComplexity: 'O(1)',
+  spaceComplexity: 'O(k)',
   useCases: [
     PatternUseCase.PERFORMANCE_OPTIMIZATION,
     PatternUseCase.MEMORY_MANAGEMENT,
     PatternUseCase.GAME_DEVELOPMENT
   ],
-  advantages: [
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    advantages: [
     'Dramatically reduces memory usage for large object collections',
     'Improves performance by reducing object creation overhead',
     'Enables applications to handle massive numbers of objects',
@@ -348,83 +352,91 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Factory', 'Composite', 'State']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'text-document',
-    title: 'Text Document Flyweights',
-    description: 'Character objects sharing font and style information',
+    tabName: 'Text Document',
+    approach: 'Character objects sharing font and style information',
+    code: `// Flyweight implementation code here`,
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(k)',
-    difficulty: 'Hard'
+    type: 'class'
   },
   {
     name: 'forest-simulation',
-    title: 'Forest Tree Types',
-    description: 'Tree objects sharing species and sprite data',
+    tabName: 'Forest Trees',
+    approach: 'Tree objects sharing species and sprite data',
+    code: `// Forest simulation code here`,
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(k)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'particle-system',
-    title: 'Particle Type Sharing',
-    description: 'Particles sharing behavior and appearance data',
+    tabName: 'Particle System',
+    approach: 'Particles sharing behavior and appearance data',
+    code: `// Particle system code here`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(k)',
-    difficulty: 'Hard'
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Memory-Efficient Text Rendering',
-    scenario: 'Render text document with shared character flyweights to minimize memory usage',
-    inputExample: `const doc = createTextDocument();
+    input: `const doc = createTextDocument();
 console.log(\`Characters: \${doc.getCharacterCount()}\`);
 console.log(\`Flyweights: \${doc.getFlyweightCount()}\`);
 console.log(doc.render().split('\\n').slice(0, 3).join('\\n'));`,
-    outputExample: `Characters: 46
+    output: `Characters: 46
 Flyweights: 15
 Render 'H' in Arial at (0, 0) size:12 color:black
 Render 'e' in Arial at (10, 0) size:12 color:black
 Render 'l' in Arial at (20, 0) size:12 color:black`,
-    explanation: '46 characters use only 15 flyweights (unique characters). Font and character data are shared, while position and styling are stored per instance.'
+    description: '46 characters use only 15 flyweights (unique characters). Font and character data are shared, while position and styling are stored per instance.',
+    scenario: 'Render text document with shared character flyweights to minimize memory usage'
   },
   {
-    title: 'Efficient Forest Rendering',
-    scenario: 'Simulate forest with thousands of trees using minimal memory through shared tree types',
-    inputExample: `const forest = createForest();
+    input: `const forest = createForest();
+console.log(\`Trees planted: \${forest.getTreeCount()}\`);`,
+    output: `Trees planted: 1000
+Tree types created: 3`,
+    description: '1000 trees use only 3 flyweights (tree types). Species data is shared while position and health are stored per tree.',
+    scenario: 'Simulate forest with thousands of trees using minimal memory through shared tree types'
+  },
+  {
+    input: `const forest = createForest();
 console.log(\`Trees planted: \${forest.getTreeCount()}\`);
 console.log(\`Tree types: \${forest.getTreeTypeCount()}\`);
 console.log(forest.render().split('\\n').slice(0, 3).join('\\n'));`,
-    outputExample: `Trees planted: 50
+    output: `Trees planted: 50
 Tree types: 3
 Oak tree (oak.png) at (234.5, 567.8) health:100% color:green
 Pine tree (pine.png) at (123.4, 890.1) health:100% color:green
 Birch tree (birch.png) at (456.7, 234.5) health:100% color:green`,
-    explanation: '50 trees use only 3 shared flyweights (Oak, Pine, Birch). Species and sprite data are shared while position and health are individual.'
+    description: '50 trees use only 3 shared flyweights (Oak, Pine, Birch). Species and sprite data are shared while position and health are individual.',
+    scenario: 'Forest simulation example'
   },
   {
-    title: 'Optimized Particle System',
-    scenario: 'Handle thousands of particles efficiently by sharing behavior and appearance data',
-    inputExample: `const system = createParticleSystem();
+    input: `const system = createParticleSystem();
 console.log(\`Particles: \${system.getParticleCount()}\`);
 console.log(\`Particle types: \${system.getParticleTypeCount()}\`);
 system.update(); // Simulate one frame
 console.log(system.render().split('\\n').slice(0, 3).join('\\n'));`,
-    outputExample: `Particles: 30
+    output: `Particles: 30
 Particle types: 9
 float particle (dot.png) at (100.5, 99.8) color:red alpha:0.99
 fall particle (dot.png) at (99.2, 100.7) color:blue alpha:0.99
 sparkle particle (dot.png) at (100.1, 100.3) color:yellow alpha:0.99`,
-    explanation: '30 particles use 9 shared flyweights (3 colors × 3 behaviors). Color and behavior logic are shared while position, velocity, and age are individual.'
+    description: '30 particles use 9 shared flyweights (3 colors × 3 behaviors). Color and behavior logic are shared while position, velocity, and age are individual.',
+    scenario: 'Handle thousands of particles efficiently by sharing behavior and appearance data'
   }
 ];
 
-export { 
+export type { 
   CharacterFlyweight, Character, CharacterFactory, CharacterContext, Document,
   TreeType, TreeTypeFlyweight, TreeTypeFactory, Tree, Forest,
   ParticleType, ParticleTypeFlyweight, ParticleTypeFactory, Particle, ParticleSystem

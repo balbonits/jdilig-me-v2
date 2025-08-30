@@ -1,4 +1,5 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🎭 State Pattern Implementation - Dynamic Behavior Change
@@ -474,17 +475,10 @@ export const metadata: PatternMetadata = {
   difficulty: "Medium",
   timeComplexity: "O(1)",
   spaceComplexity: "O(1)",
-  useCases: ["State Management", "Game Development", "UI Components", "Workflow Management"],
-  concepts: ["state transitions", "behavior encapsulation", "finite state machines", "context switching"],
-  realWorldApplications: [
-    "Media player controls",
-    "Game character AI",
-    "UI component states",
-    "Network protocols",
-    "Workflow systems",
-    "Traffic control systems"
-  ],
-  relatedPatterns: ["Strategy", "Command", "Observer"],
+  concepts: ["State Transitions", "Dynamic Behavior", "Finite State Machine", "Context Switching", "State Encapsulation"],
+  useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.GAME_DEVELOPMENT, PatternUseCase.UI_ARCHITECTURE],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Strategy", "Command", "Observer"],
   frameworkSupport: ["Redux", "XState", "React hooks", "State machine libraries"]
 };
 
@@ -509,7 +503,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "media-player-states",
     tabName: "Media Player States",

@@ -1,4 +1,4 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🏗️ Builder Pattern Implementation - Complex Object Construction
@@ -191,10 +191,20 @@ interface UserProfile {
   theme?: 'light' | 'dark';
 }
 
-export const createUserProfile = (name: string, email: string) => ({
+interface UserProfileBuilderFunction {
+  name: string;
+  email: string;
+  withAge: (age: number) => UserProfileBuilderFunction & { age: number };
+  withPreferences: (preferences: string[]) => UserProfileBuilderFunction & { preferences: string[] };
+  withNotifications: (enabled: boolean) => UserProfileBuilderFunction & { notifications: boolean };
+  withTheme: (theme: 'light' | 'dark') => UserProfileBuilderFunction & { theme: 'light' | 'dark' };
+  build: () => UserProfile;
+}
+
+export const createUserProfile = (name: string, email: string): UserProfileBuilderFunction => ({
   name,
   email,
-  withAge: (age: number) => createUserProfile(name, email).withAge?.(age) || { ...createUserProfile(name, email), age },
+  withAge: (age: number) => ({ ...createUserProfile(name, email), age }),
   withPreferences: (preferences: string[]) => ({ ...createUserProfile(name, email), preferences }),
   withNotifications: (enabled: boolean) => ({ ...createUserProfile(name, email), notifications: enabled }),
   withTheme: (theme: 'light' | 'dark') => ({ ...createUserProfile(name, email), theme }),
@@ -239,19 +249,12 @@ export const metadata: PatternMetadata = {
   detailedDescription: "🏗️ **The Builder Pattern - Complex Object Construction**\n\nConstructs complex objects step by step, allowing different representations of the same construction process. Perfect for creating objects with many optional parameters!\n\n🎯 **Core Problem Solved:**\n• Avoid telescoping constructor parameters\n• Create objects with complex initialization\n• Support different representations of same object\n• Enable step-by-step construction process\n\n🔍 **Three Implementation Approaches:**\n• **Method Chaining:** Fluent interface with returning 'this'\n• **Director Pattern:** Separate builder from construction logic\n• **Functional Builder:** Immutable approach with function composition\n\n🚀 **Real-World Applications:**\n• SQL query builders and ORM query construction\n• HTTP request builders in API clients\n• Configuration objects for complex systems\n• Test data builders in testing frameworks\n• UI component builders and form generators\n• Document and report generators\n\n⚡ **Modern Usage Examples:**\n• React component prop builders\n• GraphQL query builders\n• Docker container configuration\n• Webpack configuration builders",
   category: "Creational",
   difficulty: "Medium",
+  concepts: ['step-by-step construction', 'fluent interface', 'object composition'],
   timeComplexity: "O(n)",
   spaceComplexity: "O(1)",
-  useCases: ["Configuration Management", "Query Building", "Object Creation", "API Design"],
-  concepts: ["object construction", "method chaining", "fluent interface", "step-by-step building"],
-  realWorldApplications: [
-    "SQL query builders",
-    "HTTP request builders", 
-    "Configuration systems",
-    "Test data builders",
-    "Document generators",
-    "Form builders"
-  ],
-  relatedPatterns: ["Factory Method", "Abstract Factory", "Prototype"],
+  useCases: [PatternUseCase.API_DESIGN, PatternUseCase.CODE_ORGANIZATION, PatternUseCase.LIBRARY_DEVELOPMENT],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Factory Method", "Abstract Factory", "Prototype"],
   frameworkSupport: ["jQuery (chaining)", "Lodash", "Immutable.js", "Builder libraries"]
 };
 
@@ -276,7 +279,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "method-chaining",
     tabName: "Method Chaining",

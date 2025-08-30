@@ -377,10 +377,6 @@
     position: relative;
   }
   
-  /* Ensure all containers respect viewport bounds */
-  * {
-    max-width: 100vw;
-  }
   
   /* Professional Typography System */
   body {

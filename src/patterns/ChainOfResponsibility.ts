@@ -1,5 +1,5 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Request interface
 interface Request {
@@ -264,6 +264,7 @@ export const metadata: PatternMetadata = {
   category: 'Behavioral',
   difficulty: 'Medium',
   description: 'Pass requests along a chain of handlers until one handles it',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## ⛓️ Chain of Responsibility Pattern
 
@@ -290,12 +291,15 @@ export const metadata: PatternMetadata = {
     ✅ **Single responsibility** - Each handler has one specific responsibility  
     ✅ **Flexible processing** - Different requests can be handled by different handlers
   `,
+    timeComplexity: 'O(n)',
+  spaceComplexity: 'O(1)',
   useCases: [
     PatternUseCase.ERROR_HANDLING,
     PatternUseCase.REQUEST_PROCESSING,
     PatternUseCase.MIDDLEWARE_SYSTEMS
   ],
-  advantages: [
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    advantages: [
     'Decouples sender from receiver',
     'Flexible chain configuration',
     'Easy to add or remove handlers',
@@ -310,70 +314,183 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Command', 'Composite', 'Decorator']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'support-system',
-    title: 'Support Ticket Escalation',
-    description: 'Handle support requests through escalation levels',
+    tabName: 'Support System',
+    approach: 'Handle support requests through escalation levels',
+    code: `// Support System Chain Implementation
+abstract class Handler {
+  private nextHandler: Handler | null = null;
+
+  setNext(handler: Handler): Handler {
+    this.nextHandler = handler;
+    return handler;
+  }
+
+  handle(request: Request): string | null {
+    const result = this.doHandle(request);
+    
+    if (result !== null) {
+      return result;
+    }
+    
+    if (this.nextHandler) {
+      return this.nextHandler.handle(request);
+    }
+    
+    return null;
+  }
+
+  protected abstract doHandle(request: Request): string | null;
+}
+
+class Level1Support extends Handler {
+  protected doHandle(request: Request): string | null {
+    if (request.type === 'password-reset' || request.type === 'account-locked') {
+      return \`Level 1 Support: Handled \${request.type} request\`;
+    }
+    return null;
+  }
+}
+
+function createSupportChain() {
+  const level1 = new Level1Support();
+  const level2 = new Level2Support();
+  const level3 = new Level3Support();
+  const manager = new Manager();
+
+  level1.setNext(level2).setNext(level3).setNext(manager);
+  return { chain: level1, level1, level2, level3, manager };
+}`,
     isOptimal: true,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'authentication-chain',
-    title: 'Multi-Step Authentication',
-    description: 'Validate credentials, tokens, and roles in sequence',
+    tabName: 'Auth Chain',
+    approach: 'Validate credentials, tokens, and roles in sequence',
+    code: `// Authentication Chain Implementation
+abstract class AuthHandler {
+  private nextHandler: AuthHandler | null = null;
+
+  setNext(handler: AuthHandler): AuthHandler {
+    this.nextHandler = handler;
+    return handler;
+  }
+
+  authenticate(request: AuthRequest): { success: boolean; message: string } {
+    const result = this.doAuthenticate(request);
+    
+    if (!result.success && this.nextHandler) {
+      return this.nextHandler.authenticate(request);
+    }
+    
+    return result;
+  }
+
+  protected abstract doAuthenticate(request: AuthRequest): { success: boolean; message: string };
+}
+
+class CredentialsValidator extends AuthHandler {
+  protected doAuthenticate(request: AuthRequest): { success: boolean; message: string } {
+    if (!request.username || !request.password) {
+      return { success: false, message: 'Missing credentials' };
+    }
+    
+    if (request.username === 'admin' && request.password === 'secret123') {
+      return { success: true, message: 'Credentials validated' };
+    }
+    
+    return { success: false, message: 'Invalid credentials' };
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'http-middleware',
-    title: 'HTTP Request Middleware',
-    description: 'Process web requests through CORS, auth, and rate limiting',
+    tabName: 'HTTP Middleware',
+    approach: 'Process web requests through CORS, auth, and rate limiting',
+    code: `// HTTP Middleware Chain Implementation
+abstract class Middleware {
+  private nextMiddleware: Middleware | null = null;
+
+  setNext(middleware: Middleware): Middleware {
+    this.nextMiddleware = middleware;
+    return middleware;
+  }
+
+  process(request: HTTPRequest): { proceed: boolean; message: string } {
+    const result = this.doProcess(request);
+    
+    if (!result.proceed) {
+      return result;
+    }
+    
+    if (this.nextMiddleware) {
+      return this.nextMiddleware.process(request);
+    }
+    
+    return { proceed: true, message: 'Request processed successfully' };
+  }
+
+  protected abstract doProcess(request: HTTPRequest): { proceed: boolean; message: string };
+}
+
+class CORSMiddleware extends Middleware {
+  protected doProcess(request: HTTPRequest): { proceed: boolean; message: string } {
+    const origin = request.headers['origin'];
+    const allowedOrigins = ['https://example.com', 'https://app.example.com'];
+    
+    if (origin && !allowedOrigins.includes(origin)) {
+      return { proceed: false, message: 'CORS: Origin not allowed' };
+    }
+    
+    return { proceed: true, message: 'CORS: Origin validated' };
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Support Ticket Escalation',
-    scenario: 'Route support requests through appropriate support levels based on complexity',
-    inputExample: `const { chain } = createSupportChain();
+    input: `const { chain } = createSupportChain();
 
 console.log(chain.handle({ type: 'password-reset', data: {} }));
 console.log(chain.handle({ type: 'billing-issue', data: {} }));
 console.log(chain.handle({ type: 'system-outage', data: {} }));
 console.log(chain.handle({ type: 'complex-issue', data: {} }));`,
-    outputExample: `Level 1 Support: Handled password-reset request
+    output: `Level 1 Support: Handled password-reset request
 Level 2 Support: Handled billing-issue request
 Level 3 Support: Handled system-outage request
 Manager: Escalated complex-issue request to executive team`,
-    explanation: 'Each support level handles requests within their expertise. Unhandled requests automatically escalate to the next level until someone handles them.'
+    description: 'Each support level handles requests within their expertise. Unhandled requests automatically escalate to the next level until someone handles them.',
+    scenario: 'Route support requests through appropriate support levels based on complexity'
   },
   {
-    title: 'Authentication Pipeline',
-    scenario: 'Authenticate users through multiple validation steps with fallback options',
-    inputExample: `const { chain } = createAuthChain();
+    input: `const { chain } = createAuthChain();
 
 const validUser = { username: 'admin', password: 'secret123' };
 const tokenUser = { username: '', password: '', token: 'valid-jwt-token' };
 
 console.log(chain.authenticate(validUser).message);
 console.log(chain.authenticate(tokenUser).message);`,
-    outputExample: `Credentials validated
+    output: `Credentials validated
 Token validated`,
-    explanation: 'Authentication tries credentials first, then falls back to token validation. Each handler attempts authentication and passes to the next if unsuccessful.'
+    description: 'Authentication tries credentials first, then falls back to token validation. Each handler attempts authentication and passes to the next if unsuccessful.',
+    scenario: 'Authenticate users through multiple validation steps with fallback options'
   },
   {
-    title: 'HTTP Request Processing',
-    scenario: 'Process web requests through security middleware chain',
-    inputExample: `const { chain } = createMiddlewareChain();
+    input: `const { chain } = createMiddlewareChain();
 
 const request: HTTPRequest = {
   method: 'GET',
@@ -386,15 +503,22 @@ const request: HTTPRequest = {
 };
 
 console.log(chain.process(request).message);`,
-    outputExample: `Request processed successfully`,
-    explanation: 'HTTP requests pass through CORS validation, authentication, authorization, and rate limiting. Any middleware can reject the request and stop the chain.'
+    output: `Request processed successfully`,
+    description: 'HTTP requests pass through CORS validation, authentication, authorization, and rate limiting. Any middleware can reject the request and stop the chain.',
+    scenario: 'Process web requests through security middleware chain'
   }
 ];
 
+export type { 
+  Request, 
+  AuthRequest, 
+  HTTPRequest 
+};
+
 export { 
-  Request, Handler,
+  Handler,
   Level1Support, Level2Support, Level3Support, Manager,
-  AuthRequest, AuthHandler, CredentialsValidator, TokenValidator, RoleValidator,
-  HTTPRequest, Middleware, CORSMiddleware, AuthenticationMiddleware, 
+  AuthHandler, CredentialsValidator, TokenValidator, RoleValidator,
+  Middleware, CORSMiddleware, AuthenticationMiddleware, 
   AuthorizationMiddleware, RateLimitingMiddleware 
 };

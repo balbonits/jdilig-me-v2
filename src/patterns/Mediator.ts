@@ -1,5 +1,5 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
 // Mediator interface
 interface ChatMediator {
@@ -475,6 +475,7 @@ export const metadata: PatternMetadata = {
   category: 'Behavioral',
   difficulty: 'Medium',
   description: 'Reduce coupling by centralizing complex communications',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 🤝 Mediator Pattern
 
@@ -512,7 +513,10 @@ export const metadata: PatternMetadata = {
     PatternUseCase.EVENT_HANDLING,
     PatternUseCase.SYSTEM_INTEGRATION
   ],
-  advantages: [
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    timeComplexity: 'O(1)',
+  spaceComplexity: 'O(n)',
+    advantages: [
     'Reduces coupling between communicating objects',
     'Centralizes interaction logic in one place',
     'Makes object interactions more maintainable',
@@ -527,41 +531,221 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Observer', 'Command', 'Facade']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'chat-system',
-    title: 'Chat Room Mediator',
-    description: 'Users communicate through centralized chat room',
+    tabName: 'Chat Room Mediator',
+    approach: 'Centralized Communication Hub',
     isOptimal: true,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    type: 'class',
+    code: `// Mediator interface
+interface ChatMediator {
+  sendMessage(message: string, user: ChatUser): void;
+  addUser(user: ChatUser): void;
+  removeUser(user: ChatUser): void;
+}
+
+// Concrete mediator - Chat Room
+class ChatRoom implements ChatMediator {
+  private users: ChatUser[] = [];
+
+  addUser(user: ChatUser): void {
+    this.users.push(user);
+    console.log(\`\${user.getName()} joined the chat\`);
+  }
+
+  removeUser(user: ChatUser): void {
+    const index = this.users.indexOf(user);
+    if (index !== -1) {
+      this.users.splice(index, 1);
+      console.log(\`\${user.getName()} left the chat\`);
+    }
+  }
+
+  sendMessage(message: string, sender: ChatUser): void {
+    this.users.forEach(user => {
+      if (user !== sender) {
+        user.receive(message, sender.getName());
+      }
+    });
+  }
+
+  getUserCount(): number {
+    return this.users.length;
+  }
+}
+
+// Colleague classes
+abstract class ChatUser {
+  constructor(
+    protected name: string,
+    protected mediator: ChatMediator
+  ) {
+    this.mediator.addUser(this);
+  }
+
+  abstract send(message: string): void;
+  abstract receive(message: string, from: string): void;
+
+  getName(): string {
+    return this.name;
+  }
+}
+
+class RegularUser extends ChatUser {
+  send(message: string): void {
+    console.log(\`\${this.name} sends: "\${message}"\`);
+    this.mediator.sendMessage(message, this);
+  }
+
+  receive(message: string, from: string): void {
+    console.log(\`\${this.name} received from \${from}: "\${message}"\`);
+  }
+}`
   },
   {
     name: 'air-traffic-control',
-    title: 'Aircraft Coordination',
-    description: 'Aircraft coordinate landing/takeoff through ATC',
+    tabName: 'Aircraft Coordination',
+    approach: 'Air Traffic Control System',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Hard'
+    type: 'class',
+    code: `// Air traffic control mediator
+interface AirTrafficMediator {
+  requestLanding(aircraft: Aircraft): string;
+  requestTakeoff(aircraft: Aircraft): string;
+  registerAircraft(aircraft: Aircraft): void;
+}
+
+class AirTrafficControl implements AirTrafficMediator {
+  private runways: Map<number, boolean> = new Map();
+  private aircraft: Aircraft[] = [];
+
+  constructor() {
+    // Initialize 3 runways
+    this.runways.set(1, false);
+    this.runways.set(2, false);
+    this.runways.set(3, false);
+  }
+
+  registerAircraft(aircraft: Aircraft): void {
+    this.aircraft.push(aircraft);
+  }
+
+  requestLanding(aircraft: Aircraft): string {
+    const availableRunway = this.getAvailableRunway();
+    if (availableRunway) {
+      this.runways.set(availableRunway, true);
+      return \`ATC to \${aircraft.getCallsign()}: Cleared to land on Runway \${availableRunway}\`;
+    }
+    return \`ATC to \${aircraft.getCallsign()}: No runways available, please hold\`;
+  }
+
+  private getAvailableRunway(): number | null {
+    for (const [runway, occupied] of this.runways) {
+      if (!occupied) return runway;
+    }
+    return null;
+  }
+}
+
+// Aircraft base class
+abstract class Aircraft {
+  constructor(
+    protected callsign: string,
+    protected atc: AirTrafficMediator
+  ) {
+    this.atc.registerAircraft(this);
+  }
+
+  getCallsign(): string {
+    return this.callsign;
+  }
+
+  requestLanding(): string {
+    return this.atc.requestLanding(this);
+  }
+
+  requestTakeoff(): string {
+    return this.atc.requestTakeoff(this);
+  }
+}`
   },
   {
     name: 'form-validation',
-    title: 'UI Form Component Interaction',
-    description: 'Form components interact through form mediator',
+    tabName: 'UI Form Components',
+    approach: 'Form Validation Mediator',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Easy'
+    type: 'class',
+    code: `// Form mediator interface
+interface FormMediator {
+  notify(component: FormComponent, event: string): void;
+}
+
+// Base form component
+abstract class FormComponent {
+  constructor(protected mediator: FormMediator) {}
+
+  abstract getValue(): string;
+  abstract setValue(value: string): void;
+  abstract setEnabled(enabled: boolean): void;
+}
+
+// Concrete form mediator
+class AuthenticationForm implements FormMediator {
+  private username: TextInput;
+  private password: PasswordInput;
+  private loginButton: Button;
+  private statusLabel: Label;
+
+  constructor() {
+    this.username = new TextInput(this, 'username');
+    this.password = new PasswordInput(this, 'password');
+    this.loginButton = new Button(this, 'login');
+    this.statusLabel = new Label(this, 'status');
+    this.statusLabel.setValue('Please enter credentials');
+  }
+
+  notify(component: FormComponent, event: string): void {
+    if (event === 'change') {
+      this.updateButtonStates();
+    } else if (event === 'login') {
+      this.handleLogin();
+    }
+  }
+
+  private updateButtonStates(): void {
+    const hasUsername = this.username.getValue().length > 0;
+    const hasPassword = this.password.getValue().length > 0;
+    const canSubmit = hasUsername && hasPassword;
+    
+    this.loginButton.setEnabled(canSubmit);
+  }
+
+  private handleLogin(): void {
+    this.statusLabel.setValue('Logging in...');
+  }
+
+  getComponents() {
+    return {
+      username: this.username,
+      password: this.password,
+      loginButton: this.loginButton,
+      statusLabel: this.statusLabel
+    };
+  }
+}`
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Multi-User Chat System',
-    scenario: 'Users communicate in chat room without direct references to each other',
-    inputExample: `const { chatRoom, alice, bob, moderator } = createChatRoom();
+    input: `const { chatRoom, alice, bob, moderator } = createChatRoom();
 
 alice.send('Hello everyone!');
 bob.send('Hi Alice!');
@@ -569,35 +753,31 @@ moderator.muteUser('Bob');
 alice.send('How is everyone doing?');
 
 console.log(\`Total users: \${chatRoom.getUserCount()}\`);`,
-    outputExample: `Bob received from Alice: "Hello everyone!"
-HelpBot (bot) processed message from Alice
+    output: `Bob received from Alice: "Hello everyone!"
 ModeratorMike (moderator) received from Alice: "Hello everyone!"
 Alice received from Bob: "Hi Alice!"
-HelpBot (bot) processed message from Bob
 ModeratorMike (moderator) received from Bob: "Hi Alice!"
+ModeratorMike muted Bob
 Alice received from Bob: "How is everyone doing?"
-HelpBot (bot) processed message from Alice
-ModeratorMike (moderator): Ignored message from muted user Alice
+ModeratorMike (moderator) received from Alice: "How is everyone doing?"
 Total users: 4`,
-    explanation: 'Users send messages through the chat room mediator, which handles distribution, user management, and moderation. Users never communicate directly with each other.'
+    description: 'Messages are routed through the chat room mediator to all participants, with moderation features applied',
+    scenario: 'Users communicate in chat room without direct references to each other'
   },
   {
-    title: 'Air Traffic Control Coordination',
-    scenario: 'Aircraft coordinate landing and takeoff through central ATC system',
-    inputExample: `const { atc, flight101, privatePlane } = createAirport();
+    input: `const { atc, flight101, privatePlane } = createAirport();
 
 console.log(flight101.requestLanding());
 console.log(privatePlane.requestLanding());
 console.log(flight101.requestTakeoff());`,
-    outputExample: `ATC to AA101: Cleared to land on Runway 1
+    output: `ATC to AA101: Cleared to land on Runway 1
 ATC to N123AB: Cleared to land on Runway 2
 ATC to AA101: Cleared for takeoff on Runway 1`,
-    explanation: 'Aircraft communicate only with ATC mediator for landing/takeoff coordination. ATC manages runway availability and ensures safe operations without aircraft needing to know about each other.'
+    description: 'ATC mediator coordinates runway assignments and clearances for safe aircraft operations',
+    scenario: 'Aircraft coordinate landing and takeoff through central ATC system'
   },
   {
-    title: 'Form Component Interaction',
-    scenario: 'Form components interact through mediator to enable/disable buttons based on input validation',
-    inputExample: `const form = createAuthForm();
+    input: `const form = createAuthForm();
 const { username, password, loginButton } = form.getComponents();
 
 console.log(\`Login enabled: \${loginButton.isEnabled()}\`);
@@ -605,15 +785,20 @@ username.setValue('john');
 console.log(\`Login enabled: \${loginButton.isEnabled()}\`);
 password.setValue('secret');
 console.log(\`Login enabled: \${loginButton.isEnabled()}\`);`,
-    outputExample: `Login enabled: false
+    output: `Login enabled: false
 Login enabled: false
 Login enabled: true`,
-    explanation: 'Form components communicate through the form mediator. When username or password changes, the mediator updates button states and status messages without components directly referencing each other.'
+    description: 'Form mediator enables login button only when both username and password are provided',
+    scenario: 'Form components interact through mediator to enable/disable buttons based on input validation'
   }
 ];
 
+export type { 
+  ChatMediator, AirTrafficMediator, FormMediator, ChatUser, Aircraft, FormComponent
+};
+
 export { 
-  ChatMediator, ChatUser, ChatRoom, RegularUser, ModeratorUser, BotUser,
-  AirTrafficMediator, Aircraft, AirTrafficControl, CommercialAircraft, PrivateAircraft, CargoAircraft,
-  FormMediator, FormComponent, AuthenticationForm, TextInput, PasswordInput, Button, Label
+  ChatRoom, RegularUser, ModeratorUser, BotUser,
+  AirTrafficControl, CommercialAircraft, PrivateAircraft, CargoAircraft,
+  AuthenticationForm, TextInput, PasswordInput, Button, Label
 };

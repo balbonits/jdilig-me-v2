@@ -1,5 +1,5 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Implementation interface - the "bridge"
 interface DrawingAPI {
@@ -230,7 +230,10 @@ export const metadata: PatternMetadata = {
   category: 'Structural',
   difficulty: 'Hard',
   description: 'Separate abstraction from implementation to vary them independently',
-  detailedDescription: `
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
+    timeComplexity: 'O(1)',
+  spaceComplexity: 'O(1)',
+    detailedDescription: `
     ## 🌉 Bridge Pattern
 
     The **Bridge Pattern** decouples an abstraction from its implementation so that both can vary independently. It creates a "bridge" between the abstraction and implementation hierarchies.
@@ -261,6 +264,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.SYSTEM_INTEGRATION,
     PatternUseCase.CROSS_PLATFORM_SUPPORT
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Decouples interface from implementation',
     'Improved extensibility - add new implementations easily',
@@ -275,79 +279,275 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Adapter', 'Strategy', 'Abstract Factory']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'graphics-rendering',
-    title: 'Graphics Rendering Bridge',
-    description: 'Shapes that can render using different graphics APIs',
+    tabName: 'Graphics Rendering Bridge',
+    approach: 'Shapes that can render using different graphics APIs',
+    type: 'class',
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    code: `// Implementation hierarchy
+interface DrawingAPI {
+  drawCircle(x: number, y: number, radius: number): string;
+  drawRectangle(x: number, y: number, width: number, height: number): string;
+}
+
+class SVGRenderer implements DrawingAPI {
+  drawCircle(x: number, y: number, radius: number): string {
+    return \`<circle cx="\${x}" cy="\${y}" r="\${radius}" />\`;
+  }
+  
+  drawRectangle(x: number, y: number, width: number, height: number): string {
+    return \`<rect x="\${x}" y="\${y}" width="\${width}" height="\${height}" />\`;
+  }
+}
+
+class CanvasRenderer implements DrawingAPI {
+  drawCircle(x: number, y: number, radius: number): string {
+    return \`ctx.arc(\${x}, \${y}, \${radius}, 0, 2 * Math.PI);\`;
+  }
+  
+  drawRectangle(x: number, y: number, width: number, height: number): string {
+    return \`ctx.fillRect(\${x}, \${y}, \${width}, \${height});\`;
+  }
+}
+
+// Abstraction hierarchy  
+abstract class Shape {
+  protected renderer: DrawingAPI;
+  
+  constructor(renderer: DrawingAPI) {
+    this.renderer = renderer;
+  }
+  
+  setRenderer(renderer: DrawingAPI): void {
+    this.renderer = renderer;
+  }
+  
+  abstract draw(): string;
+}
+
+class Circle extends Shape {
+  constructor(private x: number, private y: number, private radius: number, renderer: DrawingAPI) {
+    super(renderer);
+  }
+  
+  draw(): string {
+    return this.renderer.drawCircle(this.x, this.y, this.radius);
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(private x: number, private y: number, private width: number, private height: number, renderer: DrawingAPI) {
+    super(renderer);
+  }
+  
+  draw(): string {
+    return this.renderer.drawRectangle(this.x, this.y, this.width, this.height);
+  }
+}
+
+// Usage
+const svgRenderer = new SVGRenderer();
+const canvasRenderer = new CanvasRenderer();
+
+const circle = new Circle(100, 100, 50, svgRenderer);
+console.log(circle.draw()); // SVG output
+
+circle.setRenderer(canvasRenderer);
+console.log(circle.draw()); // Canvas output`
   },
   {
     name: 'messaging-system',
-    title: 'Message Delivery Bridge',
-    description: 'Messages that can be sent through different channels',
+    tabName: 'Message Delivery Bridge',
+    approach: 'Messages that can be sent through different channels',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class',
+    code: `// Implementation hierarchy
+interface MessageSender {
+  sendMessage(recipient: string, message: string): string;
+}
+
+class EmailSender implements MessageSender {
+  sendMessage(recipient: string, message: string): string {
+    return \`Email to \${recipient}: \${message}\`;
+  }
+}
+
+class SMSSender implements MessageSender {
+  sendMessage(recipient: string, message: string): string {
+    return \`SMS to \${recipient}: \${message}\`;
+  }
+}
+
+class SlackSender implements MessageSender {
+  sendMessage(recipient: string, message: string): string {
+    return \`Slack to \${recipient}: \${message}\`;
+  }
+}
+
+// Abstraction hierarchy
+abstract class Message {
+  protected sender: MessageSender;
+  protected content: string;
+  
+  constructor(content: string, sender: MessageSender) {
+    this.content = content;
+    this.sender = sender;
+  }
+  
+  abstract send(recipient: string): string;
+}
+
+class TextMessage extends Message {
+  send(recipient: string): string {
+    return this.sender.sendMessage(recipient, this.content);
+  }
+}
+
+class EncryptedMessage extends Message {
+  send(recipient: string): string {
+    const encrypted = this.encrypt(this.content);
+    return this.sender.sendMessage(recipient, \`[ENCRYPTED] \${encrypted}\`);
+  }
+  
+  private encrypt(message: string): string {
+    return Buffer.from(message).toString('base64');
+  }
+}
+
+// Usage
+const emailSender = new EmailSender();
+const slackSender = new SlackSender();
+
+const textMessage = new TextMessage('Hello World', emailSender);
+console.log(textMessage.send('john@example.com'));
+
+textMessage.sender = slackSender;
+console.log(textMessage.send('@john'));`
   },
   {
     name: 'database-access',
-    title: 'Database Access Bridge',
-    description: 'Repository pattern with different database implementations',
+    tabName: 'Database Access Bridge',
+    approach: 'Repository pattern with different database implementations',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class',
+    code: `// Implementation hierarchy
+interface Database {
+  connect(): string;
+  query(sql: string): string;
+  disconnect(): string;
+}
+
+class MySQL implements Database {
+  connect(): string {
+    return 'Connected to MySQL';
+  }
+  
+  query(sql: string): string {
+    return \`MySQL: \${sql}\`;
+  }
+  
+  disconnect(): string {
+    return 'Disconnected from MySQL';
+  }
+}
+
+class PostgreSQL implements Database {
+  connect(): string {
+    return 'Connected to PostgreSQL';
+  }
+  
+  query(sql: string): string {
+    return \`PostgreSQL: \${sql}\`;
+  }
+  
+  disconnect(): string {
+    return 'Disconnected from PostgreSQL';
+  }
+}
+
+// Abstraction
+class Repository {
+  protected database: Database;
+  
+  constructor(database: Database) {
+    this.database = database;
+  }
+  
+  setDatabase(database: Database): void {
+    this.database = database;
+  }
+  
+  findUser(id: number): string {
+    return this.database.query(\`SELECT * FROM users WHERE id = \${id}\`);
+  }
+  
+  createUser(name: string, email: string): string {
+    return this.database.query(
+      \`INSERT INTO users (name, email) VALUES ('\${name}', '\${email}')\`
+    );
+  }
+  
+  updateUser(id: number, data: Record<string, string>): string {
+    const sets = Object.entries(data)
+      .map(([key, value]) => \`\${key} = '\${value}'\`)
+      .join(', ');
+    return this.database.query(\`UPDATE users SET \${sets} WHERE id = \${id}\`);
+  }
+  
+  deleteUser(id: number): string {
+    return this.database.query(\`DELETE FROM users WHERE id = \${id}\`);
+  }
+}
+
+// Usage
+const mysql = new MySQL();
+const postgres = new PostgreSQL();
+
+const repository = new Repository(mysql);
+console.log(repository.findUser(1));
+
+repository.setDatabase(postgres);
+console.log(repository.createUser('John', 'john@example.com'));`
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Cross-Platform Graphics',
-    scenario: 'Render shapes using different graphics APIs (SVG, Canvas) without changing shape code',
-    inputExample: `const { circle, rectangle, svgRenderer, canvasRenderer } = createShapeRenderer();
-
-console.log(circle.draw());  // Currently SVG
-circle.setRenderer(canvasRenderer);
-console.log(circle.draw());  // Now Canvas`,
-    outputExample: `<circle cx="100" cy="100" r="50" />
-ctx.arc(100, 100, 50, 0, 2 * Math.PI);`,
-    explanation: 'The Circle abstraction works with any rendering implementation. You can switch from SVG to Canvas rendering without modifying the Circle class.'
+    input: "circle.draw() with SVG and Canvas renderers",
+    output: "Different rendering outputs based on implementation",
+    description: 'Render shapes using different graphics APIs without changing shape code',
+    scenario: 'Render shapes using different graphics APIs (SVG, Canvas) without changing shape code'
   },
   {
-    title: 'Multi-Channel Messaging',
-    scenario: 'Send different message types through various delivery channels',
-    inputExample: `const { textMessage, encryptedMessage, slackSender } = createMessagingSystem();
-
-console.log(textMessage.send('john@example.com'));
-textMessage.sender = slackSender;
-console.log(textMessage.send('@john'));`,
-    outputExample: `Email to john@example.com: Hello World
-Slack to @john: Hello World`,
-    explanation: 'Message abstractions can use any sender implementation. The same message can be delivered via email, SMS, or Slack by changing the bridge.'
+    input: "textMessage.send() with email and Slack senders",
+    output: "Messages sent through different channels",
+    description: 'Send different message types through various delivery channels',
+    scenario: 'Send different message types through various delivery channels'
   },
   {
-    title: 'Database Flexibility',
-    scenario: 'Use repository pattern with different database engines',
-    inputExample: `const { repository, postgres } = createDatabaseRepository();
-
-console.log(repository.findUser(1));  // MySQL syntax
-repository.setDatabase(postgres);
-console.log(repository.createUser('John', 'john@example.com'));  // PostgreSQL syntax`,
-    outputExample: `MySQL: SELECT * FROM users WHERE id = 1
-PostgreSQL: INSERT INTO users (name, email) VALUES ('John', 'john@example.com')`,
-    explanation: 'Repository abstraction works with any database implementation. You can switch from MySQL to PostgreSQL without changing repository methods.'
+    input: "repository.findUser() with MySQL and PostgreSQL",
+    output: "Database-specific SQL queries",
+    description: 'Use repository pattern with different database engines',
+    scenario: 'Use repository pattern with different database engines'
   }
 ];
 
+export type { 
+  DrawingAPI, MessageSender, Database
+};
+
 export { 
-  DrawingAPI, SVGRenderer, CanvasRenderer, ConsoleRenderer,
+  SVGRenderer, CanvasRenderer, ConsoleRenderer,
   Shape, Circle, Rectangle,
-  MessageSender, EmailSender, SMSSender, SlackSender,
+  EmailSender, SMSSender, SlackSender,
   Message, TextMessage, EncryptedMessage,
-  Database, MySQL, PostgreSQL, Repository 
+  MySQL, PostgreSQL, Repository 
 };

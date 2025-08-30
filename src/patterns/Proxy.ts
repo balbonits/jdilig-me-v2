@@ -1,4 +1,6 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🔗 Proxy Pattern Implementation - Access Control
@@ -336,17 +338,10 @@ export const metadata: PatternMetadata = {
   difficulty: "Medium",
   timeComplexity: "O(1)",
   spaceComplexity: "O(1)",
-  useCases: ["Performance", "Access Control", "Resource Management", "Lazy Loading"],
-  concepts: ["placeholder", "lazy loading", "access control", "transparent proxy"],
-  realWorldApplications: [
-    "CDN networks",
-    "ORM lazy loading",
-    "API rate limiting",
-    "Image lazy loading",
-    "Security access control",
-    "Caching mechanisms"
-  ],
-  relatedPatterns: ["Decorator", "Adapter", "Facade"],
+  concepts: ["Access Control", "Lazy Loading", "Object Surrogates", "Transparent Intermediation", "Resource Management"],
+  useCases: [PatternUseCase.PERFORMANCE_OPTIMIZATION, PatternUseCase.MEMORY_MANAGEMENT, PatternUseCase.API_DESIGN],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Decorator", "Adapter", "Facade"],
   frameworkSupport: ["JavaScript Proxy", "React.lazy", "Service Workers", "HTTP Proxies"]
 };
 
@@ -371,7 +366,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "virtual-proxy",
     tabName: "Virtual Proxy",

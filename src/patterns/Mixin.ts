@@ -1,5 +1,7 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
 // Basic Mixin Type
 type Constructor<T = {}> = new (...args: any[]) => T;
@@ -384,6 +386,7 @@ export const metadata: PatternMetadata = {
   category: 'Modern',
   difficulty: 'Hard',
   description: 'Compose objects from multiple sources to achieve multiple inheritance',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 🎯 Mixin Pattern
 
@@ -424,11 +427,14 @@ export const metadata: PatternMetadata = {
     ✅ **Type safety** - TypeScript provides full type checking for mixins  
     ✅ **Runtime flexibility** - Can apply mixins conditionally
   `,
-  useCases: [
+    useCases: [
     PatternUseCase.CODE_ORGANIZATION,
     PatternUseCase.FRAMEWORK_DEVELOPMENT,
     PatternUseCase.CROSS_CUTTING_CONCERNS
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    timeComplexity: 'O(1) for mixin application, O(n) for method resolution',
+  spaceComplexity: 'O(k) where k is the number of mixins',
   advantages: [
     'Enables multiple inheritance-like behavior',
     'Promotes code reuse across different hierarchies',
@@ -444,41 +450,272 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Decorator', 'Strategy', 'Template Method']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'basic-mixins',
-    title: 'Timestamp & Validation Mixins',
-    description: 'Simple mixins for timestamping and validation',
+    tabName: 'Timestamp & Validation Mixins',
+    approach: 'Simple mixins for timestamping and validation',
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class',
+    code: `// Timestamped Mixin
+interface Timestamped {
+  timestamp: Date;
+  getAge(): number;
+  setTimestamp(date: Date): void;
+}
+
+function TimestampedMixin<TBase extends Constructor>(Base: TBase) {
+  return class extends Base implements Timestamped {
+    timestamp: Date = new Date();
+
+    getAge(): number {
+      return Date.now() - this.timestamp.getTime();
+    }
+
+    setTimestamp(date: Date): void {
+      this.timestamp = date;
+    }
+
+    getFormattedTimestamp(): string {
+      return this.timestamp.toISOString();
+    }
+  };
+}
+
+// Validatable Mixin
+interface Validatable {
+  errors: string[];
+  isValid(): boolean;
+  addError(error: string): void;
+  clearErrors(): void;
+}
+
+function ValidatableMixin<TBase extends Constructor>(Base: TBase) {
+  return class extends Base implements Validatable {
+    errors: string[] = [];
+
+    isValid(): boolean {
+      this.validate();
+      return this.errors.length === 0;
+    }
+
+    addError(error: string): void {
+      if (!this.errors.includes(error)) {
+        this.errors.push(error);
+      }
+    }
+
+    clearErrors(): void {
+      this.errors = [];
+    }
+
+    protected validate(): void {
+      this.clearErrors();
+      // Override in subclasses for specific validation
+    }
+  };
+}
+
+// Example usage
+class User {
+  constructor(public name: string, public email: string) {}
+}
+
+class TimestampedUser extends TimestampedMixin(User) {
+  constructor(name: string, email: string) {
+    super(name, email);
+  }
+}
+
+class ValidatedUser extends ValidatableMixin(User) {
+  constructor(name: string, email: string) {
+    super(name, email);
+  }
+
+  protected validate(): void {
+    super.validate();
+    if (!this.name || this.name.trim().length === 0) {
+      this.addError('Name is required');
+    }
+    if (!this.email || !this.email.includes('@')) {
+      this.addError('Valid email is required');
+    }
+  }
+}`
   },
   {
     name: 'serializable-product',
-    title: 'Multi-Mixin Product Tracking',
-    description: 'Product with serialization and timestamp tracking',
+    tabName: 'Multi-Mixin Product Tracking',
+    approach: 'Product with serialization and timestamp tracking',
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Hard'
+    type: 'class',
+    code: `// Serializable Mixin
+interface Serializable {
+  serialize(): string;
+  deserialize(data: string): void;
+}
+
+function SerializableMixin<TBase extends Constructor>(Base: TBase) {
+  return class extends Base implements Serializable {
+    serialize(): string {
+      const obj = { ...this };
+      return JSON.stringify(obj);
+    }
+
+    deserialize(data: string): void {
+      try {
+        const parsed = JSON.parse(data);
+        Object.assign(this, parsed);
+      } catch (error) {
+        throw new Error('Invalid serialization data');
+      }
+    }
+
+    clone(): this {
+      const serialized = this.serialize();
+      const cloned = new (this.constructor as any)();
+      cloned.deserialize(serialized);
+      return cloned;
+    }
+  };
+}
+
+// Product with multiple mixins
+class Product {
+  constructor(
+    public id: string,
+    public name: string,
+    public price: number
+  ) {}
+
+  getDisplayPrice(): string {
+    return \`$\${this.price.toFixed(2)}\`;
+  }
+}
+
+// Multiple mixins composition
+const SerializableTimestampedProduct = SerializableMixin(TimestampedMixin(Product));
+
+class TrackedProduct extends SerializableTimestampedProduct {
+  constructor(id: string, name: string, price: number) {
+    super(id, name, price);
+  }
+
+  updatePrice(newPrice: number): void {
+    this.price = newPrice;
+    this.setTimestamp(new Date());
+  }
+}
+
+// Usage
+const product = new TrackedProduct('P001', 'Laptop', 999.99);
+product.updatePrice(899.99);
+const cloned = product.clone();`
   },
   {
     name: 'full-featured-blog',
-    title: 'Complete Blog Post System',
-    description: 'Blog post with validation, serialization, timestamps, and observers',
+    tabName: 'Complete Blog Post System',
+    approach: 'Blog post with validation, serialization, timestamps, and observers',
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Hard'
+    type: 'class',
+    code: `// Observable Mixin
+interface Observable {
+  observers: Array<(data: any) => void>;
+  addObserver(observer: (data: any) => void): void;
+  removeObserver(observer: (data: any) => void): void;
+  notifyObservers(data?: any): void;
+}
+
+function ObservableMixin<TBase extends Constructor>(Base: TBase) {
+  return class extends Base implements Observable {
+    observers: Array<(data: any) => void> = [];
+
+    addObserver(observer: (data: any) => void): void {
+      if (!this.observers.includes(observer)) {
+        this.observers.push(observer);
+      }
+    }
+
+    removeObserver(observer: (data: any) => void): void {
+      const index = this.observers.indexOf(observer);
+      if (index !== -1) {
+        this.observers.splice(index, 1);
+      }
+    }
+
+    notifyObservers(data?: any): void {
+      this.observers.forEach(observer => {
+        try {
+          observer(data);
+        } catch (error) {
+          console.error('Observer error:', error);
+        }
+      });
+    }
+  };
+}
+
+// Complex mixin composition
+class BlogPost {
+  constructor(
+    public title: string,
+    public content: string,
+    public author: string
+  ) {}
+
+  getWordCount(): number {
+    return this.content.split(/\\s+/).filter(word => word.length > 0).length;
+  }
+}
+
+const FullFeaturedBlogPost = ObservableMixin(
+  ValidatableMixin(
+    SerializableMixin(
+      TimestampedMixin(BlogPost)
+    )
+  )
+);
+
+class EnhancedBlogPost extends FullFeaturedBlogPost {
+  constructor(title: string, content: string, author: string) {
+    super(title, content, author);
+  }
+
+  protected validate(): void {
+    super.validate();
+    if (!this.title || this.title.trim().length === 0) {
+      this.addError('Title is required');
+    }
+    if (!this.content || this.content.trim().length < 10) {
+      this.addError('Content must be at least 10 characters');
+    }
+  }
+
+  publish(): boolean {
+    if (!this.isValid()) {
+      return false;
+    }
+    
+    this.notifyObservers({
+      event: 'published',
+      post: { title: this.title, timestamp: this.timestamp }
+    });
+    
+    return true;
+  }
+}`
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'User with Timestamp Tracking',
-    scenario: 'Add timestamp functionality to user class without modifying original class',
-    inputExample: `const user = createTimestampedUser('John Doe', 'john@example.com');
+    input: `const user = createTimestampedUser('John Doe', 'john@example.com');
 
 console.log('User:', user.getDisplayName());
 console.log('Created:', user.getFormattedTimestamp());
@@ -490,16 +727,15 @@ setTimeout(() => {
 
 user.setTimestamp(new Date('2023-01-01'));
 console.log('Updated timestamp:', user.getFormattedTimestamp());`,
-    outputExample: `User: John Doe
+    output: `User: John Doe
 Created: 2024-01-01T12:00:00.000Z
 Age (ms): 102
 Updated timestamp: 2023-01-01T00:00:00.000Z`,
-    explanation: 'TimestampedUser inherits all User functionality plus timestamp capabilities through mixin composition. Original User class remains unchanged.'
+    description: 'TimestampedUser inherits all User functionality plus timestamp capabilities through mixin composition. Original User class remains unchanged.',
+    scenario: 'Add timestamp functionality to user class without modifying original class'
   },
   {
-    title: 'Multi-Feature Product Tracking',
-    scenario: 'Combine multiple mixins to create feature-rich product with serialization and timestamps',
-    inputExample: `const product = createTrackedProduct('P001', 'Laptop', 999.99);
+    input: `const product = createTrackedProduct('P001', 'Laptop', 999.99);
 
 console.log('Product:', product.name, product.getDisplayPrice());
 console.log('Created:', product.getFormattedTimestamp());
@@ -512,17 +748,16 @@ console.log('Serialized length:', serialized.length);
 
 const cloned = product.clone();
 console.log('Clone price:', cloned.getDisplayPrice());`,
-    outputExample: `Product: Laptop $999.99
+    output: `Product: Laptop $999.99
 Created: 2024-01-01T12:00:00.000Z
 Updated price: $899.99
 Serialized length: 156
 Clone price: $899.99`,
-    explanation: 'TrackedProduct combines Product base class with TimestampedMixin and SerializableMixin, gaining automatic timestamping, serialization, and cloning capabilities.'
+    description: 'TrackedProduct combines Product base class with TimestampedMixin and SerializableMixin, gaining automatic timestamping, serialization, and cloning capabilities.',
+    scenario: 'Combine multiple mixins to create feature-rich product with serialization and timestamps'
   },
   {
-    title: 'Full-Featured Blog Post System',
-    scenario: 'Complex object combining validation, serialization, timestamps, and observer pattern',
-    inputExample: `const post = createEnhancedBlogPost('My Blog Post', 'This is the content of my blog post.', 'John Doe');
+    input: `const post = createEnhancedBlogPost('My Blog Post', 'This is the content of my blog post.', 'John Doe');
 
 // Add observer
 post.addObserver((data) => console.log('Event:', data.event, 'at', data.timestamp));
@@ -535,13 +770,14 @@ console.log('Valid after update:', post.isValid());
 
 const published = post.publish();
 console.log('Published:', published);`,
-    outputExample: `Valid: true
+    output: `Valid: true
 Word count: 9
 Event: updated at 2024-01-01T12:00:01.000Z
 Valid after update: true
 Event: published at 2024-01-01T12:00:01.000Z
 Published: true`,
-    explanation: 'EnhancedBlogPost combines four mixins (Observable, Validatable, Serializable, Timestamped) with BlogPost base class, creating a rich object with multiple behaviors.'
+    description: 'EnhancedBlogPost combines four mixins (Observable, Validatable, Serializable, Timestamped) with BlogPost base class, creating a rich object with multiple behaviors.',
+    scenario: 'Complex object combining validation, serialization, timestamps, and observer pattern'
   }
 ];
 

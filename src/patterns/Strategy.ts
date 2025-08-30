@@ -1,4 +1,4 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🎭 Strategy Pattern Implementation - Interchangeable Algorithms
@@ -349,30 +349,67 @@ export const metadata: PatternMetadata = {
   title: "Strategy Pattern",
   description: "Encapsulate algorithms and make them interchangeable at runtime",
   detailedDescription: "🎭 **The Strategy Pattern - Interchangeable Algorithms**\n\nDefines a family of algorithms, encapsulates each one, and makes them interchangeable at runtime!\n\n🎯 **Core Problem Solved:**\n• Switch between different algorithms dynamically\n• Eliminate complex conditional statements\n• Support easy algorithm extension\n• Decouple algorithm implementation from usage\n\n🔍 **Three Implementation Approaches:**\n• **Interface-based:** Traditional OOP with strategy interfaces\n• **Function-based:** Modern functional approach with higher-order functions\n• **Class-based:** Strategy classes with shared behavior\n\n🚀 **Real-World Applications:**\n• Payment processing systems (credit card, PayPal, crypto)\n• Sorting algorithms (quicksort, mergesort, heapsort)\n• Form validation rules and strategies\n• Data compression algorithms\n• Routing and pathfinding algorithms\n• Authentication mechanisms\n\n⚡ **Modern Usage Examples:**\n• React form validation libraries\n• Data processing pipelines\n• Microservice routing strategies\n• A/B testing algorithm selection",
-  concepts: ["polymorphism", "algorithm selection", "runtime behavior", "decoupling"],
-  timeComplexity: "Depends on chosen algorithm",
+    timeComplexity: "Depends on chosen algorithm",
   spaceComplexity: "O(1) - strategy storage overhead",
   difficulty: "Medium",
   category: "Behavioral",
-  useCases: ["State Management", "Code Organization", "Performance"],
-  realWorldApplications: [
-    "Payment processing systems with multiple providers",
-    "Form validation with different rule sets",
-    "Sorting algorithms selection based on data size",
-    "Data compression strategy selection",
-    "Authentication method switching",
-    "A/B testing algorithm variations"
-  ],
-  relatedPatterns: ["State", "Command", "Template Method"],
+  concepts: ["Algorithm Encapsulation", "Runtime Selection", "Interchangeable Behavior", "Policy Pattern", "Behavioral Parameterization"],
+  useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.CODE_ORGANIZATION, PatternUseCase.PERFORMANCE_OPTIMIZATION],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["State", "Command", "Template Method"],
   modernAlternatives: ["Higher-order functions", "React hooks patterns", "Functional composition"],
   frameworkSupport: ["React validation libraries", "Express.js middleware", "Redux middleware"]
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "DataSorter",
     tabName: "Interface-based",
     approach: "Traditional OOP with strategy interface",
+    code: `// Strategy pattern for sorting algorithms
+interface SortingStrategy {
+  sort(data: number[]): number[];
+  getName(): string;
+  getComplexity(): string;
+}
+
+class QuickSortStrategy implements SortingStrategy {
+  sort(data: number[]): number[] {
+    if (data.length <= 1) return [...data];
+    
+    const pivot = data[Math.floor(data.length / 2)];
+    const less = data.filter(x => x < pivot);
+    const equal = data.filter(x => x === pivot);
+    const greater = data.filter(x => x > pivot);
+    
+    return [
+      ...this.sort(less),
+      ...equal,
+      ...this.sort(greater)
+    ];
+  }
+
+  getName(): string {
+    return 'Quick Sort';
+  }
+
+  getComplexity(): string {
+    return 'O(n log n) average, O(n²) worst';
+  }
+}
+
+class DataSorter {
+  constructor(private strategy: SortingStrategy) {}
+
+  public setStrategy(strategy: SortingStrategy): void {
+    this.strategy = strategy;
+  }
+
+  public sort(data: number[]): number[] {
+    console.log(\`Sorting with \${this.strategy.getName()}\`);
+    return this.strategy.sort(data);
+  }
+}`,
     timeComplexity: "Varies by algorithm",
     spaceComplexity: "O(1)",
     isOptimal: true,
@@ -382,6 +419,48 @@ export const solutions: SolutionMetadata[] = [
     name: "FormValidator",
     tabName: "Validation Strategies",
     approach: "Map-based strategy registry",
+    code: `// Strategy pattern for form validation
+interface ValidationStrategy {
+  validate(value: string): { isValid: boolean; errors: string[] };
+  getType(): string;
+}
+
+class EmailValidationStrategy implements ValidationStrategy {
+  validate(value: string): { isValid: boolean; errors: string[] } {
+    const errors: string[] = [];
+    
+    if (!value || value.trim().length === 0) {
+      errors.push('Email is required');
+    } else {
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if (!emailRegex.test(value)) {
+        errors.push('Invalid email format');
+      }
+    }
+    
+    return { isValid: errors.length === 0, errors };
+  }
+
+  getType(): string {
+    return 'email';
+  }
+}
+
+class FormValidator {
+  private strategies: Map<string, ValidationStrategy> = new Map();
+
+  public addValidationStrategy(field: string, strategy: ValidationStrategy): void {
+    this.strategies.set(field, strategy);
+  }
+
+  public validateField(field: string, value: string): { isValid: boolean; errors: string[] } {
+    const strategy = this.strategies.get(field);
+    if (!strategy) {
+      return { isValid: true, errors: [] };
+    }
+    return strategy.validate(value);
+  }
+}`,
     timeComplexity: "O(n) per validation",
     spaceComplexity: "O(n)",
     isOptimal: true,
@@ -391,6 +470,48 @@ export const solutions: SolutionMetadata[] = [
     name: "PaymentProcessor",
     tabName: "Function-based",
     approach: "Modern functional strategy pattern",
+    code: `// Functional strategy pattern for payments
+const paymentStrategies = {
+  creditCard: async (amount: number) => {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return {
+      success: amount > 0,
+      transactionId: \`cc_\${Math.random().toString(36).substr(2, 9)}\`,
+      fee: amount * 0.029 // 2.9% fee
+    };
+  },
+
+  paypal: async (amount: number) => {
+    await new Promise(resolve => setTimeout(resolve, 150));
+    return {
+      success: amount > 0,
+      transactionId: \`pp_\${Math.random().toString(36).substr(2, 9)}\`,
+      fee: amount * 0.034 + 0.30 // 3.4% + $0.30 fee
+    };
+  },
+
+  bankTransfer: async (amount: number) => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return {
+      success: amount > 0,
+      transactionId: \`bt_\${Math.random().toString(36).substr(2, 9)}\`,
+      fee: amount > 1000 ? 0 : 5.00 // Free for amounts over $1000
+    };
+  }
+} as const;
+
+class PaymentProcessor {
+  public async processPayment(
+    method: keyof typeof paymentStrategies,
+    amount: number
+  ) {
+    const strategy = paymentStrategies[method];
+    if (!strategy) {
+      throw new Error(\`Unknown payment method: \${method}\`);
+    }
+    return await strategy(amount);
+  }
+}`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: true,

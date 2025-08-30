@@ -1,4 +1,4 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🏗️ Prototype Pattern Implementation - Efficient Object Cloning
@@ -282,17 +282,10 @@ export const metadata: PatternMetadata = {
   difficulty: "Medium",
   timeComplexity: "O(n)",
   spaceComplexity: "O(n)",
-  useCases: ["Object Cloning", "Template Systems", "Performance Optimization", "Dynamic Object Creation"],
-  concepts: ["object cloning", "prototype inheritance", "deep vs shallow copy", "registry pattern"],
-  realWorldApplications: [
-    "Document template systems",
-    "Game entity spawning",
-    "Configuration management",
-    "GUI widget templates",
-    "Database record cloning",
-    "Immutable data structures"
-  ],
-  relatedPatterns: ["Factory Method", "Builder", "Singleton"],
+  concepts: ["Object Cloning", "Deep/Shallow Copy", "Template Objects", "Performance Optimization", "Runtime Creation"],
+  useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.PERFORMANCE_OPTIMIZATION, PatternUseCase.FRAMEWORK_DEVELOPMENT],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Factory Method", "Builder", "Singleton"],
   frameworkSupport: ["Lodash (cloneDeep)", "Immutable.js", "Ramda", "Native Object methods"]
 };
 
@@ -317,7 +310,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "shallow-clone",
     tabName: "Shallow Clone",

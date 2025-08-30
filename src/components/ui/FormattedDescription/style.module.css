@@ -2,6 +2,7 @@
 .formattedDescription {
   line-height: 1.6;
   color: var(--foreground);
+  overflow-wrap: break-word;
 }
 
 .paragraph {

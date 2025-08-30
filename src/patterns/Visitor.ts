@@ -1,5 +1,4 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 // Element interface
 interface Shape {
@@ -314,7 +313,7 @@ class Evaluator implements ASTVisitor {
 }
 
 // Factory functions
-export function createShapeCollection() {
+function createShapeCollection() {
   const shapes: Shape[] = [
     new Circle(5),
     new Rectangle(10, 8),
@@ -330,7 +329,7 @@ export function createShapeCollection() {
   return { shapes, visitors };
 }
 
-export function createFileSystem() {
+function createFileSystem() {
   const root = new Directory('project');
   const src = new Directory('src');
   const docs = new Directory('docs');
@@ -354,7 +353,7 @@ export function createFileSystem() {
   return { root, visitors };
 }
 
-export function createAST() {
+function createAST() {
   // Represents: (3 + x) * (2 - 1)
   const ast = new BinaryOpNode(
     new BinaryOpNode(new NumberNode(3), '+', new VariableNode('x')),
@@ -374,7 +373,10 @@ export const metadata: PatternMetadata = {
   title: 'Visitor Pattern',
   category: 'Behavioral',
   difficulty: 'Hard',
+  timeComplexity: 'O(n) - visits each element once',
+  spaceComplexity: 'O(h) - recursion depth for tree structures',
   description: 'Separate algorithms from objects they operate on',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 👋 Visitor Pattern
 
@@ -412,6 +414,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.DATA_PROCESSING,
     PatternUseCase.CODE_ANALYSIS
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Easy to add new operations without changing element classes',
     'Groups related operations in visitor classes',
@@ -427,97 +430,221 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Composite', 'Interpreter', 'Iterator']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'shape-operations',
-    title: 'Shape Calculation & Rendering',
-    description: 'Multiple operations on geometric shapes',
-    isOptimal: true,
+    tabName: 'Shape Operations',
+    approach: 'Multiple operations on geometric shapes',
+    code: `// Visitor pattern for shape operations
+interface Shape {
+  accept(visitor: ShapeVisitor): string;
+}
+
+interface ShapeVisitor {
+  visitCircle(circle: Circle): string;
+  visitRectangle(rectangle: Rectangle): string;
+  visitTriangle(triangle: Triangle): string;
+}
+
+class Circle implements Shape {
+  constructor(public radius: number) {}
+
+  accept(visitor: ShapeVisitor): string {
+    return visitor.visitCircle(this);
+  }
+
+  getArea(): number {
+    return Math.PI * this.radius * this.radius;
+  }
+}
+
+class Rectangle implements Shape {
+  constructor(public width: number, public height: number) {}
+
+  accept(visitor: ShapeVisitor): string {
+    return visitor.visitRectangle(this);
+  }
+
+  getArea(): number {
+    return this.width * this.height;
+  }
+}
+
+class AreaCalculator implements ShapeVisitor {
+  visitCircle(circle: Circle): string {
+    const area = Math.PI * circle.radius * circle.radius;
+    return \`Circle area: \${area.toFixed(2)}\`;
+  }
+
+  visitRectangle(rectangle: Rectangle): string {
+    const area = rectangle.width * rectangle.height;
+    return \`Rectangle area: \${area}\`;
+  }
+
+  visitTriangle(triangle: Triangle): string {
+    const area = 0.5 * triangle.base * triangle.height;
+    return \`Triangle area: \${area}\`;
+  }
+}`,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Hard'
+    isOptimal: true,
+    type: 'class'
   },
   {
     name: 'file-system',
-    title: 'File System Analysis',
-    description: 'Size calculation and security scanning on files',
-    isOptimal: false,
+    tabName: 'File System Analysis',
+    approach: 'Size calculation and security scanning on files',
+    code: `// File system visitor pattern
+interface FileSystemItem {
+  accept(visitor: FileSystemVisitor): string;
+  getName(): string;
+}
+
+interface FileSystemVisitor {
+  visitFile(file: File): string;
+  visitDirectory(directory: Directory): string;
+  visitSymlink(symlink: Symlink): string;
+}
+
+class File implements FileSystemItem {
+  constructor(private name: string, private size: number, private extension: string) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSize(): number {
+    return this.size;
+  }
+
+  getExtension(): string {
+    return this.extension;
+  }
+
+  accept(visitor: FileSystemVisitor): string {
+    return visitor.visitFile(this);
+  }
+}
+
+class SizeCalculator implements FileSystemVisitor {
+  visitFile(file: File): string {
+    return \`\${file.getName()}: \${file.getSize()}KB\`;
+  }
+
+  visitDirectory(directory: Directory): string {
+    const items = directory.getItems();
+    const totalSize = items.reduce((sum, item) => {
+      if (item instanceof File) {
+        return sum + item.getSize();
+      }
+      return sum;
+    }, 0);
+    
+    return \`\${directory.getName()}/: \${totalSize}KB (\${items.length} items)\`;
+  }
+
+  visitSymlink(symlink: Symlink): string {
+    return \`\${symlink.getName()} -> \${symlink.getTarget()}: 0KB (symlink)\`;
+  }
+}`,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    isOptimal: false,
+    type: 'class'
   },
   {
     name: 'ast-processing',
-    title: 'Abstract Syntax Tree Operations',
-    description: 'Code generation and evaluation on expression trees',
-    isOptimal: false,
+    tabName: 'AST Processing',
+    approach: 'Code generation and evaluation on expression trees',
+    code: `// AST visitor pattern
+interface ASTNode {
+  accept(visitor: ASTVisitor): string;
+}
+
+interface ASTVisitor {
+  visitNumber(node: NumberNode): string;
+  visitBinaryOp(node: BinaryOpNode): string;
+  visitVariable(node: VariableNode): string;
+}
+
+class NumberNode implements ASTNode {
+  constructor(public value: number) {}
+
+  accept(visitor: ASTVisitor): string {
+    return visitor.visitNumber(this);
+  }
+}
+
+class BinaryOpNode implements ASTNode {
+  constructor(
+    public left: ASTNode,
+    public operator: string,
+    public right: ASTNode
+  ) {}
+
+  accept(visitor: ASTVisitor): string {
+    return visitor.visitBinaryOp(this);
+  }
+}
+
+class CodeGenerator implements ASTVisitor {
+  visitNumber(node: NumberNode): string {
+    return node.value.toString();
+  }
+
+  visitBinaryOp(node: BinaryOpNode): string {
+    const left = node.left.accept(this);
+    const right = node.right.accept(this);
+    return \`(\${left} \${node.operator} \${right})\`;
+  }
+
+  visitVariable(node: VariableNode): string {
+    return node.name;
+  }
+}`,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(h)',
-    difficulty: 'Hard'
+    isOptimal: false,
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Multi-Operation Shape Processing',
-    scenario: 'Perform different calculations and rendering operations on geometric shapes',
-    inputExample: `const { shapes, visitors } = createShapeCollection();
-
-shapes.forEach(shape => {
-  console.log(shape.accept(visitors.area));
-  console.log(shape.accept(visitors.perimeter));
-  console.log(shape.accept(visitors.svg));
-  console.log('---');
-});`,
-    outputExample: `Circle area: 78.54
-Circle perimeter: 31.42
-<circle r="5" cx="0" cy="0" />
----
-Rectangle area: 80
-Rectangle perimeter: 36
-<rect width="10" height="8" x="0" y="0" />
----`,
-    explanation: 'Each shape accepts different visitors that perform area calculation, perimeter calculation, and SVG rendering. The visitor pattern enables adding new operations without modifying shape classes.'
+    input: 'createShapeCollection()',
+    output: 'Shape operations executed',
+    description: 'Multi-Operation Shape Processing',
+    scenario: 'Perform different calculations and rendering operations on geometric shapes without modifying shape classes'
   },
   {
-    title: 'File System Analysis',
-    scenario: 'Analyze file system structure with size calculation and security scanning',
-    inputExample: `const { root, visitors } = createFileSystem();
-
-console.log('Size Analysis:');
-console.log(root.accept(visitors.size));
-console.log('\\nSecurity Scan:');
-console.log(root.accept(visitors.security));`,
-    outputExample: `Size Analysis:
-project/: 11KB (3 items)
-
-Security Scan:
-project/: ⚠️  1 dangerous files`,
-    explanation: 'The file system structure accepts different visitors for size calculation and security analysis. Each visitor handles files, directories, and symlinks differently based on their specific operation.'
+    input: 'createFileSystem()',
+    output: 'File system analyzed',
+    description: 'File System Analysis',
+    scenario: 'Analyze file system structure with size calculation and security scanning using visitor pattern'
   },
   {
-    title: 'AST Code Generation & Evaluation',
-    scenario: 'Process abstract syntax tree for both code generation and mathematical evaluation',
-    inputExample: `const { ast, visitors } = createAST();
-
-console.log('Generated Code:');
-console.log(ast.accept(visitors.codegen));
-console.log('\\nEvaluated Result:');
-console.log(ast.accept(visitors.evaluator));`,
-    outputExample: `Generated Code:
-((3 + x) * (2 - 1))
-
-Evaluated Result:
-8`,
-    explanation: 'The AST accepts visitors for both code generation (produces readable expression) and evaluation (computes numerical result with x=5). Same tree structure, different operations.'
+    input: 'createAST()',
+    output: 'Code generated and evaluated',
+    description: 'AST Processing',
+    scenario: 'Process abstract syntax tree for both code generation and mathematical evaluation with same structure'
   }
 ];
 
+// Export classes for actual use
 export { 
-  Shape, ShapeVisitor, Circle, Rectangle, Triangle,
+  Circle, Rectangle, Triangle,
   AreaCalculator, PerimeterCalculator, SVGRenderer,
-  FileSystemItem, FileSystemVisitor, File, Directory, Symlink,
+  File, Directory, Symlink,
   SizeCalculator, SecurityScanner,
-  ASTNode, ASTVisitor, NumberNode, BinaryOpNode, VariableNode,
-  CodeGenerator, Evaluator
+  NumberNode, BinaryOpNode, VariableNode,
+  CodeGenerator, Evaluator,
+  createShapeCollection, createFileSystem, createAST
+};
+
+// Export types for TypeScript
+export type { 
+  Shape, ShapeVisitor,
+  FileSystemItem, FileSystemVisitor,
+  ASTNode, ASTVisitor
 };

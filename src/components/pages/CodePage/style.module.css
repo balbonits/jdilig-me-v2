@@ -13,6 +13,13 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
 .heroLink {
   display: block;
   text-decoration: none;

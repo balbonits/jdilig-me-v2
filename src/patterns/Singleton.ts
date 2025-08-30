@@ -1,4 +1,4 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🏗️ Singleton Pattern Implementation - Single Instance Control
@@ -155,30 +155,61 @@ export const metadata: PatternMetadata = {
   title: "Singleton Pattern",
   description: "Ensures a class has only one instance with global access point",
   detailedDescription: "🏗️ **The Singleton Pattern - Single Instance Control**\n\nEnsures a class has only one instance while providing global access to that instance. Essential for managing shared resources!\n\n🎯 **Core Problem Solved:**\n• Need exactly one instance of a class\n• Global access point required\n• Prevent multiple instantiation\n• Control resource allocation\n\n🔍 **Three Implementation Approaches:**\n• **Class-based:** Traditional OOP with private constructor\n• **Closure-based:** Functional approach using JavaScript closures\n• **Module-based:** ES6 modules are naturally singleton\n\n🚀 **Real-World Applications:**\n• Database connection pools\n• Logging systems and audit trails\n• Configuration managers\n• Cache systems and registries\n• Redux stores in React apps\n\n⚡ **Modern Considerations:**\n• Thread safety in Node.js\n• Module loading behavior\n• Memory management\n• Testing challenges and mocking",
-  concepts: ["object creation", "global state", "instance control", "resource management"],
-  timeComplexity: "O(1) - constant time access",
+    timeComplexity: "O(1) - constant time access",
   spaceComplexity: "O(1) - single instance storage",
   difficulty: "Easy",
   category: "Creational",
-  useCases: ["State Management", "Object Creation", "Performance"],
-  realWorldApplications: [
-    "Database connection pooling",
-    "Logging and audit systems",
-    "Application configuration management",
-    "Cache managers and service registries",
-    "Redux stores in React applications",
-    "Global state management"
-  ],
-  relatedPatterns: ["Factory", "Builder", "Prototype"],
+  concepts: ["Single Instance", "Global Access", "Lazy Initialization", "Resource Control", "Private Constructor"],
+  useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.CODE_ORGANIZATION, PatternUseCase.PERFORMANCE_OPTIMIZATION],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Factory", "Builder", "Prototype"],
   modernAlternatives: ["ES6 Modules", "Dependency Injection", "React Context"],
   frameworkSupport: ["Redux", "Vuex", "Angular Services", "Node.js modules"]
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "DatabaseConnection",
     tabName: "Class-based",
     approach: "Traditional OOP with private constructor",
+    code: `// Class-based Singleton (Traditional)
+export class DatabaseConnection {
+  private static instance: DatabaseConnection | null = null;
+  private connected: boolean = false;
+  private connectionId: string;
+
+  private constructor() {
+    this.connectionId = Math.random().toString(36).substr(2, 9);
+    this.connect();
+  }
+
+  public static getInstance(): DatabaseConnection {
+    if (!DatabaseConnection.instance) {
+      DatabaseConnection.instance = new DatabaseConnection();
+    }
+    return DatabaseConnection.instance;
+  }
+
+  private connect(): void {
+    this.connected = true;
+    console.log(\`Database connected with ID: \${this.connectionId}\`);
+  }
+
+  public query(sql: string): string {
+    if (!this.connected) {
+      throw new Error('Database not connected');
+    }
+    return \`Executing: \${sql} on connection \${this.connectionId}\`;
+  }
+
+  public getConnectionId(): string {
+    return this.connectionId;
+  }
+
+  public isConnected(): boolean {
+    return this.connected;
+  }
+}`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: true,
@@ -188,6 +219,45 @@ export const solutions: SolutionMetadata[] = [
     name: "createLoggerSingleton",
     tabName: "Closure-based",
     approach: "Functional approach using closures",
+    code: `// Closure-based Singleton (Functional)
+export const createLoggerSingleton = (() => {
+  let instance: Logger | null = null;
+
+  class Logger {
+    private logs: string[] = [];
+    private id: string;
+
+    constructor() {
+      this.id = \`logger-\${Date.now()}\`;
+    }
+
+    public log(message: string): void {
+      const timestamp = new Date().toISOString();
+      const logEntry = \`[\${timestamp}] \${message}\`;
+      this.logs.push(logEntry);
+      console.log(logEntry);
+    }
+
+    public getLogs(): string[] {
+      return [...this.logs];
+    }
+
+    public getId(): string {
+      return this.id;
+    }
+
+    public clear(): void {
+      this.logs = [];
+    }
+  }
+
+  return (): Logger => {
+    if (!instance) {
+      instance = new Logger();
+    }
+    return instance;
+  };
+})();`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: false,
@@ -197,6 +267,48 @@ export const solutions: SolutionMetadata[] = [
     name: "appConfig",
     tabName: "Module-based",
     approach: "ES6 module natural singleton",
+    code: `// Module-based Singleton (ES6 Modules)
+class ConfigManager {
+  private config: Record<string, unknown> = {};
+  private readonly instanceId: string;
+
+  constructor() {
+    this.instanceId = \`config-\${Math.random().toString(36).substr(2, 9)}\`;
+    this.loadDefaultConfig();
+  }
+
+  private loadDefaultConfig(): void {
+    this.config = {
+      apiUrl: 'https://api.example.com',
+      timeout: 5000,
+      retryAttempts: 3,
+      environment: 'development'
+    };
+  }
+
+  public get<T>(key: string): T | undefined {
+    return this.config[key] as T;
+  }
+
+  public set(key: string, value: unknown): void {
+    this.config[key] = value;
+  }
+
+  public getAll(): Record<string, unknown> {
+    return { ...this.config };
+  }
+
+  public getInstanceId(): string {
+    return this.instanceId;
+  }
+
+  public update(newConfig: Record<string, unknown>): void {
+    this.config = { ...this.config, ...newConfig };
+  }
+}
+
+// Export the singleton instance (ES6 module pattern)
+export const appConfig = new ConfigManager();`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: true,

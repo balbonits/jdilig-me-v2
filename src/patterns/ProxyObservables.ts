@@ -1,5 +1,6 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
 // Basic Observable using Proxy
 type ChangeListener<T> = (target: T, property: keyof T, value: any, oldValue: any) => void;
@@ -493,7 +494,10 @@ export const metadata: PatternMetadata = {
   category: 'Modern',
   difficulty: 'Hard',
   description: 'Create reactive objects using ES6 Proxy for automatic change detection',
-  detailedDescription: `
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
+    timeComplexity: 'O(1) for property access, O(n) for deep observation',
+  spaceComplexity: 'O(n) where n is the number of observers',
+    detailedDescription: `
     ## 🔍 Proxy-Based Observables Pattern
 
     The **Proxy-Based Observables Pattern** leverages ES6 Proxy to create reactive objects that automatically notify observers when properties change. This enables building reactive systems with minimal boilerplate.
@@ -538,6 +542,7 @@ export const metadata: PatternMetadata = {
     PatternUseCase.DATA_BINDING,
     PatternUseCase.REACTIVE_SYSTEMS
   ],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
   advantages: [
     'Automatic change detection without manual setup',
     'Natural property access syntax',
@@ -553,50 +558,273 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Observer', 'Proxy', 'Model-View-ViewModel (MVVM)']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'basic-observable',
-    title: 'Basic Proxy Observable',
-    description: 'Simple reactive object with change listeners',
+    tabName: 'Basic Proxy Observable',
+    approach: 'Simple reactive object with change listeners',
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    type: 'function',
+    code: `// Basic Observable using Proxy
+type ChangeListener<T> = (target: T, property: keyof T, value: any, oldValue: any) => void;
+
+function createObservable<T extends object>(
+  target: T,
+  listeners: Array<ChangeListener<T>> = []
+): T {
+  return new Proxy(target, {
+    set(obj, property, value) {
+      const oldValue = (obj as any)[property];
+      (obj as any)[property] = value;
+      
+      // Notify listeners
+      listeners.forEach(listener => {
+        try {
+          listener(obj as T, property as keyof T, value, oldValue);
+        } catch (error) {
+          console.error('Observer error:', error);
+        }
+      });
+      
+      return true;
+    }
+  });
+}
+
+// Usage
+const data = createObservable({ count: 0, name: 'test' }, [
+  (target, property, value) => console.log(\`\${String(property)} changed to \${value}\`)
+]);
+
+data.count = 5; // Logs: "count changed to 5"
+data.name = 'updated'; // Logs: "name changed to updated"`
   },
   {
     name: 'state-manager',
-    title: 'Application State Manager',
-    description: 'Complex state management with history and deep observation',
+    tabName: 'Application State Manager',
+    approach: 'Complex state management with history and deep observation',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Hard'
+    type: 'class',
+    code: `// Advanced State Manager
+class StateManager<T extends Record<string, any>> {
+  private state: T;
+  private listeners: Array<ChangeListener<T>> = [];
+  private history: Array<{ property: keyof T; value: any; timestamp: Date }> = [];
+
+  constructor(initialState: T) {
+    this.state = this.createDeepObservable(initialState);
+  }
+
+  private createDeepObservable<U extends object>(obj: U): U {
+    const self = this;
+    
+    return new Proxy(obj, {
+      set(target, property, value) {
+        const oldValue = (target as any)[property];
+        
+        // Make nested objects observable too
+        if (typeof value === 'object' && value !== null) {
+          value = self.createDeepObservable(value);
+        }
+        
+        (target as any)[property] = value;
+        
+        // Record in history
+        self.history.push({
+          property: property as keyof T,
+          value,
+          timestamp: new Date()
+        });
+        
+        // Notify listeners
+        self.listeners.forEach(listener => {
+          listener(target as T, property as keyof T, value, oldValue);
+        });
+        
+        return true;
+      }
+    });
+  }
+
+  getState(): T {
+    return this.state;
+  }
+
+  addStateListener(listener: ChangeListener<T>): void {
+    this.listeners.push(listener);
+  }
+
+  getHistory(): Array<{ property: keyof T; value: any; timestamp: Date }> {
+    return [...this.history];
+  }
+}`
   },
   {
     name: 'reactive-form',
-    title: 'Form Validation System',
-    description: 'Real-time form validation with reactive fields',
+    tabName: 'Form Validation System',
+    approach: 'Real-time form validation with reactive fields',
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Hard'
+    type: 'class',
+    code: `// Reactive Form Validation
+interface ValidationRule {
+  validate: (value: any) => boolean;
+  message: string;
+}
+
+class ReactiveFormField {
+  private _value: any = '';
+  private _errors: string[] = [];
+  private validators: ValidationRule[] = [];
+  private listeners: Array<(field: ReactiveFormField) => void> = [];
+
+  constructor(initialValue: any = '', required: boolean = false) {
+    this._value = initialValue;
+    
+    if (required) {
+      this.addValidator({
+        validate: (value) => value !== null && value !== undefined && value !== '',
+        message: 'This field is required'
+      });
+    }
+
+    return new Proxy(this, {
+      set(target, property, value) {
+        if (property === 'value') {
+          target._value = value;
+          target.validate();
+          target.notifyListeners();
+        } else {
+          (target as any)[property] = value;
+        }
+        return true;
+      },
+      
+      get(target, property) {
+        if (property === 'value') return target._value;
+        if (property === 'errors') return target._errors;
+        return (target as any)[property];
+      }
+    });
+  }
+
+  addValidator(rule: ValidationRule): void {
+    this.validators.push(rule);
+    this.validate();
+  }
+
+  private validate(): void {
+    this._errors = [];
+    this.validators.forEach(rule => {
+      if (!rule.validate(this._value)) {
+        this._errors.push(rule.message);
+      }
+    });
+  }
+
+  private notifyListeners(): void {
+    this.listeners.forEach(listener => listener(this));
+  }
+
+  onChange(listener: (field: ReactiveFormField) => void): void {
+    this.listeners.push(listener);
+  }
+
+  isValid(): boolean {
+    return this._errors.length === 0;
+  }
+}`
   },
   {
     name: 'computed-properties',
-    title: 'Model with Computed Properties',
-    description: 'Reactive model with auto-updating computed values',
+    tabName: 'Model with Computed Properties',
+    approach: 'Reactive model with auto-updating computed values',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(1)',
-    difficulty: 'Medium'
+    type: 'class',
+    code: `// Reactive Model with Computed Properties
+interface UserModel {
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+}
+
+class ReactiveUserModel {
+  private data: UserModel;
+  private computedCache = new Map<string, any>();
+  private listeners: Array<(model: ReactiveUserModel) => void> = [];
+
+  constructor(initialData: UserModel) {
+    this.data = new Proxy(initialData, {
+      set: (target, property, value) => {
+        (target as any)[property] = value;
+        
+        // Clear related computed properties
+        this.computedCache.clear();
+        
+        // Notify listeners
+        this.listeners.forEach(listener => listener(this));
+        
+        return true;
+      }
+    });
+  }
+
+  // Computed properties
+  get fullName(): string {
+    if (!this.computedCache.has('fullName')) {
+      this.computedCache.set('fullName', \`\${this.data.firstName} \${this.data.lastName}\`);
+    }
+    return this.computedCache.get('fullName');
+  }
+
+  get displayName(): string {
+    if (!this.computedCache.has('displayName')) {
+      const name = this.fullName;
+      const ageInfo = this.data.age > 0 ? \` (age \${this.data.age})\` : '';
+      this.computedCache.set('displayName', \`\${name}\${ageInfo}\`);
+    }
+    return this.computedCache.get('displayName');
+  }
+
+  get isAdult(): boolean {
+    if (!this.computedCache.has('isAdult')) {
+      this.computedCache.set('isAdult', this.data.age >= 18);
+    }
+    return this.computedCache.get('isAdult');
+  }
+
+  // Direct property access
+  get firstName(): string { return this.data.firstName; }
+  set firstName(value: string) { this.data.firstName = value; }
+  
+  get lastName(): string { return this.data.lastName; }
+  set lastName(value: string) { this.data.lastName = value; }
+  
+  get email(): string { return this.data.email; }
+  set email(value: string) { this.data.email = value; }
+  
+  get age(): number { return this.data.age; }
+  set age(value: number) { this.data.age = value; }
+
+  onChange(listener: (model: ReactiveUserModel) => void): void {
+    this.listeners.push(listener);
+  }
+}`
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Reactive State Management',
     scenario: 'Create application state that automatically notifies when properties change',
-    inputExample: `const initialState: AppState = {
+    input: `const initialState: AppState = {
   user: { id: 1, name: 'John', email: 'john@example.com', preferences: { theme: 'dark', language: 'en', notifications: true } },
   ui: { loading: false, errors: [], currentPage: 'home' },
   data: { items: [], filters: {}, pagination: { page: 1, pageSize: 10, total: 0 } }
@@ -614,15 +842,14 @@ stateManager.addStateListener((target, property, value) => {
 state.user.name = 'Jane Doe';
 state.ui.loading = true;
 state.user.preferences.theme = 'light';`,
-    outputExample: `State changed: name = "Jane Doe"
+    output: `State changed: name = "Jane Doe"
 State changed: loading = true  
 State changed: theme = "light"`,
-    explanation: 'All state changes are automatically detected through Proxy, including nested object properties. The state manager maintains history and provides centralized change tracking.'
+    description: 'All state changes are automatically detected through Proxy, including nested object properties. The state manager maintains history and provides centralized change tracking.'
   },
   {
-    title: 'Real-Time Form Validation',
     scenario: 'Create reactive form with automatic validation as user types',
-    inputExample: `const form = createReactiveForm();
+    input: `const form = createReactiveForm();
 
 // Setup form fields
 form.addField('email', '', true);
@@ -647,17 +874,16 @@ console.log('Form valid:', form.isValid());
 
 form.setValue('password', '123456');
 console.log('Form valid after password fix:', form.isValid());`,
-    outputExample: `Form validation errors: { email: 'Invalid email format' }
+    output: `Form validation errors: { email: 'Invalid email format' }
 Email field: { value: 'john', error: 'Invalid email format', touched: true, required: true }
 Form validation errors: { password: 'Password must be at least 6 characters' }
 Form valid: false
 Form valid after password fix: true`,
-    explanation: 'Form fields are automatically validated when values change. The Proxy detects property changes and triggers validation with debouncing to prevent excessive validation calls.'
+    description: 'Form fields are automatically validated when values change. The Proxy detects property changes and triggers validation with debouncing to prevent excessive validation calls.'
   },
   {
-    title: 'Model with Computed Properties',
     scenario: 'Create reactive model where computed properties automatically update when dependencies change',
-    inputExample: `const userData: UserModel = {
+    input: `const userData: UserModel = {
   firstName: 'John',
   lastName: 'Doe', 
   email: 'john@example.com',
@@ -677,16 +903,19 @@ console.log('After name change:');
 console.log('Full name:', userModel.getComputed('fullName'));
 console.log('Initials:', userModel.getComputed('initials'));
 console.log('Age:', userModel.getComputed('age'));`,
-    outputExample: `Initial computed: { fullName: 'John Doe', age: 34, initials: 'JD' }
+    output: `Initial computed: { fullName: 'John Doe', age: 34, initials: 'JD' }
 After name change:
 Full name: Jane Smith
 Initials: JS
 Age: 34`,
-    explanation: 'Computed properties automatically recalculate when their dependencies change. The Proxy detects changes to firstName and lastName, causing fullName and initials to update automatically.'
+    description: 'Computed properties automatically recalculate when their dependencies change. The Proxy detects changes to firstName and lastName, causing fullName and initials to update automatically.'
   }
 ];
 
 export { 
-  ProxyObservable, StateManager, ReactiveForm, ReactiveUserModel,
+  ProxyObservable, StateManager, ReactiveForm, ReactiveUserModel
+};
+
+export type { 
   ChangeListener, ObservableOptions, AppState, FormField, FormState, UserModel
 };

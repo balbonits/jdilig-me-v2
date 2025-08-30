@@ -1,4 +1,4 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🔗 Decorator Pattern Implementation - Dynamic Behavior Enhancement
@@ -321,30 +321,73 @@ export const metadata: PatternMetadata = {
   title: "Decorator Pattern",
   description: "Add new behaviors to objects dynamically without altering structure",
   detailedDescription: "🔗 **The Decorator Pattern - Dynamic Behavior Enhancement**\n\nAttaches new behaviors to objects by placing them inside special wrapper objects. Perfect for extending functionality without inheritance!\n\n🎯 **Core Problem Solved:**\n• Add behavior to objects at runtime\n• Avoid rigid inheritance hierarchies\n• Combine multiple enhancements flexibly\n• Follow Single Responsibility Principle\n\n🔍 **Three Implementation Approaches:**\n• **Class-based:** Traditional decorator with component interfaces\n• **Function-based:** Higher-order functions (HOFs) for enhancement\n• **Proxy-based:** JavaScript Proxy for transparent decoration\n\n🚀 **Real-World Applications:**\n• Express.js middleware (logging, auth, compression)\n• React Higher-Order Components (HOCs)\n• Coffee shop ordering system (milk, sugar, extras)\n• HTTP request/response processing\n• Data processing pipelines\n• API endpoint enhancement\n\n⚡ **Modern Usage Examples:**\n• Function composition in functional programming\n• React hooks for component enhancement\n• Python @decorator syntax\n• JavaScript Proxy for method interception",
-  concepts: ["composition over inheritance", "wrapper objects", "dynamic behavior", "aspect-oriented programming"],
-  timeComplexity: "O(1) - per decoration layer",
+    timeComplexity: "O(1) - per decoration layer",
   spaceComplexity: "O(n) - for n decorator layers",
   difficulty: "Medium",
   category: "Structural",
-  useCases: ["Code Organization", "API Design", "Event Handling"],
-  realWorldApplications: [
-    "Express.js middleware system (logging, auth, CORS)",
-    "React Higher-Order Components (HOCs)",
-    "HTTP request/response processing chains",
-    "Data processing and transformation pipelines",
-    "Coffee shop ordering with customizations",
-    "API endpoint enhancement and monitoring"
-  ],
-  relatedPatterns: ["Proxy", "Composite", "Strategy"],
+  concepts: ["Object Wrapping", "Dynamic Behavior", "Runtime Enhancement", "Composition over Inheritance", "Single Responsibility"],
+  useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.API_DESIGN, PatternUseCase.EVENT_HANDLING],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Proxy", "Composite", "Strategy"],
   modernAlternatives: ["Higher-order functions", "React hooks", "JavaScript Proxy", "Function composition"],
-  frameworkSupport: ["Express.js", "React", "Angular", "Python decorators", "Java annotations"]
+  frameworkSupport: ["Express.js", "React", "Angular", "Python decorators", "Java annotations"],
+  advantages: [
+    "Adds behavior to objects dynamically",
+    "More flexible than static inheritance",
+    "Supports composition of multiple enhancements",
+    "Follows Single Responsibility Principle"
+  ],
+  disadvantages: [
+    "Can result in many small objects",
+    "Can make debugging more complex",
+    "Order of decoration may matter",
+    "Performance overhead from wrapper layers"
+  ]
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "DataProcessorDecorator",
     tabName: "Class-based",
     approach: "Traditional OOP decorator pattern",
+    code: `// Class-based Decorator Implementation
+interface DataProcessor {
+  process(data: string): string;
+  getDescription(): string;
+}
+
+class BasicDataProcessor implements DataProcessor {
+  process(data: string): string {
+    return data;
+  }
+
+  getDescription(): string {
+    return 'Basic data processor';
+  }
+}
+
+abstract class DataProcessorDecorator implements DataProcessor {
+  constructor(protected processor: DataProcessor) {}
+
+  process(data: string): string {
+    return this.processor.process(data);
+  }
+
+  getDescription(): string {
+    return this.processor.getDescription();
+  }
+}
+
+class EncryptionDecorator extends DataProcessorDecorator {
+  process(data: string): string {
+    const processed = super.process(data);
+    return Buffer.from(processed).toString('base64');
+  }
+
+  getDescription(): string {
+    return super.getDescription() + ' + Encryption';
+  }
+}`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(n)",
     isOptimal: true,
@@ -354,6 +397,30 @@ export const solutions: SolutionMetadata[] = [
     name: "withRetry",
     tabName: "Function-based",
     approach: "Higher-order functions for decoration",
+    code: `// Function-based Decorator Implementation
+type AsyncFunction<T, R> = (input: T) => Promise<R>;
+
+function withRetry<T, R>(maxAttempts: number, delay: number = 1000) {
+  return function(fn: AsyncFunction<T, R>): AsyncFunction<T, R> {
+    return async function(input: T): Promise<R> {
+      let lastError: Error | undefined;
+      
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+          return await fn(input);
+        } catch (error) {
+          lastError = error as Error;
+          
+          if (attempt < maxAttempts) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+        }
+      }
+      
+      throw new Error(\`All \${maxAttempts} attempts failed\`);
+    };
+  };
+}`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: true,
@@ -363,6 +430,24 @@ export const solutions: SolutionMetadata[] = [
     name: "createLoggingProxy",
     tabName: "Proxy-based",
     approach: "JavaScript Proxy for transparent decoration",
+    code: `// Proxy-based Decorator Implementation
+function createLoggingProxy<T extends object>(target: T, name: string): T {
+  return new Proxy(target, {
+    get(obj, prop) {
+      const value = obj[prop as keyof T];
+      
+      if (typeof value === 'function') {
+        return function(...args: unknown[]) {
+          console.log(\`[PROXY] Calling \${name}.\${String(prop)}\`);
+          const result = (value as (...args: unknown[]) => unknown).apply(obj, args);
+          return result;
+        };
+      }
+      
+      return value;
+    }
+  });
+}`,
     timeComplexity: "O(1)",
     spaceComplexity: "O(1)",
     isOptimal: true,

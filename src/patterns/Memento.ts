@@ -1,5 +1,4 @@
-import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
 // Memento interface
 interface TextEditorMemento {
@@ -401,6 +400,7 @@ export const metadata: PatternMetadata = {
   category: 'Behavioral',
   difficulty: 'Medium',
   description: 'Capture and restore object state without violating encapsulation',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 💾 Memento Pattern
 
@@ -439,7 +439,10 @@ export const metadata: PatternMetadata = {
     PatternUseCase.DATA_BACKUP,
     PatternUseCase.TRANSACTION_PROCESSING
   ],
-  advantages: [
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    timeComplexity: 'O(1)',
+  spaceComplexity: 'O(n)',
+    advantages: [
     'Preserves encapsulation boundaries',
     'Simplifies originator by removing state management responsibility',
     'Enables undo/redo functionality',
@@ -454,41 +457,135 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Command', 'Iterator', 'Prototype']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'text-editor',
-    title: 'Text Editor with Undo/Redo',
-    description: 'Document editing with history management',
+    tabName: 'Text Editor with Undo/Redo',
+    approach: 'Document editing with history management',
+    type: 'class',
     isOptimal: true,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Medium'
+    code: `// Memento interface
+interface TextEditorMemento {
+  getContent(): string;
+  getCursor(): number;
+  getTimestamp(): Date;
+}
+
+// Originator
+class TextEditor {
+  private content = '';
+  private cursor = 0;
+
+  type(text: string): void {
+    const before = this.content.substring(0, this.cursor);
+    const after = this.content.substring(this.cursor);
+    this.content = before + text + after;
+    this.cursor += text.length;
+  }
+
+  delete(count: number = 1): void {
+    const before = this.content.substring(0, Math.max(0, this.cursor - count));
+    const after = this.content.substring(this.cursor);
+    this.content = before + after;
+    this.cursor = Math.max(0, this.cursor - count);
+  }
+
+  save(): TextEditorMemento {
+    return new ConcreteTextEditorMemento(this.content, this.cursor);
+  }
+
+  restore(memento: TextEditorMemento): void {
+    this.content = memento.getContent();
+    this.cursor = memento.getCursor();
+  }
+}`
   },
   {
     name: 'game-save-system',
-    title: 'Game State Management',
-    description: 'Save/load game progress with multiple slots',
+    tabName: 'Game State Management',
+    approach: 'Save/load game progress with multiple slots',
+    type: 'class',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(k)',
-    difficulty: 'Medium'
+    code: `// Game State Memento
+interface GameStateMemento {
+  getLevel(): number;
+  getScore(): number;
+  getHealth(): number;
+  getInventory(): string[];
+  getPosition(): { x: number; y: number };
+}
+
+class GameState {
+  private level = 1;
+  private score = 0;
+  private health = 100;
+  private inventory: string[] = [];
+  private position = { x: 0, y: 0 };
+
+  createSavePoint(): GameStateMemento {
+    return new ConcreteGameStateMemento(
+      this.level,
+      this.score,
+      this.health,
+      [...this.inventory],
+      { ...this.position }
+    );
+  }
+
+  loadSavePoint(memento: GameStateMemento): void {
+    this.level = memento.getLevel();
+    this.score = memento.getScore();
+    this.health = memento.getHealth();
+    this.inventory = [...memento.getInventory()];
+    this.position = { ...memento.getPosition() };
+  }
+}`
   },
   {
     name: 'configuration-manager',
-    title: 'Settings Snapshot System',
-    description: 'Application configuration with named snapshots',
+    tabName: 'Settings Snapshot System',
+    approach: 'Application configuration with named snapshots',
+    type: 'class',
     isOptimal: false,
     timeComplexity: 'O(1)',
     spaceComplexity: 'O(n)',
-    difficulty: 'Easy'
+    code: `// Configuration Memento
+interface ConfigMemento {
+  getSettings(): Record<string, unknown>;
+  getName(): string;
+}
+
+class ConfigurationManager {
+  private settings: Record<string, unknown> = {
+    theme: 'light',
+    fontSize: 14,
+    autoSave: true,
+    language: 'en'
+  };
+
+  setSetting(key: string, value: unknown): void {
+    this.settings[key] = value;
+  }
+
+  createSnapshot(name: string): ConfigMemento {
+    return new ConcreteConfigMemento(name, { ...this.settings });
+  }
+
+  restoreSnapshot(memento: ConfigMemento): void {
+    this.settings = { ...memento.getSettings() };
+  }
+}`
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'Text Editor Undo/Redo',
     scenario: 'Edit document with ability to undo and redo changes through state snapshots',
-    inputExample: `const { editor, history } = createTextEditorWithHistory();
+    input: `const { editor, history } = createTextEditorWithHistory();
 
 editor.type('Hello');
 history.save(editor.save());
@@ -500,15 +597,14 @@ editor.restore(history.undo()!);
 console.log('After undo:', editor.getContent());
 editor.restore(history.redo()!);
 console.log('After redo:', editor.getContent());`,
-    outputExample: `Current: Hello World
+    output: `Current: Hello World
 After undo: Hello
 After redo: Hello World`,
-    explanation: 'Each edit operation can be followed by saving a memento. The history manager enables navigating through saved states without exposing internal editor structure.'
+    description: 'Each edit operation can be followed by saving a memento. The history manager enables navigating through saved states without exposing internal editor structure.'
   },
   {
-    title: 'Game Save/Load System',
     scenario: 'Save game progress at checkpoints and restore when needed',
-    inputExample: `const { game, saveManager } = createGameWithSaveSystem();
+    input: `const { game, saveManager } = createGameWithSaveSystem();
 
 game.addScore(100);
 game.addItem('sword');
@@ -524,14 +620,13 @@ console.log('After damage:', game.getStats());
 // Load checkpoint
 game.loadSavePoint(saveManager.loadGame('checkpoint1')!);
 console.log('After loading:', game.getStats());`,
-    outputExample: `After damage: {level: 1, score: 150, health: 50, inventory: ['sword'], position: {x: 10, y: 20}}
+    output: `After damage: {level: 1, score: 150, health: 50, inventory: ['sword'], position: {x: 10, y: 20}}
 After loading: {level: 1, score: 100, health: 100, inventory: ['sword'], position: {x: 10, y: 20}}`,
-    explanation: 'Game state can be captured at any point and restored later. The save manager handles storage while keeping game state details private.'
+    description: 'Game state can be captured at any point and restored later. The save manager handles storage while keeping game state details private.'
   },
   {
-    title: 'Configuration Snapshots',
     scenario: 'Create named configuration snapshots for easy restoration of settings',
-    inputExample: `const { config, history } = createConfigManagerWithHistory();
+    input: `const { config, history } = createConfigManagerWithHistory();
 
 config.setSetting('theme', 'dark');
 config.setSetting('fontSize', 16);
@@ -543,14 +638,18 @@ config.setSetting('fontSize', 18);
 console.log('Current theme:', config.getSetting('theme'));
 config.restoreSnapshot(history.getSnapshot('dark-theme')!);
 console.log('Restored theme:', config.getSetting('theme'));`,
-    outputExample: `Current theme: high-contrast
+    output: `Current theme: high-contrast
 Restored theme: dark`,
-    explanation: 'Configuration states can be saved as named snapshots and restored later. The memento pattern keeps settings data encapsulated while enabling flexible state management.'
+    description: 'Configuration states can be saved as named snapshots and restored later. The memento pattern keeps settings data encapsulated while enabling flexible state management.'
   }
 ];
 
+export type { 
+  TextEditorMemento, GameStateMemento, ConfigMemento
+};
+
 export { 
-  TextEditorMemento, TextEditor, ConcreteTextEditorMemento, EditorHistory,
-  GameStateMemento, GameState, ConcreteGameStateMemento, SaveManager,
-  ConfigMemento, ConfigurationManager, ConcreteConfigMemento, ConfigHistory 
+  TextEditor, ConcreteTextEditorMemento, EditorHistory,
+  GameState, ConcreteGameStateMemento, SaveManager,
+  ConfigurationManager, ConcreteConfigMemento, ConfigHistory 
 };

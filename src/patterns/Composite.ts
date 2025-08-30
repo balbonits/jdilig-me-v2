@@ -1,5 +1,5 @@
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
-import { SolutionMetadata } from '../interfaces/shared';
+import { Solution } from '../interfaces/shared';
 
 // Component interface
 interface FileSystemComponent {
@@ -194,6 +194,7 @@ export const metadata: PatternMetadata = {
   category: 'Structural',
   difficulty: 'Medium',
   description: 'Compose objects into tree structures to represent part-whole hierarchies',
+  concepts: ["design patterns","software architecture","code organization","object-oriented programming"],
   detailedDescription: `
     ## 🌳 Composite Pattern
 
@@ -220,12 +221,15 @@ export const metadata: PatternMetadata = {
     ✅ **Recursive operations** - Operations naturally work on entire trees  
     ✅ **Flexible structure** - Can build complex hierarchies dynamically
   `,
+    timeComplexity: 'O(n)',
+  spaceComplexity: 'O(h)',
   useCases: [
     PatternUseCase.CODE_ORGANIZATION,
     PatternUseCase.API_DESIGN,
     PatternUseCase.UI_ARCHITECTURE
   ],
-  advantages: [
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    advantages: [
     'Uniform interface for simple and complex objects',
     'Easy to add new component types',
     'Simplifies client code that works with tree structures',
@@ -239,44 +243,172 @@ export const metadata: PatternMetadata = {
   relatedPatterns: ['Iterator', 'Visitor', 'Decorator']
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: 'file-system',
-    title: 'File System Hierarchy',
-    description: 'Files and folders with size calculation and display',
+    tabName: 'File System',
+    approach: 'Files and folders with size calculation and display',
+    code: `// File System Composite Implementation
+interface FileSystemComponent {
+  getName(): string;
+  getSize(): number;
+  display(indent?: string): string;
+}
+
+class File implements FileSystemComponent {
+  constructor(private name: string, private size: number) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSize(): number {
+    return this.size;
+  }
+
+  display(indent = ''): string {
+    return \`\${indent}📄 \${this.name} (\${this.size}KB)\`;
+  }
+}
+
+class Folder implements FileSystemComponent {
+  private children: FileSystemComponent[] = [];
+
+  constructor(private name: string) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSize(): number {
+    return this.children.reduce((total, child) => total + child.getSize(), 0);
+  }
+
+  add(component: FileSystemComponent): void {
+    this.children.push(component);
+  }
+
+  display(indent = ''): string {
+    let result = \`\${indent}📁 \${this.name}/ (\${this.getSize()}KB total)\`;
+    for (const child of this.children) {
+      result += '\n' + child.display(indent + '  ');
+    }
+    return result;
+  }
+}`,
     isOptimal: true,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(h)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'ui-components',
-    title: 'UI Component Tree',
-    description: 'Buttons and containers with rendering capability',
+    tabName: 'UI Components',
+    approach: 'Buttons and containers with rendering capability',
+    code: `// UI Component Composite Implementation
+interface UIComponent {
+  render(): string;
+  getType(): string;
+}
+
+class Button implements UIComponent {
+  constructor(private text: string) {}
+
+  render(): string {
+    return \`<button>\${this.text}</button>\`;
+  }
+
+  getType(): string {
+    return 'Button';
+  }
+}
+
+class Container implements UIComponent {
+  private components: UIComponent[] = [];
+
+  constructor(private tag: string) {}
+
+  add(component: UIComponent): void {
+    this.components.push(component);
+  }
+
+  render(): string {
+    const content = this.components.map(c => c.render()).join('');
+    return \`<\${this.tag}>\${content}</\${this.tag}>\`;
+  }
+
+  getType(): string {
+    return 'Container';
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(h)',
-    difficulty: 'Medium'
+    type: 'class'
   },
   {
     name: 'expression-tree',
-    title: 'Mathematical Expressions',
-    description: 'Numbers and operations forming evaluable expressions',
+    tabName: 'Expression Tree',
+    approach: 'Numbers and operations forming evaluable expressions',
+    code: `// Expression Tree Composite Implementation
+abstract class Expression {
+  abstract evaluate(): number;
+  abstract toString(): string;
+}
+
+class Number extends Expression {
+  constructor(private value: number) {
+    super();
+  }
+
+  evaluate(): number {
+    return this.value;
+  }
+
+  toString(): string {
+    return this.value.toString();
+  }
+}
+
+class BinaryOperation extends Expression {
+  constructor(
+    private left: Expression,
+    private operator: string,
+    private right: Expression
+  ) {
+    super();
+  }
+
+  evaluate(): number {
+    const leftVal = this.left.evaluate();
+    const rightVal = this.right.evaluate();
+    
+    switch (this.operator) {
+      case '+': return leftVal + rightVal;
+      case '-': return leftVal - rightVal;
+      case '*': return leftVal * rightVal;
+      case '/': return leftVal / rightVal;
+      default: throw new Error(\`Unknown operator: \${this.operator}\`);
+    }
+  }
+
+  toString(): string {
+    return \`(\${this.left.toString()} \${this.operator} \${this.right.toString()})\`;
+  }
+}`,
     isOptimal: false,
     timeComplexity: 'O(n)',
     spaceComplexity: 'O(h)',
-    difficulty: 'Hard'
+    type: 'class'
   }
 ];
 
 export const examples: PatternExample[] = [
   {
-    title: 'File System Operations',
-    scenario: 'Calculate total size of a project directory with nested folders and files',
-    inputExample: `const project = createFileSystem();
+    input: `const project = createFileSystem();
 console.log(project.display());
 console.log(\`Total size: \${project.getSize()}KB\`);`,
-    outputExample: `📁 project/ (7KB total)
+    output: `📁 project/ (7KB total)
   📁 src/ (4KB total)
     📁 components/ (3.5KB total)
       📄 Button.tsx (2KB)
@@ -285,25 +417,24 @@ console.log(\`Total size: \${project.getSize()}KB\`);`,
   📄 package.json (1KB)
   📄 README.md (2KB)
 Total size: 7KB`,
-    explanation: 'Both files and folders implement the same interface, allowing uniform size calculation and display operations across the entire tree structure.'
+    description: 'Both files and folders implement the same interface, allowing uniform size calculation and display operations across the entire tree structure.',
+    scenario: 'Calculate total size of a project directory with nested folders and files'
   },
   {
-    title: 'UI Component Rendering',
-    scenario: 'Render a complex UI structure with nested containers and components',
-    inputExample: `const app = createUITree();
+    input: `const app = createUITree();
 console.log(app.render());`,
-    outputExample: `<div><header><button>Home</button><button>About</button></header><main><section></section></main></div>`,
-    explanation: 'Individual UI elements and containers both implement the render method, allowing the same operation to work recursively on the entire UI tree.'
+    output: `<div><header><button>Home</button><button>About</button></header><main><section></section></main></div>`,
+    description: 'Individual UI elements and containers both implement the render method, allowing the same operation to work recursively on the entire UI tree.',
+    scenario: 'Render a complex UI structure with nested containers and components'
   },
   {
-    title: 'Expression Evaluation',
-    scenario: 'Build and evaluate mathematical expressions as tree structures',
-    inputExample: `const expr = createExpressionTree();
+    input: `const expr = createExpressionTree();
 console.log(\`Expression: \${expr.toString()}\`);
 console.log(\`Result: \${expr.evaluate()}\`);`,
-    outputExample: `Expression: ((3 + 4) * (2 - 1))
+    output: `Expression: ((3 + 4) * (2 - 1))
 Result: 7`,
-    explanation: 'Numbers and operations both implement evaluate(), enabling complex mathematical expressions to be built as trees and evaluated recursively.'
+    description: 'Numbers and operations both implement evaluate(), enabling complex mathematical expressions to be built as trees and evaluated recursively.',
+    scenario: 'Build and evaluate mathematical expressions as tree structures'
   }
 ];
 

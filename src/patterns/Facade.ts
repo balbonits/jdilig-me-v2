@@ -1,4 +1,6 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PatternMetadata, PatternExample, Solution, PatternUseCase } from '@/interfaces/patterns';
 
 /**
  * 🔗 Facade Pattern Implementation - Simplified Interface
@@ -406,17 +408,10 @@ export const metadata: PatternMetadata = {
   difficulty: "Easy",
   timeComplexity: "O(1)",
   spaceComplexity: "O(1)",
-  useCases: ["API Design", "Code Organization", "Legacy Integration", "System Simplification"],
-  concepts: ["interface simplification", "subsystem coordination", "workflow orchestration", "complexity hiding"],
-  realWorldApplications: [
-    "API wrapper libraries",
-    "E-commerce order processing",
-    "Media processing pipelines",
-    "System integration layers",
-    "Database abstraction layers",
-    "Cloud service facades"
-  ],
-  relatedPatterns: ["Adapter", "Mediator", "Abstract Factory"],
+  concepts: ["Interface Simplification", "Subsystem Abstraction", "Complexity Hiding", "Unified API", "Loose Coupling"],
+  useCases: [PatternUseCase.API_DESIGN, PatternUseCase.CODE_ORGANIZATION, PatternUseCase.SYSTEM_INTEGRATION],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Adapter", "Mediator", "Abstract Factory"],
   frameworkSupport: ["Express.js", "jQuery", "ORMs", "Cloud SDKs"]
 };
 
@@ -441,7 +436,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "application-facade",
     tabName: "Application Facade",

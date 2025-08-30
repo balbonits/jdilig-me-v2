@@ -17,7 +17,8 @@ const navigationItems = [
     label: 'Code',
     subItems: [
       { href: '/code/exercises', label: 'Exercises' },
-      { href: '/code/utilities', label: 'Utilities' }
+      { href: '/code/utilities', label: 'Utilities' },
+      { href: '/code/patterns', label: 'Design Patterns' }
     ]
   },
   { href: '/about', label: 'About' }

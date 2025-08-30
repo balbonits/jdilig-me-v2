@@ -1,4 +1,5 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, PatternUseCase } from '@/interfaces/patterns';
+import { Solution } from '@/interfaces/shared';
 
 /**
  * 🎭 Observer Pattern Implementation - Event Notification System
@@ -188,52 +189,86 @@ export const metadata: PatternMetadata = {
   title: "Observer Pattern",
   description: "Notify multiple objects about state changes automatically",
   detailedDescription: "🎭 **The Observer Pattern - Event Notification System**\n\nDefines a one-to-many dependency between objects so that when one object changes state, all dependents are notified automatically!\n\n🎯 **Core Problem Solved:**\n• Decouple objects that need to communicate\n• Notify multiple objects of state changes\n• Support dynamic subscription/unsubscription\n• Enable reactive programming patterns\n\n🔍 **Three Implementation Approaches:**\n• **Interface-based:** Traditional OOP with observer interfaces\n• **Event-driven:** Using JavaScript's EventTarget API\n• **Reactive:** Modern observables with functional operators\n\n🚀 **Real-World Applications:**\n• Newsletter and notification systems\n• Model-View-Controller architectures\n• Real-time data feeds (stocks, chat)\n• DOM event handling\n• React state management\n• WebSocket communication\n\n⚡ **Modern Framework Usage:**\n• React hooks (useState, useEffect)\n• Vue.js reactive data system\n• Angular observables (RxJS)\n• Node.js EventEmitter pattern",
-  concepts: ["event handling", "state management", "reactive programming", "decoupling"],
-  timeComplexity: "O(n) - notify all observers",
+    timeComplexity: "O(n) - notify all observers",
   spaceComplexity: "O(n) - store observer references",
   difficulty: "Medium",
   category: "Behavioral",
-  useCases: ["State Management", "Event Handling", "Data Flow"],
-  realWorldApplications: [
-    "Newsletter and notification systems",
-    "Real-time stock price updates",
-    "Model-View-Controller architectures",
-    "React component state management",
-    "WebSocket real-time communication",
-    "DOM event handling systems"
-  ],
-  relatedPatterns: ["Mediator", "Command", "State"],
+  concepts: ["One-to-Many Dependency", "Event Notification", "Subscribe/Unsubscribe", "Loose Coupling", "State Broadcasting"],
+  useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.EVENT_HANDLING, PatternUseCase.DATA_PROCESSING],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Mediator", "Command", "State"],
   modernAlternatives: ["React hooks", "Vue reactivity", "RxJS Observables", "EventTarget API"],
   frameworkSupport: ["React", "Vue.js", "Angular", "RxJS", "Node.js EventEmitter"]
 };
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "NewsletterService",
     tabName: "Interface-based",
     approach: "Traditional OOP with observer interfaces",
+    type: "class",
+    code: `class NewsletterService {
+  private subscribers: Observer<string>[] = [];
+  
+  subscribe(observer: Observer<string>): void {
+    this.subscribers.push(observer);
+  }
+  
+  notify(news: string): void {
+    this.subscribers.forEach(observer => observer.update(news));
+  }
+}`,
     timeComplexity: "O(n)",
     spaceComplexity: "O(n)",
-    isOptimal: true,
-    type: "class"
+    isOptimal: true
   },
   {
     name: "StockPriceTracker",
     tabName: "Event-driven",
     approach: "Using JavaScript's EventTarget API",
+    type: "class",
+    code: `class StockPriceTracker extends EventTarget {
+  setPrice(symbol: string, price: number): void {
+    this.dispatchEvent(new CustomEvent('priceChange', {
+      detail: { symbol, price }
+    }));
+  }
+}
+
+// Usage
+tracker.addEventListener('priceChange', (event) => {
+  console.log('Price updated:', event.detail);
+});`,
     timeComplexity: "O(n)",
     spaceComplexity: "O(n)",
-    isOptimal: true,
-    type: "class"
+    isOptimal: true
   },
   {
     name: "ReactiveObservable",
     tabName: "Reactive",
     approach: "Modern observables with operators",
+    type: "class",
+    code: `class ReactiveObservable<T> {
+  private observers: Array<(value: T) => void> = [];
+  
+  subscribe(callback: (value: T) => void): () => void {
+    this.observers.push(callback);
+    return () => this.unsubscribe(callback);
+  }
+  
+  next(value: T): void {
+    this.observers.forEach(callback => callback(value));
+  }
+  
+  map<U>(transform: (value: T) => U): ReactiveObservable<U> {
+    const mapped = new ReactiveObservable<U>();
+    this.subscribe(value => mapped.next(transform(value)));
+    return mapped;
+  }
+}`,
     timeComplexity: "O(n)",
     spaceComplexity: "O(n)",
-    isOptimal: true,
-    type: "class"
+    isOptimal: true
   }
 ];
 

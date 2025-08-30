@@ -1,4 +1,5 @@
-import { PatternMetadata, PatternExample, SolutionMetadata } from '@/interfaces/patterns';
+import { PatternMetadata, PatternExample, PatternUseCase } from '@/interfaces/patterns';
+import { Solution } from '@/interfaces/shared';
 
 /**
  * 🔗 Adapter Pattern Implementation - Interface Compatibility
@@ -87,6 +88,7 @@ interface NewWeatherAPI {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class OldWeatherService implements OldWeatherAPI {
   getCurrentWeather() {
     return {
@@ -115,25 +117,25 @@ export class WeatherAPIAdapter implements NewWeatherAPI {
 
 // Database Adapter Example - Different database interfaces
 interface SQLDatabase {
-  query(sql: string): Promise<any[]>;
+  query(sql: string): Promise<unknown[]>;
   close(): Promise<void>;
 }
 
 interface NoSQLDatabase {
-  find(collection: string, filter: Record<string, unknown>): Promise<any[]>;
+  find(collection: string, filter: Record<string, unknown>): Promise<unknown[]>;
   disconnect(): Promise<void>;
 }
 
 // Unified database interface
 interface UnifiedDatabase {
-  findRecords(table: string, criteria: Record<string, unknown>): Promise<any[]>;
+  findRecords(table: string, criteria: Record<string, unknown>): Promise<unknown[]>;
   closeConnection(): Promise<void>;
 }
 
 export class SQLDatabaseAdapter implements UnifiedDatabase {
   constructor(private sqlDB: SQLDatabase) {}
 
-  async findRecords(table: string, criteria: Record<string, unknown>): Promise<any[]> {
+  async findRecords(table: string, criteria: Record<string, unknown>): Promise<unknown[]> {
     // Convert criteria to SQL WHERE clause
     const whereClause = Object.entries(criteria)
       .map(([key, value]) => `${key} = '${value}'`)
@@ -151,7 +153,7 @@ export class SQLDatabaseAdapter implements UnifiedDatabase {
 export class NoSQLDatabaseAdapter implements UnifiedDatabase {
   constructor(private noSqlDB: NoSQLDatabase) {}
 
-  async findRecords(table: string, criteria: Record<string, unknown>): Promise<any[]> {
+  async findRecords(table: string, criteria: Record<string, unknown>): Promise<unknown[]> {
     return await this.noSqlDB.find(table, criteria);
   }
 
@@ -227,13 +229,13 @@ class VlcPlayer implements AdvancedMediaPlayer {
   }
 
   playMp4(fileName: string): void {
-    // VLC can't play mp4
+    console.log(`VLC cannot play mp4 file: ${fileName}`);
   }
 }
 
 class Mp4Player implements AdvancedMediaPlayer {
   playVlc(fileName: string): void {
-    // MP4 player can't play vlc
+    console.log(`MP4 player cannot play vlc file: ${fileName}`);
   }
 
   playMp4(fileName: string): void {
@@ -287,19 +289,12 @@ export const metadata: PatternMetadata = {
   detailedDescription: "🔗 **The Adapter Pattern - Interface Compatibility**\n\nAllows incompatible interfaces to work together by providing a wrapper that translates one interface to another. Perfect for integration!\n\n🎯 **Core Problem Solved:**\n• Integrate incompatible interfaces without modifying existing code\n• Wrap third-party libraries with consistent APIs\n• Bridge legacy systems with modern applications\n• Enable code reuse across different interface requirements\n\n🔍 **Three Implementation Approaches:**\n• **Object Adapter:** Composition-based adapter using existing objects\n• **Class Adapter:** Inheritance-based adapter (less common in JS/TS)\n• **Function Adapter:** Simple function-based interface translation\n\n🚀 **Real-World Applications:**\n• API wrappers and gateway adapters\n• Database ORM adapters for different databases\n• Payment gateway integration layers\n• Legacy code integration with modern systems\n• Third-party library wrapper implementations\n• File system adapters across platforms\n\n⚡ **Modern Usage Examples:**\n• React component wrappers for different UI libraries\n• GraphQL adapters for REST APIs\n• Node.js stream adapters\n• Cloud provider SDK adapters",
   category: "Structural",
   difficulty: "Medium",
+  concepts: ['interface translation', 'wrapper pattern', 'compatibility layer'],
   timeComplexity: "O(1)",
   spaceComplexity: "O(1)",
-  useCases: ["API Design", "Legacy Integration", "Code Organization", "Third-party Integration"],
-  concepts: ["interface translation", "wrapper pattern", "composition", "delegation"],
-  realWorldApplications: [
-    "API gateway implementations",
-    "Database ORM adapters",
-    "Payment processing wrappers",
-    "Legacy system integration",
-    "Third-party library adapters",
-    "Media format converters"
-  ],
-  relatedPatterns: ["Facade", "Bridge", "Decorator"],
+  useCases: [PatternUseCase.API_DESIGN, PatternUseCase.SYSTEM_INTEGRATION, PatternUseCase.CODE_ORGANIZATION],
+  realWorldApplications: ["Software frameworks","Application architecture","Library development","System design"],
+    relatedPatterns: ["Facade", "Bridge", "Decorator"],
   frameworkSupport: ["TypeScript interfaces", "Dependency injection", "Express.js middleware"]
 };
 
@@ -324,7 +319,7 @@ export const examples: PatternExample[] = [
   }
 ];
 
-export const solutions: SolutionMetadata[] = [
+export const solutions: Solution[] = [
   {
     name: "object-adapter",
     tabName: "Object Adapter",

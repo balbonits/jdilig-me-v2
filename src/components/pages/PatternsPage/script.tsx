@@ -23,8 +23,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.CODE_ORGANIZATION],
       realWorldApplications: ['Database connections', 'Logging systems', 'Configuration management'],
       relatedPatterns: ['Factory', 'Builder', 'Prototype'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -47,8 +45,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.CODE_ORGANIZATION],
       realWorldApplications: ['Component libraries', 'Database adapters', 'Payment systems'],
       relatedPatterns: ['Abstract Factory', 'Builder'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -71,8 +67,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.CODE_ORGANIZATION],
       realWorldApplications: ['Query builders', 'Configuration objects', 'Form builders'],
       relatedPatterns: ['Factory', 'Abstract Factory'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -95,8 +89,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.PERFORMANCE_OPTIMIZATION, PatternUseCase.DATA_PROCESSING],
       realWorldApplications: ['Object copying', 'Template systems', 'Cache systems'],
       relatedPatterns: ['Factory', 'Memento'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -119,8 +111,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.SYSTEM_INTEGRATION],
       realWorldApplications: ['UI themes', 'Database drivers', 'Cross-platform development'],
       relatedPatterns: ['Factory', 'Builder'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -145,8 +135,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.API_DESIGN],
       realWorldApplications: ['Express middleware', 'React HOCs', 'Data processing'],
       relatedPatterns: ['Adapter', 'Composite'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -169,8 +157,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.SYSTEM_INTEGRATION],
       realWorldApplications: ['API integration', 'Legacy system integration', 'Third-party libraries'],
       relatedPatterns: ['Bridge', 'Facade'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -193,8 +179,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.CODE_ORGANIZATION],
       realWorldApplications: ['API wrappers', 'Library interfaces', 'System integration'],
       relatedPatterns: ['Adapter', 'Proxy'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -217,8 +201,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.PERFORMANCE_OPTIMIZATION, PatternUseCase.DATA_PROCESSING],
       realWorldApplications: ['Image loading', 'API caching', 'Access control'],
       relatedPatterns: ['Decorator', 'Facade'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -241,8 +223,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.UI_ARCHITECTURE, PatternUseCase.CODE_ORGANIZATION],
       realWorldApplications: ['File systems', 'UI components', 'Organization charts'],
       relatedPatterns: ['Decorator', 'Iterator'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -265,8 +245,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CROSS_PLATFORM_SUPPORT, PatternUseCase.SYSTEM_INTEGRATION],
       realWorldApplications: ['Graphics rendering', 'Database drivers', 'Platform abstraction'],
       relatedPatterns: ['Adapter', 'Strategy'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -289,8 +267,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.PERFORMANCE_OPTIMIZATION, PatternUseCase.MEMORY_MANAGEMENT],
       realWorldApplications: ['Text editors', 'Game development', 'Graphics systems'],
       relatedPatterns: ['Factory', 'Composite'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -315,8 +291,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.EVENT_HANDLING],
       realWorldApplications: ['Event systems', 'Model-View architectures', 'Real-time updates'],
       relatedPatterns: ['Mediator', 'Command'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -339,8 +313,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.API_DESIGN],
       realWorldApplications: ['Payment processing', 'Sorting algorithms', 'Validation strategies'],
       relatedPatterns: ['State', 'Bridge'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -363,8 +335,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.REQUEST_PROCESSING, PatternUseCase.EVENT_HANDLING],
       realWorldApplications: ['GUI actions', 'Task queues', 'Macro recording'],
       relatedPatterns: ['Memento', 'Observer'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -387,8 +357,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.UI_ARCHITECTURE],
       realWorldApplications: ['Game states', 'UI states', 'Workflow systems'],
       relatedPatterns: ['Strategy', 'Singleton'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -411,8 +379,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.REQUEST_PROCESSING, PatternUseCase.MIDDLEWARE_SYSTEMS],
       realWorldApplications: ['Middleware', 'Event handling', 'Support systems'],
       relatedPatterns: ['Command', 'Composite'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -435,8 +401,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.FRAMEWORK_DEVELOPMENT],
       realWorldApplications: ['Data processing', 'Testing frameworks', 'Code generation'],
       relatedPatterns: ['Strategy', 'Factory Method'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -459,8 +423,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.COMPILER_DESIGN, PatternUseCase.DATA_PROCESSING],
       realWorldApplications: ['AST processing', 'File system traversal', 'Code analysis'],
       relatedPatterns: ['Composite', 'Iterator'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -483,8 +445,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.UI_ARCHITECTURE, PatternUseCase.EVENT_HANDLING],
       realWorldApplications: ['Chat systems', 'UI coordination', 'Air traffic control'],
       relatedPatterns: ['Observer', 'Facade'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -507,8 +467,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.DATA_BACKUP],
       realWorldApplications: ['Text editors', 'Game saves', 'Transaction rollback'],
       relatedPatterns: ['Command', 'Iterator'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -531,8 +489,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.DATA_PROCESSING, PatternUseCase.COLLECTION_TRAVERSAL],
       realWorldApplications: ['Data structures', 'File processing', 'Stream processing'],
       relatedPatterns: ['Composite', 'Factory Method'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -557,8 +513,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.LIBRARY_DEVELOPMENT],
       realWorldApplications: ['Library development', 'Namespace management', 'State encapsulation'],
       relatedPatterns: ['Revealing Module', 'Singleton'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -581,8 +535,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.API_DESIGN, PatternUseCase.LIBRARY_DEVELOPMENT],
       realWorldApplications: ['API clients', 'Calculator libraries', 'Event systems'],
       relatedPatterns: ['Module', 'Facade'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -605,8 +557,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.CODE_ORGANIZATION, PatternUseCase.FRAMEWORK_DEVELOPMENT],
       realWorldApplications: ['Component systems', 'Behavior composition', 'Trait libraries'],
       relatedPatterns: ['Decorator', 'Strategy'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -629,8 +579,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.DATA_PROCESSING, PatternUseCase.STREAM_PROCESSING],
       realWorldApplications: ['API pagination', 'File processing', 'Real-time data'],
       relatedPatterns: ['Iterator', 'Observer'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
@@ -653,8 +601,6 @@ const patterns: PatternData[] = [
       useCases: [PatternUseCase.STATE_MANAGEMENT, PatternUseCase.REACTIVE_SYSTEMS],
       realWorldApplications: ['State management', 'Form validation', 'Data binding'],
       relatedPatterns: ['Observer', 'Proxy'],
-      advantages: [],
-      disadvantages: []
     },
     examples: [],
     code: '',
