@@ -105,9 +105,29 @@ export default function PatternPage({ pattern }: PatternPageProps) {
               <div className={styles.examplesList}>
                 <h5 className={styles.examplesLabel}>Examples:</h5>
                 {pattern.examples.map((example, index) => (
-                  <pre key={index} className={styles.exampleBlock}>
-                    <code>{`${example.scenario}: ${example.input} → ${example.output}`}</code>
-                  </pre>
+                  <div key={index} className={styles.exampleWrapper}>
+                    <div className={styles.exampleScenario}>{example.scenario}</div>
+                    <div className={styles.exampleInput}>
+                      <strong>Input:</strong>
+                      <pre className={styles.exampleBlock}>
+                        <code>{typeof example.input === 'object' 
+                          ? JSON.stringify(example.input, null, 2)
+                          : String(example.input)
+                        }</code>
+                      </pre>
+                    </div>
+                    <div className={styles.exampleOutput}>
+                      <strong>Output:</strong>
+                      <pre className={styles.exampleBlock}>
+                        <code>{example.output instanceof Error 
+                          ? example.output.message
+                          : typeof example.output === 'object' 
+                          ? JSON.stringify(example.output, null, 2)
+                          : String(example.output)
+                        }</code>
+                      </pre>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}

@@ -1,0 +1,106 @@
+[
+  {
+    "slug": "abstract-factory",
+    "title": "Abstract Factory Pattern",
+    "description": "Create families of related objects without specifying concrete classes",
+    "category": "Creational",
+    "difficulty": "Hard",
+    "solutionCount": 3
+  },
+  {
+    "slug": "async-iterator",
+    "title": "Async Iterator Pattern",
+    "description": "Process asynchronous data streams using modern iteration protocols",
+    "category": "Modern",
+    "difficulty": "Hard",
+    "solutionCount": 4
+  },
+  {
+    "slug": "bridge",
+    "title": "Bridge Pattern",
+    "description": "Separate abstraction from implementation to vary them independently",
+    "category": "Structural",
+    "difficulty": "Hard",
+    "solutionCount": 3
+  },
+  {
+    "slug": "chain-of-responsibility",
+    "title": "Chain of Responsibility Pattern",
+    "description": "Pass requests along a chain of handlers until one handles it",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "composite",
+    "title": "Composite Pattern",
+    "description": "Compose objects into tree structures to represent part-whole hierarchies",
+    "category": "Structural",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "flyweight",
+    "title": "Flyweight Pattern",
+    "description": "Share common state efficiently among large numbers of objects",
+    "category": "Structural",
+    "difficulty": "Hard",
+    "solutionCount": 3
+  },
+  {
+    "slug": "mediator",
+    "title": "Mediator Pattern",
+    "description": "Reduce coupling by centralizing complex communications",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "memento",
+    "title": "Memento Pattern",
+    "description": "Capture and restore object state without violating encapsulation",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "mixin",
+    "title": "Mixin Pattern",
+    "description": "Compose objects from multiple sources to achieve multiple inheritance",
+    "category": "Modern",
+    "difficulty": "Hard",
+    "solutionCount": 3
+  },
+  {
+    "slug": "module",
+    "title": "Module Pattern",
+    "description": "Encapsulate code using closures to create private scope",
+    "category": "Modern",
+    "difficulty": "Medium",
+    "solutionCount": 4
+  },
+  {
+    "slug": "proxy-observables",
+    "title": "Proxy-Based Observables",
+    "description": "Create reactive objects using ES6 Proxy for automatic change detection",
+    "category": "Modern",
+    "difficulty": "Hard",
+    "solutionCount": 4
+  },
+  {
+    "slug": "revealing-module",
+    "title": "Revealing Module Pattern",
+    "description": "Define all functions privately, then reveal selected ones publicly",
+    "category": "Modern",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  },
+  {
+    "slug": "template-method",
+    "title": "Template Method Pattern",
+    "description": "Define algorithm skeleton, let subclasses override specific steps",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "solutionCount": 3
+  }
+]
