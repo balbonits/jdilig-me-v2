@@ -770,3 +770,11 @@ await taskQueue.processQueue();
 // All tasks executed asynchronously`
   }
 ];
+
+const commandModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default commandModule;

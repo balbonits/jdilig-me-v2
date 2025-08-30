@@ -691,3 +691,10 @@ export const examples: PatternExample[] = [
 ];
 
 export { CalculatorModule, ApiClientModule, EventEmitterModule };
+const revealingmoduleModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default revealingmoduleModule;

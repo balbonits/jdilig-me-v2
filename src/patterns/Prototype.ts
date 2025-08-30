@@ -451,3 +451,11 @@ mage1?.learnSpell('lightning');
 console.log(registry.listAvailableTypes()); // ['warrior', 'mage']`
   }
 ];
+
+const prototypeModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default prototypeModule;

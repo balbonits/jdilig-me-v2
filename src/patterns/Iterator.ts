@@ -804,3 +804,11 @@ export {
 export type { 
   Iterator, Iterable
 };
+
+const iteratorModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default iteratorModule;

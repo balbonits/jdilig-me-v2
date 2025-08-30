@@ -605,3 +605,11 @@ await proxy.getData('user:123'); // Slow: fetches from database
 await proxy.getData('user:123'); // Fast: returns from cache`
   }
 ];
+
+const proxyModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default proxyModule;

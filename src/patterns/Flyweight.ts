@@ -441,3 +441,11 @@ export type {
   TreeType, TreeTypeFlyweight, TreeTypeFactory, Tree, Forest,
   ParticleType, ParticleTypeFlyweight, ParticleTypeFactory, Particle, ParticleSystem
 };
+
+const flyweightModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default flyweightModule;

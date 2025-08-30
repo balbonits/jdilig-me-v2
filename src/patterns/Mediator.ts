@@ -802,3 +802,11 @@ export {
   AirTrafficControl, CommercialAircraft, PrivateAircraft, CargoAircraft,
   AuthenticationForm, TextInput, PasswordInput, Button, Label
 };
+
+const mediatorModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default mediatorModule;

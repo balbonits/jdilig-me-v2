@@ -425,3 +425,11 @@ const profile = UserProfileBuilder
   .build();`
   }
 ];
+
+const builderModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default builderModule;

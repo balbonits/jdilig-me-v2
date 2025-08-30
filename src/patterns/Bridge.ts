@@ -551,3 +551,11 @@ export {
   Message, TextMessage, EncryptedMessage,
   MySQL, PostgreSQL, Repository 
 };
+
+const bridgeModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default bridgeModule;

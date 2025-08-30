@@ -813,3 +813,11 @@ const createCounter = (min: number, max: number) => {
 };`
   }
 ];
+
+const stateModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default stateModule;

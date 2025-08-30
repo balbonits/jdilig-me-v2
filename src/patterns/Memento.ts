@@ -653,3 +653,11 @@ export {
   GameState, ConcreteGameStateMemento, SaveManager,
   ConfigurationManager, ConcreteConfigMemento, ConfigHistory 
 };
+
+const mementoModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default mementoModule;

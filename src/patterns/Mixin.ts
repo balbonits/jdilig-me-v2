@@ -786,3 +786,11 @@ export {
   TimestampedUser, ValidatedUser, TrackedProduct, EnhancedBlogPost, LoggedCachedUser,
   createLoggingMixin
 };
+
+const mixinModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default mixinModule;

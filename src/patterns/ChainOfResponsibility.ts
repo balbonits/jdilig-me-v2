@@ -522,3 +522,11 @@ export {
   Middleware, CORSMiddleware, AuthenticationMiddleware, 
   AuthorizationMiddleware, RateLimitingMiddleware 
 };
+
+const chainOfResponsibilityModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default chainOfResponsibilityModule;

@@ -660,3 +660,11 @@ class MediaProcessingFacade {
 }`
   }
 ];
+
+const facadeModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default facadeModule;

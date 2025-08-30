@@ -493,3 +493,11 @@ export const examples: PatternExample[] = [
   }
 ];
 
+
+const abstractfactoryModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default abstractfactoryModule;

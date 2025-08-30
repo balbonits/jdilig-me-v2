@@ -918,3 +918,11 @@ export {
 export type { 
   ChangeListener, ObservableOptions, AppState, FormField, FormState, UserModel
 };
+
+const proxyObservablesModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default proxyObservablesModule;

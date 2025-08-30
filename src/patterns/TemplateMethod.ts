@@ -474,3 +474,11 @@ export {
   GameAI, AggressiveAI, DefensiveAI, EconomicAI,
   DocumentGenerator, HTMLGenerator, MarkdownGenerator, PDFGenerator 
 };
+
+const templateMethodModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default templateMethodModule;

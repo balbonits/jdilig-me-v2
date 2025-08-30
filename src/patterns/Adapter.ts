@@ -490,3 +490,10 @@ await paypalAdapter.processPayment(50.00, 'USD');
 await stripeAdapter.processPayment(50.00, 'USD');`
   }
 ];
+const adapterModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default adapterModule;

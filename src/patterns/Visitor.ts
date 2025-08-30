@@ -648,3 +648,11 @@ export type {
   FileSystemItem, FileSystemVisitor,
   ASTNode, ASTVisitor
 };
+
+const visitorModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default visitorModule;

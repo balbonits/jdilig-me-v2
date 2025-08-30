@@ -820,3 +820,11 @@ export {
   AsyncDataSource, PaginatedAsyncIterator, FileAsyncIterator, 
   RequestQueueAsyncIterator, WebSocketAsyncIterator
 };
+
+const asyncIteratorModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default asyncIteratorModule;

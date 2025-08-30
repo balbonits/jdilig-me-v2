@@ -805,3 +805,11 @@ After logout: false`,
 ];
 
 export { CounterModule, ShoppingCartModule, AuthModule, LoggerModule };
+
+const moduleModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default moduleModule;

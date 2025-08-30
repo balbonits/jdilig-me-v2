@@ -439,3 +439,11 @@ Result: 7`,
 ];
 
 export { File, Folder, Button, Container, Expression, Number as NumberExpression, BinaryOperation };
+
+const compositeModule = {
+  metadata,
+  solutions, 
+  examples
+};
+
+export default compositeModule;
