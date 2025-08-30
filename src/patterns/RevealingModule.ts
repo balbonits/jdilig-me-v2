@@ -1,57 +1,63 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prefer-const */
 import { PatternMetadata, PatternExample, PatternUseCase } from '../interfaces/patterns';
 import { Solution } from '../interfaces/shared';
+import type { 
+  ApiRequestOptions,
+  ApiRequestBody,
+  EventCallback, 
+  EventListener,
+  EventData
+} from '../types/revealing-module-types';
 
 // Calculator Revealing Module
 const CalculatorModule = (function() {
-  // Private variables
+  // Private variables (mutable)
   let result = 0;
-  let history: string[] = [];
+  const history: string[] = [];
+  
+  // Configuration (mutable for setPrecision)
   let precision = 2;
   
   // Private functions
-  function formatResult(value: number): number {
+  const formatResult = (value: number): number => {
     return Number(value.toFixed(precision));
-  }
+  };
   
-  function recordOperation(operation: string): void {
+  const recordOperation = (operation: string): void => {
     history.push(`${operation} = ${result}`);
     if (history.length > 50) {
       history.shift(); // Keep only last 50 operations
     }
-  }
+  };
   
-  function validateNumber(value: number): void {
+  const validateNumber = (value: number): void => {
     if (typeof value !== 'number' || isNaN(value)) {
       throw new Error('Invalid number provided');
     }
-  }
+  };
   
   // Public functions (but defined as private)
-  function add(value: number): number {
+  const add = (value: number): number => {
     validateNumber(value);
     result = formatResult(result + value);
     recordOperation(`+ ${value}`);
     return result;
-  }
+  };
   
-  function subtract(value: number): number {
+  const subtract = (value: number): number => {
     validateNumber(value);
     result = formatResult(result - value);
     recordOperation(`- ${value}`);
     return result;
-  }
+  };
   
-  function multiply(value: number): number {
+  const multiply = (value: number): number => {
     validateNumber(value);
     result = formatResult(result * value);
     recordOperation(`× ${value}`);
     return result;
-  }
+  };
   
-  function divide(value: number): number {
+  const divide = (value: number): number => {
     validateNumber(value);
     if (value === 0) {
       throw new Error('Division by zero');
@@ -59,45 +65,45 @@ const CalculatorModule = (function() {
     result = formatResult(result / value);
     recordOperation(`÷ ${value}`);
     return result;
-  }
+  };
   
-  function power(exponent: number): number {
+  const power = (exponent: number): number => {
     validateNumber(exponent);
     result = formatResult(Math.pow(result, exponent));
     recordOperation(`^ ${exponent}`);
     return result;
-  }
+  };
   
-  function sqrt(): number {
+  const sqrt = (): number => {
     if (result < 0) {
       throw new Error('Cannot calculate square root of negative number');
     }
     result = formatResult(Math.sqrt(result));
     recordOperation('√');
     return result;
-  }
+  };
   
-  function getCurrentResult(): number {
+  const getCurrentResult = (): number => {
     return result;
-  }
+  };
   
-  function clear(): void {
+  const clear = (): void => {
     result = 0;
     recordOperation('Clear');
-  }
+  };
   
-  function getHistory(): string[] {
+  const getHistory = (): string[] => {
     return [...history];
-  }
+  };
   
-  function setPrecision(digits: number): void {
+  const setPrecision = (digits: number): void => {
     if (digits < 0 || digits > 10) {
       throw new Error('Precision must be between 0 and 10');
     }
     precision = digits;
-  }
+  };
   
-  function chain() {
+  const chain = () => {
     return {
       add: (value: number) => { add(value); return chain(); },
       subtract: (value: number) => { subtract(value); return chain(); },
@@ -105,7 +111,7 @@ const CalculatorModule = (function() {
       divide: (value: number) => { divide(value); return chain(); },
       result: () => result
     };
-  }
+  };
   
   // Revealing Module Pattern - explicitly define public API
   return {
@@ -162,23 +168,23 @@ const ApiClientModule = (function() {
   };
   
   // Private functions
-  function buildUrl(endpoint: string): string {
+  const buildUrl = (endpoint: string): string => {
     return `${baseUrl}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
-  }
+  };
   
-  function getAuthHeaders(): Record<string, string> {
+  const getAuthHeaders = (): Record<string, string> => {
     return apiKey ? { Authorization: `Bearer ${apiKey}` } : {};
-  }
+  };
   
-  function mergeHeaders(customHeaders: Record<string, string> = {}): Record<string, string> {
+  const mergeHeaders = (customHeaders: Record<string, string> = {}): Record<string, string> => {
     return {
       ...defaultHeaders,
       ...getAuthHeaders(),
       ...customHeaders
     };
-  }
+  };
   
-  function simulateApiCall<T>(endpoint: string, options: any = {}): Promise<ApiResponse<T>> {
+  const simulateApiCall = <T>(endpoint: string, _options: Partial<ApiRequestOptions> = {}): Promise<ApiResponse<T>> => {
     return new Promise((resolve, reject) => {
       // Simulate network delay
       window.setTimeout(() => {
@@ -188,13 +194,13 @@ const ApiClientModule = (function() {
           return;
         }
         
-        let data: any;
+        let data: T;
         if (endpoint.includes('users')) {
-          data = { id: 1, name: 'John Doe', email: 'john@example.com' };
+          data = { id: 1, name: 'John Doe', email: 'john@example.com' } as T;
         } else if (endpoint.includes('posts')) {
-          data = { id: 1, title: 'Sample Post', content: 'Sample content', userId: 1 };
+          data = { id: 1, title: 'Sample Post', content: 'Sample content', userId: 1 } as T;
         } else {
-          data = { message: 'Success' };
+          data = { message: 'Success' } as T;
         }
         
         resolve({
@@ -206,14 +212,14 @@ const ApiClientModule = (function() {
     });
   }
   
-  function handleApiError(error: Error): never {
+  const handleApiError = (error: Error): never => {
     console.error('API Error:', error.message);
     throw error;
-  }
+  };
   
   // Public functions
-  function get<T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> {
-    const url = buildUrl(endpoint);
+  const get = <T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+    buildUrl(endpoint); // Validate URL format
     const finalHeaders = mergeHeaders(headers);
     
     return simulateApiCall<T>(endpoint, {
@@ -222,8 +228,8 @@ const ApiClientModule = (function() {
     }).catch(handleApiError);
   }
   
-  function post<T>(endpoint: string, data: any, headers?: Record<string, string>): Promise<ApiResponse<T>> {
-    const url = buildUrl(endpoint);
+  const post = <T>(endpoint: string, data: ApiRequestBody, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+    buildUrl(endpoint); // Validate URL format
     const finalHeaders = mergeHeaders(headers);
     
     return simulateApiCall<T>(endpoint, {
@@ -233,8 +239,8 @@ const ApiClientModule = (function() {
     }).catch(handleApiError);
   }
   
-  function put<T>(endpoint: string, data: any, headers?: Record<string, string>): Promise<ApiResponse<T>> {
-    const url = buildUrl(endpoint);
+  const put = <T>(endpoint: string, data: ApiRequestBody, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+    buildUrl(endpoint); // Validate URL format
     const finalHeaders = mergeHeaders(headers);
     
     return simulateApiCall<T>(endpoint, {
@@ -244,8 +250,8 @@ const ApiClientModule = (function() {
     }).catch(handleApiError);
   }
   
-  function deleteRequest<T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> {
-    const url = buildUrl(endpoint);
+  const deleteRequest = <T>(endpoint: string, headers?: Record<string, string>): Promise<ApiResponse<T>> => {
+    buildUrl(endpoint); // Validate URL format
     const finalHeaders = mergeHeaders(headers);
     
     return simulateApiCall<T>(endpoint, {
@@ -254,53 +260,53 @@ const ApiClientModule = (function() {
     }).catch(handleApiError);
   }
   
-  function setApiKey(key: string): void {
+  const setApiKey = (key: string): void => {
     apiKey = key;
-  }
+  };
   
-  function setBaseUrl(url: string): void {
+  const setBaseUrl = (url: string): void => {
     baseUrl = url.replace(/\/$/, ''); // Remove trailing slash
   }
   
-  function setTimeout(ms: number): void {
+  const setTimeout = (ms: number): void => {
     timeout = ms;
-  }
+  };
   
-  function setDefaultHeaders(headers: Record<string, string>): void {
+  const setDefaultHeaders = (headers: Record<string, string>): void => {
     defaultHeaders = { ...headers };
-  }
+  };
   
-  function getConfig() {
+  const getConfig = () => {
     return {
       baseUrl,
       timeout,
       hasApiKey: !!apiKey,
       defaultHeaders: { ...defaultHeaders }
     };
-  }
+  };
   
   // Resource-specific methods
-  function getUsers(): Promise<User[]> {
+  const getUsers = (): Promise<User[]> => {
     return get<User[]>('/users').then(response => response.data);
   }
   
-  function getUser(id: number): Promise<User> {
+  const getUser = (id: number): Promise<User> => {
     return get<User>(`/users/${id}`).then(response => response.data);
   }
   
-  function createUser(userData: Omit<User, 'id'>): Promise<User> {
+  const createUser = (userData: Omit<User, 'id'>): Promise<User> => {
     return post<User>('/users', userData).then(response => response.data);
   }
   
-  function updateUser(id: number, userData: Partial<User>): Promise<User> {
+  const updateUser = (id: number, userData: Partial<User>): Promise<User> => {
     return put<User>(`/users/${id}`, userData).then(response => response.data);
   }
   
-  function deleteUser(id: number): Promise<void> {
+  const deleteUser = (id: number): Promise<void> => {
     return deleteRequest<void>(`/users/${id}`).then(() => {});
   }
   
-  function getUserPosts(userId: number): Promise<Post[]> {
+  const getUserPosts = (userId: number): Promise<Post[]> => {
     return get<Post[]>(`/users/${userId}/posts`).then(response => response.data);
   }
   
@@ -335,41 +341,38 @@ const ApiClientModule = (function() {
 })();
 
 // Event Emitter Revealing Module
-interface EventListener<T = any> {
-  callback: (data: T) => void;
-  once: boolean;
-}
+// Remove duplicate interface - using imported EventListener type from types file
 
 const EventEmitterModule = (function() {
   // Private state
-  let events: Map<string, EventListener[]> = new Map();
+  const events: Map<string, EventListener[]> = new Map();
   let maxListeners = 10;
   let debugging = false;
   
   // Private functions
-  function validateEventName(eventName: string): void {
+  const validateEventName = (eventName: string): void => {
     if (typeof eventName !== 'string' || eventName.trim() === '') {
       throw new Error('Event name must be a non-empty string');
     }
-  }
+  };
   
-  function validateCallback(callback: (data: any) => void): void {
+  const validateCallback = (callback: EventCallback): void => {
     if (typeof callback !== 'function') {
       throw new Error('Callback must be a function');
     }
-  }
+  };
   
-  function debugLog(message: string): void {
+  const debugLog = (message: string): void => {
     if (debugging) {
       console.log(`[EventEmitter] ${message}`);
     }
-  }
+  };
   
-  function getEventListeners(eventName: string): EventListener[] {
+  const getEventListeners = (eventName: string): EventListener[] => {
     return events.get(eventName) || [];
-  }
+  };
   
-  function addListener(eventName: string, callback: (data: any) => void, once = false): void {
+  const addListener = (eventName: string, callback: EventCallback, once = false): void => {
     validateEventName(eventName);
     validateCallback(callback);
     
@@ -387,7 +390,7 @@ const EventEmitterModule = (function() {
     debugLog(`Added ${once ? 'once' : ''} listener for "${eventName}"`);
   }
   
-  function removeListener(eventName: string, callback: (data: any) => void): boolean {
+  const removeListener = (eventName: string, callback: EventCallback): boolean => {
     validateEventName(eventName);
     
     const listeners = events.get(eventName);
@@ -410,7 +413,7 @@ const EventEmitterModule = (function() {
     return false;
   }
   
-  function emit(eventName: string, data?: any): boolean {
+  const emit = (eventName: string, data: EventData = null): boolean => {
     validateEventName(eventName);
     
     const listeners = events.get(eventName);
@@ -447,7 +450,7 @@ const EventEmitterModule = (function() {
     return true;
   }
   
-  function removeAllListeners(eventName?: string): void {
+  const removeAllListeners = (eventName?: string): void => {
     if (eventName) {
       validateEventName(eventName);
       events.delete(eventName);
@@ -458,31 +461,31 @@ const EventEmitterModule = (function() {
     }
   }
   
-  function getListenerCount(eventName: string): number {
+  const getListenerCount = (eventName: string): number => {
     validateEventName(eventName);
     return getEventListeners(eventName).length;
-  }
+  };
   
-  function getEventNames(): string[] {
+  const getEventNames = (): string[] => {
     return Array.from(events.keys());
-  }
+  };
   
-  function setMaxListeners(max: number): void {
+  const setMaxListeners = (max: number): void => {
     if (max < 0) {
       throw new Error('Max listeners must be non-negative');
     }
     maxListeners = max;
-  }
+  };
   
-  function setDebugging(enabled: boolean): void {
+  const setDebugging = (enabled: boolean): void => {
     debugging = enabled;
-  }
+  };
   
   // Revealing Module Pattern
   return {
     // Core event methods
     on: addListener,
-    once: (eventName: string, callback: (data: any) => void) => addListener(eventName, callback, true),
+    once: (eventName: string, callback: EventCallback) => addListener(eventName, callback, true),
     off: removeListener,
     emit,
     
@@ -590,7 +593,7 @@ export const solutions: Solution[] = [
     type: 'function',
     code: `const CalculatorModule = (function() {
   let result = 0;
-  let history: string[] = [];
+  const history: string[] = [];
   
   function add(value: number): number {
     result += value;
@@ -598,9 +601,9 @@ export const solutions: Solution[] = [
     return result;
   }
   
-  function getCurrentResult(): number {
+  const getCurrentResult = (): number => {
     return result;
-  }
+  };
   
   return { add, getCurrentResult };
 })();`,
@@ -628,9 +631,9 @@ export const solutions: Solution[] = [
     });
   }
   
-  function setApiKey(key: string): void {
+  const setApiKey = (key: string): void => {
     apiKey = key;
-  }
+  };
   
   return { get, setApiKey };
 })();`,
@@ -653,7 +656,7 @@ export const solutions: Solution[] = [
     events.get(eventName).push(callback);
   }
   
-  function emit(eventName: string, data: any): void {
+  function emit(eventName: string, data: unknown): void {
     const listeners = events.get(eventName) || [];
     listeners.forEach(callback => callback(data));
   }

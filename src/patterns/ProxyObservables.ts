@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any -- Proxy pattern requires dynamic property access */
 import { PatternMetadata, PatternExample, PatternUseCase, Solution } from '../interfaces/patterns';
 
-// Basic Observable using Proxy
+// Local type definitions for this pattern
 type ChangeListener<T> = (target: T, property: keyof T, value: any, oldValue: any) => void;
 
 interface ObservableOptions {
@@ -266,7 +265,7 @@ class ReactiveForm {
     this.observable = new ProxyObservable(this.fields, { debounce: 300 });
     
     // Auto-validate on change
-    this.observable.addListener((target, property, value, oldValue) => {
+    this.observable.addListener((target, property, _value, _oldValue) => {
       this.validateField(String(property));
       this.notifyValidationChange();
     });

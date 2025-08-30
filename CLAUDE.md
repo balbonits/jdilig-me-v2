@@ -20,10 +20,41 @@ This serves as a **persistent knowledge base** shared between AI sessions for pr
   - "Project" - for all other projects
 - The featured field in data is ONLY for determining what shows in Featured section
 
-### TypeScript Standards
-- **Zero tolerance for `any` types** - Use specific interfaces/types
+### TypeScript Standards & Type Discipline
+- **Zero tolerance for `any` types** - Use specific interfaces/types  
 - **ESLint compliance required** - All errors are build-blocking
 - **Vercel deployment fails** on TypeScript/ESLint errors
+
+#### Type-First Development Principles
+1. **No Global Shortcuts** - Never use `any`, `unknown`, or ESLint disable comments globally
+2. **Targeted Exemptions** - Use specific ESLint disables with clear justification for patterns that require `any` (e.g., Proxy, dynamic property access)
+3. **Specific Over Generic** - Create exact types instead of broad fallbacks
+4. **Type Libraries** - Build reusable type definitions in `/src/types/`
+5. **Segregated Processing** - Separate functions for different data types
+6. **Runtime Type Guards** - Validate and narrow types at boundaries
+7. **Discriminated Unions** - Use explicit type fields to distinguish cases
+
+#### Pattern-Specific Type Requirements
+- **API Clients**: Use `JsonValue` for serializable data, specific request/response types
+- **Event Systems**: Use `EventMap` with specific event payload types
+- **Proxy Patterns**: Use targeted `/* eslint-disable @typescript-eslint/no-explicit-any -- reason */` for dynamic property access
+- **Form Validation**: Use `FormField` interfaces with specific validation rules
+- **State Management**: Use specific state interfaces, never generic objects
+
+#### Type Architecture Rules
+- `interfaces/` - Domain data structures (what data looks like)
+- `types/` - Utility types and behavioral types (how code behaves)  
+- Pattern: `JsonValue | JsonObject | JsonArray` for API data
+- Pattern: `EventMap` with typed event payloads
+- Pattern: `PropertyValue` with runtime type guards for dynamic access
+- **ESLint Integration**: All type violations are build-blocking errors
+
+#### Code Quality Standards  
+- **No `let` for immutable data** - Use `const` unless reassignment needed
+- **No unused variables** - Clean up refactoring artifacts immediately
+- **Arrow functions preferred** - Use ES6 syntax consistently
+- **Type-specific handlers** - Avoid generic `any` processors
+- **Explicit return types** - Document function contracts
 
 ### Human Readability First
 - Use template literals for multiline strings (not escaped `\n`)
@@ -174,9 +205,10 @@ projects/{name}/
 2. Create TypeScript module with ProjectData interface
 3. Process images: `npm run process-images {slug}`
 4. Generate JSON: `npm run generate:projects`
-5. Build & test: `npm run build`
-6. Update snapshots: `npx playwright test --update-snapshots`
-7. Commit & push to deploy
+5. **Check routes**: Verify URLs work by updating data-fetchers.ts slug lists
+6. Build & test: `npm run build`
+7. Update snapshots: `npx playwright test --update-snapshots`
+8. Commit & push to deploy
 
 ## 🚨 CRITICAL DEVELOPMENT WORKFLOW
 
@@ -223,6 +255,11 @@ fi
 ```
 
 ## 🐛 Known Issues & Lessons
+
+### Pattern URL 404 Bug (Resolved)
+- **Cause**: `getAllPatternSlugs()` in data-fetchers.ts was hardcoded to 5 patterns
+- **Solution**: Update slug arrays when adding new patterns/exercises/utilities
+- **Prevention**: Always verify route generation for new content pages
 
 ### Infinite Refresh Bug (Resolved)
 - **Cause**: Direct TS module imports in data layer
