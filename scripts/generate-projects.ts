@@ -182,6 +182,11 @@ class ProjectGenerator {
       if (a.metadata.featured !== b.metadata.featured) {
         return a.metadata.featured ? -1 : 1;
       }
+      
+      // Prioritize horse racing game as the featured project
+      if (a.slug === 'horse-racing-text-game') return -1;
+      if (b.slug === 'horse-racing-text-game') return 1;
+      
       // Then by title
       return a.metadata.title.localeCompare(b.metadata.title);
     });
@@ -190,6 +195,11 @@ class ProjectGenerator {
       if (a.featured !== b.featured) {
         return a.featured ? -1 : 1;
       }
+      
+      // Prioritize horse racing game as the featured project
+      if (a.slug === 'horse-racing-text-game') return -1;
+      if (b.slug === 'horse-racing-text-game') return 1;
+      
       return a.title.localeCompare(b.title);
     });
   }

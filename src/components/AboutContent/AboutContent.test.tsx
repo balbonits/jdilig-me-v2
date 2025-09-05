@@ -60,6 +60,16 @@ jest.mock('@/components/ui', () => ({
         ))}
       </div>
     </section>
+  ),
+  FutureProjectCard: ({ title, description, status, aiTechnology }: { title: string; description: string; status: string; aiTechnology: string[] }) => (
+    <div data-testid="future-project-card">
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <span data-testid="status">{status}</span>
+      <div data-testid="tech-tags">
+        {aiTechnology.map((tech) => <span key={tech}>{tech}</span>)}
+      </div>
+    </div>
   )
 }));
 
@@ -78,6 +88,9 @@ jest.mock('@/data/about', () => ({
     { type: 'email', label: 'Email', value: 'test@example.com', icon: '📧', href: 'mailto:test@example.com' },
     { type: 'phone', label: 'Phone', value: '+1 (123) 456-7890', icon: '📱', href: 'tel:+1234567890' },
     { type: 'location', label: 'Location', value: 'Test City, CA', icon: '📍' }
+  ],
+  futureAiProjectsData: [
+    { id: 'test-1', icon: '🤖', title: 'Test AI Project', description: 'Test description', status: 'planned', aiTechnology: ['Test Tech'], color: 'blue' }
   ],
   heroData: {
     title: 'Test Name',

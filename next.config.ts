@@ -2,19 +2,19 @@
 const nextConfig = {
   devIndicators: false,
   
+  // External image domains configuration
+  images: {
+    domains: [
+      'raw.githubusercontent.com', // For project screenshots hosted on GitHub
+    ],
+  },
+  
   // Performance optimizations
   compress: true,
   
   // Webpack optimizations for bundle size
   webpack: (config: any, { isServer }: { isServer: boolean }) => {
-    // Enable gzip compression for static assets
-    config.optimization = {
-      ...config.optimization,
-      usedExports: true,
-      sideEffects: false,
-    };
-    
-    // Optimize JSON imports
+    // Only add JSON chunk splitting without conflicting optimizations
     if (!isServer) {
       config.optimization.splitChunks = {
         ...config.optimization.splitChunks,

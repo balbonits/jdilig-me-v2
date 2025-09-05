@@ -20,12 +20,18 @@
   margin-bottom: 3rem;
 }
 
+/* Future AI Projects Section */
+.futureProjectsSection {
+  margin-bottom: 3rem;
+}
+
 /* Mobile Responsive */
 @media (max-width: 767px) {
   .contactSection,
   .journeySection,
   .experienceSection,
-  .skillsSection {
+  .skillsSection,
+  .futureProjectsSection {
     margin-bottom: 2rem;
   }
 }

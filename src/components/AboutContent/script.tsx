@@ -6,9 +6,10 @@ import {
   JourneyCard,
   ExperienceCard,
   SkillCard,
-  ContactSection
+  ContactSection,
+  FutureProjectCard
 } from '@/components/ui';
-import { journeyData, experienceData, skillsData, contactData, heroData } from '@/data/about';
+import { journeyData, experienceData, skillsData, contactData, heroData, futureAiProjectsData } from '@/data/about';
 import styles from './style.module.css';
 
 export default function AboutContent() {
@@ -76,6 +77,22 @@ export default function AboutContent() {
               level={skill.level}
               skills={skill.skills}
               color={skill.color}
+            />
+          ))}
+        </Grid>
+
+        {/* Future AI Projects */}
+        <Grid gap="2rem" className={styles.futureProjectsSection}>
+          {futureAiProjectsData.map((project) => (
+            <FutureProjectCard
+              key={project.id}
+              id={project.id}
+              icon={project.icon}
+              title={project.title}
+              description={project.description}
+              status={project.status}
+              aiTechnology={project.aiTechnology}
+              color={project.color}
             />
           ))}
         </Grid>

@@ -145,6 +145,56 @@ export const heroData = {
   variant: "profile" as const
 };
 
+// Future AI Projects Data
+export interface FutureProjectItem {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  status: 'planned' | 'in-development' | 'beta';
+  aiTechnology: string[];
+  color: CardColorVariant;
+}
+
+export const futureAiProjectsData: FutureProjectItem[] = [
+  {
+    id: 'ai-code-reviewer',
+    icon: '🤖',
+    title: 'AI Code Reviewer',
+    description: 'Intelligent code analysis tool that provides automated code review suggestions, detects patterns, and offers optimization recommendations using advanced language models.',
+    status: 'planned',
+    aiTechnology: ['GPT-4', 'Code Analysis', 'Pattern Recognition'],
+    color: 'blue'
+  },
+  {
+    id: 'smart-documentation',
+    icon: '📚',
+    title: 'Smart Documentation Generator',
+    description: 'AI-powered documentation system that automatically generates comprehensive technical documentation from codebases, API endpoints, and project structure.',
+    status: 'planned',
+    aiTechnology: ['Natural Language Processing', 'Code Parsing', 'Auto-Generation'],
+    color: 'purple'
+  },
+  {
+    id: 'intelligent-testing',
+    icon: '🧪',
+    title: 'Intelligent Test Generator',
+    description: 'Machine learning system that analyzes code patterns to automatically generate comprehensive test suites, edge cases, and performance benchmarks.',
+    status: 'in-development',
+    aiTechnology: ['Machine Learning', 'Test Automation', 'Edge Case Detection'],
+    color: 'teal'
+  },
+  {
+    id: 'ai-design-assistant',
+    icon: '🎨',
+    title: 'AI Design Assistant',
+    description: 'Creative AI tool that helps generate UI/UX designs, color schemes, and layout suggestions based on user requirements and modern design principles.',
+    status: 'planned',
+    aiTechnology: ['Computer Vision', 'Design Patterns', 'Generative AI'],
+    color: 'pink'
+  }
+];
+
 // Contact Section Data
 export const contactSectionData = {
   title: "Let's Connect",
