@@ -32,8 +32,8 @@
 
 ### **Migration Status**
 - ✅ Updated pattern pages to use `loadPatternBySlug`
-- ❌ **TODO**: Remove deprecated functions entirely
-- ❌ **TODO**: Clean up related helper functions
+- ✅ **DONE**: Remove deprecated functions entirely (`getPatternBySlug`, `extractPatternCode`, `slugToFileName`)
+- ✅ **DONE**: Clean up related helper functions
 
 ## [2025-08-23] Debugging Best Practices: HMR Infinite Refresh
 **⚠️ Critical Learning: Next.js HMR + Complex TypeScript Imports**

@@ -5,6 +5,11 @@ This serves as a **persistent knowledge base** shared between AI sessions for pr
 
 **memorize:** pattern - Any statement following `memorize:` becomes a candidate for inclusion in this context file.
 
+## 📝 Content Management
+- **LinkedIn Posts**: Record all written LinkedIn posts in `linkedin-posts.md` with date posted
+- Each post should be numbered and dated for tracking purposes
+- Maintain archive of all portfolio-related social media content
+
 ## 🚨 Critical Policies
 
 ### Project Status Language
@@ -327,10 +332,25 @@ docs: update readme     # No version bump
 - `public/version.json` - build-time version metadata
 
 ## 📚 Key References
-- **VERSIONING.md** - Complete automated versioning system documentation
-- **TECH_DEBT.md** - Refactoring plans and priorities
-- **AI_PROJECT_SETUP.md** - AI assistant project guide
-- **HISTORY.md** - Historical changes record
+**Complete documentation is now organized in the [docs/](./docs/) directory:**
+
+### **Architecture & Technical**
+- **[docs/architecture/CSR_SSG_AUDIT.md](./docs/architecture/CSR_SSG_AUDIT.md)** - SSG architecture analysis and performance optimization
+- **[docs/architecture/SEO_AUDIT_REPORT.md](./docs/architecture/SEO_AUDIT_REPORT.md)** - Comprehensive 52-point SEO validation
+- **[docs/architecture/TECH_DEBT.md](./docs/architecture/TECH_DEBT.md)** - Technical debt tracking and cleanup status
+- **[docs/architecture/test-coverage-report.md](./docs/architecture/test-coverage-report.md)** - Testing infrastructure (360 tests)
+
+### **Guides & Workflows**  
+- **[docs/guides/AI_PROJECT_SETUP.md](./docs/guides/AI_PROJECT_SETUP.md)** - AI assistant project guide
+- **[docs/guides/ADD_PROJECT_SIMPLE.md](./docs/guides/ADD_PROJECT_SIMPLE.md)** - Simple project addition workflow
+- **[docs/guides/IMAGE_WORKFLOW.md](./docs/guides/IMAGE_WORKFLOW.md)** - Asset processing pipeline
+
+### **Meta & Historical**
+- **[docs/meta/VERSIONING.md](./docs/meta/VERSIONING.md)** - Automated versioning system documentation
+- **[docs/meta/HISTORY.md](./docs/meta/HISTORY.md)** - Historical changes and project evolution
+- **[docs/meta/DEV_JOURNEY.md](./docs/meta/DEV_JOURNEY.md)** - Development milestones and journey
+
+**Quick Reference**: See **[docs/README.md](./docs/README.md)** for complete documentation index
 
 ## 🎯 Accessibility & Quality
 - WCAG 2.1 AA compliant

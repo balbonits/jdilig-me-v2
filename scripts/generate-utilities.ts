@@ -138,13 +138,20 @@ async function generateUtilitiesJSON() {
     }
   }
 
-  // Write utilities-index.json (summary list)
+  // Write utilities-index.json (summary list with nested metadata structure)
   const indexSummaries = utilities.map(u => ({
     name: u.name,
     slug: u.slug,
-    description: u.metadata?.description || u.metadata?.detailedDescription || '',
-    category: u.metadata?.category || '',
-    difficulty: u.metadata?.difficulty || '',
+    metadata: {
+      title: u.metadata?.title || u.name,
+      description: u.metadata?.description || u.metadata?.detailedDescription || '',
+      category: u.metadata?.category || '',
+      difficulty: u.metadata?.difficulty || '',
+      concepts: u.metadata?.concepts || [],
+      timeComplexity: u.metadata?.timeComplexity || '',
+      spaceComplexity: u.metadata?.spaceComplexity || ''
+    },
+    functions: u.functions || []
   }));
   const indexPath = path.join(OUTPUT_DIR, 'utilities-index.json');
   fs.writeFileSync(indexPath, JSON.stringify(indexSummaries));

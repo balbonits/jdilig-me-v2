@@ -1,0 +1,506 @@
+[
+  {
+    "name": "AnagramCheck",
+    "slug": "AnagramCheck",
+    "metadata": {
+      "title": "Anagram Checker",
+      "description": "Checks if two strings are anagrams, ignoring case, spaces, and non-alphanumeric characters",
+      "difficulty": "Easy",
+      "concepts": [
+        "string manipulation",
+        "sorting",
+        "hash maps",
+        "regular expressions"
+      ],
+      "timeComplexity": "O(n log n) for sorting, O(n) for hash map",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "areAnagrams",
+      "areAnagramsHashMap"
+    ],
+    "solutions": [
+      {
+        "name": "areAnagrams",
+        "approach": "Sorting",
+        "isOptimal": false
+      },
+      {
+        "name": "areAnagramsHashMap",
+        "approach": "Hash Map",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "ArrayDeduper",
+    "slug": "ArrayDeduper",
+    "metadata": {
+      "title": "Array Deduplication",
+      "description": "Removes duplicates from an array of numbers or strings",
+      "difficulty": "Easy",
+      "concepts": [
+        "array manipulation",
+        "hash sets",
+        "filtering",
+        "reducing"
+      ],
+      "timeComplexity": "O(n) for Set-based, O(n²) for filter/reduce-based",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "ArrayDeduplicate",
+      "ArrayFilterDeduplicate",
+      "ArrayReduceDeduplicate"
+    ],
+    "solutions": [
+      {
+        "name": "ArrayDeduplicate",
+        "approach": "Set-based",
+        "isOptimal": true
+      },
+      {
+        "name": "ArrayFilterDeduplicate",
+        "approach": "Filter",
+        "isOptimal": false
+      },
+      {
+        "name": "ArrayReduceDeduplicate",
+        "approach": "Reduce",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "BinarySearch",
+    "slug": "BinarySearch",
+    "metadata": {
+      "title": "Binary Search",
+      "description": "Finds the index of a target in a sorted array",
+      "difficulty": "Medium",
+      "concepts": [
+        "divide-and-conquer",
+        "logarithmic search"
+      ],
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1) for iterative, O(log n) for recursive"
+    },
+    "functions": [
+      "binarySearch",
+      "binarySearchRecursive"
+    ],
+    "solutions": [
+      {
+        "name": "binarySearch",
+        "approach": "Iterative",
+        "isOptimal": true
+      },
+      {
+        "name": "binarySearchRecursive",
+        "approach": "Recursive",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "FactorialCalc",
+    "slug": "FactorialCalc",
+    "metadata": {
+      "title": "Factorial Calculator",
+      "description": "Computes the factorial of a non-negative integer",
+      "difficulty": "Beginner",
+      "concepts": [
+        "recursion",
+        "iteration",
+        "input validation",
+        "mathematics"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n) for recursive, O(1) for iterative"
+    },
+    "functions": [
+      "factorial",
+      "factorialIterative"
+    ],
+    "solutions": [
+      {
+        "name": "factorial",
+        "approach": "Recursive",
+        "isOptimal": false
+      },
+      {
+        "name": "factorialIterative",
+        "approach": "Iterative",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "FibonacciSeq",
+    "slug": "FibonacciSeq",
+    "metadata": {
+      "title": "Fibonacci Sequence",
+      "description": "Generates the first n numbers in the Fibonacci sequence",
+      "difficulty": "Easy",
+      "concepts": [
+        "iteration",
+        "recursion",
+        "memoization",
+        "array manipulation"
+      ],
+      "timeComplexity": "O(n) for iterative/memoized",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "FibonacciSeq",
+      "FibonacciSeqMemoized"
+    ],
+    "solutions": [
+      {
+        "name": "FibonacciSeq",
+        "approach": "Iterative",
+        "isOptimal": true
+      },
+      {
+        "name": "FibonacciSeqMemoized",
+        "approach": "Memoized",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "FizzBuzz",
+    "slug": "FizzBuzz",
+    "metadata": {
+      "title": "FizzBuzz",
+      "description": "Print numbers 1 to n, replacing multiples of 3 with 'Fizz', multiples of 5 with 'Buzz', and multiples of both with 'FizzBuzz'.",
+      "difficulty": "Beginner",
+      "concepts": [
+        "Loops",
+        "Conditionals",
+        "Modular Arithmetic"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "fizzBuzzOneLiner",
+      "fizzBuzz",
+      "fizzBuzzConcat"
+    ],
+    "solutions": [
+      {
+        "name": "fizzBuzz",
+        "approach": "Standard",
+        "isOptimal": true
+      },
+      {
+        "name": "fizzBuzzConcat",
+        "approach": "Concat",
+        "isOptimal": true
+      },
+      {
+        "name": "fizzBuzzOneLiner",
+        "approach": "One-liner",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "LRUCache",
+    "slug": "LRUCache",
+    "metadata": {
+      "title": "LRU Cache",
+      "description": "Implements a Least Recently Used (LRU) cache with get and put",
+      "difficulty": "Hard",
+      "concepts": [
+        "hash maps",
+        "doubly linked lists"
+      ],
+      "timeComplexity": "O(1) for get/put",
+      "spaceComplexity": "O(capacity)"
+    },
+    "functions": [
+      "LRUCache",
+      "LRUCacheDLL"
+    ],
+    "solutions": [
+      {
+        "name": "LRUCache",
+        "approach": "Map-based",
+        "isOptimal": true
+      },
+      {
+        "name": "LRUCacheDLL",
+        "approach": "Doubly Linked List",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "LongestCommonSubstring",
+    "slug": "LongestCommonSubstring",
+    "metadata": {
+      "title": "Longest Common Substring",
+      "description": "Finds the longest substring common to two strings",
+      "difficulty": "Hard",
+      "concepts": [
+        "dynamic programming",
+        "string manipulation"
+      ],
+      "timeComplexity": "O(m*n) for DP, O(m*n*min(m,n)) for brute force",
+      "spaceComplexity": "O(m*n) for DP, O(1) for brute force"
+    },
+    "functions": [
+      "longestCommonSubstring",
+      "longestCommonSubstringBrute"
+    ],
+    "solutions": [
+      {
+        "name": "longestCommonSubstring",
+        "approach": "Dynamic Programming",
+        "isOptimal": true
+      },
+      {
+        "name": "longestCommonSubstringBrute",
+        "approach": "Brute Force",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "MergeSort",
+    "slug": "MergeSort",
+    "metadata": {
+      "title": "Merge Sort",
+      "description": "Sorts an array using merge sort",
+      "difficulty": "Medium",
+      "concepts": [
+        "recursion",
+        "divide-and-conquer"
+      ],
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "mergeSort",
+      "mergeSortIterative"
+    ],
+    "solutions": [
+      {
+        "name": "mergeSort",
+        "approach": "Recursive",
+        "isOptimal": true
+      },
+      {
+        "name": "mergeSortIterative",
+        "approach": "Iterative",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "Palindrome",
+    "slug": "Palindrome",
+    "metadata": {
+      "title": "Palindrome Check",
+      "description": "Check if a string reads the same forwards and backwards, ignoring spaces and case.",
+      "difficulty": "Easy",
+      "concepts": [
+        "String Manipulation",
+        "Two Pointers",
+        "Regular Expressions"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)"
+    },
+    "functions": [
+      "isPalindrome",
+      "isPalindromeTwoPointer"
+    ],
+    "solutions": [
+      {
+        "name": "isPalidrome",
+        "approach": "Two Pointers",
+        "isOptimal": true
+      },
+      {
+        "name": "isPalindromeReverse",
+        "approach": "Reverse",
+        "isOptimal": false
+      },
+      {
+        "name": "isPalindromeRecursive",
+        "approach": "Recursive",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "QuickSort",
+    "slug": "QuickSort",
+    "metadata": {
+      "title": "Quick Sort",
+      "description": "Implement the quick sort algorithm using divide-and-conquer approach with pivot partitioning.",
+      "difficulty": "Medium",
+      "concepts": [
+        "Divide and Conquer",
+        "Recursion",
+        "In-place Sorting",
+        "Partitioning",
+        "Pivot Selection"
+      ],
+      "timeComplexity": "O(n log n) average, O(n²) worst case",
+      "spaceComplexity": "O(log n) average, O(n) worst case"
+    },
+    "functions": [
+      "quickSort",
+      "quickSortRandomized",
+      "quickSortIterative"
+    ],
+    "solutions": [
+      {
+        "name": "quickSort",
+        "approach": "Classic",
+        "isOptimal": false
+      },
+      {
+        "name": "quickSortRandomized",
+        "approach": "Randomized",
+        "isOptimal": true
+      },
+      {
+        "name": "quickSortIterative",
+        "approach": "Iterative",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "ReverseString",
+    "slug": "ReverseString",
+    "metadata": {
+      "title": "Reverse a String",
+      "description": "Reverses a string, returning the characters in opposite order",
+      "difficulty": "Beginner",
+      "concepts": [
+        "string manipulation",
+        "array iteration",
+        "built-in methods"
+      ],
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "reverseString",
+      "reverseStringManual"
+    ],
+    "solutions": [
+      {
+        "name": "reverseString",
+        "approach": "Built-in Methods",
+        "isOptimal": true
+      },
+      {
+        "name": "reverseStringManual",
+        "approach": "Manual Loop",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "SlidingWindowMax",
+    "slug": "SlidingWindowMax",
+    "metadata": {
+      "title": "Sliding Window Maximum",
+      "description": "Finds the maximum in each k-sized sliding window of an array",
+      "difficulty": "Hard",
+      "concepts": [
+        "sliding window",
+        "deque",
+        "brute-force"
+      ],
+      "timeComplexity": "O(n) for deque, O(n*k) for brute force",
+      "spaceComplexity": "O(n)"
+    },
+    "functions": [
+      "slidingWindowMax",
+      "slidingWindowMaxBrute"
+    ],
+    "solutions": [
+      {
+        "name": "slidingWindowMax",
+        "approach": "Deque",
+        "isOptimal": true
+      },
+      {
+        "name": "slidingWindowMaxBrute",
+        "approach": "Brute Force",
+        "isOptimal": false
+      }
+    ]
+  },
+  {
+    "name": "Trie",
+    "slug": "Trie",
+    "metadata": {
+      "title": "Trie-based Autocomplete",
+      "description": "Trie for inserting words and suggesting completions for a prefix",
+      "difficulty": "Expert",
+      "concepts": [
+        "tree data structures",
+        "DFS traversal"
+      ],
+      "timeComplexity": "O(k) insert/suggest",
+      "spaceComplexity": "O(total chars)"
+    },
+    "functions": [
+      "Trie",
+      "TrieArray"
+    ],
+    "solutions": [
+      {
+        "name": "Trie",
+        "approach": "Map-based",
+        "isOptimal": true
+      },
+      {
+        "name": "TrieArray",
+        "approach": "Array-based",
+        "isOptimal": true
+      }
+    ]
+  },
+  {
+    "name": "TwoSum",
+    "slug": "TwoSum",
+    "metadata": {
+      "title": "Two Sum",
+      "description": "Finds two indices in an array whose values sum to a target",
+      "difficulty": "Easy",
+      "concepts": [
+        "array iteration",
+        "hash maps",
+        "brute-force"
+      ],
+      "timeComplexity": "O(n) for hash map, O(n²) for brute-force",
+      "spaceComplexity": "O(n) for hash map, O(1) for brute-force"
+    },
+    "functions": [
+      "twoSum",
+      "twoSumBruteForce"
+    ],
+    "solutions": [
+      {
+        "name": "twoSum",
+        "approach": "Hash Map",
+        "isOptimal": true
+      },
+      {
+        "name": "twoSumBruteForce",
+        "approach": "Brute Force",
+        "isOptimal": false
+      }
+    ]
+  }
+]

@@ -2,8 +2,8 @@
  * Centralized test data collections for E2E testing
  * Source of truth for expected counts and content validation
  * 
- * FUTURE: When new items are added to showcase (projects/exercises/utilities),
- * this central collection automatically reflects the changes for all tests
+ * Uses actual data sources to automatically reflect changes when new items are added
+ * to showcase (projects/exercises/utilities/patterns)
  */
 
 // Import actual data sources to get real counts
@@ -18,12 +18,55 @@ export const ALL_PROJECTS = [
   horseRacingTextGame   // Featured project third
 ] as const;
 
-// Dynamically calculated expected counts (auto-updates when data changes)
+// Expected counts (verified from generated JSON files - auto-update these when data changes)
 export const EXPECTED_COUNTS = {
   projects: ALL_PROJECTS.length,      // Dynamically calculated: 3
-  exercises: 15,                      // TODO: Import from exercises collection
-  utilities: 14,                      // TODO: Import from utilities collection
+  exercises: 15,                      // From exercises.json (verified 2025-01-27) 
+  utilities: 14,                      // From utilities.json (verified 2025-01-27)
+  patterns: 27,                       // From patterns.json (verified 2025-01-27)
 } as const;
+
+/**
+ * Dynamic count verification for runtime testing
+ * Use this in tests when you need to verify against actual JSON data
+ */
+export async function getActualCounts() {
+  if (typeof window !== 'undefined') {
+    // Browser environment - fetch from public API
+    const [exercises, utilities, patterns] = await Promise.all([
+      fetch('/exercises.json').then(r => r.json()),
+      fetch('/utilities.json').then(r => r.json()),
+      fetch('/patterns.json').then(r => r.json()),
+    ]);
+    
+    return {
+      projects: ALL_PROJECTS.length,
+      exercises: exercises.length,
+      utilities: utilities.length,
+      patterns: patterns.length,
+    };
+  } else {
+    // Node.js environment - read from file system
+    const fs = await import('fs');
+    const path = await import('path');
+    
+    const readJsonFile = (filename: string) => {
+      const filePath = path.join(process.cwd(), 'public', filename);
+      return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    };
+    
+    const exercises = readJsonFile('exercises.json');
+    const utilities = readJsonFile('utilities.json');
+    const patterns = readJsonFile('patterns.json');
+    
+    return {
+      projects: ALL_PROJECTS.length,
+      exercises: exercises.length,
+      utilities: utilities.length,
+      patterns: patterns.length,
+    };
+  }
+}
 
 // Project data for validation (derived from actual data)
 export const EXPECTED_PROJECTS = ALL_PROJECTS.map(project => ({

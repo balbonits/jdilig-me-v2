@@ -40,7 +40,7 @@ projects/personal-website-v2/
 
 ## Live Links
 - **Website**: https://jdilig.me
-- **Repository**: https://github.com/johndilig/jdilig-me-v2
+- **Repository**: https://github.com/balbonits/jdilig-me-v2
 
 ---
 

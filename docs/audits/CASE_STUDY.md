@@ -435,6 +435,6 @@ The result is a portfolio that not only showcases projects but demonstrates adva
 
 **Author**: John Dilig  
 **Website**: [www.jdilig.me](https://www.jdilig.me)  
-**GitHub**: [jdilig-me-v2](https://github.com/johndilig/jdilig-me-v2)  
+**GitHub**: [jdilig-me-v2](https://github.com/balbonits/jdilig-me-v2)  
 **Duration**: November 2024 - Present  
 **Status**: Actively Evolving  

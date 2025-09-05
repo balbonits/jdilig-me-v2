@@ -19,13 +19,12 @@ export default function Utilities({ utilities }: UtilitiesPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<UtilitiesPageProps> = async () => {
-  // Load utilities data from generated JSON
+  // Temporarily use full data to debug
   const utilities = await loadUtilitiesData();
-
   return {
     props: {
       utilities,
     },
-    revalidate: 3600, // Revalidate every hour
+    revalidate: 3600,
   };
 };

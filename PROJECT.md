@@ -171,7 +171,7 @@
     },
     {
       "type": "github",
-      "url": "https://github.com/johndilig/jdilig-me-v2",
+      "url": "https://github.com/balbonits/jdilig-me-v2",
       "label": "Source Code"
     }
   ],

@@ -19,13 +19,12 @@ export default function Exercises({ exercises }: ExercisesPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<ExercisesPageProps> = async () => {
-  // Load exercises data from generated JSON
+  // Temporarily use full data to debug  
   const exercises = await loadExercisesData();
-
   return {
     props: {
       exercises,
     },
-    revalidate: 3600, // Revalidate every hour
+    revalidate: 3600,
   };
 };
