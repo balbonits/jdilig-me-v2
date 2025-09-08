@@ -96,6 +96,11 @@ export default function AboutContent() {
             />
           ))}
         </Grid>
+
+        {/* Technical Documentation Reference */}
+        <div className={styles.wikiReference}>
+          <p>📚 For technical details, architecture documentation, and development guides, visit the <a href="https://github.com/balbonits/jdilig-me-v2/wiki" target="_blank" rel="noopener noreferrer">project Wiki</a>.</p>
+        </div>
       </SectionContainer>
     </>
   );

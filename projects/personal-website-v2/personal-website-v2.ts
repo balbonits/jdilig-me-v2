@@ -28,7 +28,9 @@ Development Process:
 - Test-driven development with Jest unit tests and Playwright E2E testing across 5 browsers
 - Component-driven architecture following separation of concerns and reusability principles
 - Performance-first approach with Core Web Vitals tracking and optimization
-- Comprehensive documentation with project context management and AI collaboration workflows`,
+- Comprehensive documentation with project context management and AI collaboration workflows
+
+**📚 Technical Documentation**: Complete project documentation, architecture guides, and development workflows are available in the [GitHub Wiki](https://github.com/balbonits/jdilig-me-v2/wiki).`,
     category: 'Full-Stack Development',
     startDate: '2024-11',
     role: 'Full-Stack Developer & Designer',
