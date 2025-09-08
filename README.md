@@ -32,18 +32,19 @@
 
 ## 📚 **Documentation**
 
-Complete documentation is organized in the **[docs/](./docs/)** directory:
+Complete documentation is available in the **[GitHub Wiki](https://github.com/balbonits/jdilig-me-v2/wiki)**:
 
 ### **Quick Access**
-- **[📖 Documentation Index](./docs/README.md)** - Complete documentation overview
-- **[🏗️ Architecture Guide](./docs/architecture/CSR_SSG_AUDIT.md)** - Technical architecture and performance analysis
-- **[🔍 SEO Audit Report](./docs/architecture/SEO_AUDIT_REPORT.md)** - Comprehensive SEO validation (52 tests)
-- **[🤖 AI Setup Guide](./docs/guides/AI_PROJECT_SETUP.md)** - Guide for AI assistants working on this project
+- **[📖 Wiki Home](https://github.com/balbonits/jdilig-me-v2/wiki)** - Complete documentation overview and navigation
+- **[🏗️ Tech Debt & Architecture](https://github.com/balbonits/jdilig-me-v2/wiki/Tech-Debt)** - Technical roadmap and system architecture
+- **[🔍 SEO Audit Report](https://github.com/balbonits/jdilig-me-v2/wiki/SEO-Audit-Report)** - Comprehensive SEO validation (52 tests passing)
+- **[🤖 AI Project Setup](https://github.com/balbonits/jdilig-me-v2/wiki/AI-Project-Setup)** - Guide for AI assistants working on this project
 
 ### **For Contributors**
-- **[➕ Adding Projects](./docs/guides/ADD_PROJECT_SIMPLE.md)** - Simple workflow for new projects
-- **[🖼️ Image Processing](./docs/guides/IMAGE_WORKFLOW.md)** - Asset optimization workflow
-- **[📝 Code Showcase](./docs/guides/CODE_SHOWCASE.md)** - Code documentation standards
+- **[📖 User & Developer Guides](https://github.com/balbonits/jdilig-me-v2/wiki/User-Developer-Guides)** - Development workflows and contribution guides
+- **[🏗️ Architecture & Technical](https://github.com/balbonits/jdilig-me-v2/wiki/Architecture-Technical)** - System architecture and technical documentation
+- **[🔍 Case Studies & Analysis](https://github.com/balbonits/jdilig-me-v2/wiki/Case-Studies-Analysis)** - Project analysis and performance reports
+- **[📝 Meta & Project Information](https://github.com/balbonits/jdilig-me-v2/wiki/Meta-Project-Information)** - Project history and metadata
 
 ---
 

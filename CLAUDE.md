@@ -332,25 +332,22 @@ docs: update readme     # No version bump
 - `public/version.json` - build-time version metadata
 
 ## 📚 Key References
-**Complete documentation is now organized in the [docs/](./docs/) directory:**
+**Complete documentation is now available in the [GitHub Wiki](https://github.com/balbonits/jdilig-me-v2/wiki):**
 
 ### **Architecture & Technical**
-- **[docs/architecture/CSR_SSG_AUDIT.md](./docs/architecture/CSR_SSG_AUDIT.md)** - SSG architecture analysis and performance optimization
-- **[docs/architecture/SEO_AUDIT_REPORT.md](./docs/architecture/SEO_AUDIT_REPORT.md)** - Comprehensive 52-point SEO validation
-- **[docs/architecture/TECH_DEBT.md](./docs/architecture/TECH_DEBT.md)** - Technical debt tracking and cleanup status
-- **[docs/architecture/test-coverage-report.md](./docs/architecture/test-coverage-report.md)** - Testing infrastructure (360 tests)
+- **[Tech Debt & Architecture](https://github.com/balbonits/jdilig-me-v2/wiki/Tech-Debt)** - Technical roadmap and system architecture
+- **[SEO Audit Report](https://github.com/balbonits/jdilig-me-v2/wiki/SEO-Audit-Report)** - Comprehensive 52-point SEO validation (all passing)
+- **[Architecture & Technical](https://github.com/balbonits/jdilig-me-v2/wiki/Architecture-Technical)** - Complete technical documentation index
 
 ### **Guides & Workflows**  
-- **[docs/guides/AI_PROJECT_SETUP.md](./docs/guides/AI_PROJECT_SETUP.md)** - AI assistant project guide
-- **[docs/guides/ADD_PROJECT_SIMPLE.md](./docs/guides/ADD_PROJECT_SIMPLE.md)** - Simple project addition workflow
-- **[docs/guides/IMAGE_WORKFLOW.md](./docs/guides/IMAGE_WORKFLOW.md)** - Asset processing pipeline
+- **[AI Project Setup](https://github.com/balbonits/jdilig-me-v2/wiki/AI-Project-Setup)** - AI assistant project guide
+- **[User & Developer Guides](https://github.com/balbonits/jdilig-me-v2/wiki/User-Developer-Guides)** - Development workflows and contribution guides
 
 ### **Meta & Historical**
-- **[docs/meta/VERSIONING.md](./docs/meta/VERSIONING.md)** - Automated versioning system documentation
-- **[docs/meta/HISTORY.md](./docs/meta/HISTORY.md)** - Historical changes and project evolution
-- **[docs/meta/DEV_JOURNEY.md](./docs/meta/DEV_JOURNEY.md)** - Development milestones and journey
+- **[Meta & Project Information](https://github.com/balbonits/jdilig-me-v2/wiki/Meta-Project-Information)** - Project history, versioning, and metadata
+- **[Case Studies & Analysis](https://github.com/balbonits/jdilig-me-v2/wiki/Case-Studies-Analysis)** - Project analysis and performance reports
 
-**Quick Reference**: See **[docs/README.md](./docs/README.md)** for complete documentation index
+**Quick Reference**: See **[GitHub Wiki Home](https://github.com/balbonits/jdilig-me-v2/wiki)** for complete documentation navigation
 
 ## 🎯 Accessibility & Quality
 - WCAG 2.1 AA compliant
