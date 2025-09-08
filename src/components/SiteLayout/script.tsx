@@ -32,7 +32,7 @@ export default function SiteLayout({ children, className }: SiteLayoutProps) {
       
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
-          <p>© 2025 John Dilig. Built with Next.js & TypeScript. <a href="https://github.com/jdilig/jdilig-me-v2" target="_blank" rel="noopener noreferrer">Open Source (MIT)</a></p>
+          <p>© 2025 John Dilig. Built with Next.js & TypeScript. <a href="https://github.com/balbonits/jdilig-me-v2" target="_blank" rel="noopener noreferrer">Open Source (MIT)</a> • <a href="https://github.com/balbonits/jdilig-me-v2/wiki" target="_blank" rel="noopener noreferrer">Technical Documentation</a></p>
           <p className={styles.versionInfo}>v{version} • <span title="Automatically versioned with semantic-release">Auto-versioned</span></p>
         </div>
       </footer>
