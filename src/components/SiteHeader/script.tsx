@@ -18,7 +18,8 @@ export default function SiteHeader() {
   const codeSubmenuItems = [
     { href: '/code/exercises', label: 'Exercises' },
     { href: '/code/utilities', label: 'Utilities' },
-    { href: '/code/patterns', label: 'Design Patterns' }
+    { href: '/code/patterns', label: 'Design Patterns' },
+    { href: '/code/notes', label: 'Notes' }
   ];
 
   const toggleMobileMenu = () => {

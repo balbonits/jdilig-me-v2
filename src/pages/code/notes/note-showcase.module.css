@@ -1,0 +1,326 @@
+/* Note Showcase Styles */
+.overviewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.metadataContainer {
+  background: var(--card-bg-color-default);
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.metadataGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.metadataItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metadataLabel {
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  min-width: 80px;
+}
+
+.metadataValue {
+  font-weight: 500;
+}
+
+.categoryBadge,
+.difficultyBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Category badges */
+.category-cheat-sheet {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.category-interview-prep {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.category-reference {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.category-quick-lookup {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Difficulty badges */
+.difficulty-beginner {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.difficulty-intermediate {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.difficulty-advanced {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.tagsContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tagsLabel {
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  min-width: 40px;
+  margin-top: 0.25rem;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: var(--accent-color-light);
+  color: var(--accent-color-dark);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--accent-color-medium);
+}
+
+.descriptionContainer {
+  background: var(--background-color-subtle);
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.description {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color-primary);
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary-brand);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.copyButton:hover {
+  background: var(--expertise-highlight);
+  opacity: 0.9;
+}
+
+.copyButton:active {
+  transform: translateY(1px);
+}
+
+.markdownContent {
+  background: var(--card-bg-color-default);
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.noteContent {
+  padding: 2rem;
+  max-width: none;
+  line-height: 1.7;
+}
+
+/* Markdown content styling - matching existing code showcase */
+.noteContent pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.noteContent code {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  background: var(--code-bg);
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-color-light);
+}
+
+.noteContent pre code {
+  background: transparent;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+}
+
+.noteContent h2 {
+  color: var(--text-color-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color-light);
+  padding-bottom: 0.5rem;
+}
+
+.noteContent h3 {
+  color: var(--text-color-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.noteContent ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.noteContent li {
+  margin: 0.5rem 0;
+  color: var(--text-color-primary);
+}
+
+.noteContent li.success {
+  color: #22c55e;
+}
+
+.noteContent li.error {
+  color: #ef4444;
+}
+
+.noteContent li.highlight {
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.noteContent p {
+  margin: 1rem 0;
+  color: var(--text-color-primary);
+}
+
+.noteContent strong {
+  font-weight: 600;
+  color: var(--text-color-primary);
+}
+
+.noteContent em {
+  font-style: italic;
+  color: var(--text-color-secondary);
+}
+
+/* Dark mode adjustments */
+:global(.dark) .category-cheat-sheet {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #90caf9;
+}
+
+:global(.dark) .category-interview-prep {
+  background-color: rgba(156, 39, 176, 0.2);
+  color: #ce93d8;
+}
+
+:global(.dark) .category-reference {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #a5d6a7;
+}
+
+:global(.dark) .category-quick-lookup {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ffcc02;
+}
+
+:global(.dark) .difficulty-beginner {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #a5d6a7;
+}
+
+:global(.dark) .difficulty-intermediate {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: #ffcc02;
+}
+
+:global(.dark) .difficulty-advanced {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #ef5350;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .metadataGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .metadataItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .metadataLabel {
+    min-width: auto;
+    font-size: 0.875rem;
+  }
+  
+  .tagsContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .contentHeader {
+    justify-content: center;
+  }
+  
+  .noteContent {
+    padding: 1.5rem;
+  }
+}

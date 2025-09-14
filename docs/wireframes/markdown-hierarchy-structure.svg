@@ -1,0 +1,168 @@
+<svg width="1400" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #333; }
+      .page-title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #222; }
+      .main-section-title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #2196F3; }
+      .sub-section-title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #4CAF50; }
+      .text { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .small-text { font-family: Arial, sans-serif; font-size: 9px; fill: #888; }
+      .level-indicator { font-family: monospace; font-size: 10px; fill: #999; }
+      
+      /* Page container */
+      .page-container { fill: #fafafa; stroke: #ccc; stroke-width: 2; }
+      
+      /* Main sections */
+      .main-section { fill: white; stroke: #2196F3; stroke-width: 2; }
+      
+      /* Sub-sections */
+      .sub-section { fill: #f9f9f9; stroke: #4CAF50; stroke-width: 1.5; stroke-dasharray: 5,3; }
+      
+      /* Tabs for 4th level */
+      .tab { fill: #e0e0e0; stroke: #999; stroke-width: 1; }
+      .tab-active { fill: #FF9800; stroke: #F57C00; stroke-width: 1.5; }
+      .tab-text { font-family: Arial, sans-serif; font-size: 10px; fill: #555; }
+      .tab-text-active { font-family: Arial, sans-serif; font-size: 10px; fill: white; }
+      
+      /* Content areas */
+      .tab-content { fill: #fffef5; stroke: #ddd; stroke-width: 1; }
+      .code-area { fill: #f8f8f8; stroke: #e0e0e0; stroke-width: 1; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="700" y="30" text-anchor="middle" class="title">Correct Hierarchy: Sections → Sub-sections → Tabs</text>
+  
+  <!-- Page Container -->
+  <rect x="50" y="60" width="1300" height="1120" class="page-container"/>
+  
+  <!-- Page Title -->
+  <text x="700" y="90" text-anchor="middle" class="page-title">JavaScript Interview Cheat Sheet</text>
+  <text x="700" y="110" text-anchor="middle" class="text">(Single scrollable page with organized sections)</text>
+  
+  <!-- ========== MAIN SECTION 1 (##) ========== -->
+  <rect x="80" y="130" width="1240" height="400" class="main-section"/>
+  <text x="100" y="155" class="main-section-title">## 📚 Core Concepts</text>
+  <text x="1200" y="155" class="level-indicator">[Level 2: ##]</text>
+  
+  <!-- SUB-SECTION 1.1 (###) -->
+  <rect x="100" y="170" width="1180" height="160" class="sub-section"/>
+  <text x="120" y="195" class="sub-section-title">### Modern ECMAScript Features (ES2015+)</text>
+  <text x="1150" y="195" class="level-indicator">[Level 3: ###]</text>
+  
+  <!-- TABS for Sub-section 1.1 (####) -->
+  <g transform="translate(120, 210)">
+    <!-- Tab Navigation -->
+    <rect x="0" y="0" width="80" height="25" class="tab-active"/>
+    <text x="40" y="16" text-anchor="middle" class="tab-text-active">ES2015</text>
+    
+    <rect x="80" y="0" width="80" height="25" class="tab"/>
+    <text x="120" y="16" text-anchor="middle" class="tab-text">ES2017+</text>
+    
+    <rect x="160" y="0" width="80" height="25" class="tab"/>
+    <text x="200" y="16" text-anchor="middle" class="tab-text">ES2021+</text>
+    
+    <rect x="240" y="0" width="80" height="25" class="tab"/>
+    <text x="280" y="16" text-anchor="middle" class="tab-text">Latest</text>
+    
+    <text x="1000" y="16" class="level-indicator">[Level 4: #### as tabs]</text>
+    
+    <!-- Tab Content Area -->
+    <rect x="0" y="25" width="1140" height="80" class="tab-content"/>
+    <rect x="10" y="35" width="550" height="60" class="code-area"/>
+    <text x="20" y="50" class="text">// #### ES2015 (ES6) Core Features (active tab content)</text>
+    <text x="20" y="65" class="text">const [first, ...rest] = [1, 2, 3, 4, 5];</text>
+    <text x="20" y="80" class="text">const add = (a, b) => a + b;</text>
+    
+    <rect x="570" y="35" width="550" height="60" class="code-area"/>
+    <text x="580" y="50" class="text">// Key concepts for this tab</text>
+    <text x="580" y="65" class="text">• Destructuring, Arrow Functions, Template Literals</text>
+    <text x="580" y="80" class="text">• Classes, Modules, Default Parameters</text>
+  </g>
+  
+  <!-- SUB-SECTION 1.2 (###) -->
+  <rect x="100" y="350" width="1180" height="160" class="sub-section"/>
+  <text x="120" y="375" class="sub-section-title">### ES2015 (ES6) Core Features</text>
+  <text x="1150" y="375" class="level-indicator">[Level 3: ###]</text>
+  <text x="120" y="395" class="text">This is a standalone ### section (not a tab)</text>
+  <text x="120" y="410" class="text">Contains direct content about ES2015 features</text>
+  <rect x="120" y="420" width="1140" height="70" class="code-area"/>
+  <text x="130" y="440" class="text">// Direct code examples in this section</text>
+  <text x="130" y="455" class="text">function greet(name = 'World') { return `Hello, ${name}!`; }</text>
+  <text x="130" y="470" class="text">const numbers = [1, 2, 3]; const doubled = numbers.map(n => n * 2);</text>
+  
+  <!-- ========== MAIN SECTION 2 (##) ========== -->
+  <rect x="80" y="550" width="1240" height="350" class="main-section"/>
+  <text x="100" y="575" class="main-section-title">## Asynchronous JavaScript</text>
+  <text x="1200" y="575" class="level-indicator">[Level 2: ##]</text>
+  
+  <!-- SUB-SECTION 2.1 (###) -->
+  <rect x="100" y="590" width="1180" height="140" class="sub-section"/>
+  <text x="120" y="615" class="sub-section-title">### Promises Deep Dive</text>
+  <text x="1150" y="615" class="level-indicator">[Level 3: ###]</text>
+  
+  <!-- TABS for Sub-section 2.1 (####) -->
+  <g transform="translate(120, 630)">
+    <rect x="0" y="0" width="100" height="25" class="tab-active"/>
+    <text x="50" y="16" text-anchor="middle" class="tab-text-active">Creation</text>
+    
+    <rect x="100" y="0" width="100" height="25" class="tab"/>
+    <text x="150" y="16" text-anchor="middle" class="tab-text">Methods</text>
+    
+    <rect x="200" y="0" width="100" height="25" class="tab"/>
+    <text x="250" y="16" text-anchor="middle" class="tab-text">Chaining</text>
+    
+    <rect x="300" y="0" width="100" height="25" class="tab"/>
+    <text x="350" y="16" text-anchor="middle" class="tab-text">Error Handling</text>
+    
+    <rect x="0" y="25" width="1140" height="60" class="tab-content"/>
+    <text x="10" y="45" class="text">// #### Promise Creation (active tab)</text>
+    <text x="10" y="60" class="text">new Promise((resolve, reject) => { /* async operation */ });</text>
+    <text x="10" y="75" class="text">Promise states: Pending → Fulfilled or Rejected</text>
+  </g>
+  
+  <!-- SUB-SECTION 2.2 (###) -->
+  <rect x="100" y="750" width="1180" height="130" class="sub-section"/>
+  <text x="120" y="775" class="sub-section-title">### Async/Await Patterns</text>
+  <text x="1150" y="775" class="level-indicator">[Level 3: ###]</text>
+  <text x="120" y="795" class="text">Direct content without tabs - simple subsection</text>
+  <rect x="120" y="800" width="1140" height="60" class="code-area"/>
+  <text x="130" y="820" class="text">async function fetchData() {</text>
+  <text x="130" y="835" class="text">  const data = await fetch('/api/data');</text>
+  <text x="130" y="850" class="text">  return data.json();</text>
+  
+  <!-- ========== MAIN SECTION 3 (##) ========== -->
+  <rect x="80" y="920" width="1240" height="230" class="main-section"/>
+  <text x="100" y="945" class="main-section-title">## Quick Interview Questions</text>
+  <text x="1200" y="945" class="level-indicator">[Level 2: ##]</text>
+  
+  <!-- SUB-SECTION 3.1 (###) -->
+  <rect x="100" y="960" width="580" height="170" class="sub-section"/>
+  <text x="120" y="985" class="sub-section-title">### Common Gotchas</text>
+  <text x="550" y="985" class="level-indicator">[Level 3: ###]</text>
+  <text x="120" y="1010" class="text">• Type coercion: '' == false (true)</text>
+  <text x="120" y="1025" class="text">• Closure in loops with var vs let</text>
+  <text x="120" y="1040" class="text">• Arrow functions don't have 'this'</text>
+  <text x="120" y="1055" class="text">• Floating point: 0.1 + 0.2 !== 0.3</text>
+  <text x="120" y="1070" class="text">• NaN === NaN is false</text>
+  
+  <!-- SUB-SECTION 3.2 (###) -->
+  <rect x="700" y="960" width="580" height="170" class="sub-section"/>
+  <text x="720" y="985" class="sub-section-title">### Quick Answers</text>
+  <text x="1150" y="985" class="level-indicator">[Level 3: ###]</text>
+  <text x="720" y="1010" class="text">Q: Event loop order?</text>
+  <text x="720" y="1025" class="text">A: Call Stack → Microtasks → Macrotask</text>
+  <text x="720" y="1045" class="text">Q: var vs let vs const?</text>
+  <text x="720" y="1060" class="text">A: Scope, hoisting, reassignment differences</text>
+  
+  <!-- Legend Box -->
+  <g transform="translate(100, 1180)">
+    <rect x="0" y="-100" width="400" height="90" class="sub-section"/>
+    <text x="10" y="-75" class="sub-section-title">Structure Summary:</text>
+    <text x="10" y="-55" class="text">• Page is scrollable, not tabbed at top level</text>
+    <text x="10" y="-40" class="text">• ## headers = Main sections (blue borders)</text>
+    <text x="10" y="-25" class="text">• ### headers = Sub-sections (green dashed borders)</text>
+    <text x="10" y="-10" class="text">• #### headers = Tabs within sub-sections (orange tabs)</text>
+  </g>
+  
+</svg>

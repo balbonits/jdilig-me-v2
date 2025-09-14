@@ -26,6 +26,18 @@ function decodeHtmlEntities(text: string): string {
 }
 
 /**
+ * Escape HTML characters to prevent XSS and ensure proper display in code blocks
+ */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
  * Convert markdown bold syntax to HTML strong tags
  */
 function processBoldMarkdown(text: string): string {
@@ -154,6 +166,71 @@ export function detailedDescriptionToHtml(text: string): string {
   html = html.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   html = html.replace(/\\n/g, '\n');
   
+  // Process diagram shortcodes first - [diagram:name alt="alt text"]
+  html = html.replace(/\[diagram:([a-z-]+)(?:\s+alt="([^"]*)")?\]/g, (match, diagramName, altText) => {
+    const alt = altText || `${diagramName.replace('-', ' ')} diagram`;
+    const imgPath = `/notes/diagrams/${diagramName}.png`;
+    
+    // Attribution mapping for Wikimedia Commons diagrams
+    const attributions: { [key: string]: string } = {
+      'css-box-model': 'CSS Box Model by <a href="https://commons.wikimedia.org/wiki/User:Lazar.S.Mladenovic">Lazar.S.Mladenovic</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons',
+      'flexbox-layout': 'CSS Grid x Flexbox Layout by <a href="https://commons.wikimedia.org/wiki/User:Allyhere">Allyhere</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons',
+      'js-event-loop': 'Binary Search Flowchart by <a href="https://commons.wikimedia.org/wiki/User:NickyMcLean">Nicky McLean</a>, Public Domain, via Wikimedia Commons',
+      'react-lifecycle': 'Finite State Machine by <a href="https://commons.wikimedia.org/wiki/User:Macguy314">Macguy314</a> & <a href="https://commons.wikimedia.org/wiki/User:Perhelion">Perhelion</a>, Public Domain, via Wikimedia Commons',
+      'react-context-flow': 'Model Context Protocol Component Diagram by modelcontextprotocol developers, <a href="https://opensource.org/licenses/MIT">MIT License</a>, via Wikimedia Commons',
+      'redux-data-flow': 'Data Flow Diagram by <a href="https://commons.wikimedia.org/wiki/User:AutumnSnow">AutumnSnow</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons',
+      'git-workflow': 'Git Branching Workflow by <a href="https://commons.wikimedia.org/wiki/User:TheresNoTime">TheresNoTime</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons',
+      'state-management-comparison': 'Comparison Chart by <a href="https://commons.wikimedia.org/wiki/User:Djanes">Djanes</a>, Public Domain, via Wikimedia Commons'
+    };
+    
+    const attribution = attributions[diagramName] || 'Diagram from Wikimedia Commons';
+    
+    return `<div class="diagram-container">
+      <img src="${imgPath}" alt="${alt}" class="diagram" />
+      <p class="diagram-attribution">${attribution}</p>
+    </div>`;
+  });
+  
+  // Convert markdown tables
+  html = html.replace(/^\|(.+)\|[ \t]*\n\|[-\s|]+\|[ \t]*\n((?:^\|.+\|[ \t]*(?:\n|$))*)/gm, (match, headerRow, separatorAndBody) => {
+    // Parse header row
+    const headers = headerRow.split('|').map((cell: string) => cell.trim()).filter((cell: string) => cell);
+    
+    // Parse body rows (everything after the separator line)
+    const bodyLines = separatorAndBody.split('\n').filter((line: string) => line.trim() && line.includes('|'));
+    const bodyRows = bodyLines.map((line: string) => {
+      return line.split('|').map((cell: string) => cell.trim()).filter((cell: string) => cell);
+    });
+    
+    // Build HTML table
+    let tableHtml = '<table><thead><tr>';
+    headers.forEach((header: string) => {
+      tableHtml += `<th>${header}</th>`;
+    });
+    tableHtml += '</tr></thead><tbody>';
+    
+    bodyRows.forEach((row: string[]) => {
+      if (row.length > 0) {
+        tableHtml += '<tr>';
+        row.forEach((cell: string) => {
+          tableHtml += `<td>${cell}</td>`;
+        });
+        tableHtml += '</tr>';
+      }
+    });
+    
+    tableHtml += '</tbody></table>';
+    return tableHtml;
+  });
+
+  // Convert code blocks (triple backticks) - handle language specification
+  html = html.replace(/```(\w+)?\n([\s\S]*?)\n```/g, (match, language, code) => {
+    const lang = language || '';
+    const trimmedCode = code.trim();
+    const langClass = lang ? ` class="language-${lang}"` : '';
+    return `<pre><code${langClass}>${escapeHtml(trimmedCode)}</code></pre>`;
+  });
+  
   // Convert headers (##, ###) - must be on their own lines, allowing leading whitespace
   html = html.replace(/^\s*### (.*)$/gm, '<h3>$1</h3>');
   html = html.replace(/^\s*## (.*)$/gm, '<h2>$1</h2>');
@@ -164,8 +241,10 @@ export function detailedDescriptionToHtml(text: string): string {
   // Convert italic text (*text*) - avoid interfering with bold
   html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>');
   
-  // Convert inline code (`code`)
-  html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  // Convert inline code (`code`) - but not inside <pre><code> blocks
+  html = html.replace(/`([^`\n]+)`/g, (match, code) => {
+    return `<code>${escapeHtml(code)}</code>`;
+  });
   
   // Convert bullet points with different markers
   html = html.replace(/^• (.*$)/gm, '<li>$1</li>');

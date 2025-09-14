@@ -85,6 +85,9 @@ src/
 ├── data/                  # Static data
 ├── exercises/             # Algorithm exercises
 ├── utilities/             # Utility functions
+├── notes/                 # Notes & reference materials
+│   ├── markdown/          # Source .md files (editable)
+│   └── diagrams/          # SVG diagrams for visual concepts
 └── scripts/               # Build scripts
 projects/                  # Project showcase data
 ```
@@ -154,7 +157,8 @@ npm run test:e2e:update # Update snapshots
 ```bash
 npm run dev             # Start dev server
 npm run build           # Build production
-npm run generate        # Generate JSON data
+npm run generate        # Generate JSON data (exercises, utilities, patterns, projects, notes)
+npm run generate:notes  # Generate notes JSON from markdown files
 npm run process-images  # Process project images
 npm run lint            # ESLint check
 ```
@@ -187,7 +191,7 @@ Core primitives: PageContainer, PageHeader, Section, Card, Grid, Modal, ProfileI
 - Shared template pattern: Shared → Showcase → Exercise/Utility
 
 ## 📝 Code Showcase System
-- **Exercises** (15), **Utilities** (14), & **Design Patterns** (27) with enhanced descriptions
+- **Exercises** (15), **Utilities** (14), **Design Patterns** (27), & **Notes** (6) with enhanced descriptions
 - Multiple solutions with complexity analysis
 - Optimal solution auto-detection (★ badges)
 - PascalCase naming convention
@@ -195,11 +199,55 @@ Core primitives: PageContainer, PageHeader, Section, Card, Grid, Modal, ProfileI
 ### Enhanced Descriptions & Markdown Processing
 - `description`: Brief one-liner for cards
 - `detailedDescription`: Comprehensive showcase content with full markdown support
-- **Custom Markdown Processor**: 251-line solution converting markdown to semantic HTML
+- **Custom Markdown Processor**: 300+ line solution converting markdown to semantic HTML
 - **MarkdownRenderer Component**: Reusable React component for consistent processing
+- **Code Block Support**: Triple backtick syntax with language specification (```javascript)
 - **Header Structure**: Proper `##` → `<h2>`, `###` → `<h3>` conversion with whitespace handling
-- **Rich Formatting**: Bold text, emoji bullets, inline code, structured lists
+- **Rich Formatting**: Bold text, emoji bullets, inline code, structured lists, code blocks
 - **SEO Optimized**: Semantic HTML output with proper heading hierarchy
+
+## 📚 Notes & Reference System
+- **6 Comprehensive cheat sheets** covering interview prep and development references
+- **Hierarchical UI Structure** with 4-level organization for optimal content navigation
+- **Enhanced Markdown Processing** with tables, code blocks, and rich formatting
+- **Markdown-based content** stored in `src/notes/markdown/` for portability
+- **Build-time conversion** from `.md` to JSON with frontmatter parsing
+- **Content categories**: Interview prep, cheat sheets, reference materials, quick lookup
+- **Tag-based organization** with filtering by category and difficulty level
+
+### Hierarchical Content Structure
+**MarkdownTransformer Component** converts markdown into organized UI:
+- **Level 1** (`#`): Page title
+- **Level 2** (`##`): Main sections (Section component with blue borders)
+- **Level 3** (`###`): Tabbed sub-sections (TabContainer with tab navigation)
+- **Level 4** (`####`): Card components (responsive grid layout within tabs)
+
+### Enhanced Markdown Processing
+- **Tables**: Full markdown table support with styled HTML output
+- **Code blocks**: Triple backtick syntax with language highlighting (`jsx`, `javascript`, etc.)
+- **Headers**: Proper `<h2>`, `<h3>` semantic structure
+- **Text formatting**: Bold (`**text**`), italic (`*text*`), inline code (`` `code` ``)
+- **Lists**: Bullet points with emoji support and styled markers
+
+### Notes Collection
+1. **CSS Interview Cheat Sheet** - Selectors, layouts, CSS3+ features, comparison tables
+2. **JavaScript Interview Cheat Sheet** - Modern ES features, async patterns, shortcuts, gotchas
+3. **React Interview Cheat Sheet** - Hooks, Context API, performance optimization patterns
+4. **State Management Cheat Sheet** - Redux Toolkit, Zustand, Context API comparison tables
+5. **Git Commands & Workflows** - Commands, branching strategies, troubleshooting
+6. **Agile Methodologies** - Scrum, Kanban, ceremonies, roles, best practices
+
+### Notes Generation Pipeline
+```bash
+npm run generate:notes    # Generate notes.json from markdown files
+```
+
+#### Technical Implementation
+- **MarkdownTransformer**: Reuses existing Section, TabContainer, Card components
+- **Responsive Design**: CSS Grid layout for cards (auto-fit, 300px minimum)
+- **Semantic HTML**: Proper table structure with `<thead>`, `<tbody>`, styled rows
+- **Mobile-first**: Responsive tables and card layouts across all device sizes
+- **Type-safe**: Full TypeScript integration with explicit type annotations
 
 ## 🎨 Design Pattern Generation System
 - **27 Patterns** across 4 categories (Creational, Structural, Behavioral, Modern)
@@ -363,3 +411,4 @@ docs: update readme     # No version bump
 - Always prefer editing over creating
 - Never proactively create documentation
 - when resolving issues & bugs, write tests first to verify the issue & the fix before debugging/resolving.
+- make sure all code has no linting or syntaxing errors.

@@ -30,10 +30,17 @@ export default function CodePage() {
     trackEngagement('click', 'patterns-hero-card');
   };
 
+  // Track clicks on notes showcase card
+  // Helps measure interest in interview cheat sheets and reference materials
+  const handleNotesClick = () => {
+    trackNavigation('/code/notes', 'code-showcase-card');
+    trackEngagement('click', 'notes-hero-card');
+  };
+
   return (
     <PageContainer>
       <PageHeader title="Code Showcase">
-        Frontend engineering expertise through algorithms, utilities, design patterns, and clean TypeScript implementations.
+        Frontend engineering expertise through algorithms, utilities, design patterns, interview cheat sheets, and clean TypeScript implementations.
       </PageHeader>
 
       <SectionContainer>
@@ -138,6 +145,41 @@ export default function CodePage() {
                   <span>Structural</span>
                   <span>Behavioral</span>
                   <span>Modern JS/TS</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/code/notes" className={styles.heroLink} onClick={handleNotesClick}>
+            <div className={styles.heroBanner}>
+              <div className={styles.heroContent}>
+                <div className={styles.heroHeader}>
+                  <h3 className={styles.heroTitle}>Interview Notes</h3>
+                  <div className={styles.heroBadge}>6 Cheat Sheets</div>
+                </div>
+                <p className={styles.heroDescription}>
+                  Essential technical interview preparation materials. Comprehensive cheat sheets 
+                  covering CSS, JavaScript, React, Git, and Agile methodologies.
+                </p>
+                <div className={styles.heroStats}>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>6</span>
+                    <span className={styles.statLabel}>Cheat Sheets</span>
+                  </div>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>100%</span>
+                    <span className={styles.statLabel}>Interview-Ready</span>
+                  </div>
+                  <div className={styles.stat}>
+                    <span className={styles.statNumber}>📱</span>
+                    <span className={styles.statLabel}>Mobile-First</span>
+                  </div>
+                </div>
+                <div className={styles.heroTech}>
+                  <span>CSS Fundamentals</span>
+                  <span>JavaScript Gotchas</span>
+                  <span>React Patterns</span>
+                  <span>Git Workflows</span>
                 </div>
               </div>
             </div>

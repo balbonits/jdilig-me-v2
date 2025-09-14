@@ -6,6 +6,7 @@
 import { ExerciseData } from '@/interfaces/exercises';
 import { UtilityData } from '@/interfaces/utilities';
 import { PatternData } from '@/interfaces/patterns';
+import { NoteData } from '@/interfaces/notes';
 
 /**
  * Fetch exercises data from the public JSON file
@@ -240,6 +241,84 @@ export function getAllPatternSlugs(): string[] {
 }
 
 
+// =============================================================================
+// NOTES DATA FETCHERS
+// =============================================================================
+
+/**
+ * Fetch notes data from the public JSON file
+ * @returns Promise<NoteData[]> Array of note data
+ * @throws Error if fetch fails or response is not ok
+ */
+export async function fetchNotes(): Promise<NoteData[]> {
+  const response = await fetch('/notes.json');
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch notes: ${response.status} ${response.statusText}`);
+  }
+  
+  return response.json();
+}
+
+/**
+ * Find a specific note by slug
+ * @param slug The note slug to find
+ * @returns Promise<NoteData | undefined> The note if found
+ */
+export async function fetchNoteBySlug(slug: string): Promise<NoteData | undefined> {
+  const notes = await fetchNotes();
+  return notes.find(note => note.slug === slug);
+}
+
+/**
+ * Load notes data from the file system (for SSG/SSR)
+ * @returns Promise<NoteData[]> Array of note data
+ */
+export async function loadNotesData(): Promise<NoteData[]> {
+  if (typeof window !== 'undefined') {
+    // Client-side fallback to fetch
+    return fetchNotes();
+  }
+  
+  // Server-side: load from file system
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const notesPath = path.join(process.cwd(), 'public', 'notes.json');
+    const notesJson = fs.readFileSync(notesPath, 'utf-8');
+    return JSON.parse(notesJson);
+  } catch (error) {
+    console.warn('Could not load notes.json:', error);
+    return [];
+  }
+}
+
+/**
+ * Load note by slug from the file system (for SSG/SSR)
+ * @param slug The note slug to find
+ * @returns Promise<NoteData | undefined> The note if found
+ */
+export async function loadNoteBySlug(slug: string): Promise<NoteData | undefined> {
+  const notes = await loadNotesData();
+  return notes.find(note => note.slug === slug);
+}
+
+/**
+ * Get all note slugs for static generation
+ * @returns string[] Array of note slugs
+ */
+export function getAllNoteSlugs(): string[] {
+  // Return all implemented note slugs in kebab-case
+  return [
+    'css-interview-cheat-sheet',
+    'javascript-interview-cheat-sheet',
+    'react-interview-cheat-sheet',
+    'state-management-cheat-sheet',
+    'git-cheat-sheet',
+    'agile-methodologies-cheat-sheet'
+  ];
+}
+
 /**
  * Fetch all code data including patterns
  * @returns Promise with exercises, utilities, and patterns
@@ -256,4 +335,24 @@ export async function fetchAllCodeDataWithPatterns(): Promise<{
   ]);
   
   return { exercises, utilities, patterns };
+}
+
+/**
+ * Fetch all code data including notes
+ * @returns Promise with exercises, utilities, patterns, and notes
+ */
+export async function fetchAllCodeDataWithNotes(): Promise<{
+  exercises: ExerciseData[];
+  utilities: UtilityData[];
+  patterns: PatternData[];
+  notes: NoteData[];
+}> {
+  const [exercises, utilities, patterns, notes] = await Promise.all([
+    fetchExercises(),
+    fetchUtilities(),
+    fetchPatterns(),
+    fetchNotes()
+  ]);
+  
+  return { exercises, utilities, patterns, notes };
 }
