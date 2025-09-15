@@ -164,13 +164,18 @@
   background: var(--card-bg-color-default);
   border: 1px solid var(--border-color-light);
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
+  width: 100%;
+  max-width: 100%;
 }
 
 .noteContent {
   padding: 2rem;
-  max-width: none;
+  max-width: 100%;
   line-height: 1.7;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 /* Markdown content styling - matching existing code showcase */
@@ -183,6 +188,9 @@
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.6;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .noteContent code {

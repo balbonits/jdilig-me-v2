@@ -13,6 +13,7 @@ interface ShowcaseProps {
   header?: ReactNode;
   sections: ShowcaseSection[];
   className?: string;
+  variant?: 'default' | 'full-width';
 }
 
 export default function Showcase({
@@ -20,10 +21,11 @@ export default function Showcase({
   subtitle,
   header,
   sections,
-  className = ''
+  className = '',
+  variant = 'default'
 }: ShowcaseProps) {
   return (
-    <PageContainer className={className}>
+    <PageContainer className={className} variant={variant}>
       <PageHeader title={title} subtitle={subtitle}>
         {header}
       </PageHeader>

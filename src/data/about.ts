@@ -31,6 +31,13 @@ export const journeyData: JourneyItem[] = [
     title: 'Growth Mindset',
     description: 'Continuously learning new technologies while mentoring teams and sharing knowledge across organizations.',
     color: 'teal'
+  },
+  {
+    id: 'user-advocate',
+    icon: '🎯',
+    title: 'User Advocate',
+    description: 'Passionate about accessibility and inclusive design, ensuring web experiences work seamlessly for users of all abilities and devices.',
+    color: 'orange'
   }
 ];
 
@@ -68,6 +75,14 @@ export const experienceData: ExperienceItem[] = [
     badge: 'React/CMS Developer • June 2023-August 2024',
     description: 'Enhanced web presence with cross-platform UX/UI and CMS integration, boosting user engagement significantly. Implemented subscription flows for TBNPlus.com and MeritPlus.com, introducing revenue streams via adaptive solutions.',
     color: 'green'
+  },
+  {
+    id: 'freelance',
+    icon: '💼',
+    title: 'Freelance & Consulting',
+    badge: 'Independent Developer • 2006-Present',
+    description: 'Delivered custom web solutions for diverse clients including startups, non-profits, and local businesses. Specialized in WordPress development, responsive design, and e-commerce implementations.',
+    color: 'blue'
   }
 ];
 
@@ -101,6 +116,13 @@ export const skillsData: SkillItem[] = [
     level: 'Experienced',
     skills: ['Jest/Enzyme (3 years)', 'Google Analytics/Segment (4 years)', 'UX Research/Wireframing (6 years)', 'Agile Methodologies (14 years)'],
     color: 'purple'
+  },
+  {
+    id: 'modern-stack',
+    title: 'Modern Stack',
+    level: 'Current',
+    skills: ['Next.js (3 years)', 'Tailwind CSS (2 years)', 'Node.js (4 years)', 'AWS Services (2 years)', 'Docker (1 year)', 'CI/CD Pipelines (3 years)'],
+    color: 'teal'
   }
 ];
 

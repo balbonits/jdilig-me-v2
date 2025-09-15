@@ -121,6 +121,7 @@ export default function NotePage({ note }: NotePageProps) {
         title={note.title}
         subtitle={note.description}
         sections={sections}
+        variant="full-width"
       />
     </>
   );

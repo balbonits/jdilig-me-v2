@@ -391,11 +391,22 @@ docs: update readme     # No version bump
 - **[AI Project Setup](https://github.com/balbonits/jdilig-me-v2/wiki/AI-Project-Setup)** - AI assistant project guide
 - **[User & Developer Guides](https://github.com/balbonits/jdilig-me-v2/wiki/User-Developer-Guides)** - Development workflows and contribution guides
 
+### **Developer Profile & Philosophy**
+- **[John Dilig: Developer Profile](https://github.com/balbonits/jdilig-me-v2/wiki/John-Dilig-Developer-Profile)** - Comprehensive professional profile, philosophy, and technical expertise
+- **[Development Philosophy](https://github.com/balbonits/jdilig-me-v2/wiki/Development-Philosophy)** - Coding approaches, techniques, and architectural mindset
+
 ### **Meta & Historical**
 - **[Meta & Project Information](https://github.com/balbonits/jdilig-me-v2/wiki/Meta-Project-Information)** - Project history, versioning, and metadata
 - **[Case Studies & Analysis](https://github.com/balbonits/jdilig-me-v2/wiki/Case-Studies-Analysis)** - Project analysis and performance reports
 
 **Quick Reference**: See **[GitHub Wiki Home](https://github.com/balbonits/jdilig-me-v2/wiki)** for complete documentation navigation
+
+## 📋 **Versioning Reminder**
+**IMPORTANT:** When making significant changes to project structure, documentation, or adding new features:
+1. Update `public/version.json` build time metadata
+2. Consider semantic versioning impact (feat/fix/breaking changes)
+3. Update wiki documentation links and references
+4. Ensure all documentation stays synchronized with codebase changes
 
 ## 🎯 Accessibility & Quality
 - WCAG 2.1 AA compliant

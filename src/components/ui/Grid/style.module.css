@@ -5,10 +5,18 @@
   gap: 1.5rem;
 }
 
-/* Tablet and up - go straight to 3-column layout */
+/* Tablet and up - 2-column layout for homepage cards (2x2 grid) */
 @media (min-width: 768px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+  }
+}
+
+/* For smaller tablets, use 2 columns */
+@media (min-width: 480px) and (max-width: 767px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }

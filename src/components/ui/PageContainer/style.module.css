@@ -23,3 +23,32 @@
     padding: 2rem;
   }
 }
+
+/* Full-width variant for preventing horizontal scrolling */
+.fullWidth {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.fullWidth {
+  padding: 0 1rem;
+}
+
+@media (min-width: 375px) {
+  .fullWidth {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .fullWidth {
+    padding: 0 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .fullWidth {
+    padding: 0 2rem;
+  }
+}
