@@ -100,7 +100,7 @@ export default function NotesPage({ notes }: NotesPageProps) {
 
         {/* Notes Grid */}
         <Section title={`${filteredNotes.length} Note${filteredNotes.length !== 1 ? 's' : ''}`}>
-          <Grid>
+          <Grid layout="2-col">
             {filteredNotes.map((note) => (
               <Link 
                 key={note.slug} 

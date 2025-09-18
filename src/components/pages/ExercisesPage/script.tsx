@@ -43,7 +43,7 @@ export default function ExercisesPage({ exercises }: ExercisesPageProps) {
 
       <SectionContainer>
         <Section title={`${exercises.length} Exercises`}>
-          <Grid>
+          <Grid layout="2-col">
             {exercises.map((exercise) => (
               <Link 
                 key={exercise.slug} 

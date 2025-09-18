@@ -220,7 +220,7 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
 
   return (
     <>
-      <Grid>
+      <Grid layout="2-col">
         {screenshots.map((screenshot, idx) => (
           <div
             key={idx}

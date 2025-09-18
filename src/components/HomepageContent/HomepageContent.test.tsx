@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import AboutContent from './script';
+import HomepageContent from './script';
 
 // Mock the UI components
 jest.mock('@/components/ui', () => ({
@@ -70,7 +70,35 @@ jest.mock('@/components/ui', () => ({
         {aiTechnology.map((tech) => <span key={tech}>{tech}</span>)}
       </div>
     </div>
+  ),
+  FeaturedProjectBanner: ({ project }: { project: any }) => (
+    <div data-testid="featured-project-banner">
+      <h2>{project.metadata.title}</h2>
+      <p>{project.metadata.description}</p>
+    </div>
   )
+}));
+
+// Mock the projects data
+jest.mock('@/data/projects', () => ({
+  getFeaturedProjects: () => [{
+    slug: 'test-project',
+    metadata: {
+      title: 'Test Featured Project',
+      description: 'Test project description',
+      category: 'Test Category',
+      featured: true
+    },
+    techStack: [
+      { category: 'Core', items: ['React', 'TypeScript'] }
+    ],
+    features: [
+      { title: 'Test Feature', description: 'Test description', impact: 'Test impact' }
+    ],
+    highlights: [
+      { title: 'Test Highlight', description: 'Test description', achievements: ['Achievement 1'] }
+    ]
+  }]
 }));
 
 // Mock the data
@@ -105,7 +133,7 @@ jest.mock('@/data/about', () => ({
   }
 }));
 
-describe('AboutContent Component Accessibility', () => {
+describe('HomepageContent Component Accessibility', () => {
   beforeEach(() => {
     // Clear any previous renders
     document.body.innerHTML = '';
@@ -113,7 +141,7 @@ describe('AboutContent Component Accessibility', () => {
 
   describe('Contact Section Accessibility', () => {
     it('should render contact section with proper semantic structure', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const contactSection = screen.getByLabelText('Contact information and availability');
       expect(contactSection).toBeInTheDocument();
@@ -121,14 +149,14 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render contact header with proper heading structure', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const contactTitle = screen.getByRole('heading', { level: 2, name: "Let's Connect" });
       expect(contactTitle).toHaveAttribute('id', 'contact-title');
     });
 
     it('should render employment status badge with proper ARIA attributes', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const statusBadge = screen.getByText('Open to Work');
       expect(statusBadge).toHaveAttribute('role', 'status');
@@ -136,7 +164,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render contact description with proper relationship to title', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const description = screen.getByText(/I'm actively seeking new opportunities/);
       expect(description).toHaveAttribute('aria-describedby', 'contact-title');
@@ -145,7 +173,7 @@ describe('AboutContent Component Accessibility', () => {
 
   describe('Contact Methods Accessibility', () => {
     it('should render contact methods group with proper labeling', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const contactMethodsGroup = screen.getByLabelText('Contact methods');
       expect(contactMethodsGroup).toBeInTheDocument();
@@ -153,7 +181,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render email contact with comprehensive accessibility', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const emailGroup = screen.getByLabelText('Email contact information');
       expect(emailGroup).toHaveAttribute('role', 'group');
@@ -169,7 +197,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render phone contact with proper accessibility attributes', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const phoneGroup = screen.getByLabelText('Phone contact information');
       expect(phoneGroup).toHaveAttribute('role', 'group');
@@ -185,7 +213,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render location contact with proper accessibility attributes', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const locationGroup = screen.getByLabelText('Location contact information');
       expect(locationGroup).toHaveAttribute('role', 'group');
@@ -203,7 +231,7 @@ describe('AboutContent Component Accessibility', () => {
 
   describe('Hero Banner Integration', () => {
     it.skip('should render main hero banner with rounded image shape', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const mainHero = screen.getByTestId('hero-banner');
       const imageShape = screen.getByTestId('image-shape');
@@ -213,7 +241,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should render hero banner with proper title and badge', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const title = screen.getByRole('heading', { level: 1, name: 'Test Name' });
       const badge = screen.getByTestId('badge');
@@ -225,7 +253,7 @@ describe('AboutContent Component Accessibility', () => {
 
   describe('Screen Reader Support', () => {
     it.skip('should provide comprehensive context for screen readers', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       // Check that all status elements are properly labeled
       const statusBadge = screen.getByRole('status');
@@ -237,7 +265,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should hide decorative elements from screen readers', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       // Icons are not marked as aria-hidden in the mock
       const icons = ['📧', '📱', '📍'];
@@ -248,19 +276,21 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should establish proper heading hierarchy', () => {
-      render(<AboutContent />);
-      
+      render(<HomepageContent />);
+
       const mainHeading = screen.getByRole('heading', { level: 1 });
-      const contactHeading = screen.getByRole('heading', { level: 2 });
-      
+      const h2Headings = screen.getAllByRole('heading', { level: 2 });
+
       expect(mainHeading).toBeInTheDocument();
-      expect(contactHeading).toBeInTheDocument();
+      expect(h2Headings).toHaveLength(2); // Featured project and contact section
+      expect(h2Headings[0]).toHaveTextContent('Test Featured Project');
+      expect(h2Headings[1]).toHaveTextContent("Let's Connect");
     });
   });
 
   describe('Keyboard Navigation Support', () => {
     it.skip('should ensure all interactive elements are focusable', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const links = screen.getAllByRole('link');
       expect(links.length).toBeGreaterThan(0);
@@ -275,7 +305,7 @@ describe('AboutContent Component Accessibility', () => {
 
   describe('Content Structure and Semantics', () => {
     it.skip('should use proper landmark roles and structure', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       // Main content should be in a section landmark
       const contactSection = screen.getByLabelText('Contact information and availability');
@@ -287,7 +317,7 @@ describe('AboutContent Component Accessibility', () => {
     });
 
     it('should group related information logically', () => {
-      render(<AboutContent />);
+      render(<HomepageContent />);
       
       const contactMethodsGroup = screen.getByLabelText('Contact methods');
       const emailGroup = screen.getByLabelText('Email contact information');

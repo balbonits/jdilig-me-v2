@@ -42,7 +42,7 @@ const UtilitiesPage: React.FC<UtilitiesPageProps> = ({ utilities }) => {
 
       <SectionContainer>
         <Section title={`${utilities.length} Utilities`}>
-          <Grid>
+          <Grid layout="2-col">
             {utilities.map((utility) => (
               <Link
                 key={utility.slug}

@@ -182,7 +182,7 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
       id: 'examples',
       title: 'Examples & Test Cases',
       content: (
-        <Grid minWidth="280px">
+        <Grid layout="2-col">
           {exercise.examples.map((example, index) => (
             <Card key={index}>
               <div className={styles.exampleHeader}>

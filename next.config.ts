@@ -4,8 +4,13 @@ const nextConfig = {
   
   // External image domains configuration
   images: {
-    domains: [
-      'raw.githubusercontent.com', // For project screenshots hosted on GitHub
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   

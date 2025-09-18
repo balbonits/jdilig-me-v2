@@ -684,7 +684,7 @@ export default function PatternsPage() {
               title={`${categoryEmojis[category]} ${category} (${categoryPatterns.length})`}
               description={categoryDescriptions[category]}
             >
-              <Grid>
+              <Grid layout="2-col">
                 {categoryPatterns.map(pattern => (
                   <Link 
                     key={pattern.slug}
@@ -749,7 +749,7 @@ export default function PatternsPage() {
 
       <SectionContainer>
         <Section title="Why Learn Design Patterns?" description="Understanding the value of proven software design solutions">
-          <Grid className={styles.featureGrid}>
+          <Grid layout="2-col" className={styles.featureGrid}>
             <Card className={styles.featureCard}>
               <div className={styles.featureIcon}>🧠</div>
               <h3 className={styles.featureTitle}>Problem-Solving Skills</h3>

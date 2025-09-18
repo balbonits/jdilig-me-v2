@@ -1,18 +1,8 @@
 /* About Page - Custom Styles Only */
 
-/* Journey Cards Grid */
+/* Journey Cards Section */
 .journeyGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
   margin-bottom: var(--space-12);
-}
-
-@media (min-width: 768px) {
-  .journeyGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-10);
-  }
 }
 
 .journeyCard {
@@ -99,19 +89,9 @@
   pointer-events: none;
 }
 
-/* Company Experience Grid */
+/* Company Experience Section */
 .experienceGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
   margin-bottom: var(--space-12);
-}
-
-@media (min-width: 768px) {
-  .experienceGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-10);
-  }
 }
 
 .experienceBanner {
@@ -217,25 +197,9 @@
   pointer-events: none;
 }
 
-/* Skills Grid */
+/* Skills Section */
 .skillsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-8);
   margin-bottom: var(--space-12);
-}
-
-@media (min-width: 768px) {
-  .skillsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-10);
-  }
-}
-
-@media (min-width: 1024px) {
-  .skillsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .skillBanner {
@@ -412,17 +376,7 @@
 }
 
 .contactGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
   margin-top: 1rem;
-}
-
-@media (min-width: 768px) {
-  .contactGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
 }
 
 .contactItem {

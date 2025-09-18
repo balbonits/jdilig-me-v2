@@ -65,7 +65,7 @@ export default function ResumeDisplay() {
 
         {/* Links Section - Hidden in screenshot mode */}
         {!hideShareLinks && (
-          <Grid gap="2rem" className={styles.linksSection}>
+          <Grid layout="2-col" gap="2rem" className={styles.linksSection}>
             {linksData.map((link) => (
               <a 
                 key={link.id} 

@@ -1,18 +1,23 @@
 import React from 'react';
-import { 
-  SectionContainer, 
-  Grid, 
+import {
+  SectionContainer,
+  Grid,
   HeroBanner,
   JourneyCard,
   ExperienceCard,
   SkillCard,
   ContactSection,
-  FutureProjectCard
+  FutureProjectCard,
+  FeaturedProjectBanner
 } from '@/components/ui';
 import { journeyData, experienceData, skillsData, contactData, heroData, futureAiProjectsData } from '@/data/about';
+import { getFeaturedProjects } from '@/data/projects';
 import styles from './style.module.css';
 
-export default function AboutContent() {
+export default function HomepageContent() {
+  const featuredProjects = getFeaturedProjects();
+  const featuredProject = featuredProjects[0]; // Get the first featured project
+
   return (
     <>
       {/* Main Hero Banner */}
@@ -28,7 +33,14 @@ export default function AboutContent() {
         variant={heroData.variant}
         className="about-main-hero"
       />
-      
+
+      {/* Featured Project Banner */}
+      {featuredProject && (
+        <SectionContainer>
+          <FeaturedProjectBanner project={featuredProject} />
+        </SectionContainer>
+      )}
+
       <SectionContainer>
         {/* Contact Section */}
         <ContactSection 
@@ -39,7 +51,7 @@ export default function AboutContent() {
           className={styles.contactSection}
         />
         {/* Journey Cards */}
-        <Grid gap="2rem" className={styles.journeySection}>
+        <Grid layout="2-col" gap="2rem" className={styles.journeySection}>
           {journeyData.map((journey) => (
             <JourneyCard 
               key={journey.id}
@@ -53,7 +65,7 @@ export default function AboutContent() {
         </Grid>
         
         {/* Company Experience */}
-        <Grid gap="2rem" className={styles.experienceSection}>
+        <Grid layout="2-col" gap="2rem" className={styles.experienceSection}>
           {experienceData.map((experience) => (
             <ExperienceCard
               key={experience.id}
@@ -68,7 +80,7 @@ export default function AboutContent() {
         </Grid>
         
         {/* Skills */}
-        <Grid gap="2rem" className={styles.skillsSection}>
+        <Grid layout="2-col" gap="2rem" className={styles.skillsSection}>
           {skillsData.map((skill) => (
             <SkillCard
               key={skill.id}
@@ -82,7 +94,7 @@ export default function AboutContent() {
         </Grid>
 
         {/* Future AI Projects */}
-        <Grid gap="2rem" className={styles.futureProjectsSection}>
+        <Grid layout="2-col" gap="2rem" className={styles.futureProjectsSection}>
           {futureAiProjectsData.map((project) => (
             <FutureProjectCard
               key={project.id}

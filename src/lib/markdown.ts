@@ -170,7 +170,7 @@ export function detailedDescriptionToHtml(text: string): string {
   html = html.replace(/\[diagram:([a-z-]+)(?:\s+alt="([^"]*)")?\]/g, (match, diagramName, altText) => {
     const alt = altText || `${diagramName.replace('-', ' ')} diagram`;
     const imgPath = `/notes/diagrams/${diagramName}.png`;
-    
+
     // Attribution mapping for Wikimedia Commons diagrams
     const attributions: { [key: string]: string } = {
       'css-box-model': 'CSS Box Model by <a href="https://commons.wikimedia.org/wiki/User:Lazar.S.Mladenovic">Lazar.S.Mladenovic</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons',
@@ -182,33 +182,33 @@ export function detailedDescriptionToHtml(text: string): string {
       'git-workflow': 'Git Branching Workflow by <a href="https://commons.wikimedia.org/wiki/User:TheresNoTime">TheresNoTime</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons',
       'state-management-comparison': 'Comparison Chart by <a href="https://commons.wikimedia.org/wiki/User:Djanes">Djanes</a>, Public Domain, via Wikimedia Commons'
     };
-    
+
     const attribution = attributions[diagramName] || 'Diagram from Wikimedia Commons';
-    
+
     return `<div class="diagram-container">
       <img src="${imgPath}" alt="${alt}" class="diagram" />
       <p class="diagram-attribution">${attribution}</p>
     </div>`;
   });
-  
+
   // Convert markdown tables
   html = html.replace(/^\|(.+)\|[ \t]*\n\|[-\s|]+\|[ \t]*\n((?:^\|.+\|[ \t]*(?:\n|$))*)/gm, (match, headerRow, separatorAndBody) => {
     // Parse header row
     const headers = headerRow.split('|').map((cell: string) => cell.trim()).filter((cell: string) => cell);
-    
+
     // Parse body rows (everything after the separator line)
     const bodyLines = separatorAndBody.split('\n').filter((line: string) => line.trim() && line.includes('|'));
     const bodyRows = bodyLines.map((line: string) => {
       return line.split('|').map((cell: string) => cell.trim()).filter((cell: string) => cell);
     });
-    
+
     // Build HTML table
     let tableHtml = '<table><thead><tr>';
     headers.forEach((header: string) => {
       tableHtml += `<th>${header}</th>`;
     });
     tableHtml += '</tr></thead><tbody>';
-    
+
     bodyRows.forEach((row: string[]) => {
       if (row.length > 0) {
         tableHtml += '<tr>';
@@ -218,34 +218,34 @@ export function detailedDescriptionToHtml(text: string): string {
         tableHtml += '</tr>';
       }
     });
-    
+
     tableHtml += '</tbody></table>';
     return tableHtml;
   });
 
-  // Convert code blocks (triple backticks) - handle language specification
+  // Convert code blocks FIRST, before any other processing
   html = html.replace(/```(\w+)?\n([\s\S]*?)\n```/g, (match, language, code) => {
     const lang = language || '';
     const trimmedCode = code.trim();
     const langClass = lang ? ` class="language-${lang}"` : '';
     return `<pre><code${langClass}>${escapeHtml(trimmedCode)}</code></pre>`;
   });
-  
+
   // Convert headers (##, ###) - must be on their own lines, allowing leading whitespace
   html = html.replace(/^\s*### (.*)$/gm, '<h3>$1</h3>');
   html = html.replace(/^\s*## (.*)$/gm, '<h2>$1</h2>');
-  
+
   // Convert bold text (**text**)
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  
+
   // Convert italic text (*text*) - avoid interfering with bold
   html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>');
-  
+
   // Convert inline code (`code`) - but not inside <pre><code> blocks
   html = html.replace(/`([^`\n]+)`/g, (match, code) => {
     return `<code>${escapeHtml(code)}</code>`;
   });
-  
+
   // Convert bullet points with different markers
   html = html.replace(/^• (.*$)/gm, '<li>$1</li>');
   html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
@@ -256,71 +256,33 @@ export function detailedDescriptionToHtml(text: string): string {
   html = html.replace(/^🚀 (.*$)/gm, '<li class="feature">$1</li>');
   html = html.replace(/^🛠️ (.*$)/gm, '<li class="tool">$1</li>');
   html = html.replace(/^🎯 (.*$)/gm, '<li class="target">$1</li>');
-  
+
   // Wrap consecutive list items in <ul> tags (fix regex)
   html = html.replace(/(<li[^>]*>[\s\S]*?<\/li>\s*\n?)+/g, (match) => {
     // Remove any newlines within the match and clean up
     const cleanMatch = match.replace(/\n\s*/g, '');
     return `<ul>${cleanMatch}</ul>`;
   });
-  
+
   // Split content by double newlines to identify sections
   const sections = html.split('\n\n').filter(section => section.trim());
-  
+
   html = sections.map(section => {
     const trimmed = section.trim();
-    
+
     // Check if this section is a block element (starts with HTML tags)
-    if (trimmed.startsWith('<h') || 
-        trimmed.startsWith('<ul') || 
+    if (trimmed.startsWith('<h') ||
+        trimmed.startsWith('<ul') ||
         trimmed.startsWith('<ol') ||
         trimmed.startsWith('<div') ||
-        trimmed.startsWith('<blockquote')) {
+        trimmed.startsWith('<pre') ||
+        trimmed.startsWith('<blockquote') ||
+        trimmed.startsWith('<table')) {
       return trimmed;
     }
-    
-    // Handle mixed content within a section
-    const lines = trimmed.split('\n');
-    const processedLines: string[] = [];
-    let currentParagraph: string[] = [];
-    
-    const flushParagraph = () => {
-      if (currentParagraph.length > 0) {
-        const paragraphText = currentParagraph.join('<br>').trim();
-        if (paragraphText) {
-          processedLines.push(`<p>${paragraphText}</p>`);
-        }
-        currentParagraph = [];
-      }
-    };
-    
-    for (const line of lines) {
-      const lineTrimmed = line.trim();
-      
-      // Skip empty lines within section
-      if (!lineTrimmed) continue;
-      
-      // Check if this line is already a block element
-      const isBlockElement = lineTrimmed.startsWith('<h') || 
-                            lineTrimmed.startsWith('<ul') || 
-                            lineTrimmed.startsWith('<ol') ||
-                            lineTrimmed.startsWith('<div') ||
-                            lineTrimmed.startsWith('<blockquote');
-      
-      if (isBlockElement) {
-        // Flush any pending paragraph before adding block element
-        flushParagraph();
-        processedLines.push(lineTrimmed);
-      } else {
-        // This is regular text, add to current paragraph
-        currentParagraph.push(lineTrimmed);
-      }
-    }
-    
-    // Flush any remaining paragraph
-    flushParagraph();
-    
-    return processedLines.join('');
+
+    // For non-block content, just wrap in a paragraph
+    return `<p>${trimmed}</p>`;
   }).join('');
   
   // Decode HTML entities
