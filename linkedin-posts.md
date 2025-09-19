@@ -25,11 +25,21 @@ The big update: **Featured Project Banner** prominently displaying my Horse Raci
 • Reusable UI components following established design patterns
 • Mobile-first responsive design
 
-The goal: Make it immediately clear to hiring managers that I can deliver production-quality software with professional polish.
+💡 **Development Process Insights:**
+Building this feature highlighted an important lesson in AI-assisted development. Initially, the AI assistant created CSS using undefined variables (like `--accent-color`) instead of checking the existing design system. This led to multiple debugging cycles and broken styling across themes.
+
+**Key Takeaway:** Even with AI assistance, maintaining discipline around existing patterns and conducting proper discovery is crucial. The solution was cataloging all defined CSS variables and ensuring new components leverage established design tokens rather than inventing new ones.
+
+This experience reinforced that successful AI collaboration requires:
+• Systematic code review and validation processes
+• Documentation of existing patterns and conventions
+• Iterative refinement based on real testing feedback
+
+The goal: Make it immediately clear to hiring managers that I can deliver production-quality software with professional polish, while continuously improving development processes.
 
 Check it out: https://www.jdilig.me
 
-#WebDevelopment #TypeScript #NextJS #SoftwareEngineering #ProductionReady
+#WebDevelopment #TypeScript #NextJS #SoftwareEngineering #ProductionReady #AICollaboration #CodeQuality
 
 ## Post #5 - 4 days ago (circa September 14, 2025)
 **Topic**: Notes & Reference System Launch
