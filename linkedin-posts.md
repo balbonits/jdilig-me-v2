@@ -1,5 +1,42 @@
 # LinkedIn Posts Archive
 
+## Post #7 - September 19, 2025
+**Topic**: CSS Architecture & Development Quality Lessons
+
+🎯 **Follow-up to yesterday's homepage redesign: What happens when you don't check existing systems first.**
+
+After shipping the featured project banner, we discovered a critical issue - the AI assistant had invented CSS variables (`--accent-color`, `--text-color-secondary`) that didn't exist in our design system, causing broken styling across themes.
+
+🔧 **What Went Wrong:**
+• Created new CSS variables instead of using defined ones like `--primary-brand`, `--text-secondary`
+• Assumed system behavior without validating against actual codebase
+• Multiple debugging cycles due to undefined fallbacks masking the real issue
+• Component worked partially but failed in different theme contexts
+
+💡 **The Fix:**
+• Catalogued all existing CSS variables: 50+ defined tokens for colors, spacing, typography
+• Systematically replaced undefined variables with actual design system values
+• Added validation process for new component development
+• Created reusable TerminalCard component following established patterns
+
+🛠️ **Key Development Lessons:**
+• **Discovery First**: Always audit existing patterns before building new ones
+• **Design System Discipline**: Leverage established tokens rather than creating duplicates
+• **CSS Variable Validation**: Undefined variables fail silently, making debugging harder
+• **Systematic Testing**: Visual testing should include cross-theme validation
+
+📊 **Process Improvements:**
+• Document all CSS variables and reusable components for future reference
+• Implement CSS variable validation in build process
+• Establish clear patterns for AI collaboration that prioritize existing systems
+• Create component development checklist ensuring design system compliance
+
+This experience reinforced that even with advanced tooling, fundamental software engineering principles—like understanding your existing codebase before extending it—remain crucial for maintainable, professional-quality code.
+
+**Bottom Line:** Good architecture requires discipline, whether you're coding solo or collaborating with AI assistants.
+
+#SoftwareEngineering #CSS #DesignSystems #CodeQuality #WebDevelopment #AICollaboration #LessonsLearned #TechnicalDebt
+
 ## Post #6 - September 18, 2025
 **Topic**: Homepage Redesign with Featured Project Showcase
 
