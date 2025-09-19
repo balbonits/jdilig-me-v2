@@ -71,10 +71,16 @@ jest.mock('@/components/ui', () => ({
       </div>
     </div>
   ),
-  FeaturedProjectBanner: ({ project }: { project: any }) => (
+  FeaturedProjectBanner: ({ project }: { project: { metadata: { title: string; description: string } } }) => (
     <div data-testid="featured-project-banner">
       <h2>{project.metadata.title}</h2>
       <p>{project.metadata.description}</p>
+    </div>
+  ),
+  TerminalCard: ({ title, lines }: { title?: string; lines: string[] }) => (
+    <div data-testid="terminal-card">
+      {title && <span>{title}</span>}
+      {lines.map((line, idx) => <div key={idx}>{line}</div>)}
     </div>
   )
 }));

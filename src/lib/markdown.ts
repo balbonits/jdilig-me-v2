@@ -264,8 +264,11 @@ export function detailedDescriptionToHtml(text: string): string {
     return `<ul>${cleanMatch}</ul>`;
   });
 
-  // Split content by double newlines to identify sections
-  const sections = html.split('\n\n').filter(section => section.trim());
+  // Convert single line breaks to <br> tags (but not in code blocks)
+  html = html.replace(/\n(?![\n\s]*<)/g, '<br>');
+
+  // Split content by double line breaks to identify sections
+  const sections = html.split(/(?:<br>){2,}/g).filter(section => section.trim());
 
   html = sections.map(section => {
     const trimmed = section.trim();
@@ -281,7 +284,7 @@ export function detailedDescriptionToHtml(text: string): string {
       return trimmed;
     }
 
-    // For non-block content, just wrap in a paragraph
+    // For non-block content, wrap in a paragraph
     return `<p>${trimmed}</p>`;
   }).join('');
   

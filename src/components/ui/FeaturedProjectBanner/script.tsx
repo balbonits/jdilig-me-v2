@@ -15,11 +15,13 @@ export default function FeaturedProjectBanner({ project, className = '' }: Featu
   return (
     <Section
       title={project.metadata.title}
-      badge="✨ Featured Project"
       className={`${styles.featuredSection} ${className}`}
     >
+      <div className={styles.badgeContainer}>
+        <span className={styles.featuredBadge}>✨ Featured Project</span>
+        <span className={styles.categoryBadge}>{project.metadata.category}</span>
+      </div>
       <p className={styles.description}>{project.metadata.description}</p>
-      <span className={styles.categoryBadge}>{project.metadata.category}</span>
 
       <Grid layout="2-col" gap="2rem" className={styles.mainContent}>
         {/* Achievement Content */}

@@ -161,7 +161,7 @@ export const heroData = {
     { number: "3", label: "Fortune 500s" }
   ],
   tags: ["UI/UX Expert", "React.js", "TypeScript", "Cross-platform", "Web Accessibility"],
-  imageUrl: "/images/profile.png",
+  imageUrl: "/images/headshot.png",
   imageAlt: "John Dilig - Senior Frontend Engineer",
   imageShape: "circle" as const,
   variant: "profile" as const

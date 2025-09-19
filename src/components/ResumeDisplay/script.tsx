@@ -41,7 +41,7 @@ export default function ResumeDisplay() {
         title="Reuel John Dilig"
         subtitle="Front-End Developer"
         description="Redondo Beach, CA 90278 • (909) 997-1393 • rjdofficemail@gmail.com"
-        imageUrl="/images/headshot.png"
+        imageUrl="/images/profile.png"
         imageAlt="John Dilig Professional Headshot"
         imageShape="circle"
         variant="profile"
