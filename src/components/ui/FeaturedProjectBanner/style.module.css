@@ -19,6 +19,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid var(--primary-brand);
+  margin: auto 0;
+  display: inline-block;
 }
 
 
@@ -36,8 +38,8 @@
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid var(--border);
+  margin: auto 0;
   display: inline-block;
-  margin-bottom: 1.5rem;
 }
 
 .mainContent {
