@@ -1,6 +1,6 @@
 # LinkedIn Posts Archive
 
-## Post #6 - September 18-19, 2025
+## Post #6 - September 18, 2025
 **Topic**: Homepage Redesign with Featured Project Showcase & CSS Architecture Lessons
 
 🎯 **Just redesigned my portfolio homepage to better showcase my latest work for potential employers!**
