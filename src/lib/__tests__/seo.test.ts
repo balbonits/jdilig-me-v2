@@ -329,7 +329,7 @@ describe('SEO Test Suite', () => {
       expect(html).toContain('<h3>Implementation Benefits</h3>');
 
       // Should have structured content with bullets (our implementation uses <br> for emoji bullets)
-      expect(html).toMatch(/🔹.*<br>🔹.*<br>/); // Emoji bullets with line breaks
+      expect(html).toMatch(/🔹.*<br>\s*🔹.*<br>/); // Emoji bullets with line breaks (allow whitespace)
       
       // Should have emphasis for keywords
       expect(html).toContain('<strong>ES6 Proxy</strong>');

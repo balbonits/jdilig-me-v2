@@ -65,3 +65,11 @@ temp_diff.txt
 
 # Claude settings
 .claude/settings.local.json
+
+# Performance reports & audits
+/lighthouse-reports/
+*.lighthouse.json
+*.lighthouse.html
+*.lighthouse.csv
+/performance-audits/
+/audit-reports/

@@ -11,7 +11,6 @@ const CORE_CACHE_URLS = [
   '/projects',
   '/code',
   '/offline.html',
-  '/manifest.json',
   '/_next/static/css/',
   '/_next/static/chunks/'
 ];
@@ -36,7 +35,9 @@ self.addEventListener('install', (event) => {
       // Precache core resources
       caches.open(STATIC_CACHE).then((cache) => {
         console.log('Service Worker: Precaching core resources');
-        return cache.addAll(['/offline.html', '/manifest.json']);
+        return cache.addAll(['/offline.html']).catch(error => {
+          console.log('Service Worker: Some resources failed to cache:', error);
+        });
       })
     ])
   );
