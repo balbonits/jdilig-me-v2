@@ -5,6 +5,7 @@ import SiteLayout from '@/components/SiteLayout';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { CodeDataProvider } from '@/contexts/CodeDataContext';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 // Core Web Vitals reporting for performance monitoring
@@ -44,6 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </SiteLayout>
         <Analytics />
+        <SpeedInsights />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
       </CodeDataProvider>
     </ThemeProvider>

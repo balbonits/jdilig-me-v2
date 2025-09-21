@@ -87,6 +87,11 @@ self.addEventListener('fetch', (event) => {
   } else if (url.pathname.includes('/images/') || event.request.destination === 'image') {
     // Images: Cache-first with network fallback
     event.respondWith(handleImageRequest(event.request));
+  } else if (url.pathname === '/manifest.json') {
+    // Skip manifest.json due to Cloudflare blocking
+    event.respondWith(new Response('{}', {
+      headers: { 'Content-Type': 'application/json' }
+    }));
   } else if (url.pathname.includes('.json')) {
     // JSON data: Network-first with cache fallback
     event.respondWith(handleAPIRequest(event.request));

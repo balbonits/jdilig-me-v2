@@ -34,7 +34,7 @@ export default function Document() {
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
         <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
+        {/* Manifest disabled due to Cloudflare blocking - PWA still works via meta tags */}
         
         {/* Service Worker Registration - Production Only */}
         <script
