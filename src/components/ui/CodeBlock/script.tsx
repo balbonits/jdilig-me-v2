@@ -35,6 +35,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
             <button
               className={styles.copyButton}
               onClick={handleCopy}
+              aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
               title="Copy code"
             >
               {copied ? '✓ Copied!' : '📋 Copy'}

@@ -71,14 +71,15 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
       <Tab padding="none">
         <div className={styles.solutionHeader}>
           <div className={styles.solutionInfo}>
-            <h4>{solution.name}</h4>
+            <h3>{solution.name}</h3>
             <div className={styles.solutionMeta}>
               <span>Time: {solution.timeComplexity}</span> | <span>Space: {solution.spaceComplexity}</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => handleCopyCode(solution.name, solution.code)}
             className={styles.copyButton}
+            aria-label={`Copy ${solution.name} solution code to clipboard`}
           >
             Copy
           </button>
@@ -108,7 +109,7 @@ export default function ExercisePage({ exercise }: ExercisePageProps) {
             />
             {exercise.metadata.examples && exercise.metadata.examples.length > 0 && (
               <div className={styles.examplesList}>
-                <h5 className={styles.examplesLabel}>Examples:</h5>
+                <h3 className={styles.examplesLabel}>Examples:</h3>
                 {exercise.metadata.examples.map((example, index) => (
                   <pre key={index} className={styles.exampleBlock}>
                     <code>{example}</code>

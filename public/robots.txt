@@ -1,0 +1,27 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jdilig.me/sitemap.xml
+
+# Disallow crawling of admin/api endpoints (if any)
+Disallow: /api/
+Disallow: /_next/
+
+# Allow crawling of static assets
+Allow: /_next/static/
+Allow: /images/
+Allow: /projects/
+
+# Crawl delay (in seconds) to avoid overloading server
+Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

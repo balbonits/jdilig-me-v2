@@ -32,7 +32,7 @@ export default function SiteHeader() {
 
   return (
     <header className={styles.header}>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Main navigation">
         <div className={styles.navContainer}>
           {/* Logo/Brand */}
           <div className={styles.brand}>
@@ -82,10 +82,11 @@ export default function SiteHeader() {
               >
                 📄
               </a>
-              <button 
+              <button
                 onClick={toggleTheme}
                 className={styles.themeToggle}
-                aria-label="Toggle theme"
+                aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+                aria-pressed={theme === 'dark'}
               >
                 {theme === 'dark' ? '☀️' : '🌙'}
               </button>

@@ -72,9 +72,10 @@ export default function PatternPage({ pattern }: PatternPageProps) {
               <span>Time: {solution.timeComplexity}</span> | <span>Space: {solution.spaceComplexity}</span>
             </div>
           </div>
-          <button 
+          <button
             onClick={() => handleCopyCode(solution.name, solution.code)}
             className={styles.copyButton}
+            aria-label={`Copy ${solution.name} solution code to clipboard`}
           >
             Copy
           </button>

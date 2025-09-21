@@ -5,6 +5,24 @@
     flex-direction: column;
   }
 
+  /* Skip to main content link - hidden but accessible */
+  .skipLink {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+    border-radius: 4px;
+    margin: 8px;
+  }
+
+  .skipLink:focus {
+    top: 0;
+  }
+
   .main {
     flex: 1;
   }

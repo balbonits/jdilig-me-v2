@@ -83,7 +83,7 @@ function renderMarkdownContent(text: string): React.ReactNode {
   sections.forEach((section) => {
     components.push(
       <div key={section.title} className={styles.descriptionSection}>
-        <h4 className={styles.sectionTitle}>{section.title}</h4>
+        <h3 className={styles.sectionTitle}>{section.title}</h3>
         <div className={styles.sectionContent}>
           {section.content.map((item, idx) => (
             <div key={idx} className={styles.listItem}>
@@ -108,7 +108,7 @@ function TechStackSection({ techStack }: { techStack: ProjectData['techStack'] }
     <div className={styles.techStackContainer}>
       {techStack.map((category, idx) => (
         <div key={idx} className={styles.techCategory}>
-          <h4 className={styles.techCategoryTitle}>{category.category}</h4>
+          <h3 className={styles.techCategoryTitle}>{category.category}</h3>
           <div className={styles.techItems}>
             {category.items.map((item, itemIdx) => (
               <span key={itemIdx} className={styles.techItem}>
@@ -127,7 +127,7 @@ function FeaturesSection({ features }: { features: ProjectData['features'] }) {
     <div className={styles.featuresContainer}>
       {features.map((feature, idx) => (
         <div key={idx} className={styles.featureCard}>
-          <h4 className={styles.featureTitle}>{feature.title}</h4>
+          <h3 className={styles.featureTitle}>{feature.title}</h3>
           <p className={styles.featureDescription}>{feature.description}</p>
           {feature.impact && (
             <div className={styles.featureImpact}>
@@ -163,12 +163,12 @@ function HighlightsSection({ highlights }: { highlights: ProjectData['highlights
     <div className={styles.highlightsContainer}>
       {highlights.map((highlight, idx) => (
         <div key={idx} className={styles.highlightCard}>
-          <h4 className={styles.highlightTitle}>{highlight.title}</h4>
+          <h3 className={styles.highlightTitle}>{highlight.title}</h3>
           <p className={styles.highlightDescription}>{highlight.description}</p>
           
           {highlight.code && (
             <div className={styles.highlightCode}>
-              <h5>Implementation:</h5>
+              <h4>Implementation:</h4>
               <pre className={styles.codeBlock}>
                 <code>{highlight.code}</code>
               </pre>
@@ -177,7 +177,7 @@ function HighlightsSection({ highlights }: { highlights: ProjectData['highlights
           
           {highlight.achievements && (
             <div className={styles.highlightAchievements}>
-              <h5>Key Achievements:</h5>
+              <h4>Key Achievements:</h4>
               <ul className={styles.achievementsList}>
                 {highlight.achievements.map((achievement, achIdx) => (
                   <li key={achIdx} className={styles.achievementItem}>
@@ -244,7 +244,7 @@ function ScreenshotsSection({ screenshots }: { screenshots?: ProjectData['screen
               </div>
             </div>
             <div className={styles.screenshotCaption}>
-              <h4 className={styles.screenshotTitle}>{screenshot.caption}</h4>
+              <h3 className={styles.screenshotTitle}>{screenshot.caption}</h3>
               <span className={styles.screenshotCategory}>{screenshot.category}</span>
             </div>
           </div>
@@ -300,7 +300,7 @@ function InsightsSection({
     <div className={styles.insightsContainer}>
       {lessons && (
         <div className={styles.insightCategory}>
-          <h4 className={styles.insightTitle}>Lessons Learned</h4>
+          <h3 className={styles.insightTitle}>Lessons Learned</h3>
           <ul className={styles.insightList}>
             {lessons.map((lesson, idx) => (
               <li key={idx} className={styles.insightItem}>{lesson}</li>
@@ -311,7 +311,7 @@ function InsightsSection({
       
       {challenges && (
         <div className={styles.insightCategory}>
-          <h4 className={styles.insightTitle}>Challenges Overcome</h4>
+          <h3 className={styles.insightTitle}>Challenges Overcome</h3>
           <ul className={styles.insightList}>
             {challenges.map((challenge, idx) => (
               <li key={idx} className={styles.insightItem}>{challenge}</li>
@@ -322,7 +322,7 @@ function InsightsSection({
       
       {futureImprovements && (
         <div className={styles.insightCategory}>
-          <h4 className={styles.insightTitle}>Future Improvements</h4>
+          <h3 className={styles.insightTitle}>Future Improvements</h3>
           <ul className={styles.insightList}>
             {futureImprovements.map((improvement, idx) => (
               <li key={idx} className={styles.insightItem}>{improvement}</li>
