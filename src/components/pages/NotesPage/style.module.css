@@ -29,9 +29,10 @@
   border-radius: 6px;
   background: var(--card-bg-color-default);
   color: var(--text-color-primary);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 16px to prevent zoom on iOS */
   cursor: pointer;
   transition: border-color 0.2s ease;
+  min-height: 48px; /* Ensure adequate tap target size */
 }
 
 .filterSelect:hover {
@@ -272,9 +273,16 @@
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .filterGroup {
     min-width: auto;
+    width: 100%;
+  }
+
+  .filterSelect {
+    font-size: 1rem; /* Ensure 16px minimum on mobile */
+    min-height: 48px; /* Adequate tap target */
+    width: 100%;
   }
   
   .cardHeader {

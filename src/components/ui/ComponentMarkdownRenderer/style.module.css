@@ -1,0 +1,134 @@
+.componentMarkdownRenderer {
+  line-height: 1.7;
+  color: var(--text-color-primary);
+}
+
+.componentMarkdownRenderer > div {
+  margin-bottom: 1.5rem;
+}
+
+.componentMarkdownRenderer > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Demo error message */
+.demoError {
+  padding: 1rem;
+  background: var(--error-bg-color, #fef2f2);
+  border: 1px solid var(--error-border-color, #fecaca);
+  border-radius: 4px;
+  color: var(--error-color, #dc2626);
+  font-size: 0.875rem;
+  margin: 1rem 0;
+}
+
+/* Unknown shortcode styling */
+.unknownShortcode {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: var(--warning-bg-color, #fef3c7);
+  border: 1px solid var(--warning-border-color, #fcd34d);
+  border-radius: 4px;
+  color: var(--warning-color, #92400e);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* Typography overrides for rendered content */
+.componentMarkdownRenderer h1,
+.componentMarkdownRenderer h2,
+.componentMarkdownRenderer h3,
+.componentMarkdownRenderer h4,
+.componentMarkdownRenderer h5,
+.componentMarkdownRenderer h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.componentMarkdownRenderer h1 {
+  font-size: 2rem;
+}
+
+.componentMarkdownRenderer h2 {
+  font-size: 1.5rem;
+}
+
+.componentMarkdownRenderer h3 {
+  font-size: 1.25rem;
+}
+
+.componentMarkdownRenderer p {
+  margin-bottom: 1rem;
+}
+
+.componentMarkdownRenderer ul,
+.componentMarkdownRenderer ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+.componentMarkdownRenderer li {
+  margin-bottom: 0.5rem;
+}
+
+.componentMarkdownRenderer code {
+  padding: 0.2rem 0.4rem;
+  background: var(--code-bg-color);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.componentMarkdownRenderer pre code {
+  padding: 0;
+  background: transparent;
+}
+
+.componentMarkdownRenderer blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-color-secondary);
+  font-style: italic;
+}
+
+.componentMarkdownRenderer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.componentMarkdownRenderer th,
+.componentMarkdownRenderer td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.componentMarkdownRenderer th {
+  font-weight: 600;
+  background: var(--background-color-secondary);
+}
+
+/* Dark mode adjustments */
+:global(.dark) .demoError {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #ef4444;
+}
+
+:global(.dark) .unknownShortcode {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+}
+
+:global(.dark) .componentMarkdownRenderer code {
+  background: var(--code-bg-color-dark);
+}
+
+:global(.dark) .componentMarkdownRenderer th {
+  background: var(--background-color-secondary-dark);
+}

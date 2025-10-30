@@ -252,11 +252,41 @@ export function getAllPatternSlugs(): string[] {
  */
 export async function fetchNotes(): Promise<NoteData[]> {
   const response = await fetch('/notes.json');
-  
+
   if (!response.ok) {
     throw new Error(`Failed to fetch notes: ${response.status} ${response.statusText}`);
   }
-  
+
+  return response.json();
+}
+
+/**
+ * Fetch code notes data from the public JSON file
+ * @returns Promise<NoteData[]> Array of code note data
+ * @throws Error if fetch fails or response is not ok
+ */
+export async function fetchCodeNotes(): Promise<NoteData[]> {
+  const response = await fetch('/code-notes.json');
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch code notes: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Fetch UI notes data from the public JSON file
+ * @returns Promise<NoteData[]> Array of UI note data
+ * @throws Error if fetch fails or response is not ok
+ */
+export async function fetchUINotes(): Promise<NoteData[]> {
+  const response = await fetch('/ui-notes.json');
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch UI notes: ${response.status} ${response.statusText}`);
+  }
+
   return response.json();
 }
 
@@ -279,7 +309,7 @@ export async function loadNotesData(): Promise<NoteData[]> {
     // Client-side fallback to fetch
     return fetchNotes();
   }
-  
+
   // Server-side: load from file system
   try {
     const fs = await import('fs');
@@ -289,6 +319,52 @@ export async function loadNotesData(): Promise<NoteData[]> {
     return JSON.parse(notesJson);
   } catch (error) {
     console.warn('Could not load notes.json:', error);
+    return [];
+  }
+}
+
+/**
+ * Load code notes data from the file system (for SSG/SSR)
+ * @returns Promise<NoteData[]> Array of code note data
+ */
+export async function loadCodeNotesData(): Promise<NoteData[]> {
+  if (typeof window !== 'undefined') {
+    // Client-side fallback to fetch
+    return fetchCodeNotes();
+  }
+
+  // Server-side: load from file system
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const notesPath = path.join(process.cwd(), 'public', 'code-notes.json');
+    const notesJson = fs.readFileSync(notesPath, 'utf-8');
+    return JSON.parse(notesJson);
+  } catch (error) {
+    console.warn('Could not load code-notes.json:', error);
+    return [];
+  }
+}
+
+/**
+ * Load UI notes data from the file system (for SSG/SSR)
+ * @returns Promise<NoteData[]> Array of UI note data
+ */
+export async function loadUINotesData(): Promise<NoteData[]> {
+  if (typeof window !== 'undefined') {
+    // Client-side fallback to fetch
+    return fetchUINotes();
+  }
+
+  // Server-side: load from file system
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const notesPath = path.join(process.cwd(), 'public', 'ui-notes.json');
+    const notesJson = fs.readFileSync(notesPath, 'utf-8');
+    return JSON.parse(notesJson);
+  } catch (error) {
+    console.warn('Could not load ui-notes.json:', error);
     return [];
   }
 }
@@ -310,12 +386,61 @@ export async function loadNoteBySlug(slug: string): Promise<NoteData | undefined
 export function getAllNoteSlugs(): string[] {
   // Return all implemented note slugs in kebab-case
   return [
+    // Code notes
+    'css-interview-cheat-sheet',
+    'javascript-interview-cheat-sheet',
+    'react-interview-cheat-sheet',
+    'state-management-cheat-sheet',
+    'git-cheat-sheet',
+    'agile-methodologies-cheat-sheet',
+    // UI notes (CSS fundamentals)
+    'css-box-model',
+    'css-methodologies',
+    'css-display-position',
+    'css-background',
+    'css-animations-transitions',
+    'css-variables-mixins',
+    // UI component notes
+    'button',
+    'card',
+    'modal',
+    'toggle-switch'
+  ];
+}
+
+/**
+ * Get code note slugs for static generation
+ * @returns string[] Array of code note slugs
+ */
+export function getCodeNoteSlugs(): string[] {
+  return [
     'css-interview-cheat-sheet',
     'javascript-interview-cheat-sheet',
     'react-interview-cheat-sheet',
     'state-management-cheat-sheet',
     'git-cheat-sheet',
     'agile-methodologies-cheat-sheet'
+  ];
+}
+
+/**
+ * Get UI note slugs for static generation
+ * @returns string[] Array of UI note slugs
+ */
+export function getUINoteSlugs(): string[] {
+  return [
+    // CSS fundamentals
+    'css-box-model',
+    'css-methodologies',
+    'css-display-position',
+    'css-background',
+    'css-animations-transitions',
+    'css-variables-mixins',
+    // UI components
+    'button',
+    'card',
+    'modal',
+    'toggle-switch'
   ];
 }
 

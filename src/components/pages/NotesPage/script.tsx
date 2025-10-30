@@ -65,11 +65,13 @@ export default function NotesPage({ notes }: NotesPageProps) {
         <Section title="Filters">
           <div className={styles.filtersContainer}>
             <div className={styles.filterGroup}>
-              <label className={styles.filterLabel}>Category:</label>
-              <select 
-                value={selectedCategory} 
+              <label htmlFor="category-filter" className={styles.filterLabel}>Category:</label>
+              <select
+                id="category-filter"
+                value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className={styles.filterSelect}
+                aria-label="Filter notes by category"
               >
                 <option value="all">All Categories</option>
                 {categories.map(category => (
@@ -81,11 +83,13 @@ export default function NotesPage({ notes }: NotesPageProps) {
             </div>
 
             <div className={styles.filterGroup}>
-              <label className={styles.filterLabel}>Difficulty:</label>
-              <select 
-                value={selectedDifficulty} 
+              <label htmlFor="difficulty-filter" className={styles.filterLabel}>Difficulty:</label>
+              <select
+                id="difficulty-filter"
+                value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
                 className={styles.filterSelect}
+                aria-label="Filter notes by difficulty level"
               >
                 <option value="all">All Levels</option>
                 {difficulties.map(difficulty => (
@@ -159,12 +163,13 @@ export default function NotesPage({ notes }: NotesPageProps) {
           {filteredNotes.length === 0 && (
             <div className={styles.emptyState}>
               <p>No notes found matching the selected filters.</p>
-              <button 
+              <button
                 onClick={() => {
                   setSelectedCategory('all');
                   setSelectedDifficulty('all');
                 }}
                 className={styles.resetButton}
+                aria-label="Reset all filters to show all notes"
               >
                 Reset Filters
               </button>

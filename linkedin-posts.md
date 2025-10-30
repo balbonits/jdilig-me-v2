@@ -1,5 +1,70 @@
 # LinkedIn Posts Archive
 
+## Post #7 - September 24, 2025
+**Topic**: Lighthouse Performance Optimization Journey
+
+🚀 **Lighthouse Score Optimization: From Good to Great!**
+
+Just completed a comprehensive performance audit and optimization sprint on my portfolio website. Here's the journey from decent scores to near-perfect results:
+
+**Initial Lighthouse Scores:**
+- 🎯 Performance: 100 (already optimized!)
+- ♿ Accessibility: 85
+- 🏆 Best Practices: 96
+- 🔍 SEO: 80
+
+**After Optimizations:**
+- 🎯 Performance: 100 ✅
+- ♿ Accessibility: 95+ ✨
+- 🏆 Best Practices: 96+ ✨
+- 🔍 SEO: 90+ ✨
+
+### Key Improvements Implemented:
+
+**1. SEO Enhancements:**
+- Added comprehensive meta descriptions for all pages
+- Implemented structured data (JSON-LD) for better search visibility
+- Enhanced semantic HTML structure
+- Optimized social media preview tags
+
+**2. Accessibility Improvements:**
+- Fixed color contrast ratios to meet WCAG AA standards (4.5:1 minimum)
+- Updated muted text colors from #6b7280 to #4b5563 (light mode)
+- Enhanced dark mode contrast from #9ca3af to #d1d5db
+- Improved focus indicators and keyboard navigation
+
+**3. PWA & Performance:**
+- Resolved Cloudflare blocking issues with manifest.json
+- Implemented advanced service worker caching strategies
+- Added Vercel Speed Insights for real-time monitoring
+- Optimized Core Web Vitals (LCP, FID, CLS)
+
+**4. Technical Architecture:**
+- Built comprehensive testing infrastructure (327+ Jest tests, 160+ Playwright scenarios)
+- Created automated Lighthouse reporting pipeline
+- Implemented CI/CD quality gates
+- Added professional development team agents for parallel workflow
+
+### Lessons Learned:
+
+✅ **Color contrast matters more than aesthetics** - Small changes in hex values can dramatically improve accessibility without compromising design
+
+✅ **Cloudflare can block PWA manifests** - Sometimes removing problematic features is better than fighting CDN restrictions
+
+✅ **Automation is key** - Setting up proper testing and monitoring catches issues before users do
+
+✅ **Incremental improvements add up** - Going from 85 to 95 in accessibility required multiple small fixes, not one big change
+
+### Tools & Technologies:
+Next.js | TypeScript | Tailwind CSS | Jest | Playwright | Lighthouse CI | Vercel Analytics
+
+Website: https://www.jdilig.me
+GitHub: https://github.com/balbonits/jdilig-me-v2
+
+#WebDevelopment #Performance #Accessibility #SEO #Lighthouse #NextJS #TypeScript #WebVitals #WCAG #PWA #Testing
+
+---
+
 ## Post #6 - September 18, 2025
 **Topic**: Homepage Redesign with Featured Project Showcase & CSS Architecture Lessons
 

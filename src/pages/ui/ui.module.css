@@ -1,0 +1,136 @@
+@layer components {
+  .intro {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+  .categoryLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .categoryCard {
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    background: var(--card-bg-color-default);
+    border: 1px solid var(--border-color-light);
+  }
+
+  .categoryCard:hover:not(.comingSoon) {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+  }
+
+  .comingSoon {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .comingSoon:hover {
+    transform: none;
+  }
+
+  .categoryIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .categoryTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .categoryDescription {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .categoryCount {
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    background: var(--color-blue);
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .comingSoonBadge {
+    font-size: 0.75rem;
+    background: var(--color-yellow);
+    color: var(--text-primary);
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-left: auto;
+  }
+
+  .topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .topic {
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color-light);
+  }
+
+  .topic h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .intro {
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    .categoryIcon {
+      font-size: 2rem;
+    }
+
+    .categoryTitle {
+      font-size: 1.125rem;
+    }
+
+    .topics {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .topic {
+      padding: 1rem;
+    }
+  }
+}

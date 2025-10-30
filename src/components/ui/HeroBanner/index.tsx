@@ -163,7 +163,7 @@ export default function HeroBanner({
   // If onClick is provided, wrap in button
   if (onClick) {
     return (
-      <button className={styles.heroButton}>
+      <button className={styles.heroButton} aria-label={`${title} - Click to view details`}>
         {content}
       </button>
     );

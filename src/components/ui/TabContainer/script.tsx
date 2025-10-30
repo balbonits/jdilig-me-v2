@@ -44,10 +44,11 @@ export default function TabContainer({
   return (
     <div className={cn(styles.tabContainer, className)}>
       {/* Tab Headers */}
-      <div className={cn(styles.tabHeaders, { [styles.fullWidth]: fullWidth })}>
+      <div className={cn(styles.tabHeaders, { [styles.fullWidth]: fullWidth })} role="tablist">
         {tabs.map((tab, index) => (
           <button
             key={tab.id}
+            id={`tab-${tab.id}`}
             className={cn(
               styles.tabHeader,
               { [styles.active]: index === activeTab },
@@ -55,6 +56,11 @@ export default function TabContainer({
               { [styles.fullWidthTab]: fullWidth }
             )}
             onClick={() => handleTabClick(index)}
+            aria-label={`Select ${tab.label} tab${tab.badge ? ` (${tab.badge})` : ''}`}
+            aria-selected={index === activeTab}
+            aria-controls={`tabpanel-${tab.id}`}
+            role="tab"
+            tabIndex={index === activeTab ? 0 : -1}
           >
             <span className={styles.tabLabel}>
               {tab.label}
@@ -68,7 +74,13 @@ export default function TabContainer({
       </div>
 
       {/* Active Tab Content */}
-      <div className={styles.tabContent}>
+      <div
+        className={styles.tabContent}
+        role="tabpanel"
+        id={`tabpanel-${activeTabItem.id}`}
+        aria-labelledby={`tab-${activeTabItem.id}`}
+        tabIndex={0}
+      >
         {activeTabItem.content}
       </div>
     </div>

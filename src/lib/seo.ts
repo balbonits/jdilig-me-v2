@@ -50,7 +50,7 @@ export function generateMetaTags(props: SEOProps = {}): MetaTag[] {
     { name: 'description', content: description },
     { name: 'keywords', content: siteConfig.keywords.join(', ') },
     { name: 'author', content: author },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0' },
     { name: 'language', content: siteConfig.language },
     { name: 'theme-color', content: siteConfig.seo.themeColor },
     { name: 'msapplication-TileColor', content: siteConfig.seo.themeColor },

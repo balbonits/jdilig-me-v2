@@ -253,7 +253,7 @@
 }
 
 .solutionMeta {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: var(--muted);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
@@ -264,9 +264,10 @@
   color: var(--bg-primary);
   border: none;
   border-radius: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: background 0.2s ease;
+  min-height: 48px;
 }
 
 .copyButton:hover {
@@ -301,7 +302,7 @@
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   min-width: 2rem;
   text-align: center;
@@ -326,7 +327,7 @@
 }
 
 .exampleLabel {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--muted);
   text-transform: uppercase;
@@ -358,7 +359,7 @@
   
   /* Fix code overflow on mobile */
   .code {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     word-break: break-word;
     overflow-wrap: break-word;
   }
@@ -371,7 +372,7 @@
   
   /* Further reduce code font size for iPhone SE */
   .code {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
   
   .complexityLabel {

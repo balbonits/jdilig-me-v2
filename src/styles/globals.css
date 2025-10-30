@@ -2,6 +2,7 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./tokens.css";
+@import "./mobile-optimizations.css";
 
 @layer theme {
   :root {
@@ -9,7 +10,7 @@
     --foreground: var(--color-gray-900);
     --primary: var(--color-blue-600); /* Professional blue - more authoritative */
     --primary-foreground: var(--color-white);
-    --muted: var(--color-gray-500);
+    --muted: var(--color-gray-600);
     --card: var(--color-white); /* Pure white for professional cleanliness */
     --border: var(--color-gray-200);
     --accent: var(--color-gray-50); /* Subtler accent */
@@ -28,8 +29,8 @@
     /* Professional Text Colors */
     --text-primary: #111827;        /* High contrast for readability */
     --text-secondary: #374151;      /* Secondary text with authority */
-    --text-muted: #6b7280;         /* Subtle text that remains professional */
-    --text-light: #9ca3af;         /* Light text for supporting information */
+    --text-muted: #4b5563;         /* Improved contrast (4.5:1) for WCAG AA */
+    --text-light: #6b7280;         /* Better contrast for supporting text */
     
     /* Professional Background Colors */
     --bg-primary: #ffffff;          /* Pure white for cleanliness */
@@ -41,24 +42,24 @@
     /* Semantic color variables for component states and types */
     
     /* Base Color Palette - Enhanced Light Mode Visibility */
-    --color-blue: rgba(103, 126, 234, 0.15);
-    --color-blue-hover: rgba(103, 126, 234, 0.25);
-    --color-purple: rgba(118, 75, 162, 0.15);
-    --color-purple-hover: rgba(118, 75, 162, 0.25);
-    --color-teal: rgba(17, 153, 142, 0.15);
-    --color-teal-hover: rgba(17, 153, 142, 0.25);
-    --color-pink: rgba(247, 112, 154, 0.15);
-    --color-pink-hover: rgba(247, 112, 154, 0.25);
-    --color-orange: rgba(255, 149, 0, 0.15);
-    --color-orange-hover: rgba(255, 149, 0, 0.25);
-    --color-green: rgba(56, 239, 125, 0.15);
-    --color-green-hover: rgba(56, 239, 125, 0.25);
-    --color-red: rgba(255, 99, 132, 0.15);
-    --color-red-hover: rgba(255, 99, 132, 0.25);
-    --color-yellow: rgba(255, 205, 86, 0.15);
-    --color-yellow-hover: rgba(255, 205, 86, 0.25);
-    --color-neutral: rgba(0, 0, 0, 0.06);
-    --color-neutral-hover: rgba(0, 0, 0, 0.1);
+    --color-blue: rgba(103, 126, 234, 0.35);
+    --color-blue-hover: rgba(103, 126, 234, 0.45);
+    --color-purple: rgba(118, 75, 162, 0.35);
+    --color-purple-hover: rgba(118, 75, 162, 0.45);
+    --color-teal: rgba(17, 153, 142, 0.35);
+    --color-teal-hover: rgba(17, 153, 142, 0.45);
+    --color-pink: rgba(247, 112, 154, 0.35);
+    --color-pink-hover: rgba(247, 112, 154, 0.45);
+    --color-orange: rgba(255, 149, 0, 0.35);
+    --color-orange-hover: rgba(255, 149, 0, 0.45);
+    --color-green: rgba(56, 239, 125, 0.35);
+    --color-green-hover: rgba(56, 239, 125, 0.45);
+    --color-red: rgba(255, 99, 132, 0.35);
+    --color-red-hover: rgba(255, 99, 132, 0.45);
+    --color-yellow: rgba(255, 205, 86, 0.35);
+    --color-yellow-hover: rgba(255, 205, 86, 0.45);
+    --color-neutral: rgba(0, 0, 0, 0.35);
+    --color-neutral-hover: rgba(0, 0, 0, 0.4);
     
     /* Card Component Variables */
     --card-bg-color-default: var(--bg-secondary); /* Light gray for better visual separation */
@@ -123,11 +124,11 @@
     --section-bg-color-hover: var(--color-neutral-hover);
     
     /* Border Variables */
-    --border-color-default: rgba(0, 0, 0, 0.15);
-    --border-color-light: rgba(0, 0, 0, 0.1);
-    --border-color-medium: rgba(0, 0, 0, 0.2);
-    --border-color-strong: rgba(0, 0, 0, 0.25);
-    --border-color-emphasis: rgba(0, 0, 0, 0.3);
+    --border-color-default: rgba(0, 0, 0, 0.35);
+    --border-color-light: rgba(0, 0, 0, 0.3);
+    --border-color-medium: rgba(0, 0, 0, 0.4);
+    --border-color-strong: rgba(0, 0, 0, 0.45);
+    --border-color-emphasis: rgba(0, 0, 0, 0.5);
     
     /* Component Borders */
     --card-border-color-default: var(--border-color-default);
@@ -144,9 +145,9 @@
     --tag-border-color-hover: var(--border-color-emphasis);
     
     /* Shadow Variables */
-    --shadow-color-default: rgba(0, 0, 0, 0.08);
-    --shadow-color-hover: rgba(0, 0, 0, 0.15);
-    --shadow-color-strong: rgba(0, 0, 0, 0.25);
+    --shadow-color-default: rgba(0, 0, 0, 0.35);
+    --shadow-color-hover: rgba(0, 0, 0, 0.4);
+    --shadow-color-strong: rgba(0, 0, 0, 0.45);
     
     /* Component Shadows */
     --card-shadow-default: 0 8px 25px var(--shadow-color-default);
@@ -162,7 +163,7 @@
     --foreground: var(--color-gray-50);
     --primary: var(--color-blue-400);
     --primary-foreground: var(--color-gray-900);
-    --muted: var(--color-gray-400);
+    --muted: var(--color-gray-300);
     --card: var(--color-gray-900);
     --border: var(--color-gray-700);
     --accent: var(--color-gray-800);
@@ -178,8 +179,8 @@
     /* Dark Mode Professional Text Colors */
     --text-primary: #f9fafb;               /* Light gray for high contrast */
     --text-secondary: #e5e7eb;             /* Medium light gray */
-    --text-muted: #9ca3af;                 /* Muted gray for supporting text */
-    --text-light: #6b7280;                 /* Darker gray for subtle text */
+    --text-muted: #d1d5db;                 /* Improved contrast on dark bg (4.5:1) */
+    --text-light: #9ca3af;                 /* Better contrast for subtle text */
     
     /* Dark Mode Professional Background Colors */
     --bg-primary: #111827;                 /* Dark background */
@@ -188,30 +189,30 @@
     --bg-highlight: #4b5563;               /* Lighter for highlights */
     
     /* Dark Mode Component Library Colors - Better Visibility */
-    --color-blue: rgba(120, 145, 255, 0.2);
-    --color-blue-hover: rgba(120, 145, 255, 0.3);
-    --color-purple: rgba(140, 100, 200, 0.2);
-    --color-purple-hover: rgba(140, 100, 200, 0.3);
-    --color-teal: rgba(20, 180, 170, 0.2);
-    --color-teal-hover: rgba(20, 180, 170, 0.3);
-    --color-pink: rgba(255, 130, 180, 0.2);
-    --color-pink-hover: rgba(255, 130, 180, 0.3);
-    --color-orange: rgba(255, 165, 0, 0.2);
-    --color-orange-hover: rgba(255, 165, 0, 0.3);
-    --color-green: rgba(80, 255, 150, 0.2);
-    --color-green-hover: rgba(80, 255, 150, 0.3);
-    --color-red: rgba(255, 110, 140, 0.2);
-    --color-red-hover: rgba(255, 110, 140, 0.3);
-    --color-yellow: rgba(255, 220, 100, 0.2);
-    --color-yellow-hover: rgba(255, 220, 100, 0.3);
-    --color-neutral: rgba(255, 255, 255, 0.1);
-    --color-neutral-hover: rgba(255, 255, 255, 0.15);
+    --color-blue: rgba(120, 145, 255, 0.35);
+    --color-blue-hover: rgba(120, 145, 255, 0.45);
+    --color-purple: rgba(140, 100, 200, 0.35);
+    --color-purple-hover: rgba(140, 100, 200, 0.45);
+    --color-teal: rgba(20, 180, 170, 0.35);
+    --color-teal-hover: rgba(20, 180, 170, 0.45);
+    --color-pink: rgba(255, 130, 180, 0.35);
+    --color-pink-hover: rgba(255, 130, 180, 0.45);
+    --color-orange: rgba(255, 165, 0, 0.35);
+    --color-orange-hover: rgba(255, 165, 0, 0.45);
+    --color-green: rgba(80, 255, 150, 0.35);
+    --color-green-hover: rgba(80, 255, 150, 0.45);
+    --color-red: rgba(255, 110, 140, 0.35);
+    --color-red-hover: rgba(255, 110, 140, 0.45);
+    --color-yellow: rgba(255, 220, 100, 0.35);
+    --color-yellow-hover: rgba(255, 220, 100, 0.45);
+    --color-neutral: rgba(255, 255, 255, 0.35);
+    --color-neutral-hover: rgba(255, 255, 255, 0.4);
     /* Dark Mode Borders */
-    --border-color-default: rgba(255, 255, 255, 0.2);
-    --border-color-light: rgba(255, 255, 255, 0.15);
-    --border-color-medium: rgba(255, 255, 255, 0.25);
-      --border-color-strong: rgba(255, 255, 255, 0.3);
-      --border-color-emphasis: rgba(255, 255, 255, 0.35);
+    --border-color-default: rgba(255, 255, 255, 0.35);
+    --border-color-light: rgba(255, 255, 255, 0.3);
+    --border-color-medium: rgba(255, 255, 255, 0.4);
+      --border-color-strong: rgba(255, 255, 255, 0.45);
+      --border-color-emphasis: rgba(255, 255, 255, 0.5);
       
       /* Dark Mode Badges/Tags */
       --badge-bg-color-default: var(--color-blue);
@@ -236,9 +237,9 @@
       --card-bg-color-green-hover: var(--color-green-hover);
       
       /* Dark Mode Shadows */
-      --shadow-color-default: rgba(0, 0, 0, 0.3);
-      --shadow-color-hover: rgba(0, 0, 0, 0.4);
-      --shadow-color-strong: rgba(0, 0, 0, 0.5);
+      --shadow-color-default: rgba(0, 0, 0, 0.4);
+      --shadow-color-hover: rgba(0, 0, 0, 0.5);
+      --shadow-color-strong: rgba(0, 0, 0, 0.6);
     }
   }
   
@@ -247,7 +248,7 @@
     --foreground: var(--color-gray-900);
     --primary: var(--color-blue-500);
     --primary-foreground: var(--color-white);
-    --muted: var(--color-gray-500);
+    --muted: var(--color-gray-600);
     --card: var(--color-gray-50);
     --border: var(--color-gray-200);
     --accent: var(--color-gray-100);
@@ -263,8 +264,8 @@
     /* Light Mode Professional Text Colors (inherit from :root) */
     --text-primary: #111827;
     --text-secondary: #374151;
-    --text-muted: #6b7280;
-    --text-light: #9ca3af;
+    --text-muted: #4b5563;
+    --text-light: #6b7280;
     
     /* Light Mode Professional Background Colors (inherit from :root) */
     --bg-primary: #ffffff;
@@ -273,22 +274,22 @@
     --bg-highlight: #e5e7eb;
     
     /* Light Mode Enhanced Color Palette (inherit from :root enhanced values) */
-    --color-blue: rgba(103, 126, 234, 0.15);
-    --color-blue-hover: rgba(103, 126, 234, 0.25);
-    --color-purple: rgba(118, 75, 162, 0.15);
-    --color-purple-hover: rgba(118, 75, 162, 0.25);
-    --color-teal: rgba(17, 153, 142, 0.15);
-    --color-teal-hover: rgba(17, 153, 142, 0.25);
-    --color-pink: rgba(247, 112, 154, 0.15);
-    --color-pink-hover: rgba(247, 112, 154, 0.25);
-    --color-orange: rgba(255, 149, 0, 0.15);
-    --color-orange-hover: rgba(255, 149, 0, 0.25);
-    --color-green: rgba(56, 239, 125, 0.15);
-    --color-green-hover: rgba(56, 239, 125, 0.25);
-    --color-red: rgba(255, 99, 132, 0.15);
-    --color-red-hover: rgba(255, 99, 132, 0.25);
-    --color-neutral: rgba(0, 0, 0, 0.06);
-    --color-neutral-hover: rgba(0, 0, 0, 0.1);
+    --color-blue: rgba(103, 126, 234, 0.35);
+    --color-blue-hover: rgba(103, 126, 234, 0.45);
+    --color-purple: rgba(118, 75, 162, 0.35);
+    --color-purple-hover: rgba(118, 75, 162, 0.45);
+    --color-teal: rgba(17, 153, 142, 0.35);
+    --color-teal-hover: rgba(17, 153, 142, 0.45);
+    --color-pink: rgba(247, 112, 154, 0.35);
+    --color-pink-hover: rgba(247, 112, 154, 0.45);
+    --color-orange: rgba(255, 149, 0, 0.35);
+    --color-orange-hover: rgba(255, 149, 0, 0.45);
+    --color-green: rgba(56, 239, 125, 0.35);
+    --color-green-hover: rgba(56, 239, 125, 0.45);
+    --color-red: rgba(255, 99, 132, 0.35);
+    --color-red-hover: rgba(255, 99, 132, 0.45);
+    --color-neutral: rgba(0, 0, 0, 0.35);
+    --color-neutral-hover: rgba(0, 0, 0, 0.4);
     
     /* Light Mode Section Colors */
     --section-bg-color-default: var(--color-neutral);
@@ -300,7 +301,7 @@
     --foreground: var(--color-gray-50);
     --primary: var(--color-blue-400);
     --primary-foreground: var(--color-gray-900);
-    --muted: var(--color-gray-400);
+    --muted: var(--color-gray-300);
     --card: var(--color-gray-900);
     --border: var(--color-gray-700);
     --accent: var(--color-gray-800);
@@ -316,8 +317,8 @@
     /* Dark Mode Professional Text Colors (same as :global(.dark)) */
     --text-primary: #f9fafb;
     --text-secondary: #e5e7eb;
-    --text-muted: #9ca3af;
-    --text-light: #6b7280;
+    --text-muted: #d1d5db;
+    --text-light: #9ca3af;
     
     /* Dark Mode Professional Background Colors (same as :global(.dark)) */
     --bg-primary: #111827;
@@ -326,22 +327,22 @@
     --bg-highlight: #4b5563;
     
     /* Dark Mode Component Library Colors - Better Visibility */
-    --color-blue: rgba(120, 145, 255, 0.2);
-    --color-blue-hover: rgba(120, 145, 255, 0.3);
-    --color-purple: rgba(140, 100, 200, 0.2);
-    --color-purple-hover: rgba(140, 100, 200, 0.3);
-    --color-teal: rgba(20, 180, 170, 0.2);
-    --color-teal-hover: rgba(20, 180, 170, 0.3);
-    --color-pink: rgba(255, 130, 180, 0.2);
-    --color-pink-hover: rgba(255, 130, 180, 0.3);
-    --color-orange: rgba(255, 165, 0, 0.2);
-    --color-orange-hover: rgba(255, 165, 0, 0.3);
-    --color-green: rgba(80, 255, 150, 0.2);
-    --color-green-hover: rgba(80, 255, 150, 0.3);
-    --color-red: rgba(255, 110, 140, 0.2);
-    --color-red-hover: rgba(255, 110, 140, 0.3);
-    --color-neutral: rgba(255, 255, 255, 0.1);
-    --color-neutral-hover: rgba(255, 255, 255, 0.15);
+    --color-blue: rgba(120, 145, 255, 0.35);
+    --color-blue-hover: rgba(120, 145, 255, 0.45);
+    --color-purple: rgba(140, 100, 200, 0.35);
+    --color-purple-hover: rgba(140, 100, 200, 0.45);
+    --color-teal: rgba(20, 180, 170, 0.35);
+    --color-teal-hover: rgba(20, 180, 170, 0.45);
+    --color-pink: rgba(255, 130, 180, 0.35);
+    --color-pink-hover: rgba(255, 130, 180, 0.45);
+    --color-orange: rgba(255, 165, 0, 0.35);
+    --color-orange-hover: rgba(255, 165, 0, 0.45);
+    --color-green: rgba(80, 255, 150, 0.35);
+    --color-green-hover: rgba(80, 255, 150, 0.45);
+    --color-red: rgba(255, 110, 140, 0.35);
+    --color-red-hover: rgba(255, 110, 140, 0.45);
+    --color-neutral: rgba(255, 255, 255, 0.35);
+    --color-neutral-hover: rgba(255, 255, 255, 0.4);
     
     /* Dark Mode Card Background Variables */
     --card-bg-color-default: var(--bg-secondary); /* Dark gray for better visual separation */
