@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: var(--overlay-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +15,7 @@
   background: var(--card-bg-color-default);
   color: var(--text-primary);
   border-radius: 1rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px var(--modal-shadow);
   max-width: 90vw;
   min-width: 320px;
   width: 100%;
@@ -33,7 +33,7 @@
   background: none;
   border: none;
   font-size: 2rem;
-  color: var(--foreground, #222);
+  color: var(--foreground, var(--modal-close-button));
   cursor: pointer;
   z-index: 1;
 }

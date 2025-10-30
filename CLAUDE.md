@@ -67,11 +67,12 @@ This serves as a **persistent knowledge base** shared between AI sessions for pr
 - Code should read like well-written prose
 
 ## Project Overview
-- **Name**: jdilig-me-v2  
+- **Name**: jdilig-me-v2
 - **URL**: https://www.jdilig.me
-- **Stack**: Next.js Pages Router, TypeScript, Tailwind CSS v4, Jest, Playwright
+- **Stack**: Next.js 16 (with webpack for builds), React 19.2, TypeScript, Tailwind CSS v4, Jest, Playwright
 - **Analytics**: Google Analytics 4, Vercel Analytics, Core Web Vitals tracking
 - **Architecture**: Modular components with unified UI system
+- **Build**: Uses webpack for production builds due to Turbopack/Tailwind CSS v4 compatibility issues
 
 ## 📁 Project Structure
 ```
@@ -340,6 +341,30 @@ fi
 ```
 
 ## 🐛 Known Issues & Lessons
+
+### Turbopack + Tailwind CSS v4 Compatibility (Active Issue)
+- **Issue**: Turbopack's CSS parser cannot handle some of Tailwind CSS v4's compiled output
+- **Workaround**: Use `--webpack` flag for production builds (`npm run build`)
+- **Current Setup**:
+  - Development: Uses Turbopack with filesystem caching (fast, works fine)
+  - Production: Uses webpack (slower, but reliable with Tailwind CSS v4)
+- **Scripts**: `build:turbo` available for testing Turbopack builds
+- **Future**: Monitor for Turbopack updates that resolve this compatibility issue
+
+### CSS Syntax: `:global()` in Turbopack
+- **Issue**: `:global(.dark)` syntax not recognized in regular CSS files by Turbopack
+- **Solution**: Use `.dark` directly instead of `:global(.dark)`
+- **Context**: `:global()` is CSS Modules syntax, only works in `.module.css` files
+- **Prevention**: Avoid `:global()` in regular CSS files; use direct class selectors
+
+### Color Variable Centralization (Implemented)
+- **Pattern**: All color values centralized in `globals.css`
+- **Benefits**: Single source of truth for colors; easy theme updates
+- **Structure**:
+  - Gradient base colors → tokens.css gradients → component usage
+  - Component-specific colors (code blocks, modals, terminals, etc.)
+  - Error/warning/fallback colors for consistent UI
+- **Rule**: Never add hex/rgba colors directly in component CSS files
 
 ### Pattern URL 404 Bug (Resolved)
 - **Cause**: `getAllPatternSlugs()` in data-fetchers.ts was hardcoded to 5 patterns

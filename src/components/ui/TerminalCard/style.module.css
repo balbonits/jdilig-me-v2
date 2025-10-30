@@ -2,7 +2,7 @@
 
 .terminalCard {
   background: rgba(0, 0, 0, 0.95);
-  color: #e5e5e5;
+  color: var(--terminal-text);
   font-family: var(--font-mono);
   padding: 0;
   overflow: hidden;
@@ -14,7 +14,7 @@
 /* Terminal should always be dark - it's a terminal! */
 :global(.light) .terminalCard {
   background: rgba(0, 0, 0, 0.95);
-  color: #e5e5e5;
+  color: var(--terminal-text);
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
@@ -46,9 +46,9 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-.cardDots span:first-child { background: #ff5f56; }
-.cardDots span:nth-child(2) { background: #ffbd2e; }
-.cardDots span:last-child { background: #27ca3f; }
+.cardDots span:first-child { background: var(--terminal-dot-red); }
+.cardDots span:nth-child(2) { background: var(--terminal-dot-yellow); }
+.cardDots span:last-child { background: var(--terminal-dot-green); }
 
 .cardTitle {
   font-size: 0.875rem;
@@ -59,7 +59,7 @@
   padding: 1.5rem;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #e5e5e5;
+  color: var(--terminal-text);
 }
 
 .terminalContent div {
@@ -67,7 +67,7 @@
 }
 
 .cursor {
-  color: #27ca3f;
+  color: var(--terminal-prompt);
   animation: blink 1s infinite;
   margin-left: 0.25rem;
 }

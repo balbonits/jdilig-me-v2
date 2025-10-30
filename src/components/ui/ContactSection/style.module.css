@@ -5,7 +5,7 @@
   border: 1px solid var(--banner-border-color-default);
   border-radius: 1rem;
   padding: 2.5rem;
-  color: var(--foreground, #1a202c);
+  color: var(--foreground, var(--text-fallback-dark));
   position: relative;
   overflow: hidden;
   box-shadow: var(--banner-shadow-default);
@@ -87,9 +87,13 @@
 }
 
 .ctaButton {
-  background: var(--primary-brand);
-  color: white;
-  border: 1px solid var(--primary-brand);
+  /* Use centralized button theme variables */
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: 1px solid var(--button-primary-border);
+  box-shadow: 0 2px 8px var(--button-primary-shadow);
+
+  /* Button structure */
   padding: 0.875rem 1.75rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -100,22 +104,24 @@
   gap: 0.5rem;
   transition: all 0.2s ease;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-  /* Matched button styling with consistent border */
 }
 
 .ctaButton:hover {
-  background: var(--expertise-highlight);
-  border-color: var(--expertise-highlight);
+  background: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-text);
+  border-color: var(--button-primary-hover-border);
+  box-shadow: 0 4px 12px var(--button-primary-hover-shadow);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-  /* Matched hover enhancement */
 }
 
 .ctaSecondary {
-  background: var(--primary-brand);
-  color: white;
-  border: 1px solid var(--primary-brand);
+  /* Use centralized button theme variables */
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: 1px solid var(--button-primary-border);
+  box-shadow: 0 2px 8px var(--button-primary-shadow);
+
+  /* Button structure */
   padding: 0.875rem 1.75rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -126,17 +132,14 @@
   gap: 0.5rem;
   transition: all 0.2s ease;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-  /* Perfectly matched button styling */
 }
 
 .ctaSecondary:hover {
-  background: var(--expertise-highlight);
-  color: white;
-  border-color: var(--expertise-highlight);
+  background: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-text);
+  border-color: var(--button-primary-hover-border);
+  box-shadow: 0 4px 12px var(--button-primary-hover-shadow);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
-  /* Perfectly matched hover pattern */
 }
 
 .contactGrid {

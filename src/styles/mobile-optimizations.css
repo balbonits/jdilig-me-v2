@@ -183,7 +183,7 @@
   a,
   input[type="button"],
   input[type="submit"] {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: var(--tap-highlight);
     touch-action: manipulation;
   }
 }
@@ -196,16 +196,16 @@
 }
 
 /* Ensure sufficient color contrast for links */
-/* Only underline content links, not navigation links */
-main a:not([class*="navLink"]):not([class*="Link"]) {
+/* Only underline content links, not navigation links or buttons */
+main a:not([class*="navLink"]):not([class*="Link"]):not([class*="Button"]):not([class*="cta"]) {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
-main a:not([class*="navLink"]):not([class*="Link"]):hover,
-main a:not([class*="navLink"]):not([class*="Link"]):focus {
+main a:not([class*="navLink"]):not([class*="Link"]):not([class*="Button"]):not([class*="cta"]):hover,
+main a:not([class*="navLink"]):not([class*="Link"]):not([class*="Button"]):not([class*="cta"]):focus {
   text-decoration-thickness: 2px;
 }
 

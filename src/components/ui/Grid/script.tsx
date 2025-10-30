@@ -21,31 +21,27 @@ export default function Grid({
   gap = '1.5rem',
   className = ''
 }: GridProps) {
+  // Only apply inline gridTemplateColumns for 'auto' layout or when columns prop is provided
+  // For fixed layouts ('1-col', '2-col', etc.), let CSS handle responsive behavior
   const getGridColumns = () => {
     // If columns prop is provided, it takes precedence
     if (columns) {
       return `repeat(${columns}, 1fr)`;
     }
 
-    // Layout-based configurations
-    switch (layout) {
-      case '1-col':
-        return '1fr';
-      case '2-col':
-        return 'repeat(2, 1fr)';
-      case '3-col':
-        return 'repeat(2, 1fr)';
-      case '4-col':
-        return 'repeat(2, 1fr)';
-      case 'auto':
-      default:
-        return `repeat(auto-fit, minmax(${minWidth}, 1fr))`;
+    // Only return inline style for 'auto' layout
+    if (layout === 'auto') {
+      return `repeat(auto-fit, minmax(${minWidth}, 1fr))`;
     }
+
+    // For fixed layouts, return null to let CSS modules handle responsive behavior
+    return null;
   };
 
+  const gridColumns = getGridColumns();
   const gridStyle = {
     gap,
-    gridTemplateColumns: getGridColumns()
+    ...(gridColumns && { gridTemplateColumns: gridColumns })
   };
 
   return (

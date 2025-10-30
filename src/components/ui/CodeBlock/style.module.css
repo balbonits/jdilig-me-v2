@@ -52,9 +52,9 @@
 
 /* Dark mode adjustments */
 :global(.dark) .codeBlock {
-  background: #1e1e1e;
+  background: var(--code-bg-dark);
 }
 
 :global(.dark) .codeHeader {
-  background: #2d2d2d;
+  background: var(--code-header-dark);
 }

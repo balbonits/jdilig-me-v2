@@ -431,35 +431,87 @@
   pointer-events: none;
 }
 
+/* Journey Grid - Mobile-first */
+.journeyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .journeyGrid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Experience Grid - Mobile-first */
+.experienceGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .experienceGrid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Skills Grid - Mobile-first */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .skillsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Contact Grid - Mobile-first */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .contactGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Mobile Responsive */
 @media (max-width: 767px) {
   .heroTitle {
     font-size: var(--text-5xl);
   }
-  
+
   .heroDescription {
     font-size: var(--text-base);
   }
-  
+
   .heroStats {
     gap: 2rem;
     justify-content: center;
   }
-  
+
   .statNumber {
     font-size: var(--text-4xl);
   }
-  
+
   .heroHeader {
     flex-direction: column;
     gap: var(--space-4);
     text-align: center;
   }
-  
+
   .heroBadge {
     align-self: center;
   }
-  
+
   .mainHero,
   .journeyCard,
   .experienceBanner,
@@ -468,17 +520,7 @@
     padding: 2rem;
     min-height: auto;
   }
-  
-  .journeyGrid,
-  .skillsGrid,
-  .experienceGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .contactGrid {
-    grid-template-columns: 1fr;
-  }
-  
+
   .contactItem {
     flex-direction: column;
     text-align: center;

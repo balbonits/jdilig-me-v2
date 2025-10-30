@@ -6,36 +6,36 @@
      ======================================== */
   
   /* Primary Brand Gradients */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple/Blue - Most used */
-  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink/Red - Very common */
-  --gradient-tertiary: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); /* Teal/Green - Success */
-  --gradient-quaternary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Blue - LinkedIn style */
-  
+  --gradient-primary: linear-gradient(135deg, var(--gradient-color-primary-start) 0%, var(--gradient-color-primary-end) 100%); /* Purple/Blue - Most used */
+  --gradient-secondary: linear-gradient(135deg, var(--gradient-color-secondary-start) 0%, var(--gradient-color-secondary-end) 100%); /* Pink/Red - Very common */
+  --gradient-tertiary: linear-gradient(135deg, var(--gradient-color-tertiary-start) 0%, var(--gradient-color-tertiary-end) 100%); /* Teal/Green - Success */
+  --gradient-quaternary: linear-gradient(135deg, var(--gradient-color-quaternary-start) 0%, var(--gradient-color-quaternary-end) 100%); /* Blue - LinkedIn style */
+
   /* Company Theme Gradients */
-  --gradient-aws: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%); /* AWS Blue */
-  --gradient-fox: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); /* Fox Orange */
-  --gradient-tbn: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%); /* TBN Purple */
-  --gradient-adp: linear-gradient(135deg, #e53e3e 0%, #dd6b20 100%); /* ADP Red/Orange */
+  --gradient-aws: linear-gradient(135deg, var(--gradient-color-aws-start) 0%, var(--gradient-color-aws-end) 100%); /* AWS Blue */
+  --gradient-fox: linear-gradient(135deg, var(--gradient-color-fox-start) 0%, var(--gradient-color-fox-end) 100%); /* Fox Orange */
+  --gradient-tbn: linear-gradient(135deg, var(--gradient-color-tbn-start) 0%, var(--gradient-color-tbn-end) 100%); /* TBN Purple */
+  --gradient-adp: linear-gradient(135deg, var(--gradient-color-adp-start) 0%, var(--gradient-color-adp-end) 100%); /* ADP Red/Orange */
   
   /* State Gradients */
   --gradient-success: var(--gradient-tertiary); /* Alias for teal/green */
   --gradient-warning: var(--gradient-adp); /* Alias for red/orange */
   --gradient-info: var(--gradient-quaternary); /* Alias for blue */
-  --gradient-accent: linear-gradient(135deg, #ec4899 0%, #ef4444 100%); /* Pink accent */
-  
+  --gradient-accent: linear-gradient(135deg, var(--gradient-color-accent-start) 0%, var(--gradient-color-accent-end) 100%); /* Pink accent */
+
   /* Specialty Gradients */
-  --gradient-emerald: linear-gradient(135deg, #0d7377 0%, #2dd4bf 100%); /* Emerald tones */
-  --gradient-sunset: linear-gradient(135deg, #fa709a 0%, #fee140 100%); /* Pink to yellow */
+  --gradient-emerald: linear-gradient(135deg, var(--gradient-color-emerald-start) 0%, var(--gradient-color-emerald-end) 100%); /* Emerald tones */
+  --gradient-sunset: linear-gradient(135deg, var(--gradient-color-sunset-start) 0%, var(--gradient-color-sunset-end) 100%); /* Pink to yellow */
   
   /* Decorative/Glass Morphism */
   --gradient-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   --gradient-glass-dark: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
   
   /* Hover State Variants (Darker versions) */
-  --gradient-primary-hover: linear-gradient(135deg, #5a5fcf 0%, #6a3d94 100%);
-  --gradient-secondary-hover: linear-gradient(135deg, #d182e0 0%, #dc4c60 100%);
-  --gradient-quaternary-hover: linear-gradient(135deg, #3182ce 0%, #00d4ff 100%);
-  --gradient-fox-hover: linear-gradient(135deg, #e55a5a 0%, #e6b84a 100%);
+  --gradient-primary-hover: linear-gradient(135deg, var(--gradient-color-primary-hover-start) 0%, var(--gradient-color-primary-hover-end) 100%);
+  --gradient-secondary-hover: linear-gradient(135deg, var(--gradient-color-secondary-hover-start) 0%, var(--gradient-color-secondary-hover-end) 100%);
+  --gradient-quaternary-hover: linear-gradient(135deg, var(--gradient-color-quaternary-hover-start) 0%, var(--gradient-color-quaternary-hover-end) 100%);
+  --gradient-fox-hover: linear-gradient(135deg, var(--gradient-color-fox-hover-start) 0%, var(--gradient-color-fox-hover-end) 100%);
   
   /* ========================================
      SPACING DESIGN TOKENS  
@@ -88,7 +88,7 @@
 }
 
 /* Theme variants for dark mode */
-:global(.dark) {
+.dark {
   /* Adjust gradient opacity or variants for dark theme if needed */
   --gradient-glass-light: linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
 }

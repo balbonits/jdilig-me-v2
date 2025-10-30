@@ -37,7 +37,124 @@
     --bg-secondary: #f9fafb;        /* Subtle gray for sections */
     --bg-accent: #f3f4f6;          /* Light accent for cards */
     --bg-highlight: #e5e7eb;       /* Highlight background */
-    
+
+    /* ===== GRADIENT BASE COLORS ===== */
+    /* Base hex colors for gradients - centralized color source */
+
+    /* Primary Gradient Colors (Purple/Blue) */
+    --gradient-color-primary-start: #667eea;
+    --gradient-color-primary-end: #764ba2;
+    --gradient-color-primary-hover-start: #5a5fcf;
+    --gradient-color-primary-hover-end: #6a3d94;
+
+    /* Secondary Gradient Colors (Pink/Red) */
+    --gradient-color-secondary-start: #f093fb;
+    --gradient-color-secondary-end: #f5576c;
+    --gradient-color-secondary-hover-start: #d182e0;
+    --gradient-color-secondary-hover-end: #dc4c60;
+
+    /* Tertiary Gradient Colors (Teal/Green) */
+    --gradient-color-tertiary-start: #11998e;
+    --gradient-color-tertiary-end: #38ef7d;
+
+    /* Quaternary Gradient Colors (Blue) */
+    --gradient-color-quaternary-start: #4facfe;
+    --gradient-color-quaternary-end: #00f2fe;
+    --gradient-color-quaternary-hover-start: #3182ce;
+    --gradient-color-quaternary-hover-end: #00d4ff;
+
+    /* AWS Gradient Colors */
+    --gradient-color-aws-start: #3182ce;
+    --gradient-color-aws-end: #00d4ff;
+
+    /* Fox Gradient Colors */
+    --gradient-color-fox-start: #ff6b6b;
+    --gradient-color-fox-end: #feca57;
+    --gradient-color-fox-hover-start: #e55a5a;
+    --gradient-color-fox-hover-end: #e6b84a;
+
+    /* TBN Gradient Colors */
+    --gradient-color-tbn-start: #5a67d8;
+    --gradient-color-tbn-end: #6b46c1;
+
+    /* ADP Gradient Colors */
+    --gradient-color-adp-start: #e53e3e;
+    --gradient-color-adp-end: #dd6b20;
+
+    /* Accent Gradient Colors */
+    --gradient-color-accent-start: #ec4899;
+    --gradient-color-accent-end: #ef4444;
+
+    /* Emerald Gradient Colors */
+    --gradient-color-emerald-start: #0d7377;
+    --gradient-color-emerald-end: #2dd4bf;
+
+    /* Sunset Gradient Colors */
+    --gradient-color-sunset-start: #fa709a;
+    --gradient-color-sunset-end: #fee140;
+
+    /* ===== COMPONENT SPECIFIC COLORS ===== */
+    /* Colors for specific components - all centralized here */
+
+    /* Code Block Colors */
+    --code-bg-dark: #1e1e1e;
+    --code-header-dark: #2d2d2d;
+
+    /* Modal/Overlay Colors */
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --modal-shadow: rgba(0, 0, 0, 0.18);
+    --modal-close-button: #222;
+
+    /* Tap Highlight Color */
+    --tap-highlight: rgba(0, 0, 0, 0.1);
+
+    /* Terminal Colors (macOS Chrome & Text) */
+    --terminal-dot-red: #ff5f56;
+    --terminal-dot-yellow: #ffbd2e;
+    --terminal-dot-green: #27ca3f;
+    --terminal-text: #e5e5e5;
+    --terminal-prompt: #27ca3f;
+
+    /* Error/Warning Colors */
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
+    --error-text: #dc2626;
+    --warning-bg: #fef3c7;
+    --warning-border: #fcd34d;
+    --warning-text: #92400e;
+    --danger-text: #ef4444;
+
+    /* Fallback Text Colors */
+    --text-fallback-dark: #1a202c;
+    --text-fallback-medium: #374151;
+    --text-fallback-light: #4b5563;
+
+    /* Section Border Gradient Colors */
+    --section-border-gradient: linear-gradient(90deg, var(--gradient-color-primary-start) 0%, var(--gradient-color-primary-end) 50%, var(--gradient-color-tertiary-start) 100%);
+
+    /* ===== BUTTON THEMING SYSTEM ===== */
+    /* Centralized button colors to prevent override issues */
+
+    /* Primary CTA Buttons */
+    --button-primary-bg: var(--primary-brand);
+    --button-primary-text: #ffffff;
+    --button-primary-border: var(--primary-brand);
+    --button-primary-shadow: rgba(37, 99, 235, 0.25);
+
+    --button-primary-hover-bg: var(--expertise-highlight);
+    --button-primary-hover-text: #ffffff;
+    --button-primary-hover-border: var(--expertise-highlight);
+    --button-primary-hover-shadow: rgba(37, 99, 235, 0.35);
+
+    /* Secondary Buttons */
+    --button-secondary-bg: transparent;
+    --button-secondary-text: var(--primary-brand);
+    --button-secondary-border: var(--primary-brand);
+
+    --button-secondary-hover-bg: var(--primary-brand);
+    --button-secondary-hover-text: #ffffff;
+    --button-secondary-hover-border: var(--primary-brand);
+
     /* ===== COMPONENT LIBRARY COLOR SYSTEM ===== */
     /* Semantic color variables for component states and types */
     
@@ -124,11 +241,11 @@
     --section-bg-color-hover: var(--color-neutral-hover);
     
     /* Border Variables */
-    --border-color-default: rgba(0, 0, 0, 0.35);
-    --border-color-light: rgba(0, 0, 0, 0.3);
-    --border-color-medium: rgba(0, 0, 0, 0.4);
-    --border-color-strong: rgba(0, 0, 0, 0.45);
-    --border-color-emphasis: rgba(0, 0, 0, 0.5);
+    --border-color-default: rgba(0, 0, 0, 0.1);
+    --border-color-light: rgba(0, 0, 0, 0.05);
+    --border-color-medium: rgba(0, 0, 0, 0.15);
+    --border-color-strong: rgba(0, 0, 0, 0.2);
+    --border-color-emphasis: rgba(0, 0, 0, 0.25);
     
     /* Component Borders */
     --card-border-color-default: var(--border-color-default);
@@ -145,9 +262,9 @@
     --tag-border-color-hover: var(--border-color-emphasis);
     
     /* Shadow Variables */
-    --shadow-color-default: rgba(0, 0, 0, 0.35);
-    --shadow-color-hover: rgba(0, 0, 0, 0.4);
-    --shadow-color-strong: rgba(0, 0, 0, 0.45);
+    --shadow-color-default: rgba(0, 0, 0, 0.1);
+    --shadow-color-hover: rgba(0, 0, 0, 0.15);
+    --shadow-color-strong: rgba(0, 0, 0, 0.2);
     
     /* Component Shadows */
     --card-shadow-default: 0 8px 25px var(--shadow-color-default);
@@ -158,7 +275,7 @@
     --section-shadow-hover: 0 25px 50px var(--shadow-color-hover);
   }
   
-  :global(.dark) {
+  .dark {
     --background: var(--color-gray-950);
     --foreground: var(--color-gray-50);
     --primary: var(--color-blue-400);
@@ -237,9 +354,9 @@
       --card-bg-color-green-hover: var(--color-green-hover);
       
       /* Dark Mode Shadows */
-      --shadow-color-default: rgba(0, 0, 0, 0.4);
-      --shadow-color-hover: rgba(0, 0, 0, 0.5);
-      --shadow-color-strong: rgba(0, 0, 0, 0.6);
+      --shadow-color-default: rgba(0, 0, 0, 0.2);
+      --shadow-color-hover: rgba(0, 0, 0, 0.25);
+      --shadow-color-strong: rgba(0, 0, 0, 0.3);
     }
   }
   
@@ -288,8 +405,8 @@
     --color-green-hover: rgba(56, 239, 125, 0.45);
     --color-red: rgba(255, 99, 132, 0.35);
     --color-red-hover: rgba(255, 99, 132, 0.45);
-    --color-neutral: rgba(0, 0, 0, 0.35);
-    --color-neutral-hover: rgba(0, 0, 0, 0.4);
+    --color-neutral: rgba(0, 0, 0, 0.05);
+    --color-neutral-hover: rgba(0, 0, 0, 0);
     
     /* Light Mode Section Colors */
     --section-bg-color-default: var(--color-neutral);
@@ -307,20 +424,20 @@
     --accent: var(--color-gray-800);
     --accent-foreground: var(--color-gray-300);
     
-    /* Dark Mode Professional Colors (same as :global(.dark)) */
+    /* Dark Mode Professional Colors (same as .dark) */
     --primary-brand: #60a5fa;
     --success-accent: #10b981;
     --expertise-highlight: #a78bfa;
     --corporate-neutral: #94a3b8;
     --warning-attention: #f59e0b;
     
-    /* Dark Mode Professional Text Colors (same as :global(.dark)) */
+    /* Dark Mode Professional Text Colors (same as .dark) */
     --text-primary: #f9fafb;
     --text-secondary: #e5e7eb;
     --text-muted: #d1d5db;
     --text-light: #9ca3af;
     
-    /* Dark Mode Professional Background Colors (same as :global(.dark)) */
+    /* Dark Mode Professional Background Colors (same as .dark) */
     --bg-primary: #111827;
     --bg-secondary: #1f2937;
     --bg-accent: #374151;

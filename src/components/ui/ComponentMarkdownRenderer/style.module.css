@@ -14,10 +14,10 @@
 /* Demo error message */
 .demoError {
   padding: 1rem;
-  background: var(--error-bg-color, #fef2f2);
-  border: 1px solid var(--error-border-color, #fecaca);
+  background: var(--error-bg-color, var(--error-bg));
+  border: 1px solid var(--error-border-color, var(--error-border));
   border-radius: 4px;
-  color: var(--error-color, #dc2626);
+  color: var(--error-color, var(--error-text));
   font-size: 0.875rem;
   margin: 1rem 0;
 }
@@ -26,10 +26,10 @@
 .unknownShortcode {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  background: var(--warning-bg-color, #fef3c7);
-  border: 1px solid var(--warning-border-color, #fcd34d);
+  background: var(--warning-bg-color, var(--warning-bg));
+  border: 1px solid var(--warning-border-color, var(--warning-border));
   border-radius: 4px;
-  color: var(--warning-color, #92400e);
+  color: var(--warning-color, var(--warning-text));
   font-family: var(--font-mono);
   font-size: 0.875rem;
 }
@@ -116,13 +116,13 @@
 :global(.dark) .demoError {
   background: rgba(220, 38, 38, 0.1);
   border-color: rgba(220, 38, 38, 0.3);
-  color: #ef4444;
+  color: var(--danger-text);
 }
 
 :global(.dark) .unknownShortcode {
   background: rgba(251, 191, 36, 0.1);
   border-color: rgba(251, 191, 36, 0.3);
-  color: #fbbf24;
+  color: var(--warning-border);
 }
 
 :global(.dark) .componentMarkdownRenderer code {

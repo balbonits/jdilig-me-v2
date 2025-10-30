@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #11998e 100%);
+  background: var(--section-border-gradient);
 }
 
 .section:hover {
@@ -41,7 +41,7 @@
 
 .sectionTitle::before {
   content: '●';
-  color: #667eea;
+  color: var(--gradient-color-primary-start);
   font-size: 0.75rem;
 }
 
