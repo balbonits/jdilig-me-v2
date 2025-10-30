@@ -413,7 +413,6 @@ docs: update readme     # No version bump
 - Complete ARIA implementation
 - Mobile-first responsive design
 - 38+ pages static generation
-- PWA with offline support
 
 ---
 *Critical reminders:*

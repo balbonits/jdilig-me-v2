@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import SiteHeader from '@/components/SiteHeader';
 import FloatingShare from '@/components/FloatingShare';
-import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import { getVersionInfo } from '@/lib/version';
 import { cn } from '@/utils';
 import styles from './style.module.css';
@@ -41,9 +40,8 @@ export default function SiteLayout({ children, className }: SiteLayoutProps) {
           <p className={styles.versionInfo}>v{version} • <span title="Automatically versioned with semantic-release">Auto-versioned</span></p>
         </div>
       </footer>
-      
+
       <FloatingShare />
-      <PWAInstallPrompt />
     </div>
   );
 }

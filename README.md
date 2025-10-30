@@ -26,7 +26,6 @@
 - **Pure SSG Architecture** - All 68 pages statically generated for maximum performance
 - **SEO Optimized** - Complete meta tags, structured data, and social sharing
 - **Mobile-First Design** - Responsive across all devices and screen sizes
-- **PWA Ready** - Progressive Web App capabilities with offline support
 
 ---
 

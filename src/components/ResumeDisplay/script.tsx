@@ -305,7 +305,7 @@ export default function ResumeDisplay() {
           <ul className={styles.achievements}>
             <li>Developed responsive personal site with Next.js, TypeScript, Tailwind CSS v4, keeping skills current.</li>
             <li>Implemented testing (Jest, React Testing Library, Playwright E2E) and ESLint compliance.</li>
-            <li>Added features: light/dark mode, PWA readiness, WCAG 2.1 AA accessibility.</li>
+            <li>Added features: light/dark mode, WCAG 2.1 AA accessibility, comprehensive analytics integration.</li>
             <li>Showcased algorithms, utilities with documentation and complexity analysis.</li>
           </ul>
         </div>

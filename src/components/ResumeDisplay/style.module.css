@@ -87,8 +87,14 @@
   /* Links Section */
   .linksList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .linksList {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
   }
 
   .linkItem {
@@ -119,8 +125,14 @@
   /* Skills Section */
   .skillsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .skillsGrid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
   }
 
   .skillsColumn {

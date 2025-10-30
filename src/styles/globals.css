@@ -58,8 +58,8 @@
     --color-red-hover: rgba(255, 99, 132, 0.45);
     --color-yellow: rgba(255, 205, 86, 0.35);
     --color-yellow-hover: rgba(255, 205, 86, 0.45);
-    --color-neutral: rgba(0, 0, 0, 0.35);
-    --color-neutral-hover: rgba(0, 0, 0, 0.4);
+    --color-neutral: rgba(0, 0, 0, 0.05);
+    --color-neutral-hover: rgba(0, 0, 0, 0.0);
     
     /* Card Component Variables */
     --card-bg-color-default: var(--bg-secondary); /* Light gray for better visual separation */

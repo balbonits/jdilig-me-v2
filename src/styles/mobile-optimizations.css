@@ -196,15 +196,16 @@
 }
 
 /* Ensure sufficient color contrast for links */
-a {
+/* Only underline content links, not navigation links */
+main a:not([class*="navLink"]):not([class*="Link"]) {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
-a:hover,
-a:focus {
+main a:not([class*="navLink"]):not([class*="Link"]):hover,
+main a:not([class*="navLink"]):not([class*="Link"]):focus {
   text-decoration-thickness: 2px;
 }
 
