@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Component Demo</title>
+    <link rel="stylesheet" href="component.css">
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Button Component Examples</h1>
+
+        <section class="button-group">
+            <h2>Primary Buttons</h2>
+            <button class="btn btn-primary" aria-label="Primary action">
+                Primary Button
+            </button>
+            <button class="btn btn-primary" disabled aria-disabled="true">
+                Disabled Primary
+            </button>
+        </section>
+
+        <section class="button-group">
+            <h2>Secondary Buttons</h2>
+            <button class="btn btn-secondary" aria-label="Secondary action">
+                Secondary Button
+            </button>
+            <button class="btn btn-secondary" disabled aria-disabled="true">
+                Disabled Secondary
+            </button>
+        </section>
+
+        <section class="button-group">
+            <h2>Button Sizes</h2>
+            <button class="btn btn-primary btn-small" aria-label="Small button">
+                Small
+            </button>
+            <button class="btn btn-primary" aria-label="Default button">
+                Default
+            </button>
+            <button class="btn btn-primary btn-large" aria-label="Large button">
+                Large
+            </button>
+        </section>
+
+        <section class="button-group">
+            <h2>Icon Buttons</h2>
+            <button class="btn btn-primary btn-icon" aria-label="Download file">
+                <svg class="btn-icon-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Download</span>
+            </button>
+            <button class="btn btn-secondary btn-icon-only" aria-label="Settings">
+                <svg class="btn-icon-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6m0 6v6m4.22-13.22l4.24 4.24M1.54 12h6m6 0h6"/>
+                </svg>
+            </button>
+        </section>
+
+        <section class="button-group">
+            <h2>Loading State</h2>
+            <button class="btn btn-primary btn-loading" aria-busy="true" aria-label="Loading, please wait">
+                <span class="btn-spinner"></span>
+                <span>Loading...</span>
+            </button>
+        </section>
+
+        <section class="button-group">
+            <h2>Full Width Button</h2>
+            <button class="btn btn-primary btn-block" aria-label="Full width action">
+                Full Width Button
+            </button>
+        </section>
+    </div>
+
+    <script src="component.js"></script>
+</body>
+</html>

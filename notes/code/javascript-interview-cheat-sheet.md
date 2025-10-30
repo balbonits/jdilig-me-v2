@@ -18,39 +18,131 @@ searchKeywords: [javascript, es6, async, promises, closures, prototype, intervie
 ### Modern ECMAScript Features (ES2015+)
 
 ### ES2015 (ES6) Core Features
-```javascript
-// Destructuring Assignment
-const [first, second, ...rest] = [1, 2, 3, 4, 5];
-const { name, age, city = 'Unknown' } = person;
 
-// Template Literals
+**Interview Context**: These are modern JavaScript fundamentals - you must know them cold.
+
+#### Destructuring Assignment
+**What it does**: Extracts values from arrays/objects into separate variables in a single statement.
+
+**Why use it**: Cleaner code, fewer temporary variables, easy parameter handling.
+
+```javascript
+// Array destructuring
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+console.log(first);  // 1
+console.log(second); // 2
+console.log(rest);   // [3, 4, 5]
+
+// Object destructuring
+const person = { name: 'John', age: 30, city: 'NYC' };
+const { name, age, city = 'Unknown' } = person;
+// Default value for city if undefined
+
+// Renaming while destructuring
+const { name: fullName, age: years } = person;
+console.log(fullName); // 'John'
+
+// Function parameters (very common in React)
+function greetPerson({ name, age = 0 }) {
+  return `Hello ${name}, you are ${age} years old`;
+}
+```
+
+**Common pitfall**: Destructuring undefined throws error. Always provide defaults.
+
+#### Template Literals
+**What it does**: String interpolation with embedded expressions and multi-line support.
+
+**Why use it**: More readable than concatenation, supports expressions, preserves formatting.
+
+```javascript
+// String interpolation
+const name = 'John';
+const age = 30;
 const message = `Hello ${name}, you are ${age} years old!`;
-const multiline = `
-  Line 1
-  Line 2
-  Line 3
+
+// Multi-line strings (preserves whitespace)
+const html = `
+  <div class="user">
+    <h1>${name}</h1>
+    <p>Age: ${age}</p>
+  </div>
 `;
 
-// Arrow Functions
-const add = (a, b) => a + b;
+// Expressions inside template literals
+const calculation = `2 + 3 = ${2 + 3}`;
+const conditional = `Status: ${user.isActive ? 'Active' : 'Inactive'}`;
+```
+
+#### Arrow Functions
+**What they do**: Shorter function syntax with lexical `this` binding.
+
+**Why use them**: Concise for callbacks, `this` doesn't change, great for functional programming.
+
+**How they work**: No own `this`, inherit from enclosing scope.
+
+```javascript
+// Concise for simple functions
+const add = (a, b) => a + b;  // Implicit return
+const square = x => x * x;    // Single parameter, no parens needed
+
+// Block body needs explicit return
 const multiply = (a, b) => {
   const result = a * b;
+  console.log(`${a} × ${b} = ${result}`);
   return result;
 };
 
-// Default Parameters
-function greet(name = 'World', greeting = 'Hello') {
-  return `${greeting}, ${name}!`;
-}
+// Lexical this binding (crucial for callbacks)
+class Timer {
+  constructor() {
+    this.seconds = 0;
+  }
 
-// Rest/Spread Operator
+  start() {
+    // Arrow function preserves this from Timer instance
+    setInterval(() => {
+      this.seconds++; // 'this' refers to Timer instance
+    }, 1000);
+
+    // Regular function would lose 'this'
+    // setInterval(function() {
+    //   this.seconds++; // 'this' would be undefined or global
+    // }, 1000);
+  }
+}
+```
+
+**Common pitfall**: Arrow functions can't be constructors, don't use for object methods that need `this`.
+
+#### Rest/Spread Operator
+**What it does**: `...` collects (rest) or spreads values depending on context.
+
+**Why use it**: Flexible function parameters, array/object cloning, merging.
+
+```javascript
+// REST - collects remaining arguments
 function sum(...numbers) {
   return numbers.reduce((total, num) => total + num, 0);
 }
+sum(1, 2, 3, 4); // numbers = [1, 2, 3, 4]
 
+// SPREAD - expands array/object
 const arr1 = [1, 2, 3];
-const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+const arr2 = [...arr1, 4, 5];        // [1, 2, 3, 4, 5]
+const arr3 = [0, ...arr1, ...arr2];  // [0, 1, 2, 3, 1, 2, 3, 4, 5]
+
+// Object spread (ES2018)
+const user = { name: 'John', age: 30 };
+const updatedUser = { ...user, age: 31, city: 'NYC' };
+// { name: 'John', age: 31, city: 'NYC' }
+
+// Function calls
+const numbers = [1, 2, 3];
+Math.max(...numbers); // Math.max(1, 2, 3)
 ```
+
+**Real-world use**: React props spreading, array manipulation, function parameter flexibility.
 
 ### ES2017+ Modern Features
 ```javascript
@@ -124,80 +216,228 @@ arr.at(-2); // 4 (second to last)
 ## Asynchronous JavaScript
 
 ### Promises Deep Dive
-```javascript
-// Promise states visualization:
-// Pending → Fulfilled (resolved)
-//        → Rejected
 
+**Interview Context**: Understanding Promise states and methods is crucial for async JavaScript mastery.
+
+#### Promise States & Lifecycle
+**What happens**: Every Promise goes through predictable states.
+
+```
+Pending ────────┐
+               │
+               ▼
+            Settled
+               │
+    ┌──────────┼──────────┐
+    ▼                     ▼
+Fulfilled            Rejected
+(resolved)          (error)
+```
+
+```javascript
 // Creating promises
 const promise = new Promise((resolve, reject) => {
   const success = Math.random() > 0.5;
-  
+
   setTimeout(() => {
     if (success) {
-      resolve('Success data');
+      resolve('Success data');      // Promise becomes Fulfilled
     } else {
-      reject(new Error('Something went wrong'));
+      reject(new Error('Failed')); // Promise becomes Rejected
     }
   }, 1000);
 });
 
-// Promise methods
-Promise.all([promise1, promise2, promise3])
-  .then(results => {
-    // All must resolve - fails fast on any rejection
-  });
-
-Promise.allSettled([promise1, promise2, promise3])
-  .then(results => {
-    // All settle regardless of outcome
-    // results: [{ status: 'fulfilled', value: ... }, { status: 'rejected', reason: ... }]
-  });
-
-Promise.race([promise1, promise2, promise3])
-  .then(winner => {
-    // First to settle (resolve OR reject) wins
-  });
-
-Promise.any([promise1, promise2, promise3])
-  .then(winner => {
-    // First to RESOLVE wins (ignores rejections)
-  })
-  .catch(error => {
-    // Only if ALL reject (AggregateError)
-  });
+// Promise is immutable once settled
+promise
+  .then(data => console.log('Success:', data))
+  .catch(error => console.log('Error:', error))
+  .finally(() => console.log('Always runs'));
 ```
 
-### Async/Await Patterns
+#### Promise Combinators (Critical for Interviews)
+
 ```javascript
-// Sequential vs Parallel execution
+// PROMISE.ALL - Wait for all, fail fast
+// Use case: Need all data before proceeding
+Promise.all([fetchUser(), fetchProfile(), fetchSettings()])
+  .then(([user, profile, settings]) => {
+    // All resolved - you get array of results
+    console.log('All data loaded:', { user, profile, settings });
+  })
+  .catch(error => {
+    // ANY rejection causes this catch to run
+    console.log('At least one failed:', error);
+  });
+
+// PROMISE.ALLSETTLED - Wait for all, never fail
+// Use case: Want results from all, even if some fail
+Promise.allSettled([fetchUser(), fetchProfile(), fetchSettings()])
+  .then(results => {
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        console.log(`Result ${index}:`, result.value);
+      } else {
+        console.log(`Error ${index}:`, result.reason);
+      }
+    });
+    // Always succeeds, never goes to catch
+  });
+
+// PROMISE.RACE - First to settle wins (resolve OR reject)
+// Use case: Timeout implementation, fastest server
+Promise.race([
+  fetchFromServer1(),
+  fetchFromServer2(),
+  new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Timeout')), 5000)
+  )
+])
+.then(data => console.log('First to finish:', data))
+.catch(error => console.log('First to fail or timeout:', error));
+
+// PROMISE.ANY - First success wins (ignores rejections)
+// Use case: Multiple data sources, any success is good
+Promise.any([
+  fetchFromCDN1(),
+  fetchFromCDN2(),
+  fetchFromCDN3()
+])
+.then(data => {
+  // First successful result
+  console.log('Got data from fastest working CDN:', data);
+})
+.catch(aggregateError => {
+  // Only if ALL reject
+  console.log('All CDNs failed:', aggregateError.errors);
+});
+```
+
+**Real-world scenarios**:
+- **Promise.all**: Loading a dashboard (need all widgets)
+- **Promise.allSettled**: Sending notifications (some can fail)
+- **Promise.race**: Implementing timeouts
+- **Promise.any**: Fallback data sources
+
+**Interview Questions**:
+- "What happens if one Promise.all fails?" (All fail, fast failure)
+- "When would you use allSettled over all?" (When partial success is acceptable)
+- "How do you implement a timeout?" (Promise.race with timeout promise)
+
+### Async/Await Patterns
+
+**Interview Context**: This is critical - async patterns are everywhere in modern JavaScript.
+
+#### Sequential vs Parallel Execution
+**The Problem**: Not understanding the difference leads to unnecessarily slow applications.
+
+```javascript
+// ❌ SEQUENTIAL - Operations wait for each other (SLOW)
 async function sequentialExample() {
-  const result1 = await operation1(); // Wait for 1
-  const result2 = await operation2(); // Then wait for 2
-  const result3 = await operation3(); // Then wait for 3
-  
+  console.time('sequential');
+  const result1 = await operation1(); // 1 second
+  const result2 = await operation2(); // 1 second (waits for result1)
+  const result3 = await operation3(); // 1 second (waits for result2)
+  console.timeEnd('sequential'); // ~3 seconds total
+
   return [result1, result2, result3];
-  // Total time: time1 + time2 + time3
 }
 
+// ✅ PARALLEL - Operations run simultaneously (FAST)
 async function parallelExample() {
-  // Start all operations immediately
+  console.time('parallel');
+  // Start all operations immediately (don't await yet!)
   const promise1 = operation1();
   const promise2 = operation2();
   const promise3 = operation3();
-  
-  // Wait for all to complete
+
+  // Now wait for all to complete
   const results = await Promise.all([promise1, promise2, promise3]);
+  console.timeEnd('parallel'); // ~1 second total (fastest operation)
   return results;
-  // Total time: max(time1, time2, time3)
 }
 
-// Error handling patterns
+// 🔄 MIXED - Some sequential, some parallel (REALISTIC)
+async function mixedExample() {
+  // First, get user data
+  const user = await fetchUser(userId);
+
+  // Then fetch multiple things that depend on user (parallel)
+  const [profile, orders, preferences] = await Promise.all([
+    fetchProfile(user.id),
+    fetchOrders(user.id),
+    fetchPreferences(user.id)
+  ]);
+
+  // Finally, something that depends on all the above (sequential)
+  const recommendations = await fetchRecommendations({
+    profile,
+    orders,
+    preferences
+  });
+
+  return { user, profile, orders, preferences, recommendations };
+}
+```
+
+#### Error Handling Patterns
+**What matters**: Graceful failure handling, user experience, debugging information.
+
+```javascript
+// ✅ COMPREHENSIVE error handling
 async function robustAsyncFunction() {
   try {
     const data = await riskyOperation();
     return { success: true, data };
   } catch (error) {
+    console.error('Operation failed:', error);
+
+    // Different handling based on error type
+    if (error.name === 'NetworkError') {
+      return { success: false, error: 'Network unavailable', retry: true };
+    }
+
+    if (error.status === 401) {
+      return { success: false, error: 'Authentication required', redirect: '/login' };
+    }
+
+    // Generic error
+    return { success: false, error: 'Something went wrong', retry: false };
+  }
+}
+
+// 🔄 RETRY pattern
+async function withRetry(operation, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      console.log(`Attempt ${attempt} failed:`, error.message);
+
+      if (attempt === maxRetries) {
+        throw error; // Re-throw on final attempt
+      }
+
+      // Exponential backoff: 1s, 2s, 4s, 8s...
+      const delay = Math.pow(2, attempt) * 1000;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+
+// Usage
+const result = await withRetry(() => fetchCriticalData());
+```
+
+**Common Mistakes**:
+- Using `await` in loops (sequential instead of parallel)
+- Not handling errors (crashes the app)
+- Over-awaiting (making things sequential unnecessarily)
+
+**Interview Questions**:
+- "How do you run async operations in parallel?" (Promise.all)
+- "What's the difference between Promise.all and Promise.allSettled?" (Failure behavior)
+- "How do you handle errors in async/await?" (try/catch, error objects)
     console.error('Operation failed:', error);
     return { success: false, error: error.message };
   } finally {

@@ -1,0 +1,233 @@
+/* Component Detail Page Styles */
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--text-color-secondary);
+  font-size: 1.125rem;
+}
+
+/* Documentation Section */
+.documentation {
+  line-height: 1.7;
+  color: var(--text-color-primary);
+}
+
+/* Code Section */
+.codeSection {
+  background: var(--background-color-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.codeTabContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--background-color-tertiary);
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.codeTitle {
+  font-weight: 600;
+  color: var(--text-color-primary);
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.copyButton:hover {
+  background: var(--primary-color-dark);
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+  background: var(--code-bg-color);
+}
+
+.codeBlock code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--code-text-color);
+}
+
+/* Properties Section */
+.properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.propertyGroup {
+  background: var(--background-color-secondary);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.propertyTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.375rem 0.75rem;
+  background: var(--tag-bg-color);
+  color: var(--tag-text-color);
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Features */
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featureItem {
+  padding: 0.5rem 0;
+  color: var(--text-color-primary);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+
+.featureItem::before {
+  content: '✓';
+  color: var(--success-color);
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+/* Browser Support */
+.browserList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.browserBadge {
+  padding: 0.375rem 0.75rem;
+  background: var(--background-color-tertiary);
+  color: var(--text-color-primary);
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+}
+
+/* Last Updated */
+.lastUpdated {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+/* Usage Tips */
+.tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.tip {
+  padding: 1.5rem;
+  background: var(--background-color-secondary);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.tip h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.tip p {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .properties {
+    grid-template-columns: 1fr;
+  }
+
+  .tips {
+    grid-template-columns: 1fr;
+  }
+
+  .codeHeader {
+    padding: 1rem;
+  }
+
+  .codeBlock {
+    padding: 1rem;
+  }
+}
+
+/* Dark Mode */
+:global(.dark) .codeSection {
+  background: var(--background-color-secondary-dark);
+}
+
+:global(.dark) .codeHeader {
+  background: var(--background-color-tertiary-dark);
+}
+
+:global(.dark) .codeBlock {
+  background: var(--code-bg-color-dark);
+}
+
+:global(.dark) .propertyGroup {
+  background: var(--background-color-secondary-dark);
+}
+
+:global(.dark) .browserBadge {
+  background: var(--background-color-tertiary-dark);
+  border-color: var(--border-color-dark);
+}
+
+:global(.dark) .tip {
+  background: var(--background-color-secondary-dark);
+}
+
+:global(.dark) .tag {
+  background: var(--tag-bg-color-dark);
+  color: var(--tag-text-color-dark);
+}

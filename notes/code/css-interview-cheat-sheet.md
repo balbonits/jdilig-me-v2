@@ -33,12 +33,31 @@ searchKeywords: [css, selectors, flexbox, grid, specificity, responsive, css3, i
 ```
 
 #### Specificity Hierarchy
+
+**Interview Context**: This is CSS fundamentals - you MUST know this cold.
+
+**How to Calculate**: Count each selector type, compare left-to-right.
+
 ```
-Inline styles:     1,0,0,0  (highest)
-IDs:              0,1,0,0
-Classes/Attrs:    0,0,1,0  
-Elements:         0,0,0,1  (lowest)
+Inline styles:     1,0,0,0  (highest - style="color: red")
+IDs:              0,1,0,0  (#header, #nav)
+Classes/Attrs:    0,0,1,0  (.button, [type="text"], :hover)
+Elements:         0,0,0,1  (div, p, h1)
 ```
+
+**Key Rules**:
+- Higher specificity always wins
+- Equal specificity? Last rule wins (cascade)
+- `!important` trumps everything (avoid!)
+- Inline styles beat everything
+
+**Common Interview Question**: "Which rule applies?"
+```css
+div.header { color: blue; }      /* 0,0,1,1 */
+#main div { color: red; }        /* 0,1,0,1 */
+.header { color: green; }        /* 0,0,1,0 */
+```
+**Answer**: Red wins (ID beats class+element)
 
 ### Selector Examples
 ```css
@@ -62,26 +81,54 @@ input[type="email"] { border: 1px solid blue; }
 ```
 
 ### Advanced Selectors
+
+**Interview Context**: Shows deeper CSS knowledge beyond basic selectors.
+
 ```css
-/* Child combinator */
+/* CHILD combinator (>) - Direct children only */
 ul > li { list-style: none; }
+/* Targets: <ul><li>This</li></ul> */
+/* Ignores: <ul><div><li>Not this</li></div></ul> */
 
-/* Adjacent sibling */
+/* ADJACENT sibling (+) - Immediately following */
 h1 + p { margin-top: 0; }
+/* Targets first <p> right after <h1> */
+/* Use case: Remove margin from first paragraph after heading */
 
-/* General sibling */
+/* GENERAL sibling (~) - Any following sibling */
 h1 ~ p { color: gray; }
+/* Targets ALL <p> elements that come after <h1> at same level */
+/* Use case: Style all paragraphs in a section differently */
 
-/* Attribute selectors */
-[class*="btn"] { padding: 8px; }     /* contains "btn" */
-[class^="btn"] { border-radius: 4px; } /* starts with "btn" */
-[class$="btn"] { cursor: pointer; }  /* ends with "btn" */
+/* ATTRIBUTE selectors - Very powerful */
+[class*="btn"] { padding: 8px; }      /* Contains "btn" anywhere */
+[class^="btn"] { border-radius: 4px; }  /* Starts with "btn" */
+[class$="btn"] { cursor: pointer; }     /* Ends with "btn" */
+[type="email"] { border: 2px solid blue; } /* Exact match */
+[href^="https"] { color: green; }      /* External links */
+[href$=".pdf"] { color: red; }         /* PDF links */
 
-/* Pseudo-selectors */
-:nth-child(2n+1) { background: #f0f0f0; } /* odd children */
-:not(.hidden) { display: block; }
-::before { content: "→"; }
+/* PSEUDO-CLASSES - Element states */
+:nth-child(2n+1) { background: #f0f0f0; } /* Odd children (1,3,5...) */
+:nth-child(even) { background: white; }   /* Even children */
+:first-child { font-weight: bold; }       /* First child */
+:last-child { margin-bottom: 0; }         /* Last child */
+:not(.hidden) { display: block; }         /* Everything except .hidden */
+:hover, :focus, :active { /* Interactive states */ }
+
+/* PSEUDO-ELEMENTS - Virtual elements */
+::before { content: "→"; }                /* Insert content before */
+::after { content: "←"; }                 /* Insert content after */
+::first-line { font-weight: bold; }       /* First line of text */
+::selection { background: yellow; }       /* Text selection highlight */
 ```
+
+**Real-world use cases**:
+- `ul > li`: Style direct navigation items, not sub-menus
+- `h2 + p`: Remove top margin from first paragraph after heading
+- `[href^="mailto"]`: Style email links with envelope icon
+- `:nth-child(odd)`: Zebra-stripe table rows
+- `::before`: Add icons without HTML
 
 ## Layout Systems
 
@@ -376,16 +423,52 @@ Flex Wrap:
 ## Common Interview Questions
 
 ### Q1: What's the difference between `display: none` and `visibility: hidden`?
+
+**Interview Context**: Tests understanding of layout flow vs visual rendering.
+
+**The Key Differences**:
+
 ```css
-/* Removes element from layout entirely */
-.hidden { display: none; }
+/* DISPLAY: NONE - Element completely removed */
+.hidden {
+  display: none;
+  /* ❌ Not in document flow */
+  /* ❌ No space reserved */
+  /* ❌ Screen readers ignore */
+  /* ❌ Cannot receive events */
+  /* ✅ Other elements reflow */
+}
 
-/* Hides element but keeps space in layout */
-.invisible { visibility: hidden; }
+/* VISIBILITY: HIDDEN - Element invisible but present */
+.invisible {
+  visibility: hidden;
+  /* ✅ Stays in document flow */
+  /* ✅ Space is reserved ("ghost" element) */
+  /* ⚠️ Screen readers may announce */
+  /* ❌ Cannot receive focus */
+  /* ✅ Children can override with visibility: visible */
+}
 
-/* Transparent but still interactive */
-.transparent { opacity: 0; }
+/* OPACITY: 0 - Element transparent but interactive */
+.transparent {
+  opacity: 0;
+  /* ✅ Stays in document flow */
+  /* ✅ Space is reserved */
+  /* ✅ Still clickable and focusable */
+  /* ✅ Screen readers still read */
+  /* ✅ Smooth animation possible */
+}
 ```
+
+**When to use each**:
+- **display: none**: Responsive design (hide mobile nav on desktop), conditional content
+- **visibility: hidden**: Maintain layout while loading, hover effects
+- **opacity: 0**: Smooth fade animations, accessible hidden content
+
+**Follow-up questions**:
+- "How does this affect accessibility?" (Screen reader behavior)
+- "Which can be animated?" (opacity smoothly, visibility jumps, display can't)
+- "Performance implications?" (display: none removes from render tree)
 
 ### Q2: Explain the CSS Box Model
 
@@ -430,50 +513,182 @@ Box Model Components:
 ```
 
 ### Q4: How do you center elements?
+
+**Interview Context**: THE classic CSS question. Interviewers want multiple methods and when to use each.
+
+**Modern Methods (Use These)**:
 ```css
-/* Flexbox centering (modern) */
+/* FLEXBOX - Best general solution */
 .flex-center {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;  /* Horizontal centering */
+  align-items: center;      /* Vertical centering */
+  /* ✅ Works with any content size */
+  /* ✅ Responsive by default */
+  /* ✅ Clean, predictable */
 }
 
-/* Grid centering */
+/* CSS GRID - Even simpler */
 .grid-center {
   display: grid;
-  place-items: center;
+  place-items: center;      /* Both axes at once */
+  /* ✅ Single property solution */
+  /* ✅ Great browser support */
+}
+```
+
+**Specific Use Cases**:
+```css
+/* HORIZONTAL-ONLY centering */
+.horizontal-center {
+  margin: 0 auto;           /* Classic for block elements */
+  max-width: 600px;         /* Must have defined width */
+  /* Best for: page containers, content wrappers */
 }
 
-/* Block element centering */
-.block-center {
-  margin: 0 auto;
-  max-width: 600px;
+/* TEXT centering */
+.text-center {
+  text-align: center;       /* Horizontal text centering */
+  /* For single line vertical: */
+  line-height: 100px;       /* Match container height */
+  /* For multi-line: use padding or flexbox */
 }
 
-/* Absolute centering */
+/* ABSOLUTE positioning (overlays) */
 .absolute-center {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* ✅ Works without knowing dimensions */
+  /* ✅ Perfect for modals, tooltips */
+  /* ❌ Removes from document flow */
+}
+
+/* LEGACY methods (know but avoid) */
+.table-center {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  /* Only for old browser support */
 }
 ```
 
+**Decision Matrix**:
+- **Unknown content size**: Flexbox or Grid
+- **Simple horizontal**: margin: auto
+- **Text only**: text-align: center
+- **Overlay/modal**: Absolute + transform
+- **Old browser support**: table-cell
+
+**Interview Follow-ups**:
+- "What about browser support?" (Flexbox: IE10+, Grid: IE10+ with prefixes)
+- "Performance considerations?" (Transform creates new stacking context)
+- "What if content overflows?" (Flexbox handles gracefully)
+
 ### Q5: What are CSS methodologies?
+
+**Interview Context**: Tests understanding of scalable CSS architecture and team development.
+
+**Why They Exist**: CSS gets messy fast. Methodologies provide rules for naming, organizing, and scaling CSS in large projects.
+
+**BEM (Block Element Modifier) - Most Popular**:
 ```css
-/* BEM (Block Element Modifier) */
-.card { }              /* Block */
-.card__title { }       /* Element */
-.card__title--large { } /* Modifier */
+/* BLOCK - Independent, reusable component */
+.card {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* Standalone component */
+}
 
-/* OOCSS principles */
-.btn { /* Structure */ }
-.btn-primary { /* Skin */ }
+/* ELEMENT - Child of block, has no meaning outside it */
+.card__header {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  /* Only exists within card context */
+}
 
-/* Atomic CSS */
-.m-4 { margin: 1rem; }
-.text-center { text-align: center; }
+.card__content {
+  color: #666;
+  line-height: 1.5;
+}
+
+/* MODIFIER - Variation of block or element */
+.card--featured {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  /* Featured variant of card */
+}
+
+.card__header--large {
+  font-size: 1.5rem;
+  /* Large variant of header */
+}
+
+/* Usage: <div class="card card--featured"> */
+/*          <h2 class="card__header card__header--large"> */
 ```
+
+**OOCSS (Object-Oriented CSS) - Separation Principles**:
+```css
+/* STRUCTURE - Layout and positioning */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  /* Base button structure */
+}
+
+/* SKIN - Visual appearance */
+.btn--primary {
+  background: #007bff;
+  color: white;
+}
+
+.btn--secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn--large {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Combine: <button class="btn btn--primary btn--large"> */
+```
+
+**Atomic CSS (Utility-First) - Tailwind Philosophy**:
+```css
+/* Single-purpose utility classes */
+.p-4 { padding: 1rem; }
+.m-2 { margin: 0.5rem; }
+.bg-blue-500 { background-color: #3b82f6; }
+.text-white { color: white; }
+.rounded { border-radius: 0.25rem; }
+.shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+/* HTML becomes the "stylesheet" */
+/* <div class="p-4 m-2 bg-blue-500 text-white rounded shadow-md"> */
+```
+
+**When to Use Each**:
+
+| Methodology | Best For | Pros | Cons |
+|-------------|----------|------|------|
+| **BEM** | Large apps, teams | Clear naming, no conflicts | Verbose class names |
+| **OOCSS** | Design systems | High reusability | Complex inheritance |
+| **Atomic** | Rapid development | Fast iteration | HTML bloat |
+| **SMACSS** | Complex applications | Good organization | Learning curve |
+
+**Interview Follow-ups**:
+- "What problems do these solve?" (Specificity wars, maintainability, conflicts)
+- "How do you handle responsive design?" (Each has different approaches)
+- "What about CSS-in-JS?" (Some methodologies become less relevant)
 
 ## Browser Compatibility & Debugging
 

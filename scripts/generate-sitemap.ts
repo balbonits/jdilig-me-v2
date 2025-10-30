@@ -29,7 +29,9 @@ function generateSitemap() {
     { url: '/code/exercises', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
     { url: '/code/utilities', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
     { url: '/code/patterns', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
-    { url: '/notes', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
+    { url: '/code/notes', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
+    { url: '/ui', lastmod: currentDate, changefreq: 'weekly', priority: 0.8 },
+    { url: '/ui/notes', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },
   ];
 
   // Dynamic pages
@@ -75,10 +77,13 @@ function generateSitemap() {
     });
   });
 
-  // Add notes pages
+  // Add notes pages (routes based on note type)
   notesData.forEach((note: any) => {
+    const noteType = note.type || 'code'; // Default to 'code' for backwards compatibility
+    const baseRoute = noteType === 'ui' ? '/ui/notes' : '/code/notes';
+
     dynamicPages.push({
-      url: `/notes/${note.slug}`,
+      url: `${baseRoute}/${note.slug}`,
       lastmod: currentDate,
       changefreq: 'monthly',
       priority: 0.7

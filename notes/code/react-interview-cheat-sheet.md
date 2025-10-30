@@ -51,107 +51,249 @@ Consumer Components (useContext)
 ### React Hooks Complete Reference
 
 ### useState - State Management
+
+**Interview Context**: This is the most basic React Hook - you must understand all its patterns.
+
+**What it does**: Adds state to functional components. Returns current value and setter function.
+
+**Why use it**: Functional components are simpler than class components, but need state management.
+
+**How it works**: React tracks state between re-renders. When state changes, component re-renders.
+
 ```jsx
 import { useState } from 'react';
 
 function Counter() {
-  // Simple state
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState('');
-  
-  // Object state (functional updates)
+  // Simple state - most common pattern
+  const [count, setCount] = useState(0);  // Initial value: 0
+  const [name, setName] = useState('');   // Initial value: empty string
+
+  // Object state - requires spreading for updates
   const [user, setUser] = useState({ name: '', email: '' });
+
+  // ❌ WRONG - This mutates state directly
+  const badUpdate = (field, value) => {
+    user[field] = value;  // DON'T DO THIS
+    setUser(user);        // React won't re-render!
+  };
+
+  // ✅ CORRECT - Create new object
   const updateUser = (field, value) => {
     setUser(prev => ({ ...prev, [field]: value }));
+    // prev = current state, spread it, override field
   };
-  
-  // Lazy initialization (expensive computation)
+
+  // Lazy initialization - for expensive calculations
   const [expensive] = useState(() => {
-    console.log('This only runs once');
+    console.log('This only runs once on mount');
+    // Expensive computation only runs if needed
     return computeExpensiveInitialValue();
   });
-  
-  // Functional updates (when next state depends on previous)
+  // Without function: useState(computeExpensiveInitialValue())
+  // Would run on every render!
+
+  // Functional updates - when new state depends on old
   const increment = () => setCount(prev => prev + 1);
   const decrement = () => setCount(prev => prev - 1);
-  
+
+  // ❌ BAD in concurrent mode (React 18+)
+  const badIncrement = () => setCount(count + 1);
+  // If multiple updates happen, might use stale count
+
   return (
     <div>
       <p>Count: {count}</p>
       <button onClick={increment}>+</button>
       <button onClick={decrement}>-</button>
+
+      <input
+        value={user.name}
+        onChange={e => updateUser('name', e.target.value)}
+        placeholder="Name"
+      />
     </div>
   );
 }
 ```
 
+**Common Pitfalls**:
+- Mutating objects/arrays directly (React won't detect changes)
+- Using stale state in updates (use functional updates)
+- Expensive initial values without lazy initialization
+
+**Interview Questions**:
+- "Why use functional updates?" (Avoids stale closure issues)
+- "How do you update nested objects?" (Spread operator, immutable patterns)
+- "What happens if you call setState with same value?" (React may skip re-render)
+```
+
 ### useEffect - Side Effects & Lifecycle
+
+**Interview Context**: This is where most React bugs happen. Understanding dependencies is crucial.
+
+**What it does**: Performs side effects after render. Replaces componentDidMount, componentDidUpdate, componentWillUnmount.
+
+**Why use it**: React components should be pure functions. useEffect is the "escape hatch" for impure operations.
+
+**How it works**: Runs after DOM updates. Dependencies determine when to re-run.
+
 ```jsx
 import { useEffect, useState } from 'react';
 
 function DataComponent({ userId }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  // Component did mount + update
+
+  // ⚠️ NO DEPENDENCIES - Runs after every render
   useEffect(() => {
     console.log('Runs after every render');
+    // Usually not what you want - can cause performance issues
   });
-  
-  // Component did mount only
+
+  // ✅ EMPTY DEPENDENCIES - Runs once on mount
   useEffect(() => {
-    console.log('Runs once on mount');
-  }, []); // Empty dependency array
-  
-  // Conditional effect (componentDidUpdate equivalent)
+    console.log('Component mounted - runs once');
+    // Perfect for: initial API calls, subscriptions, timers
+  }, []); // Empty array = no dependencies = never re-run
+
+  // ✅ SPECIFIC DEPENDENCIES - Runs when dependencies change
   useEffect(() => {
     if (userId) {
       setLoading(true);
-      fetchUserData(userId)
-        .then(setData)
-        .finally(() => setLoading(false));
+
+      // Async function inside useEffect
+      const fetchData = async () => {
+        try {
+          const userData = await fetchUserData(userId);
+          setData(userData);
+        } catch (error) {
+          console.error('Failed to fetch user:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
     }
   }, [userId]); // Only runs when userId changes
-  
-  // Cleanup (componentWillUnmount equivalent)
+
+  // ✅ CLEANUP FUNCTION - Prevents memory leaks
   useEffect(() => {
+    console.log('Setting up timer');
     const timer = setInterval(() => {
       console.log('Timer tick');
     }, 1000);
-    
-    // Cleanup function
+
+    // Cleanup runs on unmount AND before effect re-runs
     return () => {
+      console.log('Cleaning up timer');
       clearInterval(timer);
-      console.log('Timer cleaned up');
     };
-  }, []);
-  
-  // Multiple effects for separation of concerns
+  }, []); // Empty deps = cleanup only on unmount
+
+  // ✅ MULTIPLE EFFECTS - Separation of concerns
   useEffect(() => {
     document.title = `User: ${data?.name || 'Loading...'}`;
-  }, [data]);
-  
+  }, [data]); // Only runs when data changes
+
+  // ✅ CONDITIONAL EFFECTS - Avoid unnecessary work
+  useEffect(() => {
+    if (!data) return; // Early return if no data
+
+    const analytics = initializeAnalytics(data.id);
+    analytics.track('user_viewed', { userId: data.id });
+
+    return () => {
+      analytics.cleanup();
+    };
+  }, [data?.id]); // Only re-run if user ID changes
+
   if (loading) return <div>Loading...</div>;
   return <div>{data?.name}</div>;
 }
 ```
 
-### useContext - Global State
+**Dependency Rules (Critical)**:
 ```jsx
-import { createContext, useContext, useState } from 'react';
+// ❌ MISSING DEPENDENCIES - Can cause stale closures
+useEffect(() => {
+  setInterval(() => {
+    setCount(count + 1); // Uses stale count!
+  }, 1000);
+}, []); // Missing count dependency
 
-// 1. Create Context
-const ThemeContext = createContext();
-const UserContext = createContext();
+// ✅ FUNCTIONAL UPDATES - Avoid stale closures
+useEffect(() => {
+  const timer = setInterval(() => {
+    setCount(prev => prev + 1); // Always current
+  }, 1000);
+  return () => clearInterval(timer);
+}, []); // No dependencies needed
 
-// 2. Provider Component
+// ✅ INCLUDE ALL DEPENDENCIES
+useEffect(() => {
+  if (userId && shouldFetch) {
+    fetchData(userId, apiKey);
+  }
+}, [userId, shouldFetch, apiKey]); // All used variables
+```
+
+**Common Mistakes**:
+- Missing dependencies (stale closures)
+- Infinite loops (missing dependencies or wrong dependencies)
+- Memory leaks (forgetting cleanup)
+- Async functions directly in useEffect
+
+**Interview Questions**:
+- "How do you fetch data on mount?" (useEffect with empty deps)
+- "How do you prevent memory leaks?" (Cleanup functions)
+- "What's the difference between useEffect and useLayoutEffect?" (Timing)
+- "How do you handle dependencies?" (Include everything used inside effect)
+```
+
+### useContext - Global State
+
+**Interview Context**: Context API is React's built-in state management. Know when to use it vs external libraries.
+
+**What it does**: Shares data between components without prop drilling. Creates "global" state scoped to a provider tree.
+
+**Why use it**: Avoids passing props through many component layers. Good for themes, auth, language settings.
+
+**How it works**: Provider makes value available, consumers access it via useContext hook.
+
+```jsx
+import { createContext, useContext, useState, useMemo } from 'react';
+
+// 1. CREATE CONTEXT with default value
+const ThemeContext = createContext({
+  theme: 'light',
+  setTheme: () => {}, // Default no-op function
+});
+
+const UserContext = createContext(null);
+
+// 2. PROVIDER COMPONENT
 function App() {
   const [theme, setTheme] = useState('light');
   const [user, setUser] = useState(null);
-  
+
+  // ✅ OPTIMIZATION - Memoize context values
+  const themeValue = useMemo(() => ({
+    theme,
+    setTheme,
+    toggleTheme: () => setTheme(t => t === 'light' ? 'dark' : 'light')
+  }), [theme]);
+
+  const userValue = useMemo(() => ({
+    user,
+    setUser,
+    isLoggedIn: !!user,
+    logout: () => setUser(null)
+  }), [user]);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <UserContext.Provider value={{ user, setUser }}>
+    <ThemeContext.Provider value={themeValue}>
+      <UserContext.Provider value={userValue}>
         <Header />
         <MainContent />
       </UserContext.Provider>
@@ -159,22 +301,33 @@ function App() {
   );
 }
 
-// 3. Consumer Components
+// 3. CONSUMER COMPONENTS
 function Header() {
-  const { theme, setTheme } = useContext(ThemeContext);
-  const { user } = useContext(UserContext);
-  
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, isLoggedIn, logout } = useContext(UserContext);
+
   return (
     <header className={`header header--${theme}`}>
       <h1>Welcome {user?.name || 'Guest'}</h1>
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-        Toggle Theme
-      </button>
+
+      <div className="header-actions">
+        <button onClick={toggleTheme}>
+          Switch to {theme === 'light' ? 'dark' : 'light'} mode
+        </button>
+
+        {isLoggedIn ? (
+          <button onClick={logout}>Logout</button>
+        ) : (
+          <button onClick={() => window.location.href = '/login'}>
+            Login
+          </button>
+        )}
+      </div>
     </header>
   );
 }
 
-// 4. Custom Hook for Context
+// 4. CUSTOM HOOKS - Best practice for context consumption
 function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {
@@ -182,6 +335,72 @@ function useTheme() {
   }
   return context;
 }
+
+function useUser() {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error('useUser must be used within UserProvider');
+  }
+  return context;
+}
+
+// 5. USAGE WITH CUSTOM HOOKS
+function ProfileCard() {
+  const { theme } = useTheme();        // Type-safe, error handling
+  const { user, isLoggedIn } = useUser(); // Clear, reusable
+
+  if (!isLoggedIn) {
+    return <div>Please log in to see your profile</div>;
+  }
+
+  return (
+    <div className={`profile-card profile-card--${theme}`}>
+      <img src={user.avatar} alt={user.name} />
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
+    </div>
+  );
+}
+```
+
+**Performance Optimization**:
+```jsx
+// ❌ BAD - Creates new object every render
+function BadProvider({ children }) {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+  // Every render creates new object -> all consumers re-render!
+}
+
+// ✅ GOOD - Memoize context value
+function GoodProvider({ children }) {
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({ user, setUser }), [user]);
+
+  return (
+    <UserContext.Provider value={value}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+```
+
+**When NOT to use Context**:
+- High-frequency updates (use useReducer + dispatch)
+- Complex state logic (use Redux, Zustand)
+- Performance-critical updates (use atomic state)
+- Server state (use React Query, SWR)
+
+**Interview Questions**:
+- "When would you use Context vs Redux?" (Context for simple global state)
+- "How do you prevent unnecessary re-renders?" (Memoize context values)
+- "What's prop drilling and how does Context solve it?" (Passing props through component tree)
 ```
 
 ### useReducer - Complex State Logic

@@ -12,13 +12,20 @@ interface MobileMenuProps {
 const navigationItems = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
-  { 
-    href: '/code', 
+  {
+    href: '/code',
     label: 'Code',
     subItems: [
       { href: '/code/exercises', label: 'Exercises' },
       { href: '/code/utilities', label: 'Utilities' },
       { href: '/code/patterns', label: 'Design Patterns' }
+    ]
+  },
+  {
+    href: '/ui',
+    label: 'UI',
+    subItems: [
+      { href: '/ui/notes', label: 'Notes & Concepts' }
     ]
   },
   { href: '/about', label: 'About' }

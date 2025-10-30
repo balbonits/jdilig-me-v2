@@ -61,8 +61,14 @@ export default function SiteHeader() {
               items={codeSubmenuItems}
               className={styles.navLink}
             />
-            <Link 
-              href="/about" 
+            <Link
+              href="/ui"
+              className={`${styles.navLink} ${isActive('/ui') ? styles.navLinkActive : ''}`}
+            >
+              UI
+            </Link>
+            <Link
+              href="/about"
               className={`${styles.navLink} ${isActive('/about') ? styles.navLinkActive : ''}`}
             >
               About
