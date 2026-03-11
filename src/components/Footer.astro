@@ -1,0 +1,37 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-border py-12">
+  <div class="container-page">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-on-surface-muted">
+        &copy; {currentYear} John Dilig. Built with Astro.
+      </p>
+      <nav class="flex items-center gap-6" aria-label="Footer links">
+        <a
+          href="https://github.com/balbonits"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-on-surface-muted hover:text-on-surface transition-colors"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/jdilig"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-on-surface-muted hover:text-on-surface transition-colors"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="mailto:rjdofficemail@gmail.com"
+          class="text-sm text-on-surface-muted hover:text-on-surface transition-colors"
+        >
+          Email
+        </a>
+      </nav>
+    </div>
+  </div>
+</footer>

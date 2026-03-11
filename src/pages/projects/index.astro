@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@/data/site.config';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title={siteConfig.seo.titleTemplate('Projects')}
+  description="Explore professional web development projects showcasing React, TypeScript, and modern frontend architecture."
+>
+  <div class="section-padding">
+    <div class="container-page">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-on-surface mb-4 animate-fade-in-up">
+        Projects
+      </h1>
+      <p class="text-lg text-on-surface-muted max-w-2xl mb-12 animate-fade-in-up" style="animation-delay: 0.1s">
+        Selected work from enterprise clients and personal builds.
+      </p>
+
+      <div class="grid gap-8 md:grid-cols-2">
+        {projects.map((project, i) => (
+          <a
+            href={`/projects/${project.id.replace(/\.mdx?$/, '')}`}
+            class="card-base card-hover group block animate-fade-in-up"
+            style={`animation-delay: ${0.1 * (i + 1)}s`}
+          >
+            {project.data.screenshots?.[0] && (
+              <img
+                src={project.data.screenshots[0].src}
+                alt={project.data.screenshots[0].alt}
+                class="rounded-lg mb-4 w-full aspect-video object-cover"
+                loading="lazy"
+              />
+            )}
+            <div class="flex items-center gap-2 mb-3">
+              <span class="badge bg-accent-500/10 text-accent-500">
+                {project.data.category}
+              </span>
+              {project.data.featured && (
+                <span class="badge bg-secondary-500/10 text-secondary-500">Featured</span>
+              )}
+            </div>
+            <h2 class="text-xl font-semibold text-on-surface group-hover:text-accent-500 transition-colors mb-2">
+              {project.data.title}
+            </h2>
+            <p class="text-sm text-on-surface-muted mb-4">{project.data.description}</p>
+            <div class="flex flex-wrap gap-1.5">
+              {project.data.techStack[0]?.items.slice(0, 4).map((tech) => (
+                <span class="text-xs rounded-md bg-surface px-2 py-1 text-on-surface-muted border border-border">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

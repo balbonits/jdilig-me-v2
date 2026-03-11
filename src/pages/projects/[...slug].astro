@@ -1,0 +1,155 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { siteConfig } from '@/data/site.config';
+import { formatStartDate } from '@/utils/formatting';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id.replace(/\.mdx?$/, '') },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { data } = project;
+---
+
+<BaseLayout
+  title={siteConfig.seo.titleTemplate(data.title)}
+  description={data.description}
+  ogImage={data.ogImage}
+>
+  <article class="section-padding">
+    <div class="container-page">
+      <!-- Back link -->
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-1 text-sm text-on-surface-muted hover:text-accent-500 transition-colors mb-8"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        All Projects
+      </a>
+
+      <!-- Header -->
+      <header class="mb-12 animate-fade-in-up">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="badge bg-accent-500/10 text-accent-500">{data.category}</span>
+          <span class="badge bg-secondary-500/10 text-secondary-500">{data.difficulty}</span>
+          <span class="text-sm text-on-surface-muted">{formatStartDate(data.startDate)}</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-on-surface mb-3">
+          {data.title}
+        </h1>
+        <p class="text-lg text-on-surface-muted max-w-3xl">{data.description}</p>
+        <p class="text-sm text-on-surface-muted mt-2">{data.role}</p>
+      </header>
+
+      <!-- Links -->
+      {data.links.length > 0 && (
+        <div class="flex flex-wrap gap-3 mb-12">
+          {data.links.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={[
+                'inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors touch-target',
+                link.type === 'live' || link.type === 'demo'
+                  ? 'bg-accent-600 text-white hover:bg-accent-500'
+                  : 'border border-border text-on-surface hover:bg-surface-alt',
+              ]}
+            >
+              {link.label}
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      )}
+
+      <!-- Metrics -->
+      {data.metrics && data.metrics.length > 0 && (
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {data.metrics.map((metric) => (
+            <div class="card-base text-center">
+              <p class="text-xl font-bold text-gradient mb-1">{metric.value}</p>
+              <p class="text-xs text-on-surface-muted">{metric.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <!-- Screenshots -->
+      {data.screenshots && data.screenshots.length > 0 && (
+        <div class="grid gap-4 md:grid-cols-2 mb-12">
+          {data.screenshots.map((shot) => (
+            <figure class="card-base p-3">
+              <img
+                src={shot.src}
+                alt={shot.alt}
+                class="rounded-lg w-full"
+                loading="lazy"
+              />
+              <figcaption class="text-xs text-on-surface-muted mt-2 text-center">
+                {shot.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+
+      <!-- MDX content -->
+      <div class="prose prose-invert max-w-none
+        [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-on-surface [&_h2]:mt-12 [&_h2]:mb-4
+        [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-on-surface [&_h3]:mt-8 [&_h3]:mb-3
+        [&_p]:text-on-surface-muted [&_p]:leading-relaxed [&_p]:mb-4
+        [&_ul]:text-on-surface-muted [&_ul]:space-y-2 [&_ul]:mb-6
+        [&_li]:leading-relaxed
+        [&_strong]:text-on-surface [&_strong]:font-semibold
+        [&_code]:text-accent-400 [&_code]:bg-surface-alt [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+        [&_a]:text-accent-500 [&_a]:link-underline
+      ">
+        <Content />
+      </div>
+
+      <!-- Tech Stack -->
+      <section aria-labelledby="tech-heading" class="mt-16">
+        <h2 id="tech-heading" class="text-2xl font-bold text-on-surface mb-6">Tech Stack</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data.techStack.map((cat) => (
+            <div class="card-base">
+              <h3 class="text-sm font-semibold text-on-surface mb-3">{cat.category}</h3>
+              <div class="flex flex-wrap gap-1.5">
+                {cat.items.map((item) => (
+                  <span class="badge bg-accent-500/10 text-accent-500">{item}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section aria-labelledby="features-heading" class="mt-16">
+        <h2 id="features-heading" class="text-2xl font-bold text-on-surface mb-6">Features</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          {data.features.map((feat) => (
+            <div class="card-base">
+              <h3 class="text-base font-semibold text-on-surface mb-2">{feat.title}</h3>
+              <p class="text-sm text-on-surface-muted mb-2">{feat.description}</p>
+              {feat.impact && (
+                <p class="text-xs text-accent-500">{feat.impact}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

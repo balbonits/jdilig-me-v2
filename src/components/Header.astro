@@ -1,0 +1,133 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-border bg-surface/80 backdrop-blur-md">
+  <nav class="container-page flex items-center justify-between h-16" aria-label="Main navigation">
+    <a href="/" class="text-lg font-bold tracking-tight text-on-surface hover:text-accent-500 transition-colors">
+      jdilig<span class="text-accent-500">.</span>me
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex items-center gap-1">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              'rounded-lg px-3 py-2 text-sm font-medium transition-colors touch-target inline-flex items-center',
+              pathname === href || (href !== '/' && pathname.startsWith(href))
+                ? 'text-accent-500 bg-accent-500/10'
+                : 'text-on-surface-muted hover:text-on-surface hover:bg-surface-alt',
+            ]}
+            aria-current={pathname === href ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <button
+          id="theme-toggle"
+          type="button"
+          class="rounded-lg p-2 text-on-surface-muted hover:text-on-surface hover:bg-surface-alt transition-colors touch-target"
+          aria-label="Toggle dark mode"
+        >
+          <svg class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Mobile menu button -->
+    <div class="flex items-center gap-2 md:hidden">
+      <button
+        id="theme-toggle-mobile"
+        type="button"
+        class="rounded-lg p-2 text-on-surface-muted hover:text-on-surface transition-colors touch-target"
+        aria-label="Toggle dark mode"
+      >
+        <svg class="hidden dark:block w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg class="block dark:hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        class="rounded-lg p-2 text-on-surface-muted hover:text-on-surface transition-colors touch-target"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu panel -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-surface">
+    <ul class="container-page py-4 space-y-1">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              'block rounded-lg px-3 py-3 text-base font-medium transition-colors touch-target',
+              pathname === href || (href !== '/' && pathname.startsWith(href))
+                ? 'text-accent-500 bg-accent-500/10'
+                : 'text-on-surface-muted hover:text-on-surface hover:bg-surface-alt',
+            ]}
+            aria-current={pathname === href ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script is:inline>
+  function setupThemeToggle() {
+    function toggle() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.documentElement.classList.toggle('light', !isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    document.getElementById('theme-toggle')?.addEventListener('click', toggle);
+    document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggle);
+  }
+
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    btn?.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu?.classList.toggle('hidden');
+    });
+  }
+
+  setupThemeToggle();
+  setupMobileMenu();
+
+  document.addEventListener('astro:after-swap', () => {
+    setupThemeToggle();
+    setupMobileMenu();
+  });
+</script>

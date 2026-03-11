@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ============================================
+   CUSTOM THEME — Design Tokens
+   ============================================ */
+
+@theme {
+  /* --- Colors: Neutral palette --- */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-850: #1a1a1a;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+
+  /* --- Colors: Brand accent (vibrant blue) --- */
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+
+  /* --- Colors: Secondary accent (purple) --- */
+  --color-secondary-400: #a78bfa;
+  --color-secondary-500: #8b5cf6;
+  --color-secondary-600: #7c3aed;
+
+  /* --- Colors: Success --- */
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+
+  /* --- Colors: Surface (light/dark adaptive via CSS vars below) --- */
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-muted: var(--on-surface-muted);
+  --color-border: var(--border-color);
+
+  /* --- Typography --- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Fira Code", monospace;
+
+  /* --- Spacing scale (4px base) --- */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --spacing-128: 32rem;
+
+  /* --- Animation --- */
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  --animate-slide-in: slide-in 0.4s ease-out both;
+}
+
+/* --- Keyframes --- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-0.5rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================
+   ADAPTIVE SURFACE VARIABLES (light/dark)
+   ============================================ */
+
+:root {
+  --surface: #ffffff;
+  --surface-alt: #f5f5f5;
+  --on-surface: #171717;
+  --on-surface-muted: #525252;
+  --border-color: #e5e5e5;
+}
+
+.dark {
+  --surface: #0a0a0a;
+  --surface-alt: #171717;
+  --on-surface: #fafafa;
+  --on-surface-muted: #a3a3a3;
+  --border-color: #262626;
+}
+
+/* ============================================
+   BASE LAYER
+   ============================================ */
+
+@layer base {
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-500 rounded-sm;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+@utility container-page {
+  @apply mx-auto w-full max-w-5xl px-4 md:px-6 lg:px-8;
+}
+
+@utility text-gradient {
+  @apply bg-gradient-to-r from-accent-500 to-secondary-500 bg-clip-text text-transparent;
+}
+
+@utility text-gradient-light {
+  @apply bg-gradient-to-r from-accent-400 to-secondary-400 bg-clip-text text-transparent;
+}
+
+@utility section-padding {
+  @apply py-16 md:py-24;
+}
+
+@utility card-base {
+  @apply rounded-xl border border-border bg-surface-alt p-6 transition-all duration-300;
+}
+
+@utility card-hover {
+  @apply hover:border-accent-500/30 hover:shadow-lg hover:-translate-y-0.5;
+}
+
+@utility link-underline {
+  @apply underline decoration-accent-500/40 underline-offset-4 hover:decoration-accent-500 transition-colors;
+}
+
+@utility badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+}
+
+@utility touch-target {
+  @apply min-h-11 min-w-11;
+}
+
+@utility skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-accent-600 focus:px-4 focus:py-2 focus:text-white;
+}

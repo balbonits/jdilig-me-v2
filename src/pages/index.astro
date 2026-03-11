@@ -1,0 +1,172 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StructuredData from '@/components/StructuredData.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@/data/site.config';
+import { Image } from 'astro:assets';
+import headshot from '@/assets/images/headshot.png';
+
+const featuredProjects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.author.name,
+  url: siteConfig.url,
+  jobTitle: 'Front-End Developer',
+  sameAs: [siteConfig.author.github, siteConfig.author.linkedin],
+};
+---
+
+<BaseLayout title={siteConfig.seo.defaultTitle} description={siteConfig.description}>
+  <StructuredData data={personSchema} />
+
+  <!-- Hero -->
+  <section class="section-padding" aria-label="Introduction">
+    <div class="container-page">
+      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <div class="flex-1 text-center md:text-left animate-fade-in-up">
+          <p class="text-sm font-medium tracking-widest uppercase text-accent-500 mb-4">
+            Front-End Developer
+          </p>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-surface mb-6">
+            Hi, I'm <span class="text-gradient">John Dilig</span>
+          </h1>
+          <p class="text-lg md:text-xl text-on-surface-muted max-w-2xl leading-relaxed mb-8">
+            18+ years building responsive, high-traffic web apps for companies like
+            <strong class="text-on-surface">FOX Sports</strong>,
+            <strong class="text-on-surface">AWS</strong>, and
+            <strong class="text-on-surface">TBN</strong>.
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+            <a
+              href="/projects"
+              class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-6 py-3 text-sm font-semibold text-white hover:bg-accent-500 transition-colors touch-target"
+            >
+              View Projects
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href="/about"
+              class="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-on-surface hover:bg-surface-alt transition-colors touch-target"
+            >
+              About Me
+            </a>
+          </div>
+        </div>
+        <div class="shrink-0 animate-fade-in" style="animation-delay: 0.2s">
+          <Image
+            src={headshot}
+            alt="John Dilig — Front-End Developer"
+            width={280}
+            height={280}
+            class="rounded-full border-4 border-accent-500/20 shadow-2xl"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 mt-16 max-w-lg mx-auto md:mx-0">
+        {[
+          { value: '18+', label: 'Years Experience' },
+          { value: '10M+', label: 'Users Served' },
+          { value: '3', label: 'Fortune 500s' },
+        ].map(({ value, label }) => (
+          <div class="text-center">
+            <p class="text-2xl md:text-3xl font-bold text-gradient">{value}</p>
+            <p class="text-xs md:text-sm text-on-surface-muted mt-1">{label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="section-padding bg-surface-alt" aria-labelledby="featured-heading">
+    <div class="container-page">
+      <h2 id="featured-heading" class="text-2xl md:text-3xl font-bold tracking-tight text-on-surface mb-2">
+        Featured Projects
+      </h2>
+      <p class="text-on-surface-muted mb-10">
+        Selected work from enterprise and personal projects.
+      </p>
+
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {featuredProjects.map((project) => (
+          <a
+            href={`/projects/${project.id.replace(/\.mdx?$/, '')}`}
+            class="card-base card-hover group block"
+          >
+            {project.data.screenshots?.[0] && (
+              <img
+                src={project.data.screenshots[0].src}
+                alt={project.data.screenshots[0].alt}
+                class="rounded-lg mb-4 w-full aspect-video object-cover"
+                loading="lazy"
+              />
+            )}
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge bg-accent-500/10 text-accent-500">
+                {project.data.category}
+              </span>
+              <span class="badge bg-secondary-500/10 text-secondary-500">
+                {project.data.difficulty}
+              </span>
+            </div>
+            <h3 class="text-lg font-semibold text-on-surface group-hover:text-accent-500 transition-colors mb-2">
+              {project.data.title}
+            </h3>
+            <p class="text-sm text-on-surface-muted line-clamp-2">
+              {project.data.description}
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <div class="text-center mt-10">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 text-sm font-medium text-accent-500 hover:text-accent-400 transition-colors"
+        >
+          View all projects
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="section-padding" aria-labelledby="contact-heading">
+    <div class="container-page text-center">
+      <h2 id="contact-heading" class="text-2xl md:text-3xl font-bold tracking-tight text-on-surface mb-4">
+        Let's Connect
+      </h2>
+      <p class="text-on-surface-muted max-w-xl mx-auto mb-8">
+        I'm actively seeking new opportunities. Ready to bring 18+ years of front-end expertise to your team.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a
+          href="mailto:rjdofficemail@gmail.com"
+          class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-6 py-3 text-sm font-semibold text-white hover:bg-accent-500 transition-colors touch-target"
+        >
+          Get in Touch
+        </a>
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-on-surface hover:bg-surface-alt transition-colors touch-target"
+        >
+          Download Resume
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

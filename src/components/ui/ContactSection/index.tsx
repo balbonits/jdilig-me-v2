@@ -1,1 +1,0 @@
-export { default, type ContactSectionProps, type ContactItem } from './script';

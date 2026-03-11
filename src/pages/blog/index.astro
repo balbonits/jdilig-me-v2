@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '@/data/site.config';
+import { formatDate } from '@/utils/formatting';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title={siteConfig.seo.titleTemplate('Blog')}
+  description="Articles on frontend development, TypeScript, React, and web engineering."
+>
+  <div class="section-padding">
+    <div class="container-page">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-on-surface mb-4 animate-fade-in-up">
+        Blog
+      </h1>
+      <p class="text-lg text-on-surface-muted max-w-2xl mb-12 animate-fade-in-up" style="animation-delay: 0.1s">
+        Thoughts on frontend development, engineering practices, and lessons learned.
+      </p>
+
+      {posts.length > 0 ? (
+        <div class="space-y-6">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`} class="card-base card-hover group block">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                <time class="text-sm text-on-surface-muted" datetime={post.data.date.toISOString()}>
+                  {formatDate(post.data.date)}
+                </time>
+                {post.data.tags.map((tag) => (
+                  <span class="badge bg-accent-500/10 text-accent-500">{tag}</span>
+                ))}
+              </div>
+              <h2 class="text-xl font-semibold text-on-surface group-hover:text-accent-500 transition-colors mb-2">
+                {post.data.title}
+              </h2>
+              <p class="text-sm text-on-surface-muted">{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="card-base text-center py-16">
+          <p class="text-on-surface-muted text-lg mb-2">Coming Soon</p>
+          <p class="text-sm text-on-surface-muted">
+            Articles on frontend development and engineering practices are on the way.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

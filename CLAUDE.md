@@ -1,443 +1,82 @@
-# CLAUDE.md - Project Context
-
-## 🤖 Shared Context System
-This serves as a **persistent knowledge base** shared between AI sessions for project continuity.
-
-**memorize:** pattern - Any statement following `memorize:` becomes a candidate for inclusion in this context file.
-
-## 📝 Content Management
-- **LinkedIn Posts**: Record all written LinkedIn posts in `linkedin-posts.md` with date posted
-- Each post should be numbered and dated for tracking purposes
-- Maintain archive of all portfolio-related social media content
-
-## 🚨 Critical Policies
-
-### Project Status Language
-- NEVER use "complete", "completed", "finished", "done" status language
-- NEVER add status fields to project data or interfaces  
-- Use "current", "working", "functional", "implemented" instead
-
-### Project Card Display Rules
-- Projects in "Featured" section: No badges needed (already in Featured section)
-- Projects in "All Projects & Case Studies" section: Show type badge
-  - "Featured" - if project is also in Featured section
-  - "Case Study" - if category contains "case study"
-  - "Project" - for all other projects
-- The featured field in data is ONLY for determining what shows in Featured section
-
-### TypeScript Standards & Type Discipline
-- **Zero tolerance for `any` types** - Use specific interfaces/types  
-- **ESLint compliance required** - All errors are build-blocking
-- **Vercel deployment fails** on TypeScript/ESLint errors
-
-#### Type-First Development Principles
-1. **No Global Shortcuts** - Never use `any`, `unknown`, or ESLint disable comments globally
-2. **Targeted Exemptions** - Use specific ESLint disables with clear justification for patterns that require `any` (e.g., Proxy, dynamic property access)
-3. **Specific Over Generic** - Create exact types instead of broad fallbacks
-4. **Type Libraries** - Build reusable type definitions in `/src/types/`
-5. **Segregated Processing** - Separate functions for different data types
-6. **Runtime Type Guards** - Validate and narrow types at boundaries
-7. **Discriminated Unions** - Use explicit type fields to distinguish cases
-
-#### Pattern-Specific Type Requirements
-- **API Clients**: Use `JsonValue` for serializable data, specific request/response types
-- **Event Systems**: Use `EventMap` with specific event payload types
-- **Proxy Patterns**: Use targeted `/* eslint-disable @typescript-eslint/no-explicit-any -- reason */` for dynamic property access
-- **Form Validation**: Use `FormField` interfaces with specific validation rules
-- **State Management**: Use specific state interfaces, never generic objects
-
-#### Type Architecture Rules
-- `interfaces/` - Domain data structures (what data looks like)
-- `types/` - Utility types and behavioral types (how code behaves)  
-- Pattern: `JsonValue | JsonObject | JsonArray` for API data
-- Pattern: `EventMap` with typed event payloads
-- Pattern: `PropertyValue` with runtime type guards for dynamic access
-- **ESLint Integration**: All type violations are build-blocking errors
-
-#### Code Quality Standards  
-- **No `let` for immutable data** - Use `const` unless reassignment needed
-- **No unused variables** - Clean up refactoring artifacts immediately
-- **Arrow functions preferred** - Use ES6 syntax consistently
-- **Type-specific handlers** - Avoid generic `any` processors
-- **Explicit return types** - Document function contracts
-
-### Human Readability First
-- Use template literals for multiline strings (not escaped `\n`)
-- Write self-documenting code with clear naming
-- Code should read like well-written prose
+# CLAUDE.md
+Read AGENTS.md first.
 
 ## Project Overview
-- **Name**: jdilig-me-v2
+- **Name**: jdilig-me-v2 (v3 rebuild)
 - **URL**: https://www.jdilig.me
-- **Stack**: Next.js 16 (with webpack for builds), React 19.2, TypeScript, Tailwind CSS v4, Jest, Playwright
-- **Analytics**: Google Analytics 4, Vercel Analytics, Core Web Vitals tracking
-- **Architecture**: Modular components with unified UI system
-- **Build**: Uses webpack for production builds due to Turbopack/Tailwind CSS v4 compatibility issues
+- **Stack**: Astro 5, TypeScript (strict), Tailwind CSS v4, MDX, Preact islands
+- **Deployment**: Vercel (static output, every push goes live)
+- **Package Manager**: bun
+- **Analytics**: GA4 (G-D80RETE964, free tier)
 
-## 📁 Project Structure
+## Behavioral Rules
+- Do only what is asked
+- Prefer editing over creating files
+- Tailwind utility classes only — no CSS modules, no external stylesheets
+- Custom tokens via `@theme`, custom utilities via `@utility` in global.css
+- NEVER use "complete/done/finished" — use "current/working/functional"
+
+## Production Warning
+Every push → live at jdilig.me. No staging environment.
+
+## Commit Protocol
+1. Never commit without explicit approval
+2. Ask: "Should I commit?"
+3. Run: bun run build before committing
+
+## Styling Rules
+- All styling via Tailwind v4 utility classes
+- Custom design tokens in `src/styles/global.css` via `@theme { }`
+- Custom utility classes via `@utility name { }` directives
+- No CSS modules, no `.module.css`, no separate component stylesheets
+- Colors only from theme tokens — no raw hex/rgba in component files
+- Mobile-first: base=mobile, `md:` for tablet, `lg:` for desktop
+- Never use `max-width` media queries
+
+## Accessibility Requirements
+- WCAG 2.1 AA compliance on all pages
+- Semantic HTML, proper heading hierarchy (h1 > h2 > h3)
+- ARIA labels on all interactive elements
+- Touch targets minimum 44px (`touch-target` utility)
+- Skip-to-content link on every page layout
+- `prefers-reduced-motion: reduce` disables all animations
+- Focus-visible outlines on all interactive elements
+- Color contrast minimum 4.5:1 for text
+
+## Verification
+```bash
+bun run check         # astro check (TypeScript)
+bun run build         # Production build (includes astro check)
+```
+
+## Project Structure
 ```
 src/
-├── pages/                  # Next.js Pages Router
-├── components/
-│   ├── ui/                # Core UI primitives
-│   └── pages/             # Page components
-├── interfaces/            # Domain data structures
-├── types/                 # Utility types
-├── data/                  # Static data
-├── exercises/             # Algorithm exercises
-├── utilities/             # Utility functions
-├── notes/                 # Notes & reference materials
-│   ├── markdown/          # Source .md files (editable)
-│   └── diagrams/          # SVG diagrams for visual concepts
-└── scripts/               # Build scripts
-projects/                  # Project showcase data
+├── assets/images/     # Build-time optimized (headshot, profile)
+├── components/        # .astro components (static)
+├── content/           # MDX content collections (projects, blog)
+├── content.config.ts  # Zod schemas for content
+├── data/              # Static TypeScript data modules
+├── layouts/           # BaseLayout.astro
+├── pages/             # File-based routing
+├── styles/global.css  # Tailwind imports + @theme + @utility
+├── types/             # TypeScript types
+└── utils/             # Utility functions
 ```
 
-## 🎨 CSS Architecture (MANDATORY)
+## Content Collections
+- `src/content/projects/*.mdx` — Project case studies (Zod-validated frontmatter)
+- `src/content/blog/*.mdx` — Blog posts
+- Schema defined in `src/content.config.ts`
 
-### Mobile-First Hierarchy
-```css
-/* 1. ROOT - Global foundation */
-:root { /* CSS variables */ }
-
-/* 2. COMPONENT - Reusable styles */
-.component { /* Mobile-first base */ }
-
-/* 3. PAGE - Specific overrides (minimize) */
-.pageSpecific { /* Only when needed */ }
-
-/* 4. THEME - Conditional overrides */
-:global(.dark) .component { /* Dark only */ }
-```
-
-### Responsive Breakpoints
-- Mobile: 320px+ (base)
-- Tablet: `@media (min-width: 768px)`
-- Desktop: `@media (min-width: 1024px)`
-
-**NEVER**: Use `max-width` queries or desktop-first approach
-
-## 🎨 Theming System
-
-### Three-Tier Architecture
-1. **`:root`** - Default/fallback palette
-2. **`.light`** - Light mode overrides
-3. **`.dark`** - Dark mode overrides
-
-### Component Variables Pattern
-```css
---card-bg-color-default: var(--color-neutral);
---banner-border-color-hover: var(--border-color-medium);
-```
-Naming: `--{component}-{property}-{state}`
-
-## 🧪 Testing Infrastructure
-
-### Jest (327+ tests, 20 suites)
-- Mock factories for browser APIs
-- Component testing with accessibility  
-- Advanced test utilities framework
-- **Comprehensive SEO Test Suite**: 52 tests covering meta tags, OpenGraph, structured data, semantic HTML, performance, and accessibility compliance
-- **Markdown Processing Tests**: 36 tests validating header conversion, formatting, and edge cases
-
-### Playwright E2E (160+ scenarios, 5 browsers)
-- Core Web Vitals validation
-- Cross-browser testing matrix
-- Visual regression snapshots
-- User journey testing
-
-### Test Commands
-```bash
-npm test                # Jest unit tests
-npm run test:e2e        # Playwright E2E
-npm run test:all        # Both suites
-npm run test:e2e:update # Update snapshots
-```
-
-## 💻 Development Commands
-```bash
-npm run dev             # Start dev server
-npm run build           # Build production
-npm run generate        # Generate JSON data (exercises, utilities, patterns, projects, notes)
-npm run generate:notes  # Generate notes JSON from markdown files
-npm run process-images  # Process project images
-npm run lint            # ESLint check
-```
-
-## 📊 Analytics Implementation
-- **Google Analytics 4** via @next/third-parties/google
-- **Vercel Analytics** with zero config
-- **Custom event tracking** for code showcase interactions
-- **Production-only** with environment gating
-
-Setup: Add `NEXT_PUBLIC_GA_ID=G-XXX` to `.env.local`
-
-## 🏗️ Component Architecture
-
-### Structure Pattern
-```
-ComponentName/
-├── index.tsx      # Clean export
-├── script.tsx     # Component logic
-├── style.module.css # Scoped styles
-└── test.tsx       # Jest tests
-```
-
-### UI Component System
-Core primitives: PageContainer, PageHeader, Section, Card, Grid, Modal, ProfileImage, CodeShowcase, SolutionTabs, Breadcrumb
-
-### TypeScript Organization
-- `interfaces/` - Domain data structures (what data looks like)
-- `types/` - Utility types (how code behaves)
-- Shared template pattern: Shared → Showcase → Exercise/Utility
-
-## 📝 Code Showcase System
-- **Exercises** (15), **Utilities** (14), **Design Patterns** (27), & **Notes** (6) with enhanced descriptions
-- Multiple solutions with complexity analysis
-- Optimal solution auto-detection (★ badges)
-- PascalCase naming convention
-
-### Enhanced Descriptions & Markdown Processing
-- `description`: Brief one-liner for cards
-- `detailedDescription`: Comprehensive showcase content with full markdown support
-- **Custom Markdown Processor**: 300+ line solution converting markdown to semantic HTML
-- **MarkdownRenderer Component**: Reusable React component for consistent processing
-- **Code Block Support**: Triple backtick syntax with language specification (```javascript)
-- **Header Structure**: Proper `##` → `<h2>`, `###` → `<h3>` conversion with whitespace handling
-- **Rich Formatting**: Bold text, emoji bullets, inline code, structured lists, code blocks
-- **SEO Optimized**: Semantic HTML output with proper heading hierarchy
-
-## 📚 Notes & Reference System
-- **6 Comprehensive cheat sheets** covering interview prep and development references
-- **Hierarchical UI Structure** with 4-level organization for optimal content navigation
-- **Enhanced Markdown Processing** with tables, code blocks, and rich formatting
-- **Markdown-based content** stored in `src/notes/markdown/` for portability
-- **Build-time conversion** from `.md` to JSON with frontmatter parsing
-- **Content categories**: Interview prep, cheat sheets, reference materials, quick lookup
-- **Tag-based organization** with filtering by category and difficulty level
-
-### Hierarchical Content Structure
-**MarkdownTransformer Component** converts markdown into organized UI:
-- **Level 1** (`#`): Page title
-- **Level 2** (`##`): Main sections (Section component with blue borders)
-- **Level 3** (`###`): Tabbed sub-sections (TabContainer with tab navigation)
-- **Level 4** (`####`): Card components (responsive grid layout within tabs)
-
-### Enhanced Markdown Processing
-- **Tables**: Full markdown table support with styled HTML output
-- **Code blocks**: Triple backtick syntax with language highlighting (`jsx`, `javascript`, etc.)
-- **Headers**: Proper `<h2>`, `<h3>` semantic structure
-- **Text formatting**: Bold (`**text**`), italic (`*text*`), inline code (`` `code` ``)
-- **Lists**: Bullet points with emoji support and styled markers
-
-### Notes Collection
-1. **CSS Interview Cheat Sheet** - Selectors, layouts, CSS3+ features, comparison tables
-2. **JavaScript Interview Cheat Sheet** - Modern ES features, async patterns, shortcuts, gotchas
-3. **React Interview Cheat Sheet** - Hooks, Context API, performance optimization patterns
-4. **State Management Cheat Sheet** - Redux Toolkit, Zustand, Context API comparison tables
-5. **Git Commands & Workflows** - Commands, branching strategies, troubleshooting
-6. **Agile Methodologies** - Scrum, Kanban, ceremonies, roles, best practices
-
-### Notes Generation Pipeline
-```bash
-npm run generate:notes    # Generate notes.json from markdown files
-```
-
-#### Technical Implementation
-- **MarkdownTransformer**: Reuses existing Section, TabContainer, Card components
-- **Responsive Design**: CSS Grid layout for cards (auto-fit, 300px minimum)
-- **Semantic HTML**: Proper table structure with `<thead>`, `<tbody>`, styled rows
-- **Mobile-first**: Responsive tables and card layouts across all device sizes
-- **Type-safe**: Full TypeScript integration with explicit type annotations
-
-## 🎨 Design Pattern Generation System
-- **27 Patterns** across 4 categories (Creational, Structural, Behavioral, Modern)
-- **84 Solutions** with actual TypeScript implementation code (275.6 KB)
-- **Advanced Path Resolution**: Custom tsconfig.scripts.json for Node.js ts-node imports
-- **Intelligent Tab Optimization**: 50+ abbreviations with 14-character limit
-- **Real Code Generation**: Extracts actual implementation from TypeScript modules
-- **Comprehensive Testing**: 23 tests including tab name optimization validation
-
-### Pattern Generation Pipeline
-```bash
-npm run generate:patterns    # Generate patterns.json from TS modules
-```
-
-#### Tab Name Shortening Algorithm
-- **Smart Abbreviations**: Database → DB, Application → App, Iterator → Iter
-- **Pattern-Aware**: Preserves Factory, Bridge, Proxy, Adapter terminology
-- **Intelligent Truncation**: First+last word selection with ellipsis fallback
-- **UI Optimized**: 14-character limit ensures container compatibility
-
-Examples: "Database Abstraction Factory" → "DB Factory", "WebSocket Message Stream" → "WS Msg Strm"
-
-### Build Integration
-- **tsconfig-paths**: Resolves @ aliases in Node.js environment
-- **Automated Generation**: Runs during build pipeline
-- **Error Resilient**: Continues processing when individual patterns fail
-
-## 🚀 Project Showcase System
-
-### Structure
-```
-projects/{name}/
-├── {name}.ts      # TypeScript module
-├── images/        # Raw images
-└── PROJECT.md     # Documentation
-```
-
-### Project Addition Workflow
-1. Capture screenshots (01-desktop-homepage.png, etc.)
-2. Create TypeScript module with ProjectData interface
-3. Process images: `npm run process-images {slug}`
-4. Generate JSON: `npm run generate:projects`
-5. **Check routes**: Verify URLs work by updating data-fetchers.ts slug lists
-6. Build & test: `npm run build`
-7. Update snapshots: `npx playwright test --update-snapshots`
-8. Commit & push to deploy
-
-## 🚨 CRITICAL DEVELOPMENT WORKFLOW
-
-### 🔴 PRODUCTION DEPLOYMENT WARNING
-**EVERY PUSH GOES LIVE IMMEDIATELY - NO DEV ENVIRONMENT**
-- Pushes deploy directly to production at https://www.jdilig.me
-- Broken code affects live users instantly
-- NEVER push without complete testing
-
-### Testing Requirements (MANDATORY)
-**ALL tests must PASS before any commit consideration:**
-```bash
-npm run dev          # Test dev server works
-npm run lint         # Zero ESLint errors
-npm test             # All Jest tests pass
-npm run build        # Production build succeeds
-npx playwright test  # E2E tests pass (optional for docs)
-```
-
-### Commit/Push Protocol
-1. **NEVER commit or push without explicit user approval**
-2. **NEVER assume user wants immediate deployment**  
-3. **Always ask: "Should I commit these changes?"**
-4. **Wait for explicit "commit" or "push" commands**
-5. **If build/tests fail, fix completely before mentioning commit**
-
-### Pre-Commit Checklist
-- [ ] Dev server runs without errors (`npm run dev`)
-- [ ] All syntax errors fixed (CSS, TypeScript, etc.)  
-- [ ] Build succeeds (`npm run build`)
-- [ ] Linting passes (`npm run lint`)
-- [ ] Tests pass (`npm test`)
-- [ ] Changes tested in browser
-- [ ] User explicitly approved commit/push
-
-### Smart Test Skip (Docs Only)
-```bash
-# For .md files only - skip expensive tests
-if git diff --cached --name-only | grep -v '\.md$' | grep -q .; then
-  npm run lint && npm test && npx playwright test && npm run build
-else
-  npm run lint  # Lint only for docs
-fi
-```
-
-## 🐛 Known Issues & Lessons
-
-### Turbopack + Tailwind CSS v4 Compatibility (Active Issue)
-- **Issue**: Turbopack's CSS parser cannot handle some of Tailwind CSS v4's compiled output
-- **Workaround**: Use `--webpack` flag for production builds (`npm run build`)
-- **Current Setup**:
-  - Development: Uses Turbopack with filesystem caching (fast, works fine)
-  - Production: Uses webpack (slower, but reliable with Tailwind CSS v4)
-- **Scripts**: `build:turbo` available for testing Turbopack builds
-- **Future**: Monitor for Turbopack updates that resolve this compatibility issue
-
-### CSS Syntax: `:global()` in Turbopack
-- **Issue**: `:global(.dark)` syntax not recognized in regular CSS files by Turbopack
-- **Solution**: Use `.dark` directly instead of `:global(.dark)`
-- **Context**: `:global()` is CSS Modules syntax, only works in `.module.css` files
-- **Prevention**: Avoid `:global()` in regular CSS files; use direct class selectors
-
-### Color Variable Centralization (Implemented)
-- **Pattern**: All color values centralized in `globals.css`
-- **Benefits**: Single source of truth for colors; easy theme updates
-- **Structure**:
-  - Gradient base colors → tokens.css gradients → component usage
-  - Component-specific colors (code blocks, modals, terminals, etc.)
-  - Error/warning/fallback colors for consistent UI
-- **Rule**: Never add hex/rgba colors directly in component CSS files
-
-### Pattern URL 404 Bug (Resolved)
-- **Cause**: `getAllPatternSlugs()` in data-fetchers.ts was hardcoded to 5 patterns
-- **Solution**: Update slug arrays when adding new patterns/exercises/utilities
-- **Prevention**: Always verify route generation for new content pages
-
-### Infinite Refresh Bug (Resolved)
-- **Cause**: Direct TS module imports in data layer
-- **Solution**: Use stable JSON imports
-- **Prevention**: Always use build pipeline for data imports
-
-### Interface Design Patterns
-- Required fields for core data
-- Optional fields for enhancements
-- Never spread undefined values (overwrites existing)
-- Always provide fallbacks for optional fields
-
-## 🚀 Automated Versioning System
-- **semantic-release** with **GitHub Actions** for commit-based versioning
-- **Conventional Commits** determine version bumps automatically
-- **GitHub releases** created with changelogs for every version
-- **Version info** displayed in website footer with build metadata
-- **Quality gates** ensure tests pass before releases
-
-### Version Workflow
-```bash
-feat: add new feature     # Minor bump (1.0.0 → 1.1.0)
-fix: resolve bug         # Patch bump (1.0.0 → 1.0.1)  
-feat!: breaking change   # Major bump (1.0.0 → 2.0.0)
-docs: update readme     # No version bump
-```
-
-### Files & Configuration
-- `.github/workflows/release.yml` - GitHub Actions release workflow
-- `.releaserc.json` - semantic-release configuration  
-- `.commitlintrc.json` - conventional commit validation
-- `scripts/get-version.ts` - version info generation
-- `public/version.json` - build-time version metadata
-
-## 📚 Key References
-**Complete documentation is now available in the [GitHub Wiki](https://github.com/balbonits/jdilig-me-v2/wiki):**
-
-### **Architecture & Technical**
-- **[Tech Debt & Architecture](https://github.com/balbonits/jdilig-me-v2/wiki/Tech-Debt)** - Technical roadmap and system architecture
-- **[SEO Audit Report](https://github.com/balbonits/jdilig-me-v2/wiki/SEO-Audit-Report)** - Comprehensive 52-point SEO validation (all passing)
-- **[Architecture & Technical](https://github.com/balbonits/jdilig-me-v2/wiki/Architecture-Technical)** - Complete technical documentation index
-
-### **Guides & Workflows**  
-- **[AI Project Setup](https://github.com/balbonits/jdilig-me-v2/wiki/AI-Project-Setup)** - AI assistant project guide
-- **[User & Developer Guides](https://github.com/balbonits/jdilig-me-v2/wiki/User-Developer-Guides)** - Development workflows and contribution guides
-
-### **Developer Profile & Philosophy**
-- **[John Dilig: Developer Profile](https://github.com/balbonits/jdilig-me-v2/wiki/John-Dilig-Developer-Profile)** - Comprehensive professional profile, philosophy, and technical expertise
-- **[Development Philosophy](https://github.com/balbonits/jdilig-me-v2/wiki/Development-Philosophy)** - Coding approaches, techniques, and architectural mindset
-
-### **Meta & Historical**
-- **[Meta & Project Information](https://github.com/balbonits/jdilig-me-v2/wiki/Meta-Project-Information)** - Project history, versioning, and metadata
-- **[Case Studies & Analysis](https://github.com/balbonits/jdilig-me-v2/wiki/Case-Studies-Analysis)** - Project analysis and performance reports
-
-**Quick Reference**: See **[GitHub Wiki Home](https://github.com/balbonits/jdilig-me-v2/wiki)** for complete documentation navigation
-
-## 📋 **Versioning Reminder**
-**IMPORTANT:** When making significant changes to project structure, documentation, or adding new features:
-1. Update `public/version.json` build time metadata
-2. Consider semantic versioning impact (feat/fix/breaking changes)
-3. Update wiki documentation links and references
-4. Ensure all documentation stays synchronized with codebase changes
-
-## 🎯 Accessibility & Quality
-- WCAG 2.1 AA compliant
-- Complete ARIA implementation
-- Mobile-first responsive design
-- 38+ pages static generation
+## Key Files
+| File | Purpose |
+|------|---------|
+| `astro.config.mjs` | Astro + Tailwind + MDX + Vercel config |
+| `src/styles/global.css` | All design tokens and custom utilities |
+| `src/content.config.ts` | Content collection Zod schemas |
+| `src/data/site.config.ts` | Site metadata and SEO defaults |
+| `src/layouts/BaseLayout.astro` | HTML shell + View Transitions |
 
 ---
 *Critical reminders:*
@@ -445,5 +84,4 @@ docs: update readme     # No version bump
 - Never create files unless necessary
 - Always prefer editing over creating
 - Never proactively create documentation
-- when resolving issues & bugs, write tests first to verify the issue & the fix before debugging/resolving.
-- make sure all code has no linting or syntaxing errors.
+- Make sure all code has no linting or syntax errors

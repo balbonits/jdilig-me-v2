@@ -1,0 +1,104 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StructuredData from '@/components/StructuredData.astro';
+import { siteConfig } from '@/data/site.config';
+import { experience } from '@/data/experience';
+import { skills } from '@/data/skills';
+import { contactLinks } from '@/data/contact';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.author.name,
+  url: siteConfig.url,
+  jobTitle: 'Front-End Developer',
+  worksFor: experience.map((e) => ({ '@type': 'Organization', name: e.company })),
+  sameAs: [siteConfig.author.github, siteConfig.author.linkedin],
+};
+---
+
+<BaseLayout
+  title={siteConfig.seo.titleTemplate('About')}
+  description="Learn about John Dilig — 18+ years of front-end development experience at FOX Sports, AWS, and TBN."
+>
+  <StructuredData data={personSchema} />
+
+  <div class="section-padding">
+    <div class="container-page">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-on-surface mb-4 animate-fade-in-up">
+        About Me
+      </h1>
+      <p class="text-lg text-on-surface-muted max-w-2xl mb-16 animate-fade-in-up" style="animation-delay: 0.1s">
+        Front-end developer specializing in React ecosystems, modern JavaScript, and high-performance interfaces that serve millions of users.
+      </p>
+
+      <!-- Experience -->
+      <section aria-labelledby="experience-heading" class="mb-20">
+        <h2 id="experience-heading" class="text-2xl font-bold text-on-surface mb-8">
+          Experience
+        </h2>
+        <div class="space-y-6">
+          {experience.map((job, i) => (
+            <div
+              class="card-base animate-fade-in-up"
+              style={`animation-delay: ${0.1 * (i + 1)}s`}
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
+                <h3 class="text-lg font-semibold text-on-surface">{job.company}</h3>
+                <span class="text-sm text-on-surface-muted">{job.period}</span>
+              </div>
+              <p class="text-sm font-medium text-accent-500 mb-2">{job.role}</p>
+              <p class="text-sm text-on-surface-muted leading-relaxed">{job.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section aria-labelledby="skills-heading" class="mb-20">
+        <h2 id="skills-heading" class="text-2xl font-bold text-on-surface mb-8">
+          Skills
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2">
+          {skills.map((cat) => (
+            <div class="card-base">
+              <h3 class="text-base font-semibold text-on-surface mb-3">{cat.title}</h3>
+              <div class="flex flex-wrap gap-2">
+                {cat.skills.map((skill) => (
+                  <span class="badge bg-accent-500/10 text-accent-500">{skill}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="text-2xl font-bold text-on-surface mb-8">
+          Contact
+        </h2>
+        <div class="flex flex-wrap gap-4">
+          {contactLinks.map((link) => (
+            <a
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-3 text-sm font-medium text-on-surface hover:bg-surface-alt hover:border-accent-500/30 transition-all touch-target"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-5 py-3 text-sm font-semibold text-white hover:bg-accent-500 transition-colors touch-target"
+          >
+            Download Resume
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
