@@ -118,7 +118,7 @@ class ProjectGenerator {
       console.log(`Processing ${folderName}/${tsFileName}...`);
       try {
         // Use require to import the TS module (must be run with ts-node)
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
+         
         const mod = require(tsFilePath);
         const project = mod.default as ProjectData;
         
@@ -148,7 +148,7 @@ class ProjectGenerator {
       console.log(`Processing legacy file ${file}...`);
       try {
         // Use require to import the TS module
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
+         
         const mod = require(filePath);
         const project = mod.default as ProjectData;
         

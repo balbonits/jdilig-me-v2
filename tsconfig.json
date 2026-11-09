@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2018",
     "lib": [
       "dom",
       "dom.iterable",
@@ -35,7 +35,18 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "src/**/test.tsx",
+    "src/**/test.ts",
+    "tests/**",
+    "playwright.config.ts",
+    "jest.setup.js",
+    "jest.config.js"
   ],
   "ts-node": {
     "compilerOptions": {

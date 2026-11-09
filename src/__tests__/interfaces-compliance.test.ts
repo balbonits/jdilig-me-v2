@@ -26,7 +26,7 @@ import SlidingWindowMax from '../exercises/SlidingWindowMax';
 import Trie from '../exercises/Trie';
 
 import Curry from '../utilities/Curry';
-import Debounce from '../utilities/Debounce';
+import Debounce from '../utilities/debounce';
 import DeepClone from '../utilities/DeepClone';
 import DeepEqual from '../utilities/DeepEqual';
 import GroupBy from '../utilities/GroupBy';

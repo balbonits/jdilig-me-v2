@@ -106,7 +106,7 @@ export default module;
         
         // Extract JSDoc (should not find anything in this test file)
         const jsdocMatch = fileContent.match(/\/\*\*\s*([\s\S]*?)\s*\*\//);
-        let enrichedMetadata: any = {};
+        const enrichedMetadata: any = {};
         
         if (jsdocMatch) {
           // JSDoc parsing logic (won't match our test file)
@@ -159,7 +159,7 @@ export default module;
 
     const generateExercises = jest.fn().mockImplementation(async () => {
       // Simulate JSDoc parsing that returns undefined
-      let enrichedMetadata: any = {};
+      const enrichedMetadata: any = {};
       // No JSDoc found, so enrichedMetadata remains empty
       
       const { metadata } = mockModule;
@@ -181,7 +181,7 @@ export default module;
   test('only includes defined properties in enrichedMetadata to prevent overwrites', async () => {
     const generateExercises = jest.fn().mockImplementation(async () => {
       // Simulate the fixed approach where we only include defined properties
-      let enrichedMetadata: any = {};
+      const enrichedMetadata: any = {};
       
       // Simulate JSDoc parsing that might find some fields but not others
       const foundDescription = "JSDoc enhanced description";

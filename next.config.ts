@@ -20,6 +20,11 @@ const nextConfig = {
   // Enable stable optimizations
   poweredByHeader: false,
 
+  // The old About page became the Resume page.
+  async redirects() {
+    return [{ source: '/about', destination: '/resume', permanent: true }];
+  },
+
   // Next.js 16: Turbopack is now the default bundler
   // Enable filesystem caching for faster compile times
   experimental: {

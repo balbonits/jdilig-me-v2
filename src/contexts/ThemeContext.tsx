@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useCallback, useContext, useSyncExternalStore } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
 type ThemeMode = 'light' | 'dark';
@@ -10,38 +10,38 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+// The inline script in _document sets data-theme on <html> before paint (saved choice, else the OS setting).
+const listeners = new Set<() => void>();
+function subscribe(cb: () => void) {
+  listeners.add(cb);
+  return () => listeners.delete(cb);
+}
+function read(): ThemeMode {
+  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+}
+function apply(theme: ThemeMode) {
+  document.documentElement.dataset.theme = theme;
+  document.body.classList.toggle('dark', theme === 'dark');
+  document.body.classList.toggle('light', theme === 'light');
+  listeners.forEach((l) => l());
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<ThemeMode>('light');
+  const theme = useSyncExternalStore<ThemeMode>(subscribe, read, () => 'light');
   const { trackThemeChange } = useAnalytics();
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    // Track theme change for user behavior insights
-    trackThemeChange(newTheme);
-  };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as ThemeMode;
-    if (savedTheme) {
-      setTheme(savedTheme);
+  const toggleTheme = useCallback(() => {
+    const next: ThemeMode = read() === 'dark' ? 'light' : 'dark';
+    apply(next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* storage may be blocked */
     }
-  }, []);
+    trackThemeChange(next);
+  }, [trackThemeChange]);
 
-  // Apply theme class to document body
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.body.className = theme;
-    }
-  }, [theme]);
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

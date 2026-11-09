@@ -105,7 +105,7 @@ export default module;
         
         // Extract JSDoc (should not find anything in this test file)
         const jsdocMatch = fileContent.match(/\/\*\*\s*([\s\S]*?)\s*\*\//);
-        let enrichedMetadata: any = {};
+        const enrichedMetadata: any = {};
         
         if (jsdocMatch) {
           // JSDoc parsing logic (won't match our test file)
@@ -289,7 +289,7 @@ export default module;
 
     const generateUtilities = jest.fn().mockImplementation(async () => {
       // Simulate JSDoc parsing that finds nothing (returns undefined)
-      let enrichedMetadata: any = {};
+      const enrichedMetadata: any = {};
       // No JSDoc enhancement, so enrichedMetadata is empty
       
       const { metadata } = utilityWithExistingMetadata;
