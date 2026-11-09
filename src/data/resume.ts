@@ -23,7 +23,7 @@ export const resumeMeta = {
 };
 
 export const summary =
-  'Senior Front-End Developer with 18+ years building production web apps in React, TypeScript, and Next.js across streaming and sports media, enterprise BI/SaaS, consumer products, and live-event platforms. Recent work includes real-time, data-dense UIs (data tables, geographic maps, live GraphQL data, streamed AI query interfaces), enterprise SSO with role-based UI, and subscription auth and payment flows. Uses AI-assisted development (Claude Code, multi-agent workflows) for delivery, documentation, and testing.';
+  'Senior Front-End Developer with 18+ years building production web apps in React, TypeScript, and Next.js across streaming and sports media, enterprise BI/SaaS, consumer products, and live-event platforms. Recent work includes real-time, data-dense UIs (data tables with live GraphQL data and streamed AI query interfaces), enterprise SSO with role-based UI, and subscription auth and payment flows. Uses AI-assisted development (Claude Code, multi-agent workflows) for delivery, documentation, and testing.';
 
 export const skills: { label: string; items: string }[] = [
   { label: 'Languages & Frameworks', items: 'TypeScript, JavaScript (ES6+), React, Next.js, HTML5, CSS3' },
@@ -48,7 +48,7 @@ export const jobs: ResumeJob[] = [
       'Merged 48 PRs in ~4 months (~3/week) on a real-time analytics web app (React, Next.js, TypeScript, Tailwind CSS), with 13 features in six weeks: app shell, navigation, loading/error/access states, and sortable, filterable data tables with live GraphQL data.',
       'Built the natural-language query feature end to end (~22 PRs), with streamed AI answers, saved history, editable sessions, follow-ups, and deep links; took it to production, cutting ~11k legacy lines.',
       'Used by FOX News analysts and producers on election night (100+ queries); displayed as "Election Insights" during FOX News\u2019 election watch.',
-      'Built geographic map visualizations (~12 PRs) with change-scaled trend indicators, density tuning, and missing-data notices; implemented enterprise SSO and claims-driven role-based access for 3 user roles.',
+      'Assisted with geographic map visualizations (~12 PRs) and other UX/UI components and improvements.',
       'Reviewed 102 teammate PRs (158 reviews), including 6k–11k-line refactors, across 159 Jest + Testing Library files; built multi-agent AI engineering workflows with human approval gates and 20+ tested automation skills.',
     ],
   },
