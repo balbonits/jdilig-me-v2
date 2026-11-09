@@ -3,7 +3,7 @@ import { siteConfig } from '@/config/site';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" data-theme="light">
       <Head>
         {/* Open Graph Meta Tags for Social Sharing */}
         <meta property="og:site_name" content={siteConfig.siteName} />
@@ -20,8 +20,9 @@ export default function Document() {
         <meta name="twitter:image" content={siteConfig.seo.ogImage} />
         
         {/* Additional Meta Tags */}
-        <meta name="theme-color" content="#3b82f6" />
-        <meta name="msapplication-TileColor" content="#3b82f6" />
+        <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#16181b" />
 
         {/* Favicon and App Icons */}
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
@@ -30,6 +31,13 @@ export default function Document() {
         <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
       </Head>
       <body>
+        <script
+          // Sets the theme before first paint: saved choice, else the OS setting.
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);document.body.className=t}catch(e){}})();",
+          }}
+        />
         <Main />
         <NextScript />
       </body>

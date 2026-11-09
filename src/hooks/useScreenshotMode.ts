@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 
 /**
  * Custom hook for screenshot mode functionality
@@ -14,13 +13,8 @@ import { useState, useEffect } from 'react';
  */
 export function useScreenshotMode() {
   const router = useRouter();
-  const [isScreenshotMode, setIsScreenshotMode] = useState(false);
-  
-  useEffect(() => {
-    // Only run on client side after hydration
-    const screenshot = router.query.screenshot;
-    setIsScreenshotMode(screenshot === 'true');
-  }, [router.query.screenshot]);
+  // router.query is empty until the router is ready, so the server and first client render agree.
+  const isScreenshotMode = router.isReady && router.query.screenshot === 'true';
   
   return {
     isScreenshotMode,

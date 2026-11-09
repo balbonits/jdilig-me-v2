@@ -88,123 +88,50 @@ const mockProject: ProjectData = {
   ]
 };
 
+// Rewritten for the v1.0 UX-IA spec project page (H1, Role/Year/Stack <dl>, H2 sections, back/next links).
+// The old assertions targeted the removed Showcase/Modal layout.
 describe('ProjectPage', () => {
-  it('renders project title and basic information', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByRole('heading', { level: 1, name: 'Test Project' })).toBeInTheDocument();
-    // Note: detailedDescription now appears in Project Overview section, not header
-    expect(screen.getByText('Project Overview')).toBeInTheDocument();
+  const next = { slug: 'other', title: 'Other Project' };
+
+  it('renders one H1 with the project title and the lede', () => {
+    render(<ProjectPage project={mockProject} next={next} />);
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Test Project');
+    expect(screen.getByText('A test project for unit testing')).toBeInTheDocument();
   });
 
-  it('renders project metadata tags', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Full-Stack Development')).toBeInTheDocument();
-    expect(screen.getAllByText('Expert')).toHaveLength(2); // appears in header and details
+  it('renders role, year and stack as a description list', () => {
+    const { container } = render(<ProjectPage project={mockProject} next={next} />);
+    const dts = Array.from(container.querySelectorAll('dl.s-facts dt')).map((n) => n.textContent);
+    expect(dts).toEqual(['Role', 'Year', 'Stack']);
+    expect(screen.getByText('Full-Stack Developer')).toBeInTheDocument();
+    expect(screen.getByText('2024')).toBeInTheDocument();
   });
 
-  it('renders project details in overview section', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Started: 2024-01')).toBeInTheDocument(); // appears in header
-    expect(screen.getAllByText('Full-Stack Developer')).toHaveLength(2); // appears in header and details
+  it('renders features under an H2', () => {
+    render(<ProjectPage project={mockProject} next={next} />);
+    expect(screen.getByRole('heading', { level: 2, name: 'Features' })).toBeInTheDocument();
+    expect(screen.getByText('Feature 1:')).toBeInTheDocument();
   });
 
-  it('renders tech stack sections', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Frontend')).toBeInTheDocument();
-    expect(screen.getByText('Backend')).toBeInTheDocument();
-    expect(screen.getByText('React')).toBeInTheDocument();
-    expect(screen.getByText('TypeScript')).toBeInTheDocument();
-    expect(screen.getByText('Node.js')).toBeInTheDocument();
+  it('renders links in the same tab and labels external ones', () => {
+    render(<ProjectPage project={mockProject} next={next} />);
+    const link = screen.getByRole('link', { name: /Source Code/ });
+    expect(link).toHaveAttribute('href', 'https://github.com/test/repo');
+    expect(link).not.toHaveAttribute('target');
+    expect(link).toHaveTextContent('(external site)');
   });
 
-  it('renders features with descriptions and impact', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Feature 1')).toBeInTheDocument();
-    expect(screen.getByText('Description of feature 1')).toBeInTheDocument();
-    expect(screen.getByText('Impact of feature 1')).toBeInTheDocument();
-    
-    expect(screen.getByText('Feature 2')).toBeInTheDocument();
-    expect(screen.getByText('Description of feature 2')).toBeInTheDocument();
+  it('renders back to work and next project links', () => {
+    render(<ProjectPage project={mockProject} next={next} />);
+    expect(screen.getByRole('link', { name: 'Back to work' })).toHaveAttribute('href', '/projects');
+    expect(screen.getByRole('link', { name: /Next project: Other Project/ })).toHaveAttribute('href', '/projects/other');
   });
 
-  it('renders metrics when provided', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('95%')).toBeInTheDocument();
-    expect(screen.getByText('Performance')).toBeInTheDocument();
-    expect(screen.getByText('Performance score')).toBeInTheDocument();
-    
-    expect(screen.getByText('100%')).toBeInTheDocument();
-    expect(screen.getByText('Coverage')).toBeInTheDocument();
-  });
-
-  it('renders technical highlights with code examples', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Technical Highlight 1')).toBeInTheDocument();
-    expect(screen.getByText('Description of highlight 1')).toBeInTheDocument();
-    expect(screen.getByText('const example = () => { return "test"; };')).toBeInTheDocument();
-    expect(screen.getByText('Achievement 1')).toBeInTheDocument();
-    expect(screen.getByText('Achievement 2')).toBeInTheDocument();
-  });
-
-  it('renders project links with correct attributes', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    const liveLink = screen.getByRole('link', { name: 'Live Demo' });
-    expect(liveLink).toHaveAttribute('href', 'https://example.com');
-    expect(liveLink).toHaveAttribute('target', '_blank');
-    expect(liveLink).toHaveAttribute('rel', 'noopener noreferrer');
-    
-    const githubLink = screen.getByRole('link', { name: 'Source Code' });
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/test/repo');
-  });
-
-  it('renders insights sections', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Lessons Learned')).toBeInTheDocument();
-    expect(screen.getByText('Lesson 1')).toBeInTheDocument();
-    expect(screen.getByText('Lesson 2')).toBeInTheDocument();
-    
-    expect(screen.getByText('Challenges Overcome')).toBeInTheDocument();
-    expect(screen.getByText('Challenge 1')).toBeInTheDocument();
-    expect(screen.getByText('Challenge 2')).toBeInTheDocument();
-    
-    expect(screen.getByText('Future Improvements')).toBeInTheDocument();
-    expect(screen.getByText('Improvement 1')).toBeInTheDocument();
-    expect(screen.getByText('Improvement 2')).toBeInTheDocument();
-  });
-
-  it('renders all showcase sections', () => {
-    render(<ProjectPage project={mockProject} />);
-    
-    expect(screen.getByText('Project Overview')).toBeInTheDocument();
-    expect(screen.getByText('Technology Stack')).toBeInTheDocument();
-    expect(screen.getByText('Key Features')).toBeInTheDocument();
-    expect(screen.getByText('Technical Highlights')).toBeInTheDocument();
-    expect(screen.getByText('Insights & Learnings')).toBeInTheDocument();
-  });
-
-  it('renders project without optional fields', () => {
-    const minimalProject: ProjectData = {
-      ...mockProject,
-      metrics: undefined,
-      lessons: undefined,
-      challenges: undefined,
-      futureImprovements: undefined
-    };
-
-    render(<ProjectPage project={minimalProject} />);
-    
-    expect(screen.getByRole('heading', { level: 1, name: 'Test Project' })).toBeInTheDocument();
-    expect(screen.queryByText('Lessons Learned')).not.toBeInTheDocument();
-    expect(screen.queryByText('Challenges Overcome')).not.toBeInTheDocument();
-    expect(screen.queryByText('Future Improvements')).not.toBeInTheDocument();
+  it('renders without optional fields or a next project', () => {
+    const minimal = { ...mockProject, lessons: undefined, metrics: undefined, features: [], links: [] };
+    render(<ProjectPage project={minimal} next={null} />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Test Project');
+    expect(screen.queryByRole('link', { name: /Next project/ })).not.toBeInTheDocument();
   });
 });

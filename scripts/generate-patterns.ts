@@ -172,10 +172,10 @@ async function processPattern(slug: string, moduleName: string): Promise<Pattern
     console.log(`Processing ${moduleName}...`);
     
     // Dynamic import of the pattern module
-    const module = await import(`../src/patterns/${moduleName}.ts`);
+    const patternModule = await import(`../src/patterns/${moduleName}.ts`);
     
     // Extract exports
-    const { metadata, solutions, examples } = module;
+    const { metadata, solutions, examples } = patternModule;
     
     if (!metadata || !solutions) {
       console.warn(`⚠️  ${moduleName} missing required exports (metadata, solutions)`);

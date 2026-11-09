@@ -114,10 +114,10 @@ async function generateExercisesJSON() {
           const funcCode = match ? match[0].trim() : '';
           
           // Use function name as approach for backwards compatibility
-          let approach = funcName;
+          const approach = funcName;
           let timeComplexity = 'O(n)';
           let spaceComplexity = 'O(1)';
-          let isOptimal = false;
+          const isOptimal = false;
           
           // Basic complexity inference (keep minimal for backwards compatibility)
           if (funcName.toLowerCase().includes('bruteforce') || funcName.toLowerCase().includes('brute')) {

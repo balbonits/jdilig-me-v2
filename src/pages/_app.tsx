@@ -1,53 +1,50 @@
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
+import { Geist, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import '@/styles/globals.css';
-import SiteLayout from '@/components/SiteLayout';
+import '@/styles/site.css';
+import Layout from '@/components/site/Layout';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { CodeDataProvider } from '@/contexts/CodeDataContext';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
+// Self-hosted at build time by next/font (no requests to Google at runtime), with size-adjusted fallbacks.
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
+const instrument = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'italic', variable: '--font-instrument', display: 'swap' });
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-jetbrains', display: 'swap', preload: false });
+
 // Core Web Vitals reporting for performance monitoring
 export function reportWebVitals(metric: NextWebVitalsMetric) {
-  // Only send metrics in production and when GA is configured
   if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID) {
-    // Send to Google Analytics 4
     if (typeof window !== 'undefined' && window.gtag) {
-      // Base event data that always exists
       const eventData: Record<string, unknown> = {
         custom_map: { metric_id: 'dimension1' },
         metric_id: metric.id,
         metric_value: Math.round(metric.value),
       };
-
-      // Add optional properties with proper type casting if they exist
       if ('delta' in metric && typeof metric.delta === 'number') {
         eventData.metric_delta = metric.delta;
       }
       if ('rating' in metric && typeof metric.rating === 'string') {
         eventData.metric_rating = metric.rating;
       }
-
       window.gtag('event', metric.name, eventData);
     }
-    
-    // Note: Vercel Analytics automatically tracks Core Web Vitals via the <Analytics /> component
-    // No manual tracking needed - the component handles it automatically
   }
 }
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <CodeDataProvider>
-        <SiteLayout>
+    <div className={`s-root ${geist.variable} ${instrument.variable} ${jetbrains.variable}`}>
+      <ThemeProvider>
+        <Layout>
           <Component {...pageProps} />
-        </SiteLayout>
+        </Layout>
         <Analytics />
         <SpeedInsights />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
-      </CodeDataProvider>
-    </ThemeProvider>
+        {process.env.NEXT_PUBLIC_GA_ID ? <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} /> : null}
+      </ThemeProvider>
+    </div>
   );
 }

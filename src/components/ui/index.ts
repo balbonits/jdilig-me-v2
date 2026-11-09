@@ -12,8 +12,6 @@ export { default as Tab } from './Tab';
 export { default as Showcase } from './Showcase';
 
 export { default as Modal } from './Modal';
-export { default as MobileMenu } from './MobileMenu';
-export { default as NavDropdown } from './NavDropdown';
 export { default as FormattedDescription } from './FormattedDescription';
 export { default as MarkdownRenderer } from './MarkdownRenderer';
 export { default as MarkdownTransformer } from './MarkdownTransformer';
