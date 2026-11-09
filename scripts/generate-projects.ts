@@ -183,9 +183,9 @@ class ProjectGenerator {
         return a.metadata.featured ? -1 : 1;
       }
       
-      // Prioritize horse racing game as the featured project
-      if (a.slug === 'horse-racing-text-game') return -1;
-      if (b.slug === 'horse-racing-text-game') return 1;
+      // City App Framework leads (design SPEC 6)
+      if (a.slug === 'city-app-framework') return -1;
+      if (b.slug === 'city-app-framework') return 1;
       
       // Then by title
       return a.metadata.title.localeCompare(b.metadata.title);
@@ -196,9 +196,9 @@ class ProjectGenerator {
         return a.featured ? -1 : 1;
       }
       
-      // Prioritize horse racing game as the featured project
-      if (a.slug === 'horse-racing-text-game') return -1;
-      if (b.slug === 'horse-racing-text-game') return 1;
+      // City App Framework leads (design SPEC 6)
+      if (a.slug === 'city-app-framework') return -1;
+      if (b.slug === 'city-app-framework') return 1;
       
       return a.title.localeCompare(b.title);
     });

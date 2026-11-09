@@ -22,7 +22,10 @@ const nextConfig = {
 
   // The old About page became the Resume page.
   async redirects() {
-    return [{ source: '/about', destination: '/resume', permanent: true }];
+    return [
+      { source: '/about', destination: '/#resume', permanent: true },
+      { source: '/resume', destination: '/#resume', permanent: true },
+    ];
   },
 
   // Next.js 16: Turbopack is now the default bundler

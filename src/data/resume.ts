@@ -18,6 +18,7 @@ export const resumeMeta = {
   linkedin: 'https://www.linkedin.com/in/rjdilig',
   github: 'https://github.com/balbonits',
   pdf: '/John_Dilig_Resume.pdf',
+  pdfSize: '67 KB', // real size of public/John_Dilig_Resume.pdf (69,032 bytes)
   updated: 'November 2026',
 };
 
@@ -135,48 +136,3 @@ export const education = {
   school: 'ITT Technical Institute, San Dimas, CA',
   dates: 'June 2006 – December 2008 (Graduated)',
 };
-
-export interface WorkItem {
-  title: string;
-  subtitle: string;
-  meta: string;
-  summary: string;
-  tags: string[];
-  href: string;
-  external?: boolean;
-  host?: string;
-}
-
-// Notable projects, from the resume's NOTABLE PROJECTS section, plus John's own open-source projects on this site.
-export const selectedWork: WorkItem[] = [
-  {
-    title: 'Squanto.app',
-    subtitle: 'live gig marketplace',
-    meta: '2025–2026 · Product · Sole front-end',
-    summary: 'The entire web UI for a live entertainment gig marketplace for hosts, performers, and audiences, taken through soft launch.',
-    tags: ['React', 'TypeScript', 'Maps', 'PWA'],
-    href: 'https://squanto.app',
-    external: true,
-    host: 'squanto.app',
-  },
-  {
-    title: 'The Vanishing Man',
-    subtitle: 'Sports Emmy winner',
-    meta: 'FOX Sports · Longform feature',
-    summary: 'Front-end work on a Sports Emmy Award–winning longform feature on FOXSports.com.',
-    tags: ['JavaScript', 'Longform', 'Media'],
-    href: 'https://www.foxsports.com/stories/other/the-vanishing-man',
-    external: true,
-    host: 'foxsports.com',
-  },
-  {
-    title: 'jdilig.me',
-    subtitle: 'this site',
-    meta: '2026 · Open source · Next.js',
-    summary: 'Personal portfolio built with Next.js and TypeScript, with a self-hosted design system, light and dark themes, and accessible defaults.',
-    tags: ['Next.js', 'TypeScript', 'a11y'],
-    href: 'https://github.com/balbonits/jdilig-me-v2',
-    external: true,
-    host: 'github.com',
-  },
-];

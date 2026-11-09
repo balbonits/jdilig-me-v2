@@ -300,3 +300,26 @@ img, svg { max-width: 100%; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .s-btn:active, .s-card:active { transform: none; }
 }
+
+/* v1.0 spec additions */
+.s-footer__links { display: flex; flex-wrap: wrap; gap: 0 20px; list-style: none; margin: 0; padding: 0; }
+a.s-addr { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; min-height: 44px; display: flex; align-items: center; }
+.s-dl-row { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 56px; box-sizing: border-box; padding: 0 16px;
+  margin-top: 24px; border: 1px solid var(--c-line-strong, var(--c-line)); border-radius: var(--radius); background: var(--c-raised);
+  color: var(--c-ember); font-weight: 600; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }
+.s-dl-row:hover { text-decoration-thickness: 2px; border-color: var(--c-ink); }
+@media (min-width: 768px) { .s-dl-row { width: auto; display: inline-flex; } }
+.s-xp { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 0; }
+.s-xp li { display: grid; gap: 2px 24px; padding-block: 14px; border-top: 1px solid var(--c-line); }
+.s-xp li:last-child { border-bottom: 1px solid var(--c-line); }
+@media (min-width: 768px) { .s-xp li { grid-template-columns: 1fr auto; align-items: baseline; } }
+.s-xp__role { color: var(--c-ink); font-weight: 600; }
+.s-xp__years { color: var(--c-muted); font: 500 14px/1.4 var(--f-mono); }
+.s-facts { display: grid; gap: 8px 24px; margin: 24px 0 0; }
+@media (min-width: 768px) { .s-facts { grid-template-columns: max-content 1fr; } }
+.s-facts dt { color: var(--c-muted); font: 500 13px/1.6 var(--f-mono); text-transform: uppercase; letter-spacing: .04em; }
+.s-facts dd { margin: 0; color: var(--c-ink); }
+.s-detail h2 { margin-top: 48px; margin-bottom: 16px; }
+.s-detail ul.s-list { margin: 0; padding-left: 1.2em; display: grid; gap: 10px; max-width: 72ch; }
+.s-detail ul.s-list li::marker { color: var(--c-ember); }
+.s-pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--c-line); }

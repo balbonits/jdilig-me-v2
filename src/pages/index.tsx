@@ -1,12 +1,24 @@
 import Link from 'next/link';
+import type { GetStaticProps } from 'next';
 import SEOHead from '@/components/SEOHead';
 import WorkCard from '@/components/site/WorkCard';
 import ContactBlock from '@/components/site/ContactBlock';
 import { Icon, PixelMark, PixelPlay } from '@/components/site/Icons';
 import { heroData } from '@/data/about';
-import { selectedWork, resumeMeta } from '@/data/resume';
+import { jobs, resumeMeta, summary } from '@/data/resume';
+import { loadProjectsData } from '@/data/projects';
+import { pickSelected, type WorkItem } from '@/data/work';
 
-export default function Home() {
+// Years only for the one-line experience list (UX-IA R2).
+const years = (dates: string) => {
+  const ys = dates.match(/\d{4}/g) ?? [];
+  if (ys.length === 0) return dates;
+  const first = ys[0];
+  const last = /present/i.test(dates) ? 'Present' : ys[ys.length - 1];
+  return first === last ? first : `${first}–${last}`;
+};
+
+export default function Home({ work }: { work: WorkItem[] }) {
   return (
     <>
       <SEOHead pathname="/" />
@@ -27,11 +39,11 @@ export default function Home() {
             </h1>
             <p className="s-lede">{heroData.description}</p>
             <div className="s-btns">
-              <Link className="s-btn s-btn--primary" href="/projects">
-                See my work <Icon name="arrow" />
-              </Link>
-              <a className="s-btn s-btn--secondary" href={resumeMeta.pdf} download>
-                <Icon name="download" /> Resume (PDF)
+              <a className="s-btn s-btn--primary" href="#work">
+                See the work <Icon name="arrow" />
+              </a>
+              <a className="s-btn s-btn--secondary" href="#contact">
+                Get in touch
               </a>
             </div>
             <div className="s-strip" aria-hidden="true">
@@ -48,25 +60,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="s-section" aria-labelledby="glance-title" style={{ paddingTop: 0 }}>
-        <div className="s-container">
-          <h2 id="glance-title" className="s-label" style={{ marginBottom: 12 }}>At a glance</h2>
-          <ul className="s-proof">
-            {heroData.stats.map((s) => (
-              <li key={s.label}>
-                <strong>{s.number}</strong>
-                {s.label}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="s-section" aria-labelledby="work-title">
+      <section id="work" className="s-section" aria-labelledby="work-title">
         <div className="s-container">
           <div className="s-sechead">
             <div>
-              <p className="s-label s-seclabel"><span aria-hidden="true">01</span></p>
+              <p className="s-label s-seclabel" aria-hidden="true">01</p>
               <h2 id="work-title" className="s-h2">Selected work</h2>
             </div>
             <Link className="s-standalone" href="/projects">
@@ -74,8 +72,8 @@ export default function Home() {
             </Link>
           </div>
           <ul className="s-cards">
-            {selectedWork.map((item) => (
-              <li key={item.title}><WorkCard item={item} /></li>
+            {work.map((item) => (
+              <li key={item.href}><WorkCard item={item} /></li>
             ))}
           </ul>
         </div>
@@ -83,41 +81,65 @@ export default function Home() {
 
       <section className="s-section" aria-labelledby="play-title">
         <div className="s-container">
-          <p className="s-label s-seclabel"><span aria-hidden="true">02</span></p>
+          <p className="s-label s-seclabel" aria-hidden="true">02</p>
           <h2 id="play-title" className="s-h2" style={{ marginBottom: 24 }}>Playground</h2>
-          <a className="s-play" href="https://games.jdilig.me" target="_blank" rel="noopener noreferrer"
-            aria-label="Playground, AI-assisted browser games, opens games.jdilig.me, new tab">
-            <span className="s-tile"><PixelPlay /></span>
+          <a className="s-play" href="https://games.jdilig.me">
+            <span className="s-tile" aria-hidden="true"><PixelPlay /></span>
             <span>
-              <span className="s-meta" style={{ display: 'block' }}>Playground</span>
               <span className="s-play__title">AI-assisted browser games</span>
-              <span className="s-host">opens games.jdilig.me <Icon name="external" small /></span>
+              <span className="s-host" aria-hidden="true">games.jdilig.me <Icon name="external" small /></span>
+              <span className="s-visually-hidden"> (external site)</span>
             </span>
           </a>
         </div>
       </section>
 
-      <div className="s-container s-split">
-        <section className="s-section" aria-labelledby="about-title" style={{ paddingInline: 0 }}>
-          <p className="s-label s-seclabel"><span aria-hidden="true">03</span></p>
+      <section id="resume" className="s-section" aria-labelledby="resume-title">
+        <div className="s-container">
+          <p className="s-label s-seclabel" aria-hidden="true">03</p>
+          <h2 id="resume-title" className="s-h2" style={{ marginBottom: 16 }}>Resume</h2>
+          <div className="s-prose">
+            <p>{summary}</p>
+          </div>
+          <a className="s-dl-row" href={resumeMeta.pdf} download>
+            <Icon name="download" /> Download resume (PDF, {resumeMeta.pdfSize})
+          </a>
+          <h3 className="s-h3" style={{ marginTop: 40 }}>Experience</h3>
+          <ol className="s-xp" style={{ marginTop: 12 }}>
+            {jobs.map((job) => (
+              <li key={`${job.company}-${job.dates}`}>
+                <span><span className="s-xp__role">{job.role}</span>, {job.company}</span>
+                <span className="s-xp__years">{years(job.dates)}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="about" className="s-section" aria-labelledby="about-title">
+        <div className="s-container">
+          <p className="s-label s-seclabel" aria-hidden="true">04</p>
           <h2 id="about-title" className="s-h2" style={{ marginBottom: 16 }}>About</h2>
           <div className="s-prose">
             <p>
               I&apos;m a {resumeMeta.title.toLowerCase()} in {resumeMeta.location} with 18+ years of React,
               TypeScript, and Next.js work across streaming and sports media, enterprise BI, consumer products,
-              and live-event platforms.
+              and live-event platforms. On my own time I build AI-assisted tools and browser games.
             </p>
           </div>
-          <p style={{ marginTop: 16 }}>
-            <Link className="s-standalone" href="/resume">
-              Read my resume <Icon name="arrow" small />
-            </Link>
-          </p>
-        </section>
-        <section className="s-section" aria-labelledby="contact-heading" style={{ paddingInline: 0 }}>
-          <ContactBlock />
-        </section>
-      </div>
+        </div>
+      </section>
+
+      <section id="contact" className="s-section" aria-labelledby="contact-heading">
+        <div className="s-container">
+          <ContactBlock label="05" />
+        </div>
+      </section>
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const projects = await loadProjectsData();
+  return { props: { work: pickSelected(projects) } };
+};

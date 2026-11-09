@@ -7,7 +7,7 @@ export default function Contact() {
       <SEOHead pathname="/contact" title="Contact - John Dilig" description="Get in touch with John Dilig, Senior Front-End Developer." />
       <div className="s-container">
         <section className="s-page-head" aria-labelledby="contact-heading" style={{ paddingBottom: 64 }}>
-          <ContactBlock headingLevel={1} showLabel={false} />
+          <ContactBlock headingLevel={1} />
         </section>
       </div>
     </>
