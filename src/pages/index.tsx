@@ -5,7 +5,7 @@ import WorkCard from '@/components/site/WorkCard';
 import ContactBlock from '@/components/site/ContactBlock';
 import { Icon, PixelMark, PixelPlay } from '@/components/site/Icons';
 import { heroData } from '@/data/about';
-import { jobs, resumeMeta, summary } from '@/data/resume';
+import { jobs, resumeMeta, status, summary } from '@/data/resume';
 import { loadProjectsData } from '@/data/projects';
 import { pickSelected, type WorkItem } from '@/data/work';
 
@@ -100,6 +100,7 @@ export default function Home({ work }: { work: WorkItem[] }) {
           <h2 id="resume-title" className="s-h2" style={{ marginBottom: 16 }}>Resume</h2>
           <div className="s-prose">
             <p>{summary}</p>
+            <p>{status}</p>
           </div>
           <a className="s-dl-row" href={resumeMeta.pdf} download>
             <Icon name="download" /> Download resume (PDF, {resumeMeta.pdfSize})

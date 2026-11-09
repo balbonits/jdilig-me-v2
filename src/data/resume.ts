@@ -1,4 +1,5 @@
-// Source: Reuel_John_Dilig_Resume_2026_FrontEnd.pdf (John's resume, Nov 2026).
+// Source: Job Hunter's NDA-safe site copy (/workspace/jdilig-site/resume-copy.md) and
+// Reuel_John_Dilig_Resume_2026_FrontEnd.pdf (Nov 9 2026). No FOX 2026 metrics on the site.
 // Keep this file in sync with public/resume.pdf. Do not add experience that is not in the resume.
 
 export interface ResumeJob {
@@ -18,12 +19,14 @@ export const resumeMeta = {
   linkedin: 'https://www.linkedin.com/in/rjdilig',
   github: 'https://github.com/balbonits',
   pdf: '/John_Dilig_Resume.pdf',
-  pdfSize: '67 KB', // real size of public/John_Dilig_Resume.pdf (69,032 bytes)
+  pdfSize: '70 KB', // real size of public/John_Dilig_Resume.pdf (71,703 bytes)
   updated: 'November 2026',
 };
 
 export const summary =
-  'Senior Front-End Developer with 18+ years building production web apps in React, TypeScript, and Next.js across streaming and sports media, enterprise BI/SaaS, consumer products, and live-event platforms. Recent work includes real-time, data-dense UIs (data tables with live GraphQL data and streamed AI query interfaces), enterprise SSO with role-based UI, and subscription auth and payment flows. Uses AI-assisted development (Claude Code, multi-agent workflows) for delivery, documentation, and testing.';
+  "I've been building production web apps for 18+ years, mostly in media, sports, streaming and SaaS. These days I work in React, TypeScript and Next.js, on real-time, data-dense interfaces: live data tables, AI-powered query tools, auth and payment flows. I like owning a feature from the first commit to production, and I use AI-assisted tooling (Claude Code, multi-agent workflows) to ship faster and keep docs and tests current.";
+
+export const status = "Open to full-time front-end roles. Based in Redondo Beach, CA; remote preferred. Available now.";
 
 export const skills: { label: string; items: string }[] = [
   { label: 'Languages & Frameworks', items: 'TypeScript, JavaScript (ES6+), React, Next.js, HTML5, CSS3' },
@@ -40,93 +43,75 @@ export const skills: { label: string; items: string }[] = [
 
 export const jobs: ResumeJob[] = [
   {
-    role: 'Frontend Developer (Contract)',
-    company: 'FOX',
-    place: 'Los Angeles, CA (Remote)',
-    dates: 'July 2026 – Nov 2026',
+    role: "Frontend Developer (Contract)",
+    company: "FOX",
+    place: "Los Angeles, CA (Remote)",
+    dates: "Jul 2026 – Nov 2026",
     bullets: [
-      'Merged 48 PRs in ~4 months (~3/week) on a real-time analytics web app (React, Next.js, TypeScript, Tailwind CSS), with 13 features in six weeks: app shell, navigation, loading/error/access states, and sortable, filterable data tables with live GraphQL data.',
-      'Built the natural-language query feature end to end (~22 PRs), with streamed AI answers, saved history, editable sessions, follow-ups, and deep links; took it to production, cutting ~11k legacy lines.',
-      'Used by FOX News analysts and producers on election night (100+ queries); displayed as "Election Insights" during FOX News\u2019 election watch.',
-      'Assisted with geographic map visualizations (~12 PRs) and other UX/UI components and improvements.',
-      'Reviewed 102 teammate PRs (158 reviews), including 6k–11k-line refactors, across 159 Jest + Testing Library files; built multi-agent AI engineering workflows with human approval gates and 20+ tested automation skills.',
+      "Front-end work on a new internal real-time analytics web app, from early build to production. I mostly built the sortable, filterable data tables with live GraphQL data and the natural-language AI query feature (streamed answers, saved history, follow-ups), and I assisted with map visualizations and other UI work. On election night it was used by FOX News analysts and producers and was displayed as \"Election Insights\" during FOX News' election watch.",
     ],
   },
   {
-    role: 'Senior Front-End Developer',
-    company: 'Squanto',
-    place: 'Los Angeles, CA (Remote)',
-    dates: 'October 2025 – June 2026',
+    role: "Senior Front-End Developer",
+    company: "Squanto",
+    place: "Los Angeles, CA (Remote)",
+    dates: "Oct 2025 – Jun 2026",
     bullets: [
-      'Built and shipped squanto.app\u2019s entire web UI as sole front-end developer, a live gig marketplace for hosts, performers, and audiences, taking React/TypeScript flows through soft launch.',
-      'Implemented real-time mapping, data visualizations, and analytics interfaces for live data, and extended the same UI to mobile with PWA/Cordova.',
-      'Partnered with the CEO and systems architect in live debugging sessions, and built and fixed Node.js/MongoDB API endpoints for front-end data, including the repo\u2019s AI context setup.',
-      'Maintained front-end conventions (routing, design patterns, spec-driven development) and used Claude Code to speed up docs and test coverage.',
+      "Sole front-end developer for squanto.app, a live gig marketplace for hosts, performers and audiences. Built the entire web UI in React/TypeScript through soft launch, including real-time maps and data visualizations, and extended it to mobile as a PWA.",
     ],
   },
   {
-    role: 'React/TypeScript Developer (Contract)',
-    company: 'Trinity Broadcasting Network',
-    place: 'Fort Worth, TX (Hybrid)',
-    dates: 'June 2023 – August 2024',
+    role: "React/TypeScript Developer (Contract)",
+    company: "Trinity Broadcasting Network",
+    place: "Fort Worth, TX (Hybrid)",
+    dates: "Jun 2023 – Aug 2024",
     bullets: [
-      'Led React/TypeScript front-end development for the TBNPlus.com and MeritPlus.com subscription streaming platforms, owning complex user flows including authentication and payment integration.',
-      'Partnered with backend engineers on Okta and Stripe integrations while troubleshooting and optimizing UI performance and reliability.',
-      'Supported and maintained TBN.org and related microsites built on WordPress and Drupal CMS.',
+      "Led front-end development for the TBNPlus and MeritPlus subscription streaming platforms, owning sign-in and payment flows (Okta, Stripe).",
     ],
   },
   {
-    role: 'Front-End Developer (Contract)',
-    company: 'AWS QuickSight',
-    place: 'Seattle, WA (Remote)',
-    dates: 'July 2022 – May 2023',
+    role: "Front-End Developer (Contract)",
+    company: "AWS QuickSight",
+    place: "Seattle, WA (Remote)",
+    dates: "Jul 2022 – May 2023",
     bullets: [
-      'Built and maintained React, Redux, and TypeScript UI components for AWS QuickSight, AWS\u2019s business intelligence platform.',
-      'Delivered production components under strict testing standards and collaborated on cross-functional prototypes for new features.',
+      "Built React, Redux and TypeScript UI components for AWS's business intelligence platform.",
     ],
   },
   {
-    role: 'Front-End Developer (Contract)',
-    company: 'FOX',
-    place: 'Los Angeles, CA (Remote)',
-    dates: 'June 2020 – May 2022',
+    role: "Front-End Developer (Contract)",
+    company: "FOX",
+    place: "Los Angeles, CA (Remote)",
+    dates: "Jun 2020 – May 2022",
     bullets: [
-      'Maintained and enhanced the FOX Web Player (powered by JW Player) used across FOX.com, FOXSports.com, FOX Nation, and other properties serving millions of users.',
-      'Diagnosed and resolved complex UI and WebView issues, including channel branding and compatibility on Xbox and Chromecast.',
-      'Implemented analytics tracing and performance improvements in close coordination with engineering teams.',
+      "Maintained and enhanced the FOX Web Player (JW Player) across FOX.com, FOXSports.com, FOX Nation and more, including fixes for Xbox and Chromecast.",
     ],
   },
   {
-    role: 'Front-End Developer (Contract)',
-    company: 'ADP',
-    place: 'Pasadena, CA',
-    dates: 'November 2019 – May 2020',
+    role: "Front-End Developer (Contract)",
+    company: "ADP",
+    place: "Pasadena, CA",
+    dates: "Nov 2019 – May 2020",
     bullets: [
-      'Built and maintained reusable React components and pages for myWisely, ADP\u2019s direct-to-consumer debit card platform and hybrid mobile app, targeting both browser and WebView environments.',
-      'Implemented Jest and Selenium WebDriver testing within a Redux, Material UI, and Webpack front-end architecture.',
+      "Built React components and pages for myWisely, ADP's consumer debit card platform and hybrid mobile app.",
     ],
   },
   {
-    role: 'Front-End Developer',
-    company: 'FOX Sports (FOX Corporation)',
-    place: 'Los Angeles, CA',
-    dates: 'March 2012 – August 2019',
+    role: "Front-End Developer",
+    company: "FOX Sports",
+    place: "Los Angeles, CA",
+    dates: "Mar 2012 – Aug 2019",
     bullets: [
-      'Built real-time front-end features for FOXSports.com, a high-traffic platform covering the NFL, MLB, NBA, NCAA, FIFA World Cup, US Open, and Olympics.',
-      'Contributed front-end work to \u201cThe Vanishing Man,\u201d a Sports Emmy Award\u2013winning longform feature.',
-      'Delivered live scoreboards, event brackets, newsletter tools, ad integrations, and companion video players with JavaScript, React (partial integration), JW Player, and Webpack.',
-      'Shipped multiple full-site redesigns and CMS migrations, partnering with backend teams on proprietary Java Spring services serving JSON/HTML.',
-      'Kept live events reliable through performance optimization, analytics implementation, and on-call PagerDuty coverage for major events and channel launches, including FS1.',
+      "Built real-time features for FOXSports.com across the NFL, MLB, NBA, World Cup and Olympics: live scoreboards, brackets and video players. Contributed to \"The Vanishing Man,\" a Sports Emmy–winning longform feature, and covered on-call for major live events.",
     ],
   },
   {
-    role: 'UI Engineer',
-    company: 'Medversant Technologies LLC',
-    place: 'Los Angeles, CA',
-    dates: 'May 2008 – February 2012',
+    role: "UI Engineer",
+    company: "Medversant Technologies",
+    place: "Los Angeles, CA",
+    dates: "May 2008 – Feb 2012",
     bullets: [
-      'Owned the front end of ProviderSource.com, a SaaS medical credentialing platform, as primary UI engineer, designing and building it end to end.',
-      'Developed form-heavy interfaces and internal web apps for large-scale data processing workflows.',
+      "Primary UI engineer for ProviderSource.com, a SaaS medical credentialing platform.",
     ],
   },
 ];
