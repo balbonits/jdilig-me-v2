@@ -23,7 +23,8 @@ function generateSitemap() {
   // Static pages
   const staticPages: SitemapEntry[] = [
     { url: '/', lastmod: currentDate, changefreq: 'daily', priority: 1.0 },
-    { url: '/about', lastmod: currentDate, changefreq: 'monthly', priority: 0.9 },
+    { url: '/resume', lastmod: currentDate, changefreq: 'monthly', priority: 0.9 },
+    { url: '/contact', lastmod: currentDate, changefreq: 'yearly', priority: 0.7 },
     { url: '/projects', lastmod: currentDate, changefreq: 'weekly', priority: 0.9 },
     { url: '/code', lastmod: currentDate, changefreq: 'weekly', priority: 0.8 },
     { url: '/code/exercises', lastmod: currentDate, changefreq: 'weekly', priority: 0.7 },

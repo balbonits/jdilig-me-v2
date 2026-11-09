@@ -133,7 +133,7 @@ export const pageConfigs = {
   about: {
     title: 'About John Dilig - Web Developer',
     description: 'Learn more about John Dilig, a web developer with 17+ years of experience in React, TypeScript, and modern frontend development. Professional experience with AWS, FOXSports, and TBN.',
-    path: '/about',
+    path: '/resume',
     keywords: ['John Dilig bio', 'web developer experience', 'AWS developer', 'FOXSports developer', 'React expert'],
     type: 'profile' as const,
   },
